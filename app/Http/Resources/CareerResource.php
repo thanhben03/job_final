@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Http\Resources;
+
+use App\Enums\GenderEnum;
+use App\Enums\JobExpEnum;
+use App\Enums\LevelEnum;
+use App\Enums\QualificationEnum;
+use App\Enums\WorkTypeEnum;
+use App\Trait\ConvertPriceString;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+
+class CareerResource extends ResourceCollection
+{
+
+    use ConvertPriceString;
+
+    /**
+     * Transform the resource into an array.
+     *
+     * @return array<string, mixed>
+     */
+    public function toArray(Request $request)
+    {
+        return $this->collection->map(function ($career) {
+            return [
+                'id' => $career->id,
+                'title' => $career->title,
+                'slug' => $career->slug,
+                'min_salary' => $this->convertPriceString(intval($career->min_salary)),
+                'max_salary' => $this->convertPriceString(intval($career->max_salary)),
+                'address' => $career->address,
+                'phone' => $career->phone,
+                'experience' => JobExpEnum::getDescription(intval($career->experience)),
+                'level' => LevelEnum::getDescription(intval($career->level)),
+                'company' => $career->company,
+                'work_type' => WorkTypeEnum::getDescription(intval($career->work_type)),
+                'skills' => $career->skills,
+                'currentPage' => $career->currentPage,
+                'perPage' => $career->perPage,
+                'total' => $career->total,
+                'province' => $career->province->name,
+                'updated_at' => $career->updated_at->diffForHumans(),
+                'created_at' => $career->created_at->toDateString(),
+                'expiration_day' => $career->expiration_day,
+                'gender' => GenderEnum::getDescription($career->gender),
+                'qualification' => QualificationEnum::getDescription($career->qualification),
+                'detail' => $career->detail,
+                'cv_applied' => $career->user_career,
+            ];
+        });
+
+
+    }
+}
