@@ -17,6 +17,8 @@ Route::get('/candidates/profile', [CandidateController::class, 'profile'])->name
 Route::get('/candidates/job-applied', [CandidateController::class, 'jobApplied'])->name('candidate.job-applied');
 Route::get('/candidates/my-resume', [CandidateController::class, 'myResume'])->name('candidate.my-resume');
 Route::get('/candidates/saved-job', [CandidateController::class, 'savedJob'])->name('candidate.saved-job');
+Route::post('/upload-cv', [CandidateController::class, 'uploadCv'])->name('api.file.upload');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -27,5 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('pdf-to-img', [CandidateController::class, 'pdfToImg'])->name('pdf-to-img');
 
 require __DIR__.'/auth.php';

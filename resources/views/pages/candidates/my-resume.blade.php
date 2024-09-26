@@ -1,5 +1,31 @@
 @extends('layouts.app')
 @section('content')
+    <!-- Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Upload File</h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="uploadResult" class="mt-3">
+                </div>
+                <div class="modal-body">
+                    <!-- Form Upload -->
+                    <form id="uploadForm" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Choose file</label>
+                            <input class="form-control" type="file" id="formFile" name="file">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- CONTENT START -->
     <div class="page-content">
 
@@ -69,61 +95,46 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3 text-end">
-                                        <button class="btn btn-success">+ Tạo mới</button>
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#uploadModal">+ Tạo mới</button>
                                     </div>
                                 </div>
 
                                 <!-- Section: Uploaded CVs -->
                                 <div class="uploaded-section">
                                     <h4 class="my-2">CV đã tải lên TopCV</h4>
-                                    <div class="row">
+                                    <div class="row" style="flex-wrap: nowrap; overflow-x: auto">
                                         <!-- CV Card 1 -->
-                                        <div class="col-md-4">
-                                            <div class="card card-wrapper">
-                                                <img src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-58.jpg" class="card-img-top mx-auto d-block" alt="Profile">
-                                                <div class="main-cv-badge bg-warning text-white p-1 rounded">CV chính</div>
-                                                <div class="card-body">
-                                                    <h5 class="card-title">CV-Nguyen-Ho-Thanh-Ben-PHP-Laravel</h5>
-                                                    <p class="card-text">Cập nhật lần cuối 17-03-2024 16:55 PM</p>
-                                                    <div class="d-flex justify-content-between">
-                                                        <button class="btn btn-outline-primary">Chia sẻ</button>
-                                                        <button class="btn btn-outline-secondary">Tải xuống</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @foreach($resumes as $resume)
 
-                                        <!-- CV Card 2 -->
-                                        <div class="col-md-4">
-                                            <div class="card card-wrapper">
-                                                <img src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-58.jpg" class="card-img-top mx-auto d-block" alt="Profile">
-                                                <div class="main-cv-badge bg-warning text-white p-1 rounded">CV chính</div>
-                                                <div class="card-body">
-                                                    <h5 class="card-title">CV-Nguyen-Ho-Thanh-Ben-PHP-Laravel</h5>
-                                                    <p class="card-text">Cập nhật lần cuối 20-03-2024 20:00 PM</p>
-                                                    <div class="d-flex justify-content-between">
-                                                        <button class="btn btn-outline-primary">Chia sẻ</button>
-                                                        <button class="btn btn-outline-secondary">Tải xuống</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+{{--                                            <div class="col-md-4">--}}
+{{--                                                <div class="card card-wrapper">--}}
+{{--                                                    <img src="{{asset('storage/uploads/'. $resume->thumbnail)}}" class="card-img-top mx-auto d-block" alt="Profile">--}}
+{{--                                                    <div class="">--}}
+{{--                                                        <div class="main-cv-badge bg-warning text-white p-1 rounded">CV chính</div>--}}
+{{--                                                        <div class="card-body">--}}
+{{--                                                            <h5 class="card-title">{{$resume->path}}</h5>--}}
+{{--                                                            <p class="card-text">Cập nhật lần cuối {{$resume->updated_at}}</p>--}}
+{{--                                                            <div class="d-flex justify-content-between">--}}
+{{--                                                                <button class="btn btn-outline-primary">Chia sẻ</button>--}}
+{{--                                                                <button class="btn btn-outline-secondary">Tải xuống</button>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+                                                    <div class="card mx-1 my-1 card-cv" >
+                                                        <img src="{{asset('storage/uploads/'. $resume->thumbnail)}}" class="card-img-top card-cv-img" alt="Profile">
 
-                                        <!-- CV Card 3 -->
-                                        <div class="col-md-4">
-                                            <div class="card card-wrapper">
-                                                <img src="https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/anh-avatar-cute-58.jpg" class="card-img-top mx-auto d-block" alt="Profile">
-                                                <div class="main-cv-badge bg-warning text-white p-1 rounded">CV chính</div>
-                                                <div class="card-body">
-                                                    <h5 class="card-title">CV-Nguyen-Ho-Thanh-Ben.pdf</h5>
-                                                    <p class="card-text">Cập nhật lần cuối 07-08-2024 22:35 PM</p>
-                                                    <div class="d-flex justify-content-between">
-                                                        <button class="btn btn-outline-primary">Chia sẻ</button>
-                                                        <button class="btn btn-outline-secondary">Tải xuống</button>
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">{{$resume->path}}</h5>
+                                                            <p class="card-text">Cập nhật lần cuối {{$resume->updated_at}}</p>
+                                                            <div class="d-flex justify-content-between">
+                                                                <button class="btn btn-outline-primary">Chia sẻ</button>
+                                                                <button class="btn btn-outline-secondary">Tải xuống</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endforeach
 
                                     </div>
                                 </div>
@@ -155,3 +166,34 @@
     </div>
     <!-- CONTENT END -->
 @endsection
+@push('js')
+    <script type="text/javascript">
+        $(document).ready(function (e) {
+            $('#uploadForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('api.file.upload') }}",  // Đường dẫn API
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response.success) {
+                            $('#uploadResult').html('<div class="alert alert-success">' + response.msg + '</div>');
+                            $('#formFile').val('');
+                        } else {
+                            $('#uploadResult').html('<div class="alert alert-danger">' + response.msg + '</div>');
+                        }
+                    },
+                    error: function (response) {
+                        $('#uploadResult').html('<div class="alert alert-danger">Upload failed. Please try again.</div>');
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

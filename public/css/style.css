@@ -24942,3 +24942,28 @@ HOME PAGE 15 START
     left: 10px;
     color: #1967d2;
 }
+
+.card-cv {
+    position: relative;
+    width: 18rem;
+    height: 370px;
+}
+
+.card-cv-img {
+    height: 94%;
+    object-fit: cover;
+}
+
+.card-cv > .card-body {
+    background: white;
+    position: absolute;
+    top: 175px;
+}
+
+.card-body > .card-title {
+    display: inline-block;
+    width: 242px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
