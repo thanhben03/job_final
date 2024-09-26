@@ -100,12 +100,14 @@ class JobController extends Controller
         $career = CareerResource::make($career)->resolve();
         $isApplied  = UserCareer::query()->where([
             'career_id' => $career[0]['id'],
-            'cv_id' => auth()->user()->cv->id
+            'cv_id' => auth()->user()->cv()->pluck('id')->toArray()
         ])->first();
+        $resumes = auth()->user()->cv;
         return view('pages.jobs.job-detail', [
             'career' => $career[0],
-            'cv_id' => auth()->user()->cv->id ?? 0,
-            'isApplied' => !!$isApplied
+            'cv_id' => auth()->user()->cv[0]?->id ?? 0,
+            'isApplied' => !!$isApplied,
+            'resumes' => $resumes,
         ]);
     }
     public function applyJob(Request $request)

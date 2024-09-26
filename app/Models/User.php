@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function cv()
     {
-        return $this->hasOne(CurriculumVitae::class);
+        return $this->hasMany(CurriculumVitae::class);
     }
 
     public function saveJob()

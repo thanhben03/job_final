@@ -24,7 +24,13 @@ class CandidateController extends Controller
 
     public function jobApplied()
     {
-        $ids = UserCareer::query()->where('cv_id', auth()->user()->cv->id)->pluck('id')->toArray();
+        // lay tat ca cv cua nguoi dung
+        $cvIds = auth()->user()->cv()->pluck('id')->toArray();
+
+        // lay id cv cac job ma nguoi dung da apply
+        $ids = UserCareer::query()->whereIn('cv_id', $cvIds)->pluck('career_id')->toArray();
+
+        // lay cac job
         $careers = Career::query()->whereIn('id', $ids)->paginate(10);
         $data = CareerResource::make($careers)->resolve();
 

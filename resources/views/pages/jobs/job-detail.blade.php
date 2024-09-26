@@ -258,7 +258,9 @@
 
                                             <select class="form-select mb-3" aria-label="Default select example">
                                                 <option selected>Select your CV</option>
-                                                <option value="{{auth()->user()->cv->id}}">{{auth()->user()->cv->path}}</option>
+                                                @foreach($resumes as $resume)
+                                                    <option value="{{$resume->id}}">{{explode('/', $resume->path)[1]}}</option>
+                                                @endforeach
                                             </select>
 
                                         </div>
