@@ -10,43 +10,31 @@
 
                 <div class="twm-bnr-search-bar">
                     <form>
-                        <div class="row">
+                        <div class="row" style="justify-content: space-between;">
                             <!--Title-->
                             <div class="form-group col-xl-3 col-lg-6 col-md-6">
                                 <label>What</label>
-                                <select class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="j-Job_Title" data-bv-field="size">
+                                <select class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="select-skill" data-bv-field="size">
                                     <option disabled selected value="">Select Category</option>
-                                    <option selected>Job Title</option>
-                                    <option>Web Designer</option>
-                                    <option>Developer</option>
-                                    <option>Acountant</option>
+                                    @foreach($skills as $skill)
+                                        <option value="{{$skill->name}}">{{$skill->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
-
-                            <!--All Category-->
-                            <div class="form-group col-xl-3 col-lg-6 col-md-6">
-                                <label>Type</label>
-                                <select class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="j-All_Category" data-bv-field="size">
-                                    <option disabled selected value="">Select Category</option>
-                                    <option selected>All Category</option>
-                                    <option>Web Designer</option>
-                                    <option>Developer</option>
-                                    <option>Acountant</option>
-                                </select>
-                            </div>
-
-                            <!--Location-->
+                            <!--Title-->
                             <div class="form-group col-xl-3 col-lg-6 col-md-6">
                                 <label>Location</label>
-                                <div class="twm-inputicon-box">
-                                    <input name="username" type="text" required class="form-control" placeholder="Search...">
-                                    <i class="twm-input-icon fas fa-map-marker-alt"></i>
-                                </div>
+                                <select class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="select-province" data-bv-field="size">
+                                    <option disabled selected value="">Select Category</option>
+                                    @foreach($provinces as $province)
+                                        <option value="{{$province->name}}">{{$province->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                             <!--Find job btn-->
                             <div class="form-group col-xl-3 col-lg-6 col-md-6">
-                                <button type="button" class="site-button">Find Job</button>
+                                <button type="button" onclick="searchJob()" class="site-button">Find Job</button>
                             </div>
 
                         </div>
@@ -153,3 +141,35 @@
         Jobs
     </div>
 </div>
+
+@push('js')
+    <script>
+        let originUrl = window.location.protocol + '//' + window.location.host + window.location.pathname + 'jobs/';
+
+        function searchJob() {
+            let skills = $("#select-skill").val()
+            let provinces = $("#select-province").val()
+
+            // Mảng để lưu các tham số truy vấn
+            let queryParams = [];
+
+            // Kiểm tra và thêm tham số 'skills' nếu có giá trị
+            if (skills) {
+                queryParams.push(`skills=${encodeURIComponent(skills)}`);
+            }
+
+            // Kiểm tra và thêm tham số 'locations' nếu có giá trị
+            if (provinces) {
+                queryParams.push(`locations=${encodeURIComponent(provinces)}`);
+            }
+
+            // Nối các tham số truy vấn thành chuỗi
+            let queryString = queryParams.length > 0 ? '?' + queryParams.join('&') : '';
+
+            // Ghép URL cuối cùng
+            let finalUrl = originUrl + queryString;
+
+            window.location.href = finalUrl;
+        }
+    </script>
+@endpush

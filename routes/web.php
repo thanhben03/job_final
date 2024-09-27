@@ -18,6 +18,7 @@ Route::get('/candidates/my-resume', [CandidateController::class, 'myResume'])->n
 Route::get('/candidates/saved-job', [CandidateController::class, 'savedJob'])->name('candidate.saved-job');
 Route::post('/candidates/saved-job', [CandidateController::class, 'processSavedJob'])->name('candidate.process.saved-job');
 Route::post('/upload-cv', [CandidateController::class, 'uploadCv'])->name('api.file.upload');
+Route::post('/upload-avatar', [CandidateController::class, 'uploadAvatar'])->name('api.file.upload.avatar');
 
 
 Route::get('/dashboard', function () {

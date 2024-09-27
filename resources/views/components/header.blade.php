@@ -104,7 +104,7 @@
                                     <!-- Profile Section -->
                                     <div class="d-flex align-items-center" data-bs-toggle="dropdown">
                                         <!-- Profile Picture -->
-                                        <img src="{{auth()->user()->avatar}}" class="rounded-circle me-3" alt="Profile Picture" width="50" height="50">
+                                        <img src="{{asset('/images/avatar/'.auth()->user()->avatar)}}" class="rounded-circle me-3" alt="Profile Picture" width="50" height="50">
                                         <!-- Name and Status -->
                                         <div>
                                             <h5 class="mb-0">{{auth()->user()->fullname}}</h5>

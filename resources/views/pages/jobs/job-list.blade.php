@@ -286,7 +286,7 @@
                                                 @endif
                                             </div>
                                             <div class="twm-jobs-amount">{{$career['max_salary']}} <span>/ Month</span></div>
-                                            <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
+                                            <a href="job-detail.html" class="twm-jobs-browse site-text-primary">{{$career['province']}}</a>
                                         </div>
                                     </div>
                                 </li>
