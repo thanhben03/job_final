@@ -86,7 +86,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                            <button onclick="removeJob({{$career['id']}})" title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
                                                                 <span class="far fa-trash-alt"></span>
                                                             </button>
                                                         </li>
@@ -119,3 +119,20 @@
     </div>
     <!-- CONTENT END -->
 @endsection
+@push('js')
+    <script>
+        function removeJob(careerId) {
+            $.ajax({
+                type: 'POST',
+                url: '{{route('candidate.process.saved-job')}}',
+                data: {
+                    '_token': '{{csrf_token()}}',
+                    'career_id': careerId
+                },
+                success: function(res){
+                    toastr.success(res.msg, 'Notification !')
+                }
+            });
+        }
+    </script>
+@endpush

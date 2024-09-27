@@ -8,6 +8,7 @@ use App\Http\Resources\CareerDetailResource;
 use App\Http\Resources\CareerResource;
 use App\Models\CurriculumVitae;
 use App\Models\Province;
+use App\Models\SaveCareer;
 use App\Models\Skill;
 use App\Models\UserCareer;
 use App\Services\Career\CareerServiceInterface;
@@ -78,18 +79,18 @@ class JobController extends Controller
 
         $careers = $careers->paginate(10);
         $data = CareerResource::make($careers);
-        $jobTypes = WorkTypeEnum::asSelectArray();
         $skills = $this->skillService->getAll();
         $provinces = Province::query()->get(['code', 'name']);
-        $priceFilter = [
-            'min' => $careers->min('min_salary'),
-            'max' => $careers->max('max_salary'),
-        ];
+        $careerIdSaved = SaveCareer::query()->where([
+            'user_id' => auth()->user()->id
+        ])->pluck('career_id')->toArray();
+
         return view('pages.jobs.job-list', [
             'careers' => $careers,
             'skills' => $skills,
             'provinces' => $provinces,
-            'data' => $data->resolve()
+            'data' => $data->resolve(),
+            'careerIdSaved' => $careerIdSaved,
         ]);
     }
 

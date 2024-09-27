@@ -130,7 +130,13 @@
                                                             <p class="card-text">Cập nhật lần cuối {{$resume->updated_at}}</p>
                                                             <div class="d-flex justify-content-between">
                                                                 <button class="btn btn-outline-primary">Chia sẻ</button>
-                                                                <button class="btn btn-outline-secondary">Tải xuống</button>
+                                                                <button class="btn btn-outline-secondary">
+                                                                    <a
+                                                                        download
+                                                                        href="{{asset('storage/uploads/'. $resume->path)}}">
+                                                                        Tải xuống
+                                                                    </a>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>

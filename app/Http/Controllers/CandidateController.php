@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CareerResource;
 use App\Models\Career;
 use App\Models\CurriculumVitae;
+use App\Models\SaveCareer;
 use App\Models\UserCareer;
 use App\Services\User\UserService;
 use ConvertApi\ConvertApi;
@@ -57,6 +58,41 @@ class CandidateController extends Controller
         $careers = Career::query()->whereIn('id', $ids)->get();
         $data = CareerResource::make($careers)->resolve();
         return view('pages.candidates.saved-job', compact('careers', 'data'));
+    }
+
+    public function processSavedJob(Request $request)
+    {
+        $career_id = $request->career_id;
+        $user_id = auth()->id();
+
+        // Kiểm tra xem đã lưu công việc chưa
+        $exist = SaveCareer::where([
+            'career_id' => $career_id,
+            'user_id' => $user_id
+        ])->first();
+
+        // Nếu đã tồn tại, xóa bản ghi
+        if ($exist) {
+            $exist->delete();
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Job removed successfully'
+            ]);
+        }
+
+        // Nếu chưa tồn tại, tạo bản ghi mới
+        $savedJob = SaveCareer::create([
+            'career_id' => $career_id,
+            'user_id' => $user_id
+        ]);
+
+        // Kiểm tra tạo bản ghi thành công
+        return response()->json([
+            'success' => (bool) $savedJob,
+            'msg' => $savedJob ? 'Job Applied Successfully' : 'Failed to apply for job'
+        ], $savedJob ? 200 : 400);
+
     }
 
     public function uploadCV(Request $request)

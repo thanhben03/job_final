@@ -45,25 +45,16 @@
                             <div class="product-filter-wrap d-flex justify-content-between align-items-center">
                                 <span class="woocommerce-result-count-left">Applied {{count($data)}} jobs</span>
 
-                                <form class="woocommerce-ordering twm-filter-select" method="get">
-                                    <span class="woocommerce-result-count">Short By</span>
-                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
-                                        <option>Most Recent</option>
-                                        <option>Freelance</option>
-                                        <option>Full Time</option>
-                                        <option>Internship</option>
-                                        <option>Part Time</option>
-                                        <option>Temporary</option>
-                                    </select>
-                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
-                                        <option>Show 10</option>
-                                        <option>Show 20</option>
-                                        <option>Show 30</option>
-                                        <option>Show 40</option>
-                                        <option>Show 50</option>
-                                        <option>Show 60</option>
-                                    </select>
-                                </form>
+{{--                                <form class="woocommerce-ordering twm-filter-select" method="get">--}}
+{{--                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">--}}
+{{--                                        <option>Show 10</option>--}}
+{{--                                        <option>Show 20</option>--}}
+{{--                                        <option>Show 30</option>--}}
+{{--                                        <option>Show 40</option>--}}
+{{--                                        <option>Show 50</option>--}}
+{{--                                        <option>Show 60</option>--}}
+{{--                                    </select>--}}
+{{--                                </form>--}}
 
                             </div>
 

@@ -267,7 +267,24 @@
                                             </a>
                                         </div>
                                         <div class="twm-right-content">
-                                            <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                                            <div class="twm-jobs-category green">
+                                                <span class="twm-bg-green">New</span>
+                                                @if(in_array($career['id'], $careerIdSaved))
+                                                    <i
+                                                        id="icon-save-{{$career['id']}}"
+                                                        onclick="savedJob({{$career['id']}})"
+                                                        class="fas fa-heart saved-job icon-save-job btn-save-job">
+
+                                                    </i>
+                                                @else
+                                                    <i
+                                                        id="icon-save-{{$career['id']}}"
+                                                        onclick="savedJob({{$career['id']}})"
+                                                        class="far fa-heart icon-save-job btn-save-job">
+
+                                                    </i>
+                                                @endif
+                                            </div>
                                             <div class="twm-jobs-amount">{{$career['max_salary']}} <span>/ Month</span></div>
                                             <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
                                         </div>
@@ -294,6 +311,7 @@
             const submitFilter = $("#submit-filter");
             const btnReset = $("#btn-reset");
             const selectSort = $("#select-sort")
+            const btnSaveJob = $(".btn-save-job");
 
             const formSort = $("#formSort");
 
@@ -302,6 +320,26 @@
             let filterJobTypeStr = '';
             let filterSkillStr = '';
             let filterProvinceStr = '';
+
+            savedJob = function (careerId) {
+                let iconSave = document.querySelector('#icon-save-'+ careerId)
+                iconSave.classList.toggle('far')
+                iconSave.classList.toggle('fas')
+                iconSave.classList.toggle('saved-job')
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route('candidate.process.saved-job')}}',
+                    data: {
+                        '_token': '{{csrf_token()}}',
+                        'career_id': careerId
+                    },
+                    success: function(res){
+                        toastr.success(res.msg, 'Notification !')
+                    }
+                });
+            }
+
 
             submitFilter.click(function () {
                 resetFilter()
@@ -322,7 +360,6 @@
                 formSort.submit();
             })
 
-            console.log(url)
             function filterJobType() {
                 let selectedValues = [];
                 $('input.job-type:checked').each(function() {
@@ -373,12 +410,7 @@
 
 
 
-            // let jobType = $(".job-type");
-            // jobType.each((index, ele) => {
-            //     ele.onchange = function (e) {
-            //         filterJobType()
-            //     }
-            // });
+
         });
 
     </script>
