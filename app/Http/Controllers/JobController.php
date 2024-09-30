@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Enums\WorkTypeEnum;
+use App\Http\Requests\PostJobRequest;
 use App\Http\Resources\CareerDetailResource;
 use App\Http\Resources\CareerResource;
+use App\Models\Career;
 use App\Models\CurriculumVitae;
 use App\Models\Province;
 use App\Models\SaveCareer;
@@ -15,7 +17,9 @@ use App\Services\Career\CareerServiceInterface;
 use App\Services\Skill\SkillServiceInterface;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class JobController extends Controller
 {
@@ -121,5 +125,14 @@ class JobController extends Controller
             'career_id' => $jobId,
             'cv_id' => $cv->id,
         ]);
+    }
+
+    public function store(PostJobRequest $request)
+    {
+        $data = $request->validated();
+        $career = Arr::except($data, ['skill_ids', 'desc', 'require', 'benefit', 'key_responsibility']);
+        $career['company_id'] = auth()->user()->company->id;
+        $career['slug'] = Str::slug($career['title']);
+        $insertCareer = Career::query()->create($career);
     }
 }

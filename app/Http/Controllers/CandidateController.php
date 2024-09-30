@@ -165,4 +165,28 @@ class CandidateController extends Controller
         }
 
     }
+    public function uploadAvatarCompany(Request $request)
+    {
+        // Validate input
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:5000',
+        ]);
+        // Lưu file vào thư mục 'public/images'
+        try {
+            if ($request->hasFile('avatar')) {
+                $image = $request->file('avatar');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/avatar/company'), $imageName);
+
+                auth()->user()->company->update([
+                    'company_avatar' => 'company/' . $imageName
+                ]);
+                // Trả về phản hồi JSON
+                return response()->json(['msg' => 'Image uploaded successfully.', 'image' => $imageName]);
+            }
+        } catch (\Exception $exception) {
+            return response()->json(['msg' => $exception->getMessage()], 400);
+        }
+
+    }
 }

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\ProfileController;
@@ -11,6 +13,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::resource('/jobs', JobController::class);
 
 Route::post('/api/v1/applyJob', [JobController::class, 'applyJob'])->name('api.v1.applyJob');
+Route::get('/api/v1/get-district/{province_id}', [LocationController::class, 'getDistrict'])->name('api.v1.get-district');
+
+Route::post('/job', [JobController::class, 'store'])->name('job.store');
+
+
 Route::get('/candidates/dashboard', [CandidateController::class, 'index'])->name('candidate.dashboard');
 Route::get('/candidates/profile', [CandidateController::class, 'profile'])->name('candidate.profile');
 Route::get('/candidates/job-applied', [CandidateController::class, 'jobApplied'])->name('candidate.job-applied');
@@ -19,6 +26,13 @@ Route::get('/candidates/saved-job', [CandidateController::class, 'savedJob'])->n
 Route::post('/candidates/saved-job', [CandidateController::class, 'processSavedJob'])->name('candidate.process.saved-job');
 Route::post('/upload-cv', [CandidateController::class, 'uploadCv'])->name('api.file.upload');
 Route::post('/upload-avatar', [CandidateController::class, 'uploadAvatar'])->name('api.file.upload.avatar');
+Route::post('/upload-avatar-company', [CandidateController::class, 'uploadAvatarCompany'])->name('api.file.upload.avatar.company');
+
+Route::get('/companies/dashboard', [CompanyController::class, 'index'])->name('company.index');
+Route::get('/companies/profile', [CompanyController::class, 'profile'])->name('company.profile');
+Route::get('/companies/post-job', [CompanyController::class, 'showPostJob'])->name('company.show.post-job');
+//Route::get('/companies/resume', [CompanyController::class, 'resume'])->name('company.resume');
+//Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
 
 
 Route::get('/dashboard', function () {
