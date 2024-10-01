@@ -8,7 +8,7 @@
 
             <div class="wt-admin-right-page-header clearfix">
                 <h2>Post a Job</h2>
-                <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Job Submission Form</span></div>
+                <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Job Detail Form</span></div>
             </div>
 
             <!--Logo and Cover image-->
@@ -60,15 +60,16 @@
                     @endif
                 </div>
                 <div class="panel-body wt-panel-body p-a20 m-b30 ">
-                    <form action="{{route('job.store')}}" method="POST">
+                    <form action="{{route('jobs.update', $career['id'])}}" method="POST">
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <!--Job title-->
                             <div class="col-xl-4 col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label>Job Title</label>
                                     <div class="ls-inputicon-box">
-                                        <input class="form-control" value="{{old('title', 'Ahihihihi 123')}}" name="title" type="text" placeholder="Devid Smith">
+                                        <input class="form-control" value="{{old('title', $career['title'])}}" name="title" type="text" placeholder="Devid Smith">
                                         <i class="fs-input-icon fa fa-address-card"></i>
                                     </div>
                                 </div>
@@ -85,7 +86,7 @@
                                             class="wt-select-box selectpicker"
                                             data-live-search="true" title="" id="j-category" data-bv-field="size">
                                             @foreach($skills as $skill)
-                                                <option value="{{$skill->id}}">{{$skill->name}}</option>
+                                                <option {{in_array($skill->id, $career['skills']->pluck('id')->toArray()) ? 'selected' : ''}} value="{{$skill->id}}">{{$skill->name}}</option>
                                             @endforeach
                                         </select>
                                         <i class="fs-input-icon fa fa-border-all"></i>
@@ -104,7 +105,7 @@
                                             class="wt-select-box selectpicker"
                                             data-live-search="true" title="" id="s-category" data-bv-field="size">
                                             @foreach($workType as $key => $value)
-                                                <option value="{{$key}}">{{$value}}</option>
+                                                <option {{$value == $career['work_type'] ? 'selected' : ''}} value="{{$key}}">{{$value}}</option>
                                             @endforeach
                                         </select>
                                         <i class="fs-input-icon fa fa-file-alt"></i>
@@ -120,7 +121,7 @@
                                         <div class="form-group">
                                             <label>Min Salary</label>
                                             <div class="ls-inputicon-box">
-                                                <input type="number" name="min_salary" value="{{old('min_salary', '1000000')}}" class="form-control">
+                                                <input type="number" name="min_salary" value="{{old('min_salary', $career['min_salary']['origin'])}}" class="form-control">
                                                 <i class="fs-input-icon fa fa-dollar-sign"></i>
                                             </div>
                                         </div>
@@ -129,7 +130,7 @@
                                         <div class="form-group">
                                             <label>Max Salary</label>
                                             <div class="ls-inputicon-box">
-                                                <input type="number" name="max_salary" value="{{old('max_salary', '2000000')}}" class="form-control">
+                                                <input type="number" name="max_salary" value="{{old('max_salary', $career['max_salary']['origin'])}}" class="form-control">
                                                 <i class="fs-input-icon fa fa-dollar-sign"></i>
                                             </div>
                                         </div>
@@ -144,7 +145,7 @@
                                     <div class="ls-inputicon-box">
                                         <select name="experience" class="wt-select-box selectpicker"  data-live-search="true" title="" id="salary" data-bv-field="size">
                                             @foreach($exps as $key => $value)
-                                                <option value="{{$key}}">{{$value}}</option>
+                                                <option {{$value == $career['experience'] ? 'selected' : ''}} value="{{$key}}">{{$value}}</option>
                                             @endforeach
 
                                         </select>
@@ -161,7 +162,7 @@
                                     <div class="ls-inputicon-box">
                                         <select name="qualification" class="wt-select-box selectpicker"  data-live-search="true" title="" data-bv-field="size">
                                             @foreach($qualifications as $key => $value)
-                                                <option value="{{$key}}">{{$value}}</option>
+                                                <option {{$value == $career['qualification'] ? 'selected' : ''}}  value="{{$key}}">{{$value}}</option>
                                             @endforeach
                                         </select>
                                         <i class="fs-input-icon fa fa-user-graduate"></i>
@@ -176,7 +177,7 @@
                                     <div class="ls-inputicon-box">
                                         <select class="wt-select-box selectpicker"  data-live-search="true" name="gender" id="gender" data-bv-field="size">
                                             @foreach($genders as $keyd => $value)
-                                                <option value="{{$key}}">{{$value}}</option>
+                                                <option {{$value == $career['gender']}} value="{{$key}}">{{$value}}</option>
                                             @endforeach
                                         </select>
                                         <i class="fs-input-icon fa fa-venus-mars"></i>
@@ -194,7 +195,7 @@
                                                 data-live-search="true" title=""
                                                 name="province_id" data-bv-field="size">
                                             @foreach($provinces as $key => $value)
-                                                <option value="{{$key}}">{{$value}}</option>
+                                                <option {{$value == $career['province']->name ? 'selected' : ''}} value="{{$key}}">{{$value}}</option>
                                             @endforeach
                                         </select>
                                         <i class="fs-input-icon fa fa-globe-americas"></i>
@@ -213,7 +214,9 @@
                                                 id="district"
                                                 data-live-search="true" title=""
                                                 name="district_id" data-bv-field="size">
-
+                                                @foreach($districts as $district)
+                                                <option {{$career['district']->code == $district->code ? 'selected' : ''}} value="{{$district->code}}">{{$district->name}}</option>
+                                                @endforeach
                                         </select>
                                         <i class="fs-input-icon fa fa-map-marker-alt"></i>
                                     </div>
@@ -229,7 +232,7 @@
                                     <div class="ls-inputicon-box">
                                         <select class="wt-select-box selectpicker"  data-live-search="true" title="" name="level" data-bv-field="size">
                                             @foreach($levels as $key => $value)
-                                                <option value="{{$key}}">{{$value}}</option>
+                                                <option {{$value == $career['level']}} value="{{$key}}">{{$value}}</option>
                                             @endforeach
                                         </select>
                                         <i class="fs-input-icon fa fa-globe-americas"></i>
@@ -242,7 +245,7 @@
                                 <div class="form-group">
                                     <label>Phone</label>
                                     <div class="ls-inputicon-box">
-                                        <input class="form-control" value="{{old('phone', '0772854932')}}" name="phone" type="text" placeholder="0772859431">
+                                        <input class="form-control" value="{{old('phone', $career['phone'])}}" name="phone" type="text" placeholder="0772859431">
                                         <i class="fs-input-icon fa fa-map-pin"></i>
                                     </div>
                                 </div>
@@ -253,7 +256,7 @@
                                 <div class="form-group">
                                     <label>Employee Number</label>
                                     <div class="ls-inputicon-box">
-                                        <input class="form-control" value="{{old('employee', 10)}}" name="employee" type="number" placeholder="10">
+                                        <input class="form-control" value="{{old('employee', $career['employee'])}}" name="employee" type="number" placeholder="10">
                                         <i class="fs-input-icon fas fa-at"></i>
                                     </div>
                                 </div>
@@ -264,7 +267,7 @@
                                 <div class="form-group">
                                     <label>From Time</label>
                                     <div class="ls-inputicon-box">
-                                        <input class="form-control" value="{{old('from_time', '16:34')}}" name="from_time" type="time" >
+                                        <input class="form-control" value="{{old('from_time', $career['from_time'])}}" name="from_time" type="time" >
                                         <i class="fs-input-icon fa fa-globe-americas"></i>
                                     </div>
                                 </div>
@@ -275,7 +278,7 @@
                                 <div class="form-group">
                                     <label>To Time</label>
                                     <div class="ls-inputicon-box">
-                                        <input class="form-control" value="{{old('to_time', '16:40')}}" name="to_time" type="time" >
+                                        <input class="form-control" value="{{old('to_time', $career['to_time'])}}" name="to_time" type="time" >
                                         <i class="fs-input-icon fa fa-clock"></i>
                                     </div>
                                 </div>
@@ -287,7 +290,7 @@
                                 <div class="form-group">
                                     <label>Expiration Day</label>
                                     <div class="ls-inputicon-box">
-                                        <input type="date" value="{{old('expiration_day', '2024-10-04')}}" name="expiration_day" class="form-control">
+                                        <input type="date" value="{{old('expiration_day', $career['expiration_day'])}}" name="expiration_day" class="form-control">
                                         <i class="fs-input-icon fa fa-map-marker-alt"></i>
                                     </div>
                                 </div>
@@ -298,7 +301,7 @@
                                 <div class="form-group">
                                     <label>Complete Address</label>
                                     <div class="ls-inputicon-box">
-                                        <input class="form-control" value="{{old('address', 'AN BINH, AN THANH TRUNG')}}" name="address" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA">
+                                        <input class="form-control" value="{{old('address', $career['address'])}}" name="address" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA">
                                         <i class="fs-input-icon fa fa-home"></i>
                                     </div>
                                 </div>
@@ -311,7 +314,7 @@
                                     <textarea id="desc"
                                               name="desc" class="form-control" rows="3"
                                     >
-                                        {{old('address', 'DESC DEFAULT')}}
+                                        {{old('address', $career['detail']?->desc)}}
                                     </textarea>
                                 </div>
                             </div>
@@ -326,7 +329,7 @@
                                         class="form-control"
                                         rows="3"
                                         >
-                                        {{old('require', 'REQUIRE DEFAULT')}}
+                                        {{old('require', $career['detail']?->require)}}
                                     </textarea>
                                 </div>
                             </div>
@@ -340,7 +343,7 @@
                                         name="benefit"
                                         class="form-control" rows="3"
                                     >
-                                        {{old('benefit', 'BENEFIT DEFAULT')}}
+                                        {{old('benefit', $career['detail']?->benefit)}}
                                     </textarea>
                                 </div>
                             </div>
@@ -354,7 +357,7 @@
                                         id="key_responsibility"
                                         class="form-control" rows="3"
                                     >
-                                        {{old('key_responsibility', 'RESPONSIBILITY DEFAULT')}}
+                                        {{old('key_responsibility', $career['detail']?->key_responsibilities)}}
                                     </textarea>
                                 </div>
                             </div>

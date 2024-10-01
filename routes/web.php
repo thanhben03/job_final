@@ -16,6 +16,7 @@ Route::post('/api/v1/applyJob', [JobController::class, 'applyJob'])->name('api.v
 Route::get('/api/v1/get-district/{province_id}', [LocationController::class, 'getDistrict'])->name('api.v1.get-district');
 
 Route::post('/job', [JobController::class, 'store'])->name('job.store');
+Route::post('/job/update-user-career', [JobController::class, 'updateUserCareer'])->name('job.update.user.career');
 
 
 Route::get('/candidates/dashboard', [CandidateController::class, 'index'])->name('candidate.dashboard');
@@ -28,11 +29,14 @@ Route::post('/upload-cv', [CandidateController::class, 'uploadCv'])->name('api.f
 Route::post('/upload-avatar', [CandidateController::class, 'uploadAvatar'])->name('api.file.upload.avatar');
 Route::post('/upload-avatar-company', [CandidateController::class, 'uploadAvatarCompany'])->name('api.file.upload.avatar.company');
 
-Route::get('/companies/dashboard', [CompanyController::class, 'index'])->name('company.index');
+Route::get('/companies/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
 Route::get('/companies/profile', [CompanyController::class, 'profile'])->name('company.profile');
 Route::get('/companies/post-job', [CompanyController::class, 'showPostJob'])->name('company.show.post-job');
+Route::get('/companies/manage-job', [CompanyController::class, 'showManageJob'])->name('company.show.post-job');
+Route::get('/companies/detail-job/{slug}', [CompanyController::class, 'showDetailJob'])->name('company.show.detail-job');
+Route::get('/companies/candidate-applied/{job_id}', [CompanyController::class, 'showCandidateAppliedJob'])->name('company.show.detail-job');
 //Route::get('/companies/resume', [CompanyController::class, 'resume'])->name('company.resume');
-//Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
+Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
 
 
 Route::get('/dashboard', function () {

@@ -54,7 +54,10 @@
                                             <div class="twm-mid-content">
 
                                                 <div class="twm-media">
-                                                    <img src="{{$career['company']->company_avatar}}" alt="#">
+                                                    <img src="{{
+                                            str_contains($career['company']->company_avatar, 'company/')
+                                            ? asset('/images/avatar/'.$career['company']->company_avatar)
+                                            : $career['company']->company_avatar}}" alt="#">
                                                 </div>
 
                                                 <h4 class="twm-job-title">{{$career['title']}}<span class="twm-job-post-duration">/ {{$career['updated_at']}}</span></h4>
@@ -62,7 +65,7 @@
                                                 <div class="twm-job-self-mid">
                                                     <div class="twm-job-self-mid-left">
                                                         <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">{{$career['company']->website}}</a>
-                                                        <div class="twm-jobs-amount">{{$career['min_salary']}} - {{$career['max_salary']}} <span>/ Month</span></div>
+                                                        <div class="twm-jobs-amount">{{$career['min_salary']['convert']}} - {{$career['max_salary']['convert']}} <span>/ Month</span></div>
                                                     </div>
 {{--                                                    <div class="twm-job-apllication-area">Application ends:--}}
 {{--                                                        <span class="twm-job-apllication-date">October 1, 2025</span>--}}
@@ -138,7 +141,7 @@
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-map-marker-alt"></i>
                                                     <span class="twm-title">Location</span>
-                                                    <div class="twm-s-info-discription">{{$career['province']}}</div>
+                                                    <div class="twm-s-info-discription">{{$career['province']->name}}</div>
                                                 </div>
                                             </li>
                                             <li>
@@ -174,7 +177,7 @@
 
                                                     <i class="fas fa-money-bill-wave"></i>
                                                     <span class="twm-title">Offered Salary</span>
-                                                    <div class="twm-s-info-discription">{{$career['min_salary']}}-{{$career['max_salary']}} / Month</div>
+                                                    <div class="twm-s-info-discription">{{$career['min_salary']['convert']}}-{{$career['max_salary']['convert']}} / Month</div>
                                                 </div>
                                             </li>
 

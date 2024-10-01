@@ -29,8 +29,15 @@ class CareerResource extends ResourceCollection
                 'id' => $career->id,
                 'title' => $career->title,
                 'slug' => $career->slug,
-                'min_salary' => $this->convertPriceString(intval($career->min_salary)),
-                'max_salary' => $this->convertPriceString(intval($career->max_salary)),
+                'employee' => $career->employee,
+                'min_salary' => [
+                    'origin' => $career->min_salary,
+                    'convert' => $this->convertPriceString(intval($career->min_salary))
+                ],
+                'max_salary' => [
+                    'origin' => $career->max_salary,
+                    'convert' => $this->convertPriceString(intval($career->max_salary))
+                ],
                 'address' => $career->address,
                 'phone' => $career->phone,
                 'experience' => JobExpEnum::getDescription(intval($career->experience)),
@@ -41,7 +48,8 @@ class CareerResource extends ResourceCollection
                 'currentPage' => $career->currentPage,
                 'perPage' => $career->perPage,
                 'total' => $career->total,
-                'province' => $career->province->name,
+                'province' => $career->province,
+                'district' => $career->district,
                 'updated_at' => $career->updated_at->diffForHumans(),
                 'created_at' => $career->created_at->toDateString(),
                 'expiration_day' => $career->expiration_day,
@@ -49,6 +57,8 @@ class CareerResource extends ResourceCollection
                 'qualification' => QualificationEnum::getDescription($career->qualification),
                 'detail' => $career->detail,
                 'cv_applied' => $career->user_career,
+                'from_time' => $career->from_time,
+                'to_time' => $career->to_time,
             ];
         });
 

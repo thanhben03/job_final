@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\WorkTypeEnum;
 use App\Http\Requests\PostJobRequest;
+use App\Http\Requests\UpdateJobRequest;
 use App\Http\Resources\CareerDetailResource;
 use App\Http\Resources\CareerResource;
 use App\Models\Career;
@@ -18,6 +19,7 @@ use App\Services\Skill\SkillServiceInterface;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -129,10 +131,33 @@ class JobController extends Controller
 
     public function store(PostJobRequest $request)
     {
-        $data = $request->validated();
-        $career = Arr::except($data, ['skill_ids', 'desc', 'require', 'benefit', 'key_responsibility']);
-        $career['company_id'] = auth()->user()->company->id;
-        $career['slug'] = Str::slug($career['title']);
-        $insertCareer = Career::query()->create($career);
+        $career = $this->service->store($request);
+
+        return redirect()->back()->with('msg', 'Career added successfully');
+    }
+
+    public function update($id, UpdateJobRequest $request)
+    {
+        $career = $this->service->update($id, $request);
+
+        return redirect()->back()->with('msg', 'Career Updated Successfully !');
+    }
+
+    public function updateUserCareer(Request $request)
+    {
+        $data = $request->all();
+
+        try {
+            $updatedRows = UserCareer::where('id', $data['id'])->update(['status' => $data['status']]);
+
+            if ($updatedRows === 0) {
+                return response()->json(['msg' => 'UserCareer not found or no changes made'], 404);
+            }
+
+            return response()->json(['msg' => 'Status updated successfully']);
+        } catch (\Throwable $th) {
+
+            return response()->json(['msg' => $th->getMessage()], 500);
+        }
     }
 }

@@ -36,6 +36,11 @@ class Career extends Model
         return $this->belongsTo(Province::class, 'province_id', 'code');
     }
 
+    public function district()
+    {
+        return $this->belongsTo(District::class, 'district_id', 'code');
+    }
+
     public function scopeHasSkills($query, array $skillIds)
     {
         return $query->whereHas('skills', function($q) use ($skillIds) {
@@ -45,7 +50,7 @@ class Career extends Model
 
     public function user_career()
     {
-        return $this->hasOne(UserCareer::class, 'career_id', 'id');
+        return $this->hasMany(UserCareer::class, 'career_id', 'id');
     }
 
 }

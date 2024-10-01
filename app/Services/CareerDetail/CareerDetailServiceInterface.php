@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Career;
+namespace App\Services\CareerDetail;
 use Illuminate\Http\Request;
 
-interface CareerServiceInterface
+interface CareerDetailServiceInterface
 {
      /**
      * Tạo mới
@@ -20,7 +20,7 @@ interface CareerServiceInterface
      *
      * @return boolean
      */
-    public function update($id, Request $request);
+    public function update(Request $request);
     /**
      * Xóa
      *
@@ -32,10 +32,5 @@ interface CareerServiceInterface
 
     public function getAll();
     public function getQueryBuilderWithRelations($relations);
-    public function getQueryBuilderWithRelationsUpdated($relations, $orderBy = 'DESC');
-
-    public function getAllById($company_id);
-
-    public function getBySlug($slug);
 
 }

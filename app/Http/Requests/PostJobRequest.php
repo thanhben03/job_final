@@ -49,7 +49,7 @@ class PostJobRequest extends FormRequest
             'district_id' => 'nullable|string|max:255',
             'desc' => 'required',
             'benefit' => 'required',
-            'key_responsibility' => 'required',
+            'key_responsibilities' => 'required',
             'require' => 'required',
             'skill_ids' => 'required',
         ];

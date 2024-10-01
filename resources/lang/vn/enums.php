@@ -5,6 +5,7 @@ use App\Enums\GenderEnum;
 use App\Enums\JobExpEnum;
 use App\Enums\LevelEnum;
 use App\Enums\QualificationEnum;
+use App\Enums\StatusCV;
 use App\Enums\WorkTypeEnum;
 
 return [
@@ -28,6 +29,12 @@ return [
     QualificationEnum::class => [
         QualificationEnum::UNIVERSITY => 'Đại học',
         QualificationEnum::COLLEGE => 'Cao đẳng',
+    ],
+    StatusCV::class => [
+        StatusCV::PENDING => 'Pending',
+        StatusCV::SEEN => 'Seen',
+        StatusCV::NOT_SUITABLE => 'Not Suitable',
+        StatusCV::SUITABLE => 'Suitable',
     ],
     JobExpEnum::class => [
         JobExpEnum::UNDERONEYEAR => '< 1 Year',

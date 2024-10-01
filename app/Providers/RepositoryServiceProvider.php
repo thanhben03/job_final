@@ -10,6 +10,8 @@ class RepositoryServiceProvider extends ServiceProvider
         'App\Repositories\Career\CareerRepositoryInterface' => 'App\Repositories\Career\CareerRepository',
         'App\Repositories\Skill\SkillRepositoryInterface' => 'App\Repositories\Skill\SkillRepository',
         'App\Repositories\User\UserRepositoryInterface' => 'App\Repositories\User\UserRepository',
+        'App\Repositories\CareerDetail\CareerDetailRepositoryInterface' => 'App\Repositories\CareerDetail\CareerDetailRepository',
+        'App\Repositories\CareerSkill\CareerSkillRepositoryInterface' => 'App\Repositories\CareerSkill\CareerSkillRepository',
 
     ];
     /**

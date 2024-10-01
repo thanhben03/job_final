@@ -255,7 +255,10 @@
                                 <li>
                                     <div class="twm-jobs-list-style1 mb-5">
                                         <div class="twm-media">
-                                            <img src="{{$career['company']->company_avatar}}" alt="#">
+                                            <img src="{{
+                                            str_contains($career['company']->company_avatar, 'company/')
+                                            ? asset('/images/avatar/'.$career['company']->company_avatar)
+                                            : $career['company']->company_avatar}}" alt="#">
                                         </div>
                                         <div class="twm-mid-content">
                                             <a href="{{route('jobs.show', $career['slug'])}}" class="twm-job-title">
@@ -285,8 +288,8 @@
                                                     </i>
                                                 @endif
                                             </div>
-                                            <div class="twm-jobs-amount">{{$career['max_salary']}} <span>/ Month</span></div>
-                                            <a href="job-detail.html" class="twm-jobs-browse site-text-primary">{{$career['province']}}</a>
+                                            <div class="twm-jobs-amount">{{$career['max_salary']['convert']}} <span>/ Month</span></div>
+                                            <a href="job-detail.html" class="twm-jobs-browse site-text-primary">{{$career['province']->name}}</a>
                                         </div>
                                     </div>
                                 </li>

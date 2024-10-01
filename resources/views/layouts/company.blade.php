@@ -48,24 +48,32 @@
     <!-- Sidebar Holder -->
     <nav id="sidebar-admin-wraper">
         <div class="page-logo">
-            <a href="index.html"><img src="/images/logo-dark.png" alt=""></a>
+            <a href="{{route('company.dashboard')}}"><img src="/images/logo-dark.png" alt=""></a>
         </div>
 
         <div class="admin-nav scrollbar-macosx">
             <ul>
-                <li class="active">
-                    <a href="dashboard.html"><i class="fa fa-home"></i><span class="admin-nav-text">Dashboard</span></a>
+                <li class="@if(str_contains(request()->url(), 'dashboard')) active @endif">
+                    <a href="{{route('company.dashboard')}}"><i class="fa fa-home"></i><span class="admin-nav-text">Dashboard</span></a>
                 </li>
 
-                <li>
-                    <a href="dash-company-profile.html"><i class="fa fa-user-tie"></i><span class="admin-nav-text">Company Profile</span></a>
+                <li class="@if(str_contains(request()->url(), 'profile')) active @endif">
+                    <a href="{{route('company.profile')}}"><i class="fa fa-user-tie"></i><span class="admin-nav-text">Company Profile</span></a>
                 </li>
 
-                <li>
+                <li
+                    class="@if(
+                                str_contains(request()->url(), 'post-job') ||
+                                str_contains(request()->url(), 'manage-job') ||
+                                str_contains(request()->url(), 'detail-job') ||
+                                str_contains(request()->url(), 'candidate-applied')
+                                )
+                                active
+                           @endif">
                     <a href="javascript:;"><i class="fa fa-suitcase"></i><span class="admin-nav-text">Jobs</span></a>
                     <ul class="sub-menu">
-                        <li> <a href="dash-post-job.html"><span class="admin-nav-text">Post a New Jobs</span></a></li>
-                        <li> <a href="dash-manage-jobs.html"><span class="admin-nav-text">Manage Jobs</span></a></li>
+                        <li> <a href="{{route('company.show.post-job')}}"><span class="admin-nav-text">Post a New Jobs</span></a></li>
+                        <li> <a href="{{route('company.show.post-job')}}"><span class="admin-nav-text">Manage Jobs</span></a></li>
                     </ul>
                 </li>
                 <li>
