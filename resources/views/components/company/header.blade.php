@@ -1,3 +1,4 @@
+@php use Illuminate\Support\Facades\Session; $company = Session::get('company') @endphp
 <header id="header-admin-wrap" class="header-admin-fixed">
 
     <!-- Header Start -->
@@ -21,7 +22,8 @@
                     <li class="header-widget dashboard-message-dropdown">
 
                         <div class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle jobzilla-admin-messange" id="ID-MSG_dropdown" data-bs-toggle="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle jobzilla-admin-messange" id="ID-MSG_dropdown"
+                               data-bs-toggle="dropdown">
                                 <i class="far fa-envelope"></i>
                                 <span class="notification-animate">4</span>
                             </a>
@@ -94,7 +96,8 @@
                     <li class="header-widget dashboard-noti-dropdown">
 
                         <div class="dropdown">
-                            <a  href="javascript:;" class="dropdown-toggle jobzilla-admin-notification" id="ID-NOTI_dropdown" data-bs-toggle="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle jobzilla-admin-notification"
+                               id="ID-NOTI_dropdown" data-bs-toggle="dropdown">
                                 <i class="far fa-bell"></i>
                                 <span class="notification-animate">8</span>
                             </a>
@@ -145,7 +148,6 @@
                         </div>
 
 
-
                     </li>
 
                     <!--Account-->
@@ -153,19 +155,22 @@
                         <div class="dashboard-user-section">
                             <div class="listing-user">
                                 <div class="dropdown">
-                                    <a href="javascript:;" class="dropdown-toggle" id="ID-ACCOUNT_dropdown" data-bs-toggle="dropdown">
+                                    <a href="javascript:;" class="dropdown-toggle" id="ID-ACCOUNT_dropdown"
+                                       data-bs-toggle="dropdown">
                                         <div class="user-name text-black">
                                                     <span>
-                                                        <img src="/images/user-avtar/pic4.jpg" alt="">
-                                                    </span>Nikola Tesla
+                                                        <img src="{{asset('/images/avatar/'. $company->company_avatar)}}" alt="">
+                                                    </span>{{$company->company_name}}
                                         </div>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="ID-ACCOUNT_dropdown">
 
                                         <ul>
                                             <li><a href="dashboard.html"><i class="fa fa-home"></i>Dashboard</a></li>
-                                            <li><a href="dash-messages.html"><i class="fa fa-envelope"></i> Messages</a></li>
-                                            <li><a href="dash-my-profile.html"><i class="fa fa-user"></i> Profile</a></li>
+                                            <li><a href="dash-messages.html"><i class="fa fa-envelope"></i> Messages</a>
+                                            </li>
+                                            <li><a href="dash-my-profile.html"><i class="fa fa-user"></i> Profile</a>
+                                            </li>
                                             <li><a href="index.html"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>
 

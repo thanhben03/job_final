@@ -29,59 +29,13 @@
                         <li class="has-mega-menu"><a href="{{route('home')}}">Home</a>
                         </li>
                         <li class="has-child"><a href="{{route('jobs.index')}}">Jobs</a>
-{{--                            <ul class="sub-menu">--}}
-{{--                                <li><a href="job-grid.html">Jobs Grid</a></li>--}}
-{{--                                <li><a href="job-grid-with-map.html">Jobs Grid with Map</a></li>--}}
-{{--                                <li><a href="job-list.html">Jobs List</a></li>--}}
-{{--                                <li class="has-child"><a href="javascript:;">Job Detail</a>--}}
-{{--                                    <ul class="sub-menu">--}}
-{{--                                        <li><a href="job-detail.html">Detail 1</a>--}}
-{{--                                        <li><a href="job-detail-v2.html">Detail 2 </a>--}}
-{{--                                    </ul>--}}
-{{--                                </li>--}}
-{{--                                <li><a href="apply-job.html">Apply Jobs</a></li>--}}
-{{--                            </ul>--}}
                         </li>
                         <li class=""><a href="javascript:;">Employers</a>
-{{--                            <ul class="sub-menu">--}}
-{{--                                <li><a href="employer-grid.html">Employers Grid</a></li>--}}
-{{--                                <li><a href="employer-list.html">Employers List</a></li>--}}
-{{--                                <li class="has-child"><a href="javascript:;">Employers Detail</a>--}}
-{{--                                    <ul class="sub-menu">--}}
-{{--                                        <li><a href="employer-detail.html">Detail 1</a>--}}
-{{--                                        <li><a href="employer-detail-v2.html">Detail 2</a>--}}
-{{--                                    </ul>--}}
-{{--                                </li>--}}
-{{--                                <li><a href="employer-profile.html">Profile</a></li>--}}
-{{--                                <li><a href="employer-resume.html">Resume</a></li>--}}
-{{--                                <li><a href="employer-manage-jobs.html">Manage Jobs</a></li>--}}
-{{--                                <li><a href="employer-post-job.html">Post A Jobs</a></li>--}}
-{{--                                <li><a href="employer-transaction.html">Transaction</a></li>--}}
-{{--                                <li><a href="candidate-grid.html">Browse Candidates</a></li>--}}
-{{--                                <li><a href="employer-change-password.html">Change Password</a></li>--}}
-{{--                                <li><a href="employer-account-fresher.html">Register Fresher</a></li>--}}
-{{--                                <li><a href="employer-account-professional.html">Register Professionals</a></li>--}}
-{{--                            </ul>--}}
                         </li>
-                        <li class=""><a href="javascript:;">Company</a>
+                        <li class=""><a href="javascript:;">CV / Hồ sơ</a>
                             <ul class="sub-menu">
-                                <li><a href="candidate-grid.html">Candidates Grid</a></li>
-                                <li><a href="candidate-list.html">Candidates List</a></li>
-                                <li class="has-child"><a href="javascript:;">Candidate Detail</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="candidate-detail.html">Detail 1</a>
-                                        <li><a href="candidate-detail-v2.html">Detail 2</a>
-                                    </ul>
-                                </li>
-                                <li><a href="candidate-dashboard.html">Dashboard</a></li>
-                                <li><a href="candidate-profile.html">My Pfofile</a></li>
-                                <li><a href="candidate-jobs-applied.html">Applied Jobs</a></li>
-                                <li><a href="candidate-my-resume.html">My Resume</a></li>
-                                <li><a href="candidate-saved-jobs.html">Saved Jobs</a></li>
-                                <li><a href="candidate-cv-manager.html">CV Manager</a></li>
-                                <li><a href="candidate-job-alert.html">Job Alerts</a></li>
-                                <li><a href="candidate-change-password.html">Change Passeord</a></li>
-                                <li><a href="candidate-chat.html">Chat</a></li>
+                                <li><a href="candidate-grid.html">Đánh giá CV</a></li>
+                                <li><a href="candidate-list.html">Tạo CV</a></li>
                             </ul>
                         </li>
 

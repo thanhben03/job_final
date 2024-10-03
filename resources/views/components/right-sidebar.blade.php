@@ -12,7 +12,6 @@
                 <input onchange="uploadAvatar(this)" type="file" name="fileAvatar" id="file-uploader" accept=".jpg, .jpeg, .png">
 
             </div>
-
         </div>
 
         <div class="twm-mid-content text-center">

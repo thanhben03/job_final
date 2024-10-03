@@ -8,6 +8,7 @@ use App\Repositories\CareerSkill\CareerSkillRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class CareerService implements CareerServiceInterface
@@ -36,7 +37,7 @@ class CareerService implements CareerServiceInterface
             DB::beginTransaction();
             $this->data = $request->validated();
             $career = Arr::except($this->data, ['skill_ids', 'desc', 'require', 'benefit', 'key_responsibilities']);
-            $career['company_id'] = auth()->user()->company->id;
+            $career['company_id'] = Session::get('company')->id;
             $career['slug'] = Str::slug($career['title']);
             $result = $this->repository->create($career);
 

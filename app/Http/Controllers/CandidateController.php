@@ -10,6 +10,7 @@ use App\Models\UserCareer;
 use App\Services\User\UserService;
 use ConvertApi\ConvertApi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Spatie\PdfToImage\Pdf;
 
 class CandidateController extends Controller
@@ -178,7 +179,7 @@ class CandidateController extends Controller
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images/avatar/company'), $imageName);
 
-                auth()->user()->company->update([
+                Session::get('company')->update([
                     'company_avatar' => 'company/' . $imageName
                 ]);
                 // Trả về phản hồi JSON
@@ -187,6 +188,16 @@ class CandidateController extends Controller
         } catch (\Exception $exception) {
             return response()->json(['msg' => $exception->getMessage()], 400);
         }
+
+    }
+
+    public function createCV()
+    {
+        return view('pages.candidates.create-cv');
+    }
+
+    public function storeCV()
+    {
 
     }
 }

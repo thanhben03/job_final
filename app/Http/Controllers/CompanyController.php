@@ -20,6 +20,8 @@ use App\Models\User;
 use App\Models\UserCareer;
 use App\Services\Career\CareerServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\View\View;
 
 class CompanyController extends Controller
 {
@@ -28,24 +30,26 @@ class CompanyController extends Controller
         CareerServiceInterface $careerService,
     )
     {
+        parent::__construct();
         $this->service = $careerService;
     }
 
     public function index()
     {
+
         return view('pages.companies.dashboard');
     }
 
     public function profile()
     {
 
-        $company = auth()->user()->company;
+        $company = Session::get('company');
         return view('pages.companies.company-profile', compact('company'));
     }
 
     public function update(CompanyUpdateRequest $request)
     {
-        $company = auth()->user()->company;
+        $company = Session::get('company');
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
         $company->fill($data);
@@ -61,7 +65,7 @@ class CompanyController extends Controller
 
     public function resume()
     {
-        $company = auth()->user()->company;
+        $company = Session::get('company');
         return view('pages.companies.resume', compact('company'));
     }
 
@@ -87,8 +91,8 @@ class CompanyController extends Controller
 
     public function showManageJob()
     {
-        $company_id = auth()->user()->company->id;
-        $careers = $this->service->getAllById($company_id);
+        $company = Session::get('company');
+        $careers = $this->service->getAllById($company->id);
         $careers = CareerResource::make($careers)->resolve();
 
 

@@ -16,4 +16,6 @@
 <link rel="stylesheet" type="text/css" href="{{{asset('/css/toastr.min.css')}}}"><!-- MAIN STYLE SHEET -->
 
 <!-- THEME COLOR CHANGE STYLE SHEET -->
-<link rel="stylesheet" class="skin" type="text/css" href="{{{asset('/css/skins-type/skin-6.css')}}}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+@stack('css')

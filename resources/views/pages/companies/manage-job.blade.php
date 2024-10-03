@@ -1,3 +1,4 @@
+@php use Illuminate\Support\Facades\Session; $company = Session::get('company'); @endphp
 @extends('layouts.company')
 
 @section('content')
@@ -37,7 +38,14 @@
                                         <div class="twm-bookmark-list">
                                             <div class="twm-media">
                                                 <div class="twm-media-pic">
-                                                    <img src="{{asset('/images/avatar/'.auth()->user()->company->company_avatar)}}" alt="#">
+                                                    <img
+                                                        src="
+                                                        {{
+                                                        str_contains($company->company_avatar, 'http')
+                                                        ? $company->company_avatar
+                                                        : asset('/images/avatar/'.$company->company_avatar)
+                                                        }}"
+                                                        alt="#">
                                                 </div>
                                             </div>
                                             <div class="twm-mid-content">
@@ -55,8 +63,12 @@
                                         </div>
                                     </td>
                                     <td>{{$career['level']}}</td>
-                                    <td><div class="twm-jobs-category"><span class="twm-bg-green">Part Time</span></div></td>
-                                    <td><a href="javascript:;" class="site-text-primary">{{$career['cv_applied'] == null ? 0 : count(array($career['cv_applied']))}} Applied</a></td>
+                                    <td>
+                                        <div class="twm-jobs-category"><span class="twm-bg-green">Part Time</span></div>
+                                    </td>
+                                    <td><a href="javascript:;"
+                                           class="site-text-primary">{{$career['cv_applied'] == null ? 0 : count(array($career['cv_applied']))}}
+                                            Applied</a></td>
                                     <td>
                                         <div>{{$career['created_at']}} &</div>
                                         <div>{{$career['expiration_day']}}</div>
@@ -66,19 +78,22 @@
                                         <div class="twm-table-controls">
                                             <ul class="twm-DT-controls-icon list-unstyled">
                                                 <li>
-                                                    <button title="View profile" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                    <button title="View profile" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top">
                                                         <span class="fa fa-eye"></span>
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <a href="{{route('company.show.detail-job', $career['slug'])}}">
-                                                        <button title="Edit" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                        <button title="Edit" data-bs-toggle="tooltip"
+                                                                data-bs-placement="top">
                                                             <span class="far fa-edit"></span>
                                                         </button>
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                    <button title="Delete" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top">
                                                         <span class="far fa-trash-alt"></span>
                                                     </button>
                                                 </li>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\Auth\AuthenticatedCompanyController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomeController;
@@ -25,6 +26,10 @@ Route::get('/candidates/job-applied', [CandidateController::class, 'jobApplied']
 Route::get('/candidates/my-resume', [CandidateController::class, 'myResume'])->name('candidate.my-resume');
 Route::get('/candidates/saved-job', [CandidateController::class, 'savedJob'])->name('candidate.saved-job');
 Route::post('/candidates/saved-job', [CandidateController::class, 'processSavedJob'])->name('candidate.process.saved-job');
+Route::get('/candidates/create-cv', [CandidateController::class, 'createCv'])->name('candidate.create-cv');
+Route::get('/candidates/store-cv', [CandidateController::class, 'storeCV'])->name('candidate.store-cv');
+
+
 Route::post('/upload-cv', [CandidateController::class, 'uploadCv'])->name('api.file.upload');
 Route::post('/upload-avatar', [CandidateController::class, 'uploadAvatar'])->name('api.file.upload.avatar');
 Route::post('/upload-avatar-company', [CandidateController::class, 'uploadAvatarCompany'])->name('api.file.upload.avatar.company');
@@ -37,6 +42,9 @@ Route::get('/companies/detail-job/{slug}', [CompanyController::class, 'showDetai
 Route::get('/companies/candidate-applied/{job_id}', [CompanyController::class, 'showCandidateAppliedJob'])->name('company.show.detail-job');
 //Route::get('/companies/resume', [CompanyController::class, 'resume'])->name('company.resume');
 Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
+
+Route::get('/company/login', [AuthenticatedCompanyController::class, 'create'])->name('company.showLogin');
+Route::post('/company/login', [AuthenticatedCompanyController::class, 'store'])->name('company.login');
 
 
 Route::get('/dashboard', function () {
