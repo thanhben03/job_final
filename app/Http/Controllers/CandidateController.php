@@ -122,70 +122,89 @@ class CandidateController extends Controller
             'position' => 'nullable',
         ]);
         $request['exp'] = $this->handleExpAttr($request);
-        $this->matchWithJob();
+        $careerSuggest = [];
+        $userProfile = '';
         // Lưu file vào storage/app/public/uploads
-        if ($request->file()) {
-            $fileName = time() . '_' . $request->file->getClientOriginalName();
-            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
-            $this->pdfToImg($fileName);
+        try {
+            if ($request->file()) {
+                DB::beginTransaction();
+                $fileName = time() . '_' . $request->file->getClientOriginalName();
+                $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+                $this->pdfToImg($fileName);
 
-            if ($request->html) {
-                if ($request->profile_id) {
-                    $userProfile = UserProfile::query()->find($request->profile_id);
-                    $userProfile->update([
-                        'content' => $request->html,
-                        'objective' => $request->objective,
-                        'education' => $request->education,
-                        'exp' => $request->exp,
-                        'language' => $request->language,
-                        'certificate' => $request->certificate,
-                        'skill' => $request->skill,
-                        'soft_skill' => $request->soft_skill,
-                        'position' => $request->position,
-                    ]);
-                    $cv = CurriculumVitae::query()->where('id', $userProfile->cv_id)->first();
-                    unlink(storage_path('app/public/uploads/' . $cv->path));
-                    unlink(storage_path('app/public/uploads/'. $cv->thumbnail));
-                    $cv->update([
-                        'path' => $fileName,
-                        'thumbnail' => 'img-cv/' . $fileName. '.png',
-                    ]);
+                // Neu nguoi dung tao cv tren he thong
+                if ($request->html) {
+                    // Kiem tra neu nguoi dung dang update cv
+                    if ($request->profile_id) {
+                        $userProfile = UserProfile::query()->find($request->profile_id);
+                        $userProfile->update([
+                            'content' => $request->html,
+                            'objective' => $request->objective,
+                            'education' => $request->education,
+                            'exp' => $request->exp,
+                            'language' => $request->language,
+                            'certificate' => $request->certificate,
+                            'skill' => $request->skill,
+                            'soft_skill' => $request->soft_skill,
+                            'position' => $request->position,
+                        ]);
+                        $cv = CurriculumVitae::query()->where('id', $userProfile->cv_id)->first();
+                        unlink(storage_path('app/public/uploads/' . $cv->path));
+                        unlink(storage_path('app/public/uploads/'. $cv->thumbnail));
+                        $cv->update([
+                            'path' => $fileName,
+                            'thumbnail' => 'img-cv/' . $fileName. '.png',
+                        ]);
+                    } else {
+                        $cv = CurriculumVitae::query()->create([
+                            'user_id' => auth()->user()->id,
+                            'path' => $fileName,
+                            'thumbnail' => 'img-cv/' . $fileName. '.png',
+                        ]);
+
+                        $userProfile = UserProfile::query()->create([
+                            'content' => $request->html,
+                            'cv_id' => $cv->id,
+                            'objective' => $request->objective,
+                            'education' => $request->education,
+                            'exp' => $request->exp,
+                            'language' => $request->language,
+                            'certificate' => $request->certificate,
+                            'skill' => $request->skill,
+                            'soft_skill' => $request->soft_skill,
+                            'position' => $request->position,
+                        ]);
+
+//                        $careerSuggest = $this->matchWithJob($cv->id);
+                    }
                 } else {
-                    $cv = CurriculumVitae::query()->create([
+                    CurriculumVitae::query()->create([
                         'user_id' => auth()->user()->id,
                         'path' => $fileName,
                         'thumbnail' => 'img-cv/' . $fileName. '.png',
                     ]);
-
-                    UserProfile::query()->create([
-                        'content' => $request->html,
-                        'cv_id' => $cv->id,
-                        'objective' => $request->objective,
-                        'education' => $request->education,
-                        'exp' => $request->exp,
-                        'language' => $request->language,
-                        'certificate' => $request->certificate,
-                        'skill' => $request->skill,
-                        'soft_skill' => $request->soft_skill,
-                        'position' => $request->position,
-                    ]);
                 }
-            } else {
-                CurriculumVitae::query()->create([
-                    'user_id' => auth()->user()->id,
-                    'path' => $fileName,
-                    'thumbnail' => 'img-cv/' . $fileName. '.png',
+                DB::commit();
+                Session::flash('response', [
+                    'success' => true,
+                    'msg' => 'File has been uploaded successfully!',
+                    'file_name' => $fileName,
+                    'file_path' => asset('storage/' . $filePath),
+                    'career_suggest' => $careerSuggest,
+                ]);
+
+                return response()->json([
+                    'success' => true,
+                    'redirect_url' => route('candidate.create-cv', $userProfile->id)
                 ]);
             }
-
-
-
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            dd($e);
             return response()->json([
-                'success' => true,
-                'msg' => 'File has been uploaded successfully!',
-                'file_name' => $fileName,
-                'file_path' => asset('storage/' . $filePath)
-            ], 200);
+                'success' => false,
+                'msg' => $e->getMessage(),
+            ], 500);
         }
 
         return response()->json([
@@ -271,8 +290,12 @@ class CandidateController extends Controller
 
     public function createCV($id = null)
     {
+        $response = null;
+        if (Session::has('response')) {
+            $response = Session::get('response');
+        }
         $userProfile = UserProfile::query()->find($id);
-        return view('pages.candidates.create-cv', compact('userProfile'));
+        return view('pages.candidates.create-cv', compact('userProfile', 'response'));
     }
 
     public function storeCV()

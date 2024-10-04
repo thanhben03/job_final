@@ -13,9 +13,9 @@
 <link rel="stylesheet" type="text/css" href="{{{asset('/css/flaticon.css')}}}"> <!-- Flaticon -->
 <link rel="stylesheet" type="text/css" href="{{{asset('/css/swiper-bundle.min.css')}}}"><!-- Swiper Slider -->
 <link rel="stylesheet" type="text/css" href="{{{asset('/css/style.css')}}}"><!-- MAIN STYLE SHEET -->
-<link rel="stylesheet" type="text/css" href="{{{asset('/css/toastr.min.css')}}}"><!-- MAIN STYLE SHEET -->
 
 <!-- THEME COLOR CHANGE STYLE SHEET -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @stack('css')
+<link rel="stylesheet" type="text/css" href="{{{asset('/css/toastr.min.css')}}}"><!-- MAIN STYLE SHEET -->

@@ -103,8 +103,14 @@
             </div>
             <div class="modal-footer custom-footer">
                 <a href="#" class="btn btn-success custom-btn" data-bs-dismiss="modal" aria-label="Close">Tiếp tục</a>
-                <a href="#" download class="btn btn-primary custom-btn" style="background-color: #007bff !important; border-color: #007bff !important" title="Tải xuống hồ sơ" id="download-resume-btn" data-dismiss="modal" aria-label="Close">Tải xuống</a>
-                <a href="/candidate/pre-profile?tab=manage-resume" class="btn btn-info custom-btn">Quản lý hồ sơ</a>
+                <a href="#"
+                   download class="btn btn-primary custom-btn"
+                   style="background-color: #007bff !important; border-color: #007bff !important"
+                   title="Tải xuống hồ sơ" id="download-resume-btn" data-dismiss="modal"
+                   aria-label="Close">Tải xuống</a>
+                <a
+                    href="{{route('candidate.my-resume')}}"
+                    class="btn btn-info custom-btn">Quản lý hồ sơ</a>
             </div>
         </div>
     </div>

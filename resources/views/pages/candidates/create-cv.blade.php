@@ -382,8 +382,17 @@
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
             <script src="{{asset('/js/manage-profile.js')}}"></script>
+            @if($response != null)
+                <script>
+                    $(document).ready(function($) {
+                        $("#download-resume-btn").attr("href", '{{$response['file_path']}}')
+                        $("#modal-show-export-pdf").modal('toggle')
 
+                    });
+                </script>
+            @endif
     <script>
+
         function exportToPdf (){
             let htmlUploadBtn = `
             <button class="site-button button-sm hide-btn-upload">Upload Photo</button>
@@ -438,12 +447,14 @@
                         },
                         data: formData,
                         success: function(response) {
-                            $("#download-resume-btn").attr("href", response.file_path)
-                            $("#modal-show-export-pdf").modal('toggle')
+                            console.log(response)
+                            setTimeout(function () {
+                                window.location.href = response.redirect_url;
+                            }, 5000)
 
                         },
                         error: function(xhr, status, error) {
-                            console.error('Lỗi: ' + error);
+                            toastr.error(xhr.responseJSON.msg, 'Notification !')
                         }
                     });
                 })
