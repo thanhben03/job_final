@@ -13,7 +13,17 @@ return new class extends Migration
     {
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
+            $table->text('content');
+            $table->bigInteger('cv_id')->unsigned();
+            $table->string('objective');
+            $table->string('education');
+            $table->string('exp');
+            $table->string('language');
+            $table->string('certificate');
+            $table->string('skill');
+            $table->string('soft_skill');
+            $table->string('position');
+            $table->foreign('cv_id')->references('id')->on('curriculum_vitaes')->onDelete('cascade');
             $table->timestamps();
         });
     }

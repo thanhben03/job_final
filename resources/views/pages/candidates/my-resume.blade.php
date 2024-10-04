@@ -26,6 +26,28 @@
         </div>
     </div>
 
+    <!-- Modal Match JOB -->
+    <div class="modal fade" id="modal-math-job" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Công việc phù hợp</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Chúng tôi gợi ý cho bạn một số công việc phù hợp với hồ sơ của bạn</p>
+                    <ul class="list-group" id="suggest-job">
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- CONTENT START -->
     <div class="page-content">
 
@@ -105,41 +127,65 @@
                                     <div class="row" style="flex-wrap: nowrap; overflow-x: auto">
                                         <!-- CV Card 1 -->
                                         @foreach($resumes as $resume)
+                                            <div class="card mx-1 my-1 card-cv" >
+                                                <img src="{{asset('storage/uploads/'. $resume->thumbnail)}}" class="card-img-top card-cv-img" alt="Profile">
 
-{{--                                            <div class="col-md-4">--}}
-{{--                                                <div class="card card-wrapper">--}}
-{{--                                                    <img src="{{asset('storage/uploads/'. $resume->thumbnail)}}" class="card-img-top mx-auto d-block" alt="Profile">--}}
-{{--                                                    <div class="">--}}
-{{--                                                        <div class="main-cv-badge bg-warning text-white p-1 rounded">CV chính</div>--}}
-{{--                                                        <div class="card-body">--}}
-{{--                                                            <h5 class="card-title">{{$resume->path}}</h5>--}}
-{{--                                                            <p class="card-text">Cập nhật lần cuối {{$resume->updated_at}}</p>--}}
-{{--                                                            <div class="d-flex justify-content-between">--}}
-{{--                                                                <button class="btn btn-outline-primary">Chia sẻ</button>--}}
-{{--                                                                <button class="btn btn-outline-secondary">Tải xuống</button>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-                                                    <div class="card mx-1 my-1 card-cv" >
-                                                        <img src="{{asset('storage/uploads/'. $resume->thumbnail)}}" class="card-img-top card-cv-img" alt="Profile">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{$resume->path}}</h5>
+                                                    <p class="card-text">Cập nhật lần cuối {{$resume->updated_at}}</p>
+                                                    <div class="d-flex justify-content-around">
+                                                        <button class="btn btn-outline-secondary">
+                                                            <a
+                                                                download
+                                                                href="{{asset('storage/uploads/'. $resume->path)}}">
+                                                                <i class="fas fa-download"></i>
+                                                            </a>
+                                                        </button>
 
-                                                        <div class="card-body">
-                                                            <h5 class="card-title">{{$resume->path}}</h5>
-                                                            <p class="card-text">Cập nhật lần cuối {{$resume->updated_at}}</p>
-                                                            <div class="d-flex justify-content-between">
-                                                                <button class="btn btn-outline-primary">Chia sẻ</button>
-                                                                <button class="btn btn-outline-secondary">
-                                                                    <a
-                                                                        download
-                                                                        href="{{asset('storage/uploads/'. $resume->path)}}">
-                                                                        Tải xuống
-                                                                    </a>
-                                                                </button>
-                                                            </div>
-                                                        </div>
+                                                        <button onclick="deleteCV({{$resume->id}})" class="btn btn-outline-danger">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+
                                                     </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                                <div class="uploaded-section">
+                                    <h4 class="my-2">CV đã tạo trên hệ thống</h4>
+                                    <div class="row" style="flex-wrap: nowrap; overflow-x: auto">
+                                        <!-- CV Card 1 -->
+                                        @foreach($resumeOnSys as $resume)
+                                            <div class="card mx-1 my-1 card-cv" >
+                                                <img src="{{asset('storage/uploads/'. $resume->cv->thumbnail)}}" class="card-img-top card-cv-img" alt="Profile">
+
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{$resume->cv->path}}</h5>
+                                                    <p class="card-text">Cập nhật lần cuối {{$resume->cv->updated_at}}</p>
+                                                    <div class="d-flex justify-content-around">
+                                                        <button class="btn btn-outline-secondary">
+                                                            <a
+                                                                download
+                                                                href="{{asset('storage/uploads/'. $resume->cv->path)}}">
+                                                                <i class="fas fa-download"></i>
+                                                            </a>
+                                                        </button>
+                                                        <button class="btn btn-outline-info">
+                                                            <a href="{{route('candidate.create-cv', $resume->id)}}">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                        </button>
+                                                        <button onclick="deleteCV({{$resume->cv->id}})" class="btn btn-outline-danger">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                        <button title="Tìm kiếm công việc tự động" class="btn btn-outline-warning" onclick="matchWithJob({{$resume->cv->id}})">
+                                                            <i class="fas fa-magic"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
 
                                     </div>
@@ -194,12 +240,76 @@
                         } else {
                             $('#uploadResult').html('<div class="alert alert-danger">' + response.msg + '</div>');
                         }
+
+                        setTimeout(function () {
+                            $("#uploadModal").modal('toggle')
+                            window.location.reload()
+                        }, 1500)
                     },
                     error: function (response) {
                         $('#uploadResult').html('<div class="alert alert-danger">Upload failed. Please try again.</div>');
                     }
                 });
             });
+
         });
+
+        function deleteCV(cvID) {
+            let check = confirm('Are you sure ?')
+            if (!check)
+                return
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('candidate.delete-cv', ':cvID') }}'.replace(':cvID', cvID),
+                success: function (res) {
+                    toastr.success(res.msg, 'Notification !')
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 1500)
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+
+                }
+            })
+        }
+
+        function matchWithJob(cvID) {
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('match.with.job', ':cvID') }}'.replace(':cvID', cvID),
+                success: function (res) {
+                    let html = ''
+                    res.careers.forEach(ele => {
+                        html += `
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-1">${ele.title}</h5>
+                                    <p class="mb-0"><strong>Company:</strong> ${ele.company.company_name}</p>
+                                    <p class="mb-0"><strong>Location:</strong> ${ele.address}</p>
+                                </div>
+                                <div>
+                                    <a href="/jobs/${ele.slug}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                </div>
+                            </div>
+{{--                            <p class="mb-1 mt-2"><strong>Description:</strong> {{ Str::limit(${ele.detail.desc}, 100) }}</p>--}}
+                            <div>
+                            <small class="text-muted">Posted on: ${ele.created_at}</small>
+                            <small class="">Max salary: <strong style="color: green">${ele.max_salary.convert}</strong></small>
+                            </div>
+                        </li>
+                        `
+                    })
+
+                    $("#suggest-job").html(html)
+                    $("#modal-math-job").modal('toggle')
+
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                }
+            })
+        }
     </script>
 @endpush

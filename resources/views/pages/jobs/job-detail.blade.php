@@ -92,11 +92,11 @@
                                 </div>
 
                                 <h4 class="twm-s-title">Job Description:</h4>
-                                {!!$career['detail']?->desc !!}
+                                {!!$career['detail']?->description !!}
 
                                 <h4 class="twm-s-title">Requirments:</h4>
 
-                                {!!$career['detail']?->require !!}
+                                {!!$career['detail']?->requirement !!}
 
 
                                 <h4 class="twm-s-title">Responsabilities:</h4>

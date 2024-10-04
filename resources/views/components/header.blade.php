@@ -35,7 +35,7 @@
                         <li class=""><a href="javascript:;">CV / Hồ sơ</a>
                             <ul class="sub-menu">
                                 <li><a href="candidate-grid.html">Đánh giá CV</a></li>
-                                <li><a href="candidate-list.html">Tạo CV</a></li>
+                                <li><a href="{{route('candidate.create-cv')}}">Tạo CV</a></li>
                             </ul>
                         </li>
 
