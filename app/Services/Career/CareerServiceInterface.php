@@ -38,4 +38,8 @@ interface CareerServiceInterface
 
     public function getBySlug($slug);
 
+    public function extractInfoRequire($data);
+
+    public function matchWithCandidate($extractInfo);
+
 }

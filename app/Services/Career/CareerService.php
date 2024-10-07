@@ -2,9 +2,17 @@
 
 namespace App\Services\Career;
 
+use App\Enums\GenderEnum;
+use App\Enums\JobExpEnum;
+use App\Enums\LevelEnum;
+use App\Enums\QualificationEnum;
+use App\Http\Resources\CandidateSingleResource;
+use App\Models\Skill;
+use App\Models\User;
 use App\Repositories\Career\CareerRepository;
 use App\Repositories\CareerDetail\CareerDetailRepository;
 use App\Repositories\CareerSkill\CareerSkillRepository;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -49,13 +57,121 @@ class CareerService implements CareerServiceInterface
 
             $result->skills()->attach($skillIds);
             DB::commit();
-            return $result;
+            return $mathCandidates;
         } catch (\Exception $exception) {
             DB::rollBack();
 
             dd($exception->getMessage());
         }
 
+    }
+
+    public function matchWithCandidate($extractInfo)
+    {
+        $skills = implode(' ', $extractInfo['skills']); // Nối các kỹ năng bằng khoảng trắng thay vì dấu phẩy
+
+        $conditions = [
+            'skill' => [
+                'column' => 'user_profiles.skill',
+                'value' => $skills,
+                'type' => 'fulltext',
+                'match_string' => 'Skill Match: ' . $skills,
+            ],
+            'gender' => [
+                'column' => 'users.gender',
+                'value' => $extractInfo['gender'],
+                'type' => 'equals',
+                'match_string' => 'Gender Match: ' . GenderEnum::getDescription($extractInfo['gender']),
+            ],
+
+        ];
+
+        $selects = [];
+        $selectValues = [];
+        $matchCountExpression = [];
+
+        // Tạo các điều kiện SELECT và COUNT
+        foreach ($conditions as $key => $condition) {
+            if ($condition['type'] === 'fulltext') {
+                $selects[] = DB::raw("CASE WHEN MATCH({$condition['column']}) AGAINST(? IN NATURAL LANGUAGE MODE) THEN '{$condition['match_string']}' ELSE NULL END as {$key}_match");
+                $matchCountExpression[] = "CASE WHEN MATCH({$condition['column']}) AGAINST(? IN NATURAL LANGUAGE MODE) THEN 1 ELSE 0 END";
+            } elseif ($condition['type'] === 'equals') {
+                $selects[] = DB::raw("CASE WHEN {$condition['column']} = ? THEN '{$condition['match_string']}' ELSE NULL END as {$key}_match");
+                $matchCountExpression[] = "CASE WHEN {$condition['column']} = ? THEN 1 ELSE 0 END";
+            }
+        }
+
+        foreach ($selects as $select) {
+            $selectValues[] = $select->getValue(DB::connection()->getQueryGrammar());
+        }
+
+// Bắt đầu truy vấn
+        $candidates = User::query()
+            ->leftJoin('curriculum_vitaes', 'curriculum_vitaes.user_id', '=', 'users.id')
+            ->leftJoin('user_profiles', 'user_profiles.cv_id', '=', 'curriculum_vitaes.id')
+            ->select('users.*', 'user_profiles.skill')
+            ->selectRaw(implode(', ', $selectValues)) // Chuyển đổi mảng thành chuỗi cho selectRaw
+            ->selectRaw('(' . implode(' + ', $matchCountExpression) . ') as match_count') // Đếm số lượng khớp
+            ->setBindings(array_merge(
+            // Lấy giá trị từ mảng conditions
+                array_column($conditions, 'value'),
+                array_column($conditions, 'value')
+            ))
+            ->having('match_count', '>', 0) // Chỉ lấy những ứng viên có match_count > 0
+            ->orderBy('match_count', 'desc')
+            ->get();
+
+        $candidates = collect($candidates)->unique('id');
+
+        $matchedCandidates = $candidates->map(function ($candidate) {
+            $matches = [];
+
+            // Kiểm tra và thêm các tiêu chí đã khớp vào mảng
+            if (!empty($candidate->skill_match)) {
+                $matches['skill_match'] = $candidate->skill_match;
+            }
+            if (!empty($candidate->gender_match)) {
+                $matches['gender_match'] = $candidate->gender_match;
+            }
+            // Bạn có thể thêm các tiêu chí khác vào đây nếu có
+
+            return [
+                'candidate' => CandidateSingleResource::make($candidate)->resolve(),
+                'matches' => $matches,
+            ];
+        });
+
+
+        return $matchedCandidates;
+    }
+
+    public function extractInfoRequire($data)
+    {
+        $extract = [];
+//        $gender = GenderEnum::getDescription($data['gender']);
+        $level = LevelEnum::getDescription($data['level']);
+        $experience = JobExpEnum::getDescription($data['experience']);
+        $qualification = QualificationEnum::getDescription($data['qualification']);
+
+        $skills = [];
+
+
+
+        foreach ($data['skills'] as $instance) {
+            $skillId = $instance['id'];
+            $skills[] = Skill::query()->find($skillId)->name;
+        }
+
+
+        $extract = [
+            'gender' => $data['gender'],
+            'level' => $level,
+            'experience' => $experience,
+            'qualification' => $qualification,
+            'skills' => $skills,
+        ];
+
+        return $extract;
     }
 
     public function update($id, Request $request){

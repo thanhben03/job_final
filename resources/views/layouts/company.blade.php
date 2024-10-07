@@ -73,7 +73,7 @@
                     <a href="javascript:;"><i class="fa fa-suitcase"></i><span class="admin-nav-text">Jobs</span></a>
                     <ul class="sub-menu">
                         <li> <a href="{{route('company.show.post-job')}}"><span class="admin-nav-text">Post a New Jobs</span></a></li>
-                        <li> <a href="{{route('company.show.post-job')}}"><span class="admin-nav-text">Manage Jobs</span></a></li>
+                        <li> <a href="{{route('company.manage-job')}}"><span class="admin-nav-text">Manage Jobs</span></a></li>
                     </ul>
                 </li>
                 <li>

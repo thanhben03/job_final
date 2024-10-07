@@ -71,6 +71,9 @@ class CompanyController extends Controller
 
     public function showPostJob()
     {
+        if (Session::has('matchedCandidates')) {
+            dd(Session::get('matchedCandidates'));
+        }
         $skills = Skill::all();
         $workType = WorkTypeEnum::asSelectArray();
         $exps = JobExpEnum::asSelectArray();

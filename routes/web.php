@@ -19,7 +19,9 @@ Route::get('/api/v1/get-district/{province_id}', [LocationController::class, 'ge
 
 Route::post('/job', [JobController::class, 'store'])->name('job.store');
 Route::post('/job/update-user-career', [JobController::class, 'updateUserCareer'])->name('job.update.user.career');
+Route::post('/job/report/', [JobController::class, 'reportJob'])->name('job.report');
 
+Route::get('/match-with-candidate/{id}', [JobController::class, 'matchWithCandidate'])->name('match.with.candidate');
 Route::get('/match-with-job/{id}', [CandidateController::class, 'matchWithJob'])->name('match.with.job');
 
 
@@ -41,7 +43,7 @@ Route::post('/upload-avatar-company', [CandidateController::class, 'uploadAvatar
 Route::get('/companies/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
 Route::get('/companies/profile', [CompanyController::class, 'profile'])->name('company.profile');
 Route::get('/companies/post-job', [CompanyController::class, 'showPostJob'])->name('company.show.post-job');
-Route::get('/companies/manage-job', [CompanyController::class, 'showManageJob'])->name('company.show.post-job');
+Route::get('/companies/manage-job', [CompanyController::class, 'showManageJob'])->name('company.manage-job');
 Route::get('/companies/detail-job/{slug}', [CompanyController::class, 'showDetailJob'])->name('company.show.detail-job');
 Route::get('/companies/candidate-applied/{job_id}', [CompanyController::class, 'showCandidateAppliedJob'])->name('company.show.detail-job');
 //Route::get('/companies/resume', [CompanyController::class, 'resume'])->name('company.resume');

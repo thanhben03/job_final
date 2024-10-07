@@ -6,11 +6,13 @@ namespace App\Http\Controllers;
 use App\Enums\WorkTypeEnum;
 use App\Http\Requests\PostJobRequest;
 use App\Http\Requests\UpdateJobRequest;
+use App\Http\Resources\CandidateResource;
 use App\Http\Resources\CareerDetailResource;
 use App\Http\Resources\CareerResource;
 use App\Models\Career;
 use App\Models\CurriculumVitae;
 use App\Models\Province;
+use App\Models\ReportedCareer;
 use App\Models\SaveCareer;
 use App\Models\Skill;
 use App\Models\UserCareer;
@@ -42,6 +44,7 @@ class JobController extends Controller
         Session::flash('skills');
         Session::flash('locations');
         Session::flash('sort');
+        Session::forget('keyword');
         if ($request->has('sort')) {
             $sort = $request['sort'] == 'latest' ? 'desc' : 'asc';
             Session::flash('sort', $request['sort']);
@@ -54,6 +57,7 @@ class JobController extends Controller
 
         if ($request['search']) {
             $careers = $careers->where('title', 'like', '%' . $request['search'] . '%');
+            Session::flash('keyword', $request['search']);
         }
         if ($request->has('job-type')) {
             // Chuyển chuỗi 'job_type' thành mảng
@@ -131,9 +135,20 @@ class JobController extends Controller
 
     public function store(PostJobRequest $request)
     {
-        $career = $this->service->store($request);
-
+        $matchedCandidates = $this->service->store($request);
+        Session::put('matchedCandidates', $matchedCandidates);
         return redirect()->back()->with('msg', 'Career added successfully');
+    }
+
+    public function matchWithCandidate($careerID)
+    {
+        $career = $this->service->getQueryBuilderWithRelations(['skills'])->find($careerID)->toArray();
+        $extractInfo = $this->service->extractInfoRequire($career);
+        $candidates = $this->service->matchWithCandidate($extractInfo);
+        return response()->json([
+            'candidates' => $candidates,
+        ]);
+
     }
 
     public function update($id, UpdateJobRequest $request)
@@ -157,6 +172,29 @@ class JobController extends Controller
             return response()->json(['msg' => 'Status updated successfully']);
         } catch (\Throwable $th) {
 
+            return response()->json(['msg' => $th->getMessage()], 500);
+        }
+    }
+
+    public function reportJob(Request $request)
+    {
+        $request->validate([
+            'career_id' => 'required|exists:careers,id',
+        ]);
+        try {
+            $existJob = Career::query()->findOrFail($request->input('career_id'));
+            $existReport = ReportedCareer::query()->where([
+                'career_id' => $existJob->id,
+                'user_id' => auth()->user()->id
+            ])->first();
+            if ($existReport) {
+                throw new \Exception('You have already reported this job!');
+            }
+
+            ReportedCareer::query()->create([
+                'career_id' => $existJob->id,
+            ]);
+        } catch (\Throwable $th) {
             return response()->json(['msg' => $th->getMessage()], 500);
         }
     }

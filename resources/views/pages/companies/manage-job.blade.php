@@ -2,6 +2,27 @@
 @extends('layouts.company')
 
 @section('content')
+    <!-- Modal Match JOB -->
+    <div class="modal fade" id="modal-math-candidate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ứng viên phù hợp</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Chúng tôi gợi ý cho bạn một số ứng viên phù hợp với công việc của bạn</p>
+                    <ul class="list-group" id="suggest-candidate">
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Page Content Holder -->
     <div id="content">
 
@@ -78,7 +99,7 @@
                                         <div class="twm-table-controls">
                                             <ul class="twm-DT-controls-icon list-unstyled">
                                                 <li>
-                                                    <button title="View profile" data-bs-toggle="tooltip"
+                                                    <button onclick="matchWithCandidate({{$career['id']}})" title="View profile" data-bs-toggle="tooltip"
                                                             data-bs-placement="top">
                                                         <span class="fa fa-eye"></span>
                                                     </button>
@@ -124,3 +145,52 @@
 
     </div>
 @endsection
+
+@push('js')
+    <script>
+        function matchWithCandidate(jobId) {
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('match.with.candidate', ':jobID') }}'.replace(':jobID', jobId),
+                success: function (res) {
+                    let result = Object.values(res.candidates)
+                    let html = ''
+                    result.forEach(ele => {
+                        let stringMatch = Object.values(ele.matches).map(ele => `<p class="mb-0">${ele}</p>`)
+                        html += `
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-1">${ele.candidate.fullname}</h5>
+                                    <p class="mb-0"><strong>Gender:</strong> ${ele.candidate.gender}</p>
+                                    <p class="mb-0"><strong>Price Per Hours:</strong> ${ele.candidate.price_per_hours}</p>
+
+                                </div>
+                                <div>
+                                    <a href="" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                </div>
+                            </div>
+{{--                            <p class="mb-1 mt-2"><strong>Description:</strong> {{ Str::limit(${ele.candidate.detail.desc}, 100) }}</p>--}}
+                            <div>
+                                <small class="text-muted">Join Day: ${ele.candidate.created_at}</small>
+                                <small class="">Email: <strong style="color: green">${ele.candidate.email}</strong></small>
+                            </div>
+                            <div class="wrap-match">
+                                ${stringMatch.toString().replace(',','')}
+                            </div>
+                        </li>
+                        `
+                    })
+
+                    $("#suggest-candidate").html(html)
+                    $("#modal-math-candidate").modal('toggle')
+
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                }
+            })
+        }
+
+    </script>
+@endpush

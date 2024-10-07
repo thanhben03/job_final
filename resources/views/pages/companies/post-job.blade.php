@@ -392,6 +392,11 @@
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
         });
     </script>
+    @if(session()->has('matchedCandidates'))
+       <script>
+           alert('hi')
+       </script>
+    @endif
     <script>
         function selectProvince(e) {
             $.ajax({

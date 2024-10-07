@@ -1,6 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+    <!-- Modal Report Career-->
+    <div class="modal fade" id="modal-report-career" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Báo cáo vi phạm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">Nếu bạn cho rằng đây là tin giả, vi phạm tiêu chuẩn hãy cho chúng tôi biết</div>
+                    <input hidden id="career-id" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="reportCareer()" id="btn-send-report" class="btn btn-primary">Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- INNER PAGE BANNER -->
     <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url(images/banner/1.jpg);">
         <div class="overlay-main site-bg-white opacity-01"></div>
@@ -61,7 +81,12 @@
                                 <div class="form-group mb-4">
                                     <h4 class="section-head-small mb-4">Keyword</h4>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Job Title or Keyword">
+                                        <input
+                                            type="text"
+                                            id="keyword"
+                                            value="{{session()->has('keyword') ? session()->get('keyword') : ''}}"
+                                            class="form-control"
+                                            placeholder="Job Title or Keyword">
                                         <button class="btn" type="button"><i class="feather-search"></i></button>
                                     </div>
                                 </div>
@@ -268,6 +293,9 @@
                                             <a href="{{$career['company']->website}}" class="twm-job-websites site-text-primary">
                                                 {{$career['company']->website}}
                                             </a>
+                                            <div class="">
+                                                <span onclick="showModalReportCareer({{$career['id']}})" class="btn-report">Report</span>
+                                            </div>
                                         </div>
                                         <div class="twm-right-content">
                                             <div class="twm-jobs-category green">
@@ -349,7 +377,7 @@
                 filterSkill()
                 filterJobType()
                 filterLocation()
-                console.log(url)
+                getKeyword()
 
                 window.location.href = url;
             })
@@ -404,6 +432,11 @@
                 url += filterProvinceStr;
             }
 
+            function getKeyword() {
+                let keyword = $("#keyword").val()
+                url += url.includes("?") ? `&search=${keyword}` : `?search=${keyword}`;
+            }
+
             function resetFilter() {
                 url = originUrl;
                 filterJobTypeStr = '';
@@ -415,6 +448,32 @@
 
 
         });
+        function showModalReportCareer (careerId) {
+            $("#modal-report-career").modal('toggle')
+            $("#btn-send-report").prop("disabled", false)
+            $("#career-id").val(careerId)
+        }
+
+        function reportCareer() {
+            $.ajax({
+                type: 'POST',
+                url: '{{route('job.report')}}',
+                data: {
+                    '_token': '{{csrf_token()}}',
+                    'career_id': $("#career-id").val()
+                },
+                success: function (res) {
+                    toastr.success('Reported Successfully !', 'Notification !')
+                    $("#btn-send-report").prop('disabled', true)
+
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                    $("#btn-send-report").prop('disabled', true)
+                }
+
+            })
+        }
 
     </script>
 @endpush
