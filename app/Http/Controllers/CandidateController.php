@@ -124,19 +124,21 @@ class CandidateController extends Controller
             'soft_skill' => 'nullable',
             'position' => 'nullable',
         ]);
-        $request['exp'] = $this->handleExpAttr($request);
         $careerSuggest = [];
         $userProfile = '';
         // Lưu file vào storage/app/public/uploads
         try {
             if ($request->file()) {
                 DB::beginTransaction();
+
                 $fileName = time() . '_' . $request->file->getClientOriginalName();
                 $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
                 $this->pdfToImg($fileName);
 
                 // Neu nguoi dung tao cv tren he thong
                 if ($request->html) {
+                    $request['exp'] = $this->handleExpAttr($request);
+
                     // Kiem tra neu nguoi dung dang update cv
                     if ($request->profile_id) {
                         $userProfile = UserProfile::query()->find($request->profile_id);
@@ -198,7 +200,7 @@ class CandidateController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'redirect_url' => route('candidate.create-cv', $userProfile->id)
+                    'redirect_url' => route('candidate.create-cv', $userProfile->id ?? 0)
                 ]);
             }
         } catch (\Throwable $e) {

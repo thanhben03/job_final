@@ -966,187 +966,181 @@ All JavaScript fuctions Start
 
 	// candidate_data_table function by = dataTables.bootstrap5.js
     function candidate_data_table(){
-        jQuery('#candidate_data_table').DataTable(
+        let table = jQuery('#candidate_data_table').DataTable(
             {
                 "aLengthMenu": [[5, 8, 10, -1], [5, 8, 10, "All"]],
                     "iDisplayLength": 5
                 }
             );
 
-		function checkAll(bx) {
-			var cbs = document.getElementsByTagName('input');
-			for(var i=0; i < cbs.length; i++) {
-				if(cbs[i].type == 'checkbox') {
-				cbs[i].checked = bx.checked;
-				}
-			}
-    	}
-	}
+    }
 
-	// datepicker function by = dbootstrap-datepicker.js
-    function datepicker_function(){
-		$('.datepicker').datepicker({
-			format: 'dd/mm/yyyy'
-		});
-	}
+    // datepicker function by = dbootstrap-datepicker.js
+    function datepicker_function() {
+        $('.datepicker').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+    }
 
 
-	// profile-chart function by = chart.js
-	function profile_chart(){
-		if(jQuery('#profileViewChart').length){
-			var profileViewChart = document.getElementById('profileViewChart').getContext('2d');
-			var profileViewChart = new Chart(profileViewChart, {
-				type: 'line',
-				data: {
-					labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-					datasets: [{
-						label: 'Viewers',
-						data: [200, 250, 350, 200, 250, 150],
-						pointHoverBorderColor: '#1967d2',
-						pointBorderWidth: 10,
-						pointHoverBorderWidth: 3,
-						pointHitRadius: 20,
-						borderWidth: 3,
-						borderColor: '#1967d2',
-						pointBackgroundColor: 'rgba(255, 255, 255, 0)',
-						pointHoverBackgroundColor: 'rgba(255, 255, 255, 1)',
-						pointBorderColor: 'rgba(66, 133, 244, 0)',
-						cubicInterpolationMode: 'monotone',
-						fill: true,
-						backgroundColor: 'rgba(212, 230, 255, 0.2)',
-					}]
-				},
-			});
-		}
-	}
+    // profile-chart function by = chart.js
+    function profile_chart() {
+        if (jQuery('#profileViewChart').length) {
+            var profileViewChart = document.getElementById('profileViewChart').getContext('2d');
+            var profileViewChart = new Chart(profileViewChart, {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                    datasets: [{
+                        label: 'Viewers',
+                        data: [200, 250, 350, 200, 250, 150],
+                        pointHoverBorderColor: '#1967d2',
+                        pointBorderWidth: 10,
+                        pointHoverBorderWidth: 3,
+                        pointHitRadius: 20,
+                        borderWidth: 3,
+                        borderColor: '#1967d2',
+                        pointBackgroundColor: 'rgba(255, 255, 255, 0)',
+                        pointHoverBackgroundColor: 'rgba(255, 255, 255, 1)',
+                        pointBorderColor: 'rgba(66, 133, 244, 0)',
+                        cubicInterpolationMode: 'monotone',
+                        fill: true,
+                        backgroundColor: 'rgba(212, 230, 255, 0.2)',
+                    }]
+                },
+            });
+        }
+    }
 
-	// Category slider function by = swiper-bundle.min.js
-	function category_5_slider(){
-		const swiper = new Swiper('.category-5-slider', {
-			slidesPerView: 6,
-			spaceBetween: 30,
-			grid: {
-				rows: 2,
-				fill: "row",
-			},
-			pagination: {
-				el: '.swiper-pagination',
-			},
-			navigation: {
-				nextEl: ".swiper-button-next",
-				prevEl: ".swiper-button-prev",
-			},
-
-
-			breakpoints: {
-				0: {
-					slidesPerView: 1,
-					grid: {
-						rows: 2,
-						fill: "row",
-					},
-				},
-				360: {
-					slidesPerView: 1,
-					grid: {
-						rows: 2,
-						fill: "row",
-					},
-				},
-				640: {
-					slidesPerView: 2,
-					grid: {
-						rows: 2,
-						fill: "row",
-					},
-				},
-				991: {
-					slidesPerView: 3,
-					grid: {
-						rows: 2,
-						fill: "row",
-					},
-				},
-				1366: {
-					slidesPerView: 4,
-					grid: {
-						rows: 2,
-						fill: "row",
-					},
-				},
-				1440: {
-					slidesPerView: 5,
-					grid: {
-						rows: 2,
-						fill: "row",
-					},
-				},
-				1720: {
-				  slidesPerView: 5,
-				  grid: {
-					rows: 2,
-					fill: "row",
-				},
-				},
-				1721: {
-				  slidesPerView: 6,
-				  grid: {
-					rows: 2,
-					fill: "row",
-				},
-				}
-			},
-		})
-	}
+    // Category slider function by = swiper-bundle.min.js
+    function category_5_slider() {
+        const swiper = new Swiper('.category-5-slider', {
+            slidesPerView: 6,
+            spaceBetween: 30,
+            grid: {
+                rows: 2,
+                fill: "row",
+            },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
 
 
+            breakpoints: {
+                0: {
+                    slidesPerView: 1,
+                    grid: {
+                        rows: 2,
+                        fill: "row",
+                    },
+                },
+                360: {
+                    slidesPerView: 1,
+                    grid: {
+                        rows: 2,
+                        fill: "row",
+                    },
+                },
+                640: {
+                    slidesPerView: 2,
+                    grid: {
+                        rows: 2,
+                        fill: "row",
+                    },
+                },
+                991: {
+                    slidesPerView: 3,
+                    grid: {
+                        rows: 2,
+                        fill: "row",
+                    },
+                },
+                1366: {
+                    slidesPerView: 4,
+                    grid: {
+                        rows: 2,
+                        fill: "row",
+                    },
+                },
+                1440: {
+                    slidesPerView: 5,
+                    grid: {
+                        rows: 2,
+                        fill: "row",
+                    },
+                },
+                1720: {
+                    slidesPerView: 5,
+                    grid: {
+                        rows: 2,
+                        fill: "row",
+                    },
+                },
+                1721: {
+                    slidesPerView: 6,
+                    grid: {
+                        rows: 2,
+                        fill: "row",
+                    },
+                }
+            },
+        })
+    }
 
-	// view map sidebar function by = custom.js
-	function view_map_sidebar(){
-		jQuery('.map-show-btn-open, .map-show-btn-close').on('click', function () {
-			jQuery('.half-map-section').toggleClass('active');
-		});
-	}
-	//  Radius Range Slider function by = bootstrap-slider.min.js ========================== //
-	function radius_range(){
-		jQuery("#ex2").slider({});
-	}
 
-	//DropZone File Uploading Function Start=========================//
-	function Dropzone_infut_file(){
-		if(jQuery('#demo-upload').length){
-		var dropzone = new Dropzone('#demo-upload', {
-		previewTemplate: document.querySelector('#preview-template').innerHTML,
-		parallelUploads: 2,
-		thumbnailHeight: 120,
-		thumbnailWidth: 120,
-		maxFilesize: 3,
-		filesizeBase: 1000,
-		thumbnail: function(file, dataUrl) {
-			if (file.previewElement) {
-			file.previewElement.classList.remove("dz-file-preview");
-			var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-			for (var i = 0; i < images.length; i++) {
-				var thumbnailElement = images[i];
-				thumbnailElement.alt = file.name;
-				thumbnailElement.src = dataUrl;
-			}
-			setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
-			}
-		}
+    // view map sidebar function by = custom.js
+    function view_map_sidebar() {
+        jQuery('.map-show-btn-open, .map-show-btn-close').on('click', function () {
+            jQuery('.half-map-section').toggleClass('active');
+        });
+    }
 
-		});
+    //  Radius Range Slider function by = bootstrap-slider.min.js ========================== //
+    function radius_range() {
+        jQuery("#ex2").slider({});
+    }
+
+    //DropZone File Uploading Function Start=========================//
+    function Dropzone_infut_file() {
+        if (jQuery('#demo-upload').length) {
+            var dropzone = new Dropzone('#demo-upload', {
+                previewTemplate: document.querySelector('#preview-template').innerHTML,
+                parallelUploads: 2,
+                thumbnailHeight: 120,
+                thumbnailWidth: 120,
+                maxFilesize: 3,
+                filesizeBase: 1000,
+                thumbnail: function (file, dataUrl) {
+                    if (file.previewElement) {
+                        file.previewElement.classList.remove("dz-file-preview");
+                        var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+                        for (var i = 0; i < images.length; i++) {
+                            var thumbnailElement = images[i];
+                            thumbnailElement.alt = file.name;
+                            thumbnailElement.src = dataUrl;
+                        }
+                        setTimeout(function () {
+                            file.previewElement.classList.add("dz-image-preview");
+                        }, 1);
+                    }
+                }
+
+            });
 
 
-		// Now fake the file upload, since GitHub does not handle file uploads
-		// and returns a 404
+            // Now fake the file upload, since GitHub does not handle file uploads
+            // and returns a 404
 
-		var minSteps = 6,
-			maxSteps = 60,
-			timeBetweenSteps = 100,
-			bytesPerStep = 100000;
+            var minSteps = 6,
+                maxSteps = 60,
+                timeBetweenSteps = 100,
+                bytesPerStep = 100000;
 
-		dropzone.uploadFiles = function(files) {
+            dropzone.uploadFiles = function(files) {
 		var self = this;
 
 		for (var i = 0; i < files.length; i++) {

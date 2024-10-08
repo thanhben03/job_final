@@ -54,10 +54,33 @@ Route::get('/company/login', [AuthenticatedCompanyController::class, 'create'])-
 Route::post('/company/login', [AuthenticatedCompanyController::class, 'store'])->name('company.login');
 
 Route::get('/test', function () {
-    $exp = "--10/2024-10/2024|--10/2024-10/2024|Công ty CP 123-Chuyên viên Digital Sale-10/2023-10/2024|Công ty CP ...-Chuyên viên Digital Sale-10/2023-10/2024";
-    $arr = explode("|", $exp);
-    unset($arr[0], $arr[1]);
-    dd(implode("|", $arr));
+    $response = Http::withHeaders([
+        'Content-Type' => 'application/json',
+        'Authorization' => 'Bearer YOUR_API_TOKEN', // Nếu API yêu cầu token
+    ])
+        ->attach(
+            file_get_contents(asset('/images/avatar/1728029241_test.pdf')), // Đọc nội dung file
+        )
+        ->post('http://127.0.0.1:1234/v1/chat/completions', [
+        'model' => 'gpt-3.5-turbo',
+        'messages' => [
+            [
+                'role' => 'user',
+                'content' => 'Analyze this cv!'
+            ]
+        ],
+        'temperature' => 0.7,
+    ]);
+
+// Kiểm tra kết quả trả về từ API
+    if ($response->successful()) {
+        $data = $response->json();
+        // Xử lý dữ liệu trả về ở đây
+        dd($data);
+    } else {
+        // Xử lý lỗi nếu có
+        dd($response->status(), $response->body());
+    }
 });
 
 

@@ -8,6 +8,7 @@
         "php": "^8.2",
         "bensampo/laravel-enum": "^6.11",
         "convertapi/convertapi-php": "^3.0",
+        "google-gemini-php/laravel": "*",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9"
     },

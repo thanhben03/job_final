@@ -22,6 +22,59 @@
         </div>
     </div>
 
+    <!-- Modal View Candidate Applied -->
+    <div class="modal fade" id="modal-candidate-applied" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header " style="align-items: baseline">
+                    <h5 class="modal-title"  id="exampleModalLabel">Info Candidate |</h5>
+                    <p style="margin-left: 4px"><span style="color: green; font-weight: 600">0</span> báo cáo vi phạm</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                                <img id="avatar" src="http://127.0.0.1:8001/images/avatar/company/1727932345.jpg" alt="">
+                        </div>
+                        <div class="col-6">
+                                <label class="form-label" for="email">Full Name</label>
+                                <input readonly class="form-control" type="text" id="fullname" value="Nguyern Van A">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label" for="email">Email</label>
+                            <input readonly class="form-control" type="text" id="email" value="Nguyern Van A">
+                        </div>
+                        <div class="col">
+                            <label class="form-label" for="phone">Phone</label>
+                            <input readonly class="form-control" type="text" id="phone" value="Nguyern Van A">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label" for="birthday">Birthday</label>
+                            <input readonly class="form-control" type="date" id="birthday">
+                        </div>
+                        <div class="col">
+                            <label class="form-label" for="price_per_hours">Price Per Hours</label>
+                            <input readonly class="form-control" type="text" id="price_per_hours" value="Nguyern Van A">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label" for="price_per_hours">Introduce</label>
+                            <textarea id="introduce" readonly class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- Page Content Holder -->
@@ -43,6 +96,16 @@
                         </div>
                         <div class="panel-body wt-panel-body">
                             <div class="twm-D_table p-a20 table-responsive">
+                                <!-- Filter Dropdown Section -->
+                                <div class="filter-section mb-3">
+                                    <label for="statusFilter">Filter by Status:</label>
+                                    <select id="statusFilter" class="form-select" style="width: 200px; display: inline-block; margin-left: 10px;">
+                                        <option value="">All</option>
+                                        @foreach($statusCV as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <table id="candidate_data_table" class="table table-bordered">
                                     <thead>
                                     <tr>
@@ -55,7 +118,7 @@
                                         <th>Action</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="test-candidate-table">
                                     <!--1-->
                                     @foreach($career['candidates'] as $candidate)
                                         <tr>
@@ -99,7 +162,7 @@
                                                 <div class="twm-table-controls">
                                                     <ul class="twm-DT-controls-icon list-unstyled">
                                                         <li>
-                                                            <button title="View profile" data-bs-toggle="tooltip"
+                                                            <button onclick="showModalCandidateApplied({{$candidate['info']}})" title="View profile" data-bs-toggle="tooltip"
                                                                     data-bs-placement="top">
                                                                 <span class="fa fa-eye"></span>
                                                             </button>
@@ -174,6 +237,16 @@
             $("#modal-report-candidate").modal('toggle')
             $("#btn-send-report").prop("disabled", false)
             $("#candidate-id").val(candidateId)
+        }
+
+        function showModalCandidateApplied(data) {
+            $("#avatar").attr("src", '{{asset('/images/avatar/:avatar')}}'.replace(':avatar', data.avatar))
+            $("#fullname").val(data.fullname)
+            $("#phone").val(data.phone)
+            $("#birthday").val(data.birthday)
+            $("#price_per_hours").val(data.price_per_hours)
+            $("#introduce").text(data.introduce)
+            $("#modal-candidate-applied").modal('toggle')
         }
 
         function reportCandidate() {

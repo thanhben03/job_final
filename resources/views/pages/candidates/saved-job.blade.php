@@ -131,6 +131,7 @@
                 },
                 success: function(res){
                     toastr.success(res.msg, 'Notification !')
+                    window.location.reload()
                 }
             });
         }
