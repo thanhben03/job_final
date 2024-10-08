@@ -2,6 +2,28 @@
 @extends('layouts.company')
 
 @section('content')
+    <!-- Modal Report Career-->
+    <div class="modal fade" id="modal-report-candidate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Báo cáo vi phạm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">Nếu bạn cho rằng đây là ứng viên giả mạo/span vi phạm tiêu chuẩn vui lòng báo cáo về cho chúng tôi !</div>
+                    <input hidden id="candidate-id" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="reportCandidate()" id="btn-send-report" class="btn btn-primary">Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- Page Content Holder -->
     <div id="content">
 
@@ -30,7 +52,7 @@
                                         <th>CV</th>
                                         <th>Date</th>
                                         <th>Status</th>
-{{--                                        <th></th>--}}
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -73,30 +95,30 @@
                                                     </select>
                                                 </div>
                                             </td>
-{{--                                            <td>--}}
-{{--                                                <div class="twm-table-controls">--}}
-{{--                                                    <ul class="twm-DT-controls-icon list-unstyled">--}}
-{{--                                                        <li>--}}
-{{--                                                            <button title="View profile" data-bs-toggle="tooltip"--}}
-{{--                                                                    data-bs-placement="top">--}}
-{{--                                                                <span class="fa fa-eye"></span>--}}
-{{--                                                            </button>--}}
-{{--                                                        </li>--}}
-{{--                                                        <li>--}}
-{{--                                                            <button title="Send message" data-bs-toggle="tooltip"--}}
-{{--                                                                    data-bs-placement="top">--}}
-{{--                                                                <span class="far fa-envelope-open"></span>--}}
-{{--                                                            </button>--}}
-{{--                                                        </li>--}}
-{{--                                                        <li>--}}
-{{--                                                            <button title="Delete" data-bs-toggle="tooltip"--}}
-{{--                                                                    data-bs-placement="top">--}}
-{{--                                                                <span class="far fa-trash-alt"></span>--}}
-{{--                                                            </button>--}}
-{{--                                                        </li>--}}
-{{--                                                    </ul>--}}
-{{--                                                </div>--}}
-{{--                                            </td>--}}
+                                            <td>
+                                                <div class="twm-table-controls">
+                                                    <ul class="twm-DT-controls-icon list-unstyled">
+                                                        <li>
+                                                            <button title="View profile" data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top">
+                                                                <span class="fa fa-eye"></span>
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button title="Send message" data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top">
+                                                                <span class="far fa-envelope-open"></span>
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button onclick="showModalReportCandidate({{$candidate['info']->id}})" title="Report" data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top">
+                                                                <span class="far fa-trash-alt"></span>
+                                                            </button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
 
@@ -107,9 +129,10 @@
                                         <th></th>
                                         <th>Name</th>
                                         <th>Applied for</th>
+                                        <th>CV</th>
                                         <th>Date</th>
                                         <th>Status</th>
-                                        <th></th>
+                                        <th>Action</th>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -144,6 +167,33 @@
                     console.log(xhr)
                     toastr.error(xhr.responseJSON.msg, 'Notification !')
                 }
+            })
+        }
+
+        function showModalReportCandidate(candidateId) {
+            $("#modal-report-candidate").modal('toggle')
+            $("#btn-send-report").prop("disabled", false)
+            $("#candidate-id").val(candidateId)
+        }
+
+        function reportCandidate() {
+            $.ajax({
+                type: 'POST',
+                url: '{{route('candidate.report')}}',
+                data: {
+                    '_token': '{{csrf_token()}}',
+                    'candidate_id': $("#candidate-id").val()
+                },
+                success: function (res) {
+                    toastr.success('Reported Successfully !', 'Notification !')
+                    $("#btn-send-report").prop('disabled', true)
+
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                    $("#btn-send-report").prop('disabled', true)
+                }
+
             })
         }
     </script>

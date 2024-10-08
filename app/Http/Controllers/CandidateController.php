@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CareerResource;
 use App\Models\Career;
 use App\Models\CurriculumVitae;
+use App\Models\ReportedUser;
 use App\Models\SaveCareer;
+use App\Models\User;
 use App\Models\UserCareer;
 use App\Models\UserProfile;
 use App\Services\User\UserService;
@@ -13,6 +15,7 @@ use ConvertApi\ConvertApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 use Spatie\PdfToImage\Pdf;
 
 class CandidateController extends Controller
@@ -349,6 +352,40 @@ class CandidateController extends Controller
         } catch (\Throwable $th) {
             dd($th->getMessage());
         }
+    }
+
+    public function reportCandidate(Request $request)
+    {
+        $candidate = User::query()->find($request->candidate_id);
+        $company = Session::get('company');
+        $existReport = ReportedUser::query()->where([
+            'user_id' => $candidate->id,
+            'company_id' => $company->id
+        ])->first();
+
+        if ($existReport) {
+            return response()->json([
+                'success' => false,
+                'msg' => 'You have reported this candidate!'
+            ], 500);
+        }
+
+        if ($candidate) {
+            ReportedUser::query()->create([
+                'user_id' => $candidate->id,
+                'company_id' => $company->id,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Report successfully submitted!'
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'msg' => 'Something went wrong!'
+        ], 404);
     }
 
 

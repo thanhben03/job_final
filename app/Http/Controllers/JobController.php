@@ -198,4 +198,12 @@ class JobController extends Controller
             return response()->json(['msg' => $th->getMessage()], 500);
         }
     }
+
+    public function destroy($jobID)
+    {
+        $job = Career::query()->findOrFail($jobID);
+        $job->delete();
+
+        return response()->json(['msg' => 'Career deleted successfully']);
+    }
 }

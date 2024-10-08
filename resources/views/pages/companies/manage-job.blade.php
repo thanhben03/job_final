@@ -87,8 +87,8 @@
                                     <td>
                                         <div class="twm-jobs-category"><span class="twm-bg-green">Part Time</span></div>
                                     </td>
-                                    <td><a href="javascript:;"
-                                           class="site-text-primary">{{$career['cv_applied'] == null ? 0 : count(array($career['cv_applied']))}}
+                                    <td><a href="{{route('company.show.detail-job', $career['id'])}}"
+                                           class="site-text-primary">{{$career['cv_applied'] == null ? 0 : count($career['cv_applied'])}}
                                             Applied</a></td>
                                     <td>
                                         <div>{{$career['created_at']}} &</div>
@@ -113,7 +113,7 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <button title="Delete" data-bs-toggle="tooltip"
+                                                    <button onclick="deleteJob({{$career['id']}})" title="Delete" data-bs-toggle="tooltip"
                                                             data-bs-placement="top">
                                                         <span class="far fa-trash-alt"></span>
                                                     </button>
@@ -185,6 +185,26 @@
                     $("#suggest-candidate").html(html)
                     $("#modal-math-candidate").modal('toggle')
 
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                }
+            })
+        }
+
+        function deleteJob(jobId) {
+            if (!confirm('Are you sure ?')) {
+                return;
+            }
+            $.ajax({
+                type: "DELETE",
+                url: "{{route('jobs.destroy', ':jobID')}}".replace(':jobID', jobId),
+                data: {
+                  "_token": "{{csrf_token()}}"
+                },
+                success: function (res) {
+                    toastr.success(res.msg, 'Notification !')
+                    window.location.reload()
                 },
                 error: function (xhr) {
                     toastr.error(xhr.responseJSON.msg, 'Notification !')

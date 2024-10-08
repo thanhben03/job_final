@@ -34,6 +34,7 @@ Route::post('/candidates/saved-job', [CandidateController::class, 'processSavedJ
 Route::get('/candidates/create-cv/{id?}', [CandidateController::class, 'createCv'])->name('candidate.create-cv');
 Route::get('/candidates/store-cv', [CandidateController::class, 'storeCV'])->name('candidate.store-cv');
 Route::get('/candidates/delete-cv/{cvId}', [CandidateController::class, 'deleteCV'])->name('candidate.delete-cv');
+Route::post('/candidates/report', [CandidateController::class, 'reportCandidate'])->name('candidate.report');
 
 
 Route::post('/upload-cv', [CandidateController::class, 'uploadCv'])->name('api.file.upload');

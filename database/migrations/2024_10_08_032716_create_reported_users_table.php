@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reported_careers', function (Blueprint $table) {
+        Schema::create('reported_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('career_id');
+            $table->unsignedBigInteger('company_id');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('career_id')->references('id')->on('careers');
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('report_content')->nullable();
             $table->timestamps();
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reported_careers');
+        Schema::dropIfExists('reported_users');
     }
 };
