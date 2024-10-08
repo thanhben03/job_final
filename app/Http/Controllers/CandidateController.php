@@ -12,6 +12,9 @@ use App\Models\UserCareer;
 use App\Models\UserProfile;
 use App\Services\User\UserService;
 use ConvertApi\ConvertApi;
+use Gemini\Data\Blob;
+use Gemini\Enums\MimeType;
+use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -388,6 +391,41 @@ class CandidateController extends Controller
             'success' => false,
             'msg' => 'Something went wrong!'
         ], 404);
+    }
+
+    public function showReviewCV()
+    {
+        return view('pages.candidates.review-cv');
+    }
+
+    public function reviewCV()
+    {
+
+        $filePath = public_path('/img.png'); // Đường dẫn tới file PDF
+        $pdfContent = base64_encode(file_get_contents($filePath));
+
+        $result = Gemini::
+        generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
+            ->generateContent([
+                'Hãy phân tích cv dưới dạng này đầu ra phải ở dạng, các key sẽ là các mục lớn như, achievement, experience, soft skill, language, career_goal v.v bạn nhìn thấy những mục lớn nào thì cứ ghi rõ ra, đồng thời các key đó ví dụ career_goal thì thêm một field nữa chứa là Career Goal và value sẽ gồm 3 mục score (đánh giá trên thang điểm 10), reason, suggestion [{
+              "personal_info": {
+                "score": 5,
+                "reason": "Thiếu thông tin như ngày sinh và địa chỉ.",
+                "suggestion": "Cung cấp đầy đủ thông tin cá nhân bao gồm ngày sinh và địa chỉ để tạo sự tin cậy."
+              },]'
+                ,
+                new Blob(
+                    mimeType: MimeType::IMAGE_JPEG,
+                    data: base64_encode(
+                        file_get_contents($filePath)
+                    )
+                )
+            ]);
+        $res = str_replace(['`', 'json'],'', $result->text());
+        $res = json_decode($res);
+
+
+        return response()->json($res);
     }
 
 

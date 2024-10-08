@@ -35,6 +35,7 @@ Route::get('/candidates/create-cv/{id?}', [CandidateController::class, 'createCv
 Route::get('/candidates/store-cv', [CandidateController::class, 'storeCV'])->name('candidate.store-cv');
 Route::get('/candidates/delete-cv/{cvId}', [CandidateController::class, 'deleteCV'])->name('candidate.delete-cv');
 Route::post('/candidates/report', [CandidateController::class, 'reportCandidate'])->name('candidate.report');
+Route::get('/candidates/review-cv', [CandidateController::class, 'showReviewCV'])->name('candidate.review-cv');
 
 
 Route::post('/upload-cv', [CandidateController::class, 'uploadCv'])->name('api.file.upload');
@@ -53,35 +54,7 @@ Route::put('/companies/update', [CompanyController::class, 'update'])->name('com
 Route::get('/company/login', [AuthenticatedCompanyController::class, 'create'])->name('company.showLogin');
 Route::post('/company/login', [AuthenticatedCompanyController::class, 'store'])->name('company.login');
 
-Route::get('/test', function () {
-    $response = Http::withHeaders([
-        'Content-Type' => 'application/json',
-        'Authorization' => 'Bearer YOUR_API_TOKEN', // Nếu API yêu cầu token
-    ])
-        ->attach(
-            file_get_contents(asset('/images/avatar/1728029241_test.pdf')), // Đọc nội dung file
-        )
-        ->post('http://127.0.0.1:1234/v1/chat/completions', [
-        'model' => 'gpt-3.5-turbo',
-        'messages' => [
-            [
-                'role' => 'user',
-                'content' => 'Analyze this cv!'
-            ]
-        ],
-        'temperature' => 0.7,
-    ]);
 
-// Kiểm tra kết quả trả về từ API
-    if ($response->successful()) {
-        $data = $response->json();
-        // Xử lý dữ liệu trả về ở đây
-        dd($data);
-    } else {
-        // Xử lý lỗi nếu có
-        dd($response->status(), $response->body());
-    }
-});
 
 
 Route::get('/dashboard', function () {
