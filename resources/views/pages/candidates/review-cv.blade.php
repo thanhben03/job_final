@@ -47,12 +47,19 @@
                             </div>
                             <div class="">
                                 <label class="form-label">Choose CV: </label>
-                                <select class="form-select" name="" id="">
-                                    <option value="1">1728379351_CV-Nguyen-Ho-Thanh-Ben-PHP-Laravel-Dev.pdf.pdf</option>
-                                    <option value="2">1728379351_CV-Nguyen-Ho-Thanh-Ben-PHP-Laravel-Dev.pdf.pdf</option>
-                                    <option value="3">1728379351_CV-Nguyen-Ho-Thanh-Ben-PHP-Laravel-Dev.pdf.pdf</option>
+                                <select class="form-select" name="" id="select-cv">
+                                    @foreach($cvs as $cv)
+                                        <option value="{{$cv->id}}">{{$cv->path}}</option>
+                                    @endforeach
                                 </select>
-                                <button onclick="reviewCV()" class="mt-2 btn btn-success">Review</button>
+                                <div class="wrap-btn-review d-flex align-items-center">
+                                    <button onclick="reviewCV()" class="mt-2 btn btn-success">Review</button>
+                                </div>
+
+                                <!-- HTML cho Progress Bar -->
+                                <div class="progress" style="display: none" id="progress-bar-container">
+                                    <div style="height: auto; font-size: medium" class="progress-bar" id="progress-bar"><span>Đang phân tích cv của bạn !</span></div>
+                                </div>
 
                             </div>
 
@@ -180,17 +187,32 @@
         }
 
         function reviewCV() {
+            $("#wrap-loading-cv-icon").toggleClass("d-none");
+            $(".wrap-btn-review").toggleClass("d-none");
+
+
+            // Hiển thị progress bar
+            $('#progress-bar-container').show();
+            $('#progress-bar').css('width', '0%');
+
+            // Tăng dần tiến trình khi đợi phản hồi từ server
+            let progressInterval = setInterval(function() {
+                let currentWidth = parseInt($('#progress-bar').css('width'));
+                if (currentWidth < 90) { // Dừng lại ở 90% để chờ phản hồi hoàn thành
+                    $('#progress-bar').css('width', currentWidth + 10 + '%');
+                }
+            }, 500); // Cập nhật mỗi 500ms
             $.ajax({
                 type: "POST",
                 url: "{{route('candidate.review-cv')}}",
                 data: {
-                  "_token": "{{csrf_token()}}"
+                    "_token": "{{csrf_token()}}",
+                    "cvId": $("#select-cv").val()
                 },
                 success: function (res) {
                     let reviews = Object.values(res);
-                    console.log(reviews)
+
                     let html = '';
-                    // console.log(reviews)
                     reviews.forEach(item => {
                         Object.keys(item).forEach(key => {
                             let value = item[key];
@@ -198,8 +220,8 @@
 
                             <tr class="personal_info">
                                 <td><span class="text-highlight bg-primary bg-danger review-cv-score">${value.score}</span></td>
-                                <td><b>${key}:</b> <span>${value.reason}</span>
-                                <p>
+                                <td><b>${value.field}:</b> <span>${value.reason}</span>
+                                <p style="border: 1px dashed; padding: 1px 6px">
                                     <span class="p"><i class="fa fa-flag-o"></i> <u>Gợi ý:</u>
                                         ${value.suggestion}
                                     </span>
@@ -211,9 +233,19 @@
                     });
 
                     $("#wrap-reviews-body").html(html)
+                    clearInterval(progressInterval);
+                    $('#progress-bar').css('width', '100%').text('Hoàn thành!');
                 },
                 error: function (xhr) {
                     console.log(xhr.responseJSON)
+                },
+                complete: function() {
+                    // Ẩn progress bar sau khi hoàn thành
+                    setTimeout(function() {
+                        $('#progress-bar-container').fadeOut();
+                        $(".wrap-btn-review").toggleClass("d-none");
+                        $('#progress-bar-container').text('Đang phân tích CV của bạn !')
+                    }, 2000); // Ẩn sau 2 giây
                 }
             })
         }

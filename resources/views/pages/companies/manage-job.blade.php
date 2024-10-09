@@ -18,11 +18,57 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal Show Appointment -->
+    <div class="modal fade" id="modal-show-appointment" tabindex="-1" aria-labelledby="appointmentsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-fullscreen-sm-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appointmentsModalLabel">Danh Sách Cuộc Hẹn</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="appointment-list" class="list-group">
+                        <!-- Danh sách cuộc hẹn sẽ được chèn vào đây -->
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-edit-appoinment" tabindex="-1" aria-labelledby="editAppointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-fullscreen-sm-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAppointmentModalLabel">Thay Đổi Ngày và Giờ Cuộc Hẹn</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-appointment-form">
+                        <div class="mb-3">
+                            <label for="appointment-date" class="form-label">Chọn Ngày Mới</label>
+                            <input type="date" class="form-control" id="appointment-date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="appointment-time" class="form-label">Chọn Giờ Mới</label>
+                            <input type="time" class="form-control" id="appointment-time" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Page Content Holder -->
     <div id="content">
 
@@ -87,9 +133,16 @@
                                     <td>
                                         <div class="twm-jobs-category"><span class="twm-bg-green">Part Time</span></div>
                                     </td>
-                                    <td><a href="{{route('company.show.detail-job', $career['id'])}}"
+                                    <td>
+                                        <a href="{{route('company.show.detail-job', $career['id'])}}"
                                            class="site-text-primary">{{$career['cv_applied'] == null ? 0 : count($career['cv_applied'])}}
-                                            Applied</a></td>
+                                            Applied |
+                                        </a>
+                                        <a onclick="showModalListAppoints({{json_encode($career['appointments'], 1)}})" class="site-text-primary" href="#">
+                                            {{$career['appointments'] == null ? 0 : count($career['appointments'])}}
+                                            Appointment
+                                        </a>
+                                    </td>
                                     <td>
                                         <div>{{$career['created_at']}} &</div>
                                         <div>{{$career['expiration_day']}}</div>
@@ -118,6 +171,7 @@
                                                         <span class="far fa-trash-alt"></span>
                                                     </button>
                                                 </li>
+
                                             </ul>
                                         </div>
                                     </td>
@@ -212,5 +266,76 @@
             })
         }
 
+        function showModalBookAppointment(careerId) {
+            $("#modal-book-appointment").modal('toggle')
+            $("#career-id").val(careerId)
+        }
+
+        function showModalListAppoints(appointments) {
+            $("#modal-show-appointment").modal('toggle')
+            let appointmentList = '';
+            appointments.forEach(appointment => {
+                let statusClass = appointment.status === 'pending' ? 'text-warning' :
+                    appointment.status === 'accepted' ? 'text-success' :
+                        'text-danger';
+
+                appointmentList += `
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6>${appointment.candidate.fullname}</h6>
+                            <p class="mb-1">Ngày: ${appointment.date} | Giờ: ${appointment.time}</p>
+                            <small class="${statusClass}">Trạng thái: ${appointment.status}</small><br>
+                            <small class="">Ghi chú: ${appointment.note}</small>
+                        </div>
+                        ${appointment.status !== 'rejected' ? `
+                        <div class="d-flex flex-column flex-md-row gap-2 mt-2 mt-md-0">
+                            <button class="btn btn-outline-secondary btn-sm" onclick="openEditModal(${appointment.id}, '${appointment.date}', '${appointment.time}')">Chỉnh Sửa</button>
+                        </div>
+                    ` : ''}
+                    </li>
+                `;
+            });
+            $('#appointment-list').html(appointmentList);
+        }
+
+        function openEditModal(appointmentId, currentDate, currentTime) {
+            $('#appointment-date').val(currentDate);
+            $('#appointment-time').val(currentTime);
+            $('#modal-edit-appoinment').modal('show');
+
+            // Lưu lại ID của cuộc hẹn hiện tại vào form
+            $('#edit-appointment-form').data('appointment-id', appointmentId);
+        }
+
+        $('#edit-appointment-form').on('submit', function(event) {
+            event.preventDefault();
+
+            const appointmentId = $(this).data('appointment-id');
+            const newDate = $('#appointment-date').val();
+            const newTime = $('#appointment-time').val();
+
+            $.ajax({
+                url: `/appointments/${appointmentId}/update`,
+                method: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    date: newDate,
+                    time: newTime
+                },
+                success: function(response) {
+                    alert('Ngày và giờ cuộc hẹn đã được cập nhật thành công!');
+                    $('#editAppointmentModal').modal('hide');
+                    location.reload(); // Refresh lại danh sách cuộc hẹn
+                },
+                error: function(xhr) {
+                    alert(xhr.responseJSON.error);
+                }
+            });
+        });
+
+
+
     </script>
+
+
 @endpush

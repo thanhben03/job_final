@@ -393,12 +393,14 @@ class CandidateController extends Controller
 
     public function showReviewCV()
     {
-        return view('pages.candidates.review-cv');
+        $cvs = CurriculumVitae::query()->where('user_id', auth()->user()->id)->get();
+        return view('pages.candidates.review-cv', compact('cvs'));
     }
 
-    public function reviewCV()
+    public function reviewCV(Request $request)
     {
-        $filePath = public_path('/1728059696_test.pdf.png'); // Đường dẫn tới file PDF
+        $cv = CurriculumVitae::query()->find($request->cvId);
+        $filePath = storage_path('/app/public/uploads/'.$cv->thumbnail); // Đường dẫn tới file PDF
         $pdfContent = base64_encode(file_get_contents($filePath));
 
         $result = Gemini::
@@ -408,7 +410,8 @@ class CandidateController extends Controller
               "personal_info": {
                 "score": 5,
                 "reason": "Thiếu thông tin như ngày sinh và địa chỉ.",
-                "suggestion": "Cung cấp đầy đủ thông tin cá nhân bao gồm ngày sinh và địa chỉ để tạo sự tin cậy."
+                "suggestion": "Cung cấp đầy đủ thông tin cá nhân bao gồm ngày sinh và địa chỉ để tạo sự tin cậy.",
+                "field": "Personal Info"
               },]'
                 ,
                 new Blob(
@@ -425,5 +428,9 @@ class CandidateController extends Controller
         return response()->json($res);
     }
 
+    public function showAppointment()
+    {
+        return view('pages.candidates.appointment');
+    }
 
 }

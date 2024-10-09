@@ -25,7 +25,7 @@
 
     <style>
         /* Show dropdown on hover */
-        .dropdown:hover .dropdown-menu {
+        .dropdown:hover .company.dropdown-menu {
             display: block;
         }
 

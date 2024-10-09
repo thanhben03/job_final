@@ -26,6 +26,11 @@ class Career extends Model
         return $this->belongsToMany(Skill::class, 'career_skills', 'career_id', 'skill_id');
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'career_id', 'id');
+    }
+
     public function location()
     {
         return $this->belongsTo(Province::class, 'province_id', 'code');

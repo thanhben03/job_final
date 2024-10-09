@@ -12,7 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: [
-            'http://localhost:8000/candidates/review-cv' // <-- exclude this route
+            'http://127.0.0.1:8001/candidates/review-cv' // <-- exclude this route
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
