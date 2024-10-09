@@ -24990,3 +24990,11 @@ HOME PAGE 15 START
     border: 1px dashed red;
     padding: 1px 5px;
 }
+
+.review-cv-score {
+    color: white;
+    padding: 4px 7px;
+    border-radius: 4px;
+}
+
+

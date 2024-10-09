@@ -193,6 +193,8 @@ class JobController extends Controller
 
             ReportedCareer::query()->create([
                 'career_id' => $existJob->id,
+                'user_id' => auth()->user()->id
+
             ]);
         } catch (\Throwable $th) {
             return response()->json(['msg' => $th->getMessage()], 500);

@@ -18,8 +18,6 @@ use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use SebastianBergmann\CodeCoverage\Report\Xml\Report;
-use Spatie\PdfToImage\Pdf;
 
 class CandidateController extends Controller
 {
@@ -400,8 +398,7 @@ class CandidateController extends Controller
 
     public function reviewCV()
     {
-
-        $filePath = public_path('/img.png'); // Đường dẫn tới file PDF
+        $filePath = public_path('/1728059696_test.pdf.png'); // Đường dẫn tới file PDF
         $pdfContent = base64_encode(file_get_contents($filePath));
 
         $result = Gemini::
