@@ -44,14 +44,16 @@
                             <!--Filter Short By-->
                             <div class="product-filter-wrap d-flex justify-content-between align-items-center">
                                 <span class="woocommerce-result-count-left">Review CV</span>
-                                <div class="">
-                                    <div>Choose CV: </div>
-                                    <select name="" id="">
-                                        <option value="1">1728379351_CV-Nguyen-Ho-Thanh-Ben-PHP-Laravel-Dev.pdf.pdf</option>
-                                        <option value="2">1728379351_CV-Nguyen-Ho-Thanh-Ben-PHP-Laravel-Dev.pdf.pdf</option>
-                                        <option value="3">1728379351_CV-Nguyen-Ho-Thanh-Ben-PHP-Laravel-Dev.pdf.pdf</option>
-                                    </select>
-                                </div>
+                            </div>
+                            <div class="">
+                                <label class="form-label">Choose CV: </label>
+                                <select class="form-select" name="" id="">
+                                    <option value="1">1728379351_CV-Nguyen-Ho-Thanh-Ben-PHP-Laravel-Dev.pdf.pdf</option>
+                                    <option value="2">1728379351_CV-Nguyen-Ho-Thanh-Ben-PHP-Laravel-Dev.pdf.pdf</option>
+                                    <option value="3">1728379351_CV-Nguyen-Ho-Thanh-Ben-PHP-Laravel-Dev.pdf.pdf</option>
+                                </select>
+                                <button onclick="reviewCV()" class="mt-2 btn btn-success">Review</button>
+
                             </div>
 
                             <div class="twm-cv-manager-list-wrap">
@@ -64,37 +66,7 @@
                                                     <th>Description</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                            <tr class="personal_info">
-                                                <td><span class="text-highlight bg-primary bg-danger">5</span></td>
-                                                <td><b>Thông tin:</b> <span>Thiếu thông tin quan trọng như ngày sinh và địa chỉ.</span>
-                                                    <p><span class="p"><i class="fa fa-flag-o"></i> <u>Gợi ý:</u> Cập nhật đầy đủ thông tin cá nhân như ngày sinh và địa chỉ để tăng độ tin cậy.</span></p></td>
-                                            </tr>
-                                            <tr class="work_experience">
-                                                <td><span class="text-highlight bg-primary bg-danger">2</span></td>
-                                                <td><b>Kinh nghiệm:</b> <span>Không có kinh nghiệm làm việc nào được liệt kê.</span>
-                                                    <p><span class="p"><i class="fa fa-flag-o"></i> <u>Gợi ý:</u> Nếu chưa có kinh nghiệm làm việc chính thức, hãy thêm các dự án cá nhân hoặc thực tập để thể hiện kỹ năng và kinh nghiệm thực tế.</span><span class="ex"> <b>Ví dụ:</b> <i>"Responsible for managing projects."</i> <span class="br"></span><i class="fa fa-hand-o-right mr-5 ml-5" aria-hidden="true"></i> <i class="wavy-text">Successfully managed 5 projects from inception to completion, resulting in a 20% increase in client satisfaction.</i></span></p></td>
-                                            </tr>
-                                            <tr class="skills">
-                                                <td><span class="text-highlight bg-primary bg-danger">6</span></td>
-                                                <td><b>Kĩ năng:</b> <span>Có nhiều kỹ năng tốt nhưng thiếu phần mô tả cho các kỹ năng mềm.</span>
-                                                    <p><span class="p"><i class="fa fa-flag-o"></i> <u>Gợi ý:</u> Cân nhắc thêm các kỹ năng mềm như làm việc nhóm, giao tiếp, hoặc quản lý thời gian.</span></p></td>
-                                            </tr>
-                                            <tr class="education">
-                                                <td><span class="text-highlight bg-primary">8</span></td>
-                                                <td><b>Học vấn:</b> <span>Thông tin giáo dục được cung cấp đầy đủ nhưng thiếu chi tiết về thành tích học tập.</span>
-                                                    <p><span class="p"><i class="fa fa-flag-o"></i> <u>Gợi ý:</u> Thêm thông tin về GPA hoặc các khóa học nổi bật liên quan đến vị trí bạn đang ứng tuyển.</span></p></td>
-                                            </tr>
-                                            <tr class="career_goal">
-                                                <td><span class="text-highlight bg-primary bg-orange-600">7</span></td>
-                                                <td><b>Mục tiêu nghề nghiệp:</b> <span>Mục tiêu nghề nghiệp khá rõ ràng nhưng còn thiếu sự cụ thể về cách bạn muốn đóng góp.</span>
-                                                    <p><span class="p"><i class="fa fa-flag-o"></i> <u>Gợi ý:</u> Cải thiện bằng cách nêu rõ loại dự án hoặc lĩnh vực mà bạn muốn làm việc.</span><span class="ex"> <b>Ví dụ:</b> <i>"Là một lập trình viên Back-end có động lực cao và chú ý đến chi tiết, mục tiêu của tôi là tận dụng kỹ năng và chuyên môn của mình để đóng góp cho sự thành công của một tổ chức năng động và đổi mới."</i> <span class="br"></span><i class="fa fa-hand-o-right mr-5 ml-5" aria-hidden="true"></i> <i class="wavy-text">Là một lập trình viên Back-end có động lực cao, tôi hướng tới việc phát triển các ứng dụng web hiệu suất cao cho các dự án thương mại điện tử, nhằm tối ưu hóa trải nghiệm người dùng và tăng trưởng kinh doanh cho một tổ chức đổi mới.</i></span></p></td>
-                                            </tr>
-                                            <tr class="achievements">
-                                                <td><span class="text-highlight bg-primary bg-danger">3</span></td>
-                                                <td><b>Thành tích:</b> <span>Thiếu thông tin về thành tích hoặc giải thưởng.</span>
-                                                    <p><span class="p"><i class="fa fa-flag-o"></i> <u>Gợi ý:</u> Nếu có bất kỳ giải thưởng hoặc dự án nào đáng chú ý, hãy thêm chúng vào để làm nổi bật bản thân.</span></p></td>
-                                            </tr>
+                                            <tbody id="wrap-reviews-body">
                                             </tbody>
                                         </table>
                                     </div>
@@ -203,6 +175,45 @@
                 },
                 error: function (xhr) {
                     toastr.error(xhr.responseJSON.msg, 'Notification !')
+                }
+            })
+        }
+
+        function reviewCV() {
+            $.ajax({
+                type: "POST",
+                url: "{{route('candidate.review-cv')}}",
+                data: {
+                  "_token": "{{csrf_token()}}"
+                },
+                success: function (res) {
+                    let reviews = Object.values(res);
+                    console.log(reviews)
+                    let html = '';
+                    // console.log(reviews)
+                    reviews.forEach(item => {
+                        Object.keys(item).forEach(key => {
+                            let value = item[key];
+                            html += `
+
+                            <tr class="personal_info">
+                                <td><span class="text-highlight bg-primary bg-danger review-cv-score">${value.score}</span></td>
+                                <td><b>${key}:</b> <span>${value.reason}</span>
+                                <p>
+                                    <span class="p"><i class="fa fa-flag-o"></i> <u>Gợi ý:</u>
+                                        ${value.suggestion}
+                                    </span>
+                                </p></td>
+                            </tr>
+                            `
+
+                        });
+                    });
+
+                    $("#wrap-reviews-body").html(html)
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseJSON)
                 }
             })
         }
