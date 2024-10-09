@@ -76,7 +76,53 @@
         </div>
     </div>
 
+    <!-- Modal Book Appointment -->
+    <div class="modal fade" id="modal-book-appointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Make an appointment with the candidate</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Giao diện đặt lịch hẹn -->
+                    <div class="container mt-5">
+                        <form id="appointment-form">
+                            <div class="form-group">
+                                <div class="alert alert-info" id="text-fullname"></div>
+                                <input hidden type="text" id="user_id" name="user_id" value="" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="appointment-date">Ngày</label>
+                                <input type="date" class="form-control" id="appointment-date" name="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="appointment-time">Thời gian</label>
+                                <input type="time" class="form-control" id="appointment-time" name="time" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="note">Ghi chú</label>
+                                <textarea class="form-control" id="note" name="note" rows="3"></textarea>
+                            </div>
+                            <input hidden type="text" id="career-id" name="career_id" value="">
+                            <button type="submit" class="btn btn-primary">Đặt lịch hẹn</button>
+                        </form>
+                        <div id="success-message" class="alert alert-success mt-3" style="display: none;">
+                            Lịch hẹn đã được tạo thành công!
+                        </div>
+                        <!-- Thông báo lỗi nếu lịch hẹn đã tồn tại -->
+                        <div id="error-message" class="alert alert-danger mt-3" style="display: none;">
+                            <!-- Thông báo lỗi sẽ được hiển thị ở đây -->
+                        </div>
+                    </div>
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Page Content Holder -->
     <div id="content">
 
@@ -179,6 +225,11 @@
                                                                 <span class="far fa-trash-alt"></span>
                                                             </button>
                                                         </li>
+                                                        <li>
+                                                            <button onclick="showModalBookAppointment({{$career['id']}}, {{$candidate['info']}})">
+                                                                <i class="fas fa-calendar-day"></i>
+                                                            </button>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -268,6 +319,41 @@
                 }
 
             })
+        }
+
+        $('#appointment-form').submit(function(event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: '/appointments',
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  // Thêm CSRF token vào header
+                },
+                data: $(this).serialize(),
+                success: function(response) {
+                    $('#success-message').show().text(response.success);
+                    $('#error-message').hide(); // Ẩn thông báo lỗi nếu có
+                    $('#appointment-form')[0].reset();
+                },
+                error: function(xhr) {
+                    if (xhr.status === 409) {
+                        $('#error-message').show().text(xhr.responseJSON.error);
+                        $('#success-message').hide(); // Ẩn thông báo thành công nếu có
+                    } else {
+                        alert('Đã có lỗi xảy ra. Vui lòng thử lại!');
+                    }
+                }
+            });
+        });
+
+
+        function showModalBookAppointment(careerId, infoCandidate) {
+            $("#modal-book-appointment").modal('toggle')
+            console.log(infoCandidate)
+            $("#career-id").val(careerId)
+            $("#user_id").val(infoCandidate.id)
+            $("#text-fullname").text('Ứng viên: ' + infoCandidate.fullname)
         }
     </script>
 @endpush

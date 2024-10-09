@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\AuthenticatedCompanyController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CompanyController;
@@ -37,6 +38,8 @@ Route::get('/candidates/delete-cv/{cvId}', [CandidateController::class, 'deleteC
 Route::post('/candidates/report', [CandidateController::class, 'reportCandidate'])->name('candidate.report');
 Route::get('/candidates/review-cv', [CandidateController::class, 'showReviewCV'])->name('candidate.show.review-cv');
 Route::post('/candidates/review-cv', [CandidateController::class, 'reviewCV'])->name('candidate.review-cv');
+Route::get('/candidates/appointment', [CandidateController::class, 'showAppointment'])->name('candidate.show.appointment');
+
 
 
 Route::post('/upload-cv', [CandidateController::class, 'uploadCv'])->name('api.file.upload');
@@ -55,6 +58,12 @@ Route::put('/companies/update', [CompanyController::class, 'update'])->name('com
 Route::get('/company/login', [AuthenticatedCompanyController::class, 'create'])->name('company.showLogin');
 Route::post('/company/login', [AuthenticatedCompanyController::class, 'store'])->name('company.login');
 
+
+Route::post('/appointments', [AppointmentController::class, 'store'])->name('store.appointment');
+Route::get('/appointments/{user_id}', [AppointmentController::class, 'getAppointments']);
+Route::post('/appointments/{id}/accept', [AppointmentController::class, 'acceptAppointment']);
+Route::post('/appointments/{id}/reject', [AppointmentController::class, 'rejectAppointment']);
+Route::post('/appointments/{appointmentId}/update', [AppointmentController::class, 'updateAppointment'])->name('appointment.update.time');
 
 
 

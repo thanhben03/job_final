@@ -97,7 +97,6 @@ class CompanyController extends Controller
         $company = Session::get('company');
         $careers = $this->service->getAllById($company->id);
         $careers = CareerResource::make($careers)->resolve();
-
         return view('pages.companies.manage-job', compact('careers'));
     }
 
