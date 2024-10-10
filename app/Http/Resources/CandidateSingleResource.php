@@ -23,7 +23,7 @@ class CandidateSingleResource extends JsonResource
             'fullname' => $this->fullname,
             'email' => $this->email,
             'phone' => $this->phone,
-            'type_work' => WorkTypeEnum::getDescription($this->type_work) ?? null,
+            'type_work' => WorkTypeEnum::getDescription($this?->type_work) ?? null,
             'gender' => GenderEnum::getDescription($this->gender),
             'price_per_hours' => $this->convertPriceString(intval($this->price_per_hours)),
             'created_at' => $this->created_at->diffForHumans(),

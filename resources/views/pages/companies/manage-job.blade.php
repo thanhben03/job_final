@@ -23,6 +23,8 @@
         </div>
     </div>
 
+    <x-modal.modal-progress />
+
     <!-- Modal Show Appointment -->
     <div class="modal fade" id="modal-show-appointment" tabindex="-1" aria-labelledby="appointmentsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg modal-fullscreen-sm-down">
@@ -152,7 +154,7 @@
                                         <div class="twm-table-controls">
                                             <ul class="twm-DT-controls-icon list-unstyled">
                                                 <li>
-                                                    <button onclick="matchWithCandidate({{$career['id']}})" title="View profile" data-bs-toggle="tooltip"
+                                                    <button onclick="matchWithCandidate({{$career['id']}}, 'match_cv')" title="View profile" data-bs-toggle="tooltip"
                                                             data-bs-placement="top">
                                                         <span class="fa fa-eye"></span>
                                                     </button>
@@ -202,10 +204,24 @@
 
 @push('js')
     <script>
-        function matchWithCandidate(jobId) {
+        function matchWithCandidate(jobId, type) {
+            $("#modal-progress").modal('toggle')
+            let $bar = $(".bar");
+            var progress = setInterval(function() {
+
+                // perform processing logic (ajax) here
+                $bar.width($bar.width()+100);
+
+                $bar.text($bar.width()/5 + "%");
+            }, 700);
             $.ajax({
-                type: 'GET',
-                url: '{{ route('match.with.candidate', ':jobID') }}'.replace(':jobID', jobId),
+                type: 'POST',
+                url: '{{ route('match.with.candidate') }}',
+                data: {
+                  career_id: jobId,
+                  type: type,
+                  _token: '{{csrf_token()}}'
+                },
                 success: function (res) {
                     let result = Object.values(res.candidates)
                     let html = ''
@@ -236,8 +252,26 @@
                         `
                     })
 
-                    $("#suggest-candidate").html(html)
-                    $("#modal-math-candidate").modal('toggle')
+                    // reset progree bar
+                    clearInterval(progress);
+                    $('.progress').removeClass('active');
+                    $bar.width(500);
+                    $bar.text('100%');
+                    $(".progress-bar").css('background-color', '#00b314')
+
+                    // setTimeout(function () {
+                    //     // update modal
+                    //     $(".modal-dialog").addClass('modal-dialog-scrollable')
+                    //     $('#modal-progress .modal-body').html(html);
+                    //     $("#modal-progress-title").text('Ứng viên phù hợp')
+                    //     $('#modal-progress .hide,#modal-progress .in').toggleClass('hide in');
+                    // }, 1000)
+
+                    setTimeout(function () {
+                        $("#modal-progress").modal('toggle')
+                        $("#suggest-candidate").html(html)
+                        $("#modal-math-candidate").modal('toggle')
+                    }, 1000)
 
                 },
                 error: function (xhr) {
@@ -245,6 +279,16 @@
                 }
             })
         }
+
+        $('#modal-progress').on('hidden.bs.modal', function () {
+            // reset modal
+            let html = `<div class="progress">
+                    <div class="progress-bar bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+
+                    </div>
+                </div>`;
+            $('#modal-progress .modal-body').html(html);
+        });
 
         function deleteJob(jobId) {
             if (!confirm('Are you sure ?')) {

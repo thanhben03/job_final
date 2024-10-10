@@ -48,6 +48,8 @@
         </div>
     </div>
 
+    <x-modal.modal-progress />
+
     <!-- CONTENT START -->
     <div class="page-content">
 
@@ -275,6 +277,15 @@
         }
 
         function matchWithJob(cvID) {
+            $("#modal-progress").modal('toggle')
+            let $bar = $(".bar");
+            var progress = setInterval(function() {
+
+                // perform processing logic (ajax) here
+                $bar.width($bar.width()+100);
+
+                $bar.text($bar.width()/5 + "%");
+            }, 700);
             $.ajax({
                 type: 'GET',
                 url: '{{ route('match.with.job', ':cvID') }}'.replace(':cvID', cvID),
@@ -301,9 +312,18 @@
                         </li>
                         `
                     })
+                    clearInterval(progress);
+                    $('.progress').removeClass('active');
+                    $bar.width(500);
+                    $bar.text('100%');
+                    $(".progress-bar").css('background-color', '#00b314')
 
-                    $("#suggest-job").html(html)
-                    $("#modal-math-job").modal('toggle')
+                    setTimeout(function () {
+                        $("#modal-progress").modal('toggle')
+                        $("#suggest-job").html(html)
+                        $("#modal-math-job").modal('toggle')
+                    }, 1000)
+
 
                 },
                 error: function (xhr) {

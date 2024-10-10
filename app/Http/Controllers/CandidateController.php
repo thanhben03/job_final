@@ -58,10 +58,10 @@ class CandidateController extends Controller
         $resumeIds = CurriculumVitae::query()
             ->where('user_id', auth()->user()->id)
             ->pluck('id');
-
         $resumeOnSys = UserProfile::query()->whereIn('cv_id', $resumeIds)->get();
         $resumes = CurriculumVitae::query()
             ->whereNotIn('id', $resumeOnSys->pluck('cv_id')->toArray())
+            ->where('user_id', auth()->user()->id)
             ->get();
         return view('pages.candidates.my-resume', compact('resumes', 'resumeOnSys'));
     }
