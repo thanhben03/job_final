@@ -433,4 +433,9 @@ class CandidateController extends Controller
         return view('pages.candidates.appointment');
     }
 
+    public function showChat()
+    {
+        return view('pages.candidates.chat');
+    }
+
 }
