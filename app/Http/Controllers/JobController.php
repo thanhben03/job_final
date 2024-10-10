@@ -140,11 +140,19 @@ class JobController extends Controller
         return redirect()->back()->with('msg', 'Career added successfully');
     }
 
-    public function matchWithCandidate($careerID)
+    public function matchWithCandidate(Request $request)
     {
+        $careerID = $request->career_id;
+        $type = $request->type;
         $career = $this->service->getQueryBuilderWithRelations(['skills'])->find($careerID)->toArray();
         $extractInfo = $this->service->extractInfoRequire($career);
-        $candidates = $this->service->matchWithCandidate($extractInfo);
+
+        if ($type == "filter_cv") {
+            $candidates = $this->service->matchWithCandidate($extractInfo, $careerID);
+        } else {
+            $candidates = $this->service->matchWithCandidate($extractInfo);
+
+        }
         return response()->json([
             'candidates' => $candidates,
         ]);

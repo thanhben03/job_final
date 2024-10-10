@@ -22,7 +22,7 @@ Route::post('/job', [JobController::class, 'store'])->name('job.store');
 Route::post('/job/update-user-career', [JobController::class, 'updateUserCareer'])->name('job.update.user.career');
 Route::post('/job/report/', [JobController::class, 'reportJob'])->name('job.report');
 
-Route::get('/match-with-candidate/{id}', [JobController::class, 'matchWithCandidate'])->name('match.with.candidate');
+Route::post('/match-with-candidate', [JobController::class, 'matchWithCandidate'])->name('match.with.candidate');
 Route::get('/match-with-job/{id}', [CandidateController::class, 'matchWithJob'])->name('match.with.job');
 
 

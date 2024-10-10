@@ -123,6 +123,27 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Match JOB -->
+    <div class="modal fade" id="modal-math-candidate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ứng viên phù hợp</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Chúng tôi gợi ý cho bạn một số ứng viên phù hợp với công việc của bạn</p>
+                    <ul class="list-group" id="suggest-candidate">
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Page Content Holder -->
     <div id="content">
 
@@ -145,12 +166,8 @@
                                 <!-- Filter Dropdown Section -->
                                 <div class="filter-section mb-3">
                                     <label for="statusFilter">Filter by Status:</label>
-                                    <select id="statusFilter" class="form-select" style="width: 200px; display: inline-block; margin-left: 10px;">
-                                        <option value="">All</option>
-                                        @foreach($statusCV as $key => $value)
-                                            <option value="{{ $key }}">{{ $value }}</option>
-                                        @endforeach
-                                    </select>
+                                    <x-modal.modal-progress />
+                                    <button onclick="matchWithCandidate({{$career['id']}}, 'filter_cv')" class="btn btn-primary">Fitler CV</button>
                                 </div>
                                 <table id="candidate_data_table" class="table table-bordered">
                                     <thead>
@@ -347,6 +364,95 @@
             });
         });
 
+        function matchWithCandidate(jobId, type) {
+            $("#modal-progress").modal('toggle')
+            let $bar = $(".bar");
+            var progress = setInterval(function() {
+
+                    // perform processing logic (ajax) here
+                    $bar.width($bar.width()+100);
+
+                $bar.text($bar.width()/5 + "%");
+            }, 700);
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('match.with.candidate') }}',
+                data: {
+                    career_id: jobId,
+                    type: type,
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (res) {
+                    let result = Object.values(res.candidates)
+                    let html = ''
+                    result.forEach(ele => {
+                        let stringMatch = Object.values(ele.matches).map(ele => `<p class="mb-0">${ele}</p>`)
+                        html += `
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-1">${ele.candidate.fullname}</h5>
+                                    <p class="mb-0"><strong>Gender:</strong> ${ele.candidate.gender}</p>
+                                    <p class="mb-0"><strong>Price Per Hours:</strong> ${ele.candidate.price_per_hours}</p>
+
+                                </div>
+                                <div>
+                                    <a href="" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                </div>
+                            </div>
+{{--                            <p class="mb-1 mt-2"><strong>Description:</strong> {{ Str::limit(${ele.candidate.detail.desc}, 100) }}</p>--}}
+                        <div>
+                            <small class="text-muted">Join Day: ${ele.candidate.created_at}</small>
+                                <small class="">Email: <strong style="color: green">${ele.candidate.email}</strong></small>
+                            </div>
+                            <div class="wrap-match">
+                                ${stringMatch.toString().replace(',','')}
+                            </div>
+                        </li>
+                        `
+                    })
+
+                    // reset progree bar
+                    clearInterval(progress);
+                    $('.progress').removeClass('active');
+                    $bar.width(500);
+                    $bar.text('100%');
+                    $(".progress-bar").css('background-color', '#00b314')
+
+                    setTimeout(function () {
+                        // update modal
+                        $('#modal-progress .modal-body').html(html);
+                        $("#modal-progress-title").text('Ứng viên phù hợp')
+                        $('#modal-progress .hide,#modal-progress .in').toggleClass('hide in');
+                    }, 1000)
+
+
+
+                    // setTimeout(function () {
+                    //     // $('#modal-progress').modal('hide');
+                    //     // $("#suggest-candidate").html(html)
+                    //     // $("#modal-math-candidate").modal('toggle')
+                    // }, 1000)
+
+
+
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                }
+            })
+        }
+
+        $('#modal-progress').on('hidden.bs.modal', function () {
+            // reset modal
+            let html = `<div class="progress">
+                    <div class="progress-bar bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+
+                    </div>
+                </div>`;
+            $('#modal-progress .modal-body').html(html);
+        });
 
         function showModalBookAppointment(careerId, infoCandidate) {
             $("#modal-book-appointment").modal('toggle')
