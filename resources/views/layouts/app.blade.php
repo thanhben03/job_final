@@ -537,15 +537,24 @@
 
         window.Echo.private('appointment.' + '{{auth()->user()->id}}')
             .listen('AppointmentEvent', (e) => {
-                toastr.success(e.message, 'Notification!');
-                updateTabTitle()
-                playNotificationSound()
-                let notiRead = $("#notification-read-count");
-                notiRead.text(parseInt(notiRead.text()) + 1)
+                createNoti(e)
+            });
 
-                let notiUnread = $("#notification-unread-count");
-                notiUnread.text(parseInt(notiUnread.text()) + 1)
-                $("#wrap-notification").append(`
+        window.Echo.private('notification.' + '{{auth()->user()->id}}')
+            .listen('NotificationEvent', (e) => {
+                createNoti(e)
+            })
+
+        function createNoti(e) {
+            toastr.success(e.message, 'Notification !')
+            updateTabTitle()
+            playNotificationSound()
+            let notiRead = $("#notification-read-count");
+            notiRead.text(parseInt(notiRead.text()) + 1)
+
+            let notiUnread = $("#notification-unread-count");
+            notiUnread.text(parseInt(notiUnread.text()) + 1)
+            $("#wrap-notification").prepend(`
                     <li>
                         <a href="#">
                             <span class="noti-icon"><i
@@ -555,7 +564,7 @@
                         </a>
                     </li>
                 `)
-            });
+        }
     });
 </script>
 

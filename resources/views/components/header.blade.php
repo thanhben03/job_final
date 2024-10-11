@@ -1,7 +1,7 @@
 @php
     use App\Models\Notification;
 
-    $notifications = Notification::where('user_id', auth()->id())->get();
+    $notifications = Notification::where('user_id', auth()->id())->orderBy('created_at', 'desc')->get();
 
     // Filter unread notifications
     $unreadNotifications = $notifications->where('read', 0);

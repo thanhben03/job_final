@@ -14,3 +14,12 @@ Broadcast::channel('appointment.{userId}', function ($user, $userId) {
 Broadcast::channel('appointment.company.{companyId}', function ($user, $companyId) {
     return (int) $companyId === (int) Session::get('company')->id;
 });
+Broadcast::channel('message.{receiverId}', function ($user, $receiverId) {
+    return (int) $receiverId === (int) $user->id;
+});
+Broadcast::channel('message.company.{receiverId}', function ($user, $receiverId) {
+    return (int) $receiverId === (int) Session::get('company')->id;
+});
+Broadcast::channel('notification.{receiverId}', function ($user, $receiverId) {
+    return (int) $receiverId === (int) $user->id || (int) $receiverId === (int) Session::get('company')->id;
+});

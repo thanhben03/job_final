@@ -25075,3 +25075,12 @@ HOME PAGE 15 START
     -webkit-animation: progress-bar-animate 1s linear infinite;
     animation: progress-bar-animate 1s linear infinite;
 }
+
+.msg-user-info.active {
+    background: #f0f6fe !important;
+}
+
+.msg-user-discription.active {
+    color: black;
+    font-weight: 600;
+}

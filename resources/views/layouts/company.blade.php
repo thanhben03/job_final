@@ -227,6 +227,32 @@
                     </li>
                 `)
             });
+
+        window.Echo.private('notification.' + '{{Session::get('company')->id}}')
+            .listen('NotificationEvent', (e) => {
+                createNoti(e)
+            })
+
+        function createNoti(e) {
+            toastr.success(e.message, 'Notification !')
+            updateTabTitle()
+            playNotificationSound()
+            let notiRead = $("#notification-read-count");
+            notiRead.text(parseInt(notiRead.text()) + 1)
+
+            let notiUnread = $("#notification-unread-count");
+            notiUnread.text(parseInt(notiUnread.text()) + 1)
+            $("#wrap-notification").prepend(`
+                    <li>
+                        <a href="#">
+                            <span class="noti-icon"><i
+                                    class="far fa-bell"></i></span>
+                            <span
+                                class="noti-texting">${e.message}</span>
+                        </a>
+                    </li>
+                `)
+        }
     });
 </script>
 

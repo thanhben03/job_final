@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\AuthenticatedCompanyController;
 use App\Http\Controllers\CandidateController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
@@ -56,6 +57,7 @@ Route::get('/companies/detail-job/{slug}', [CompanyController::class, 'showDetai
 Route::get('/companies/candidate-applied/{job_id}', [CompanyController::class, 'showCandidateAppliedJob'])->name('company.show.detail-job');
 //Route::get('/companies/resume', [CompanyController::class, 'resume'])->name('company.resume');
 Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
+Route::get('/companies/chat', [CompanyController::class, 'showChat'])->name('company.show.chat');
 
 Route::get('/company/login', [AuthenticatedCompanyController::class, 'create'])->name('company.showLogin');
 Route::post('/company/login', [AuthenticatedCompanyController::class, 'store'])->name('company.login');
@@ -70,9 +72,10 @@ Route::post('/appointments/{appointmentId}/update', [AppointmentController::clas
 Route::get('/notification/read-message', [NotificationController::class, 'readMessage'])->name('read.all.message');
 Route::get('/notification/read-message-company', [NotificationController::class, 'readMessageCompany'])->name('read.all.company.message');
 
-Route::get('/ahihi', function () {
-   return view('pusher');
-});
+Route::post('/chat/send-to-user', [ChatController::class, 'sendMessageToUser'])->name('send.chat.to.user');
+Route::post('/chat/send-to-company', [ChatController::class, 'sendMessageToCompany'])->name('send.chat.to.company');
+Route::get('/chat/view-chat/{companyId}', [ChatController::class, 'viewChatForUser'])->name('chat.getChat');
+Route::get('/chat/view-chat-company/{userId}', [ChatController::class, 'viewChatForCompany'])->name('chat.getChat.company');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
