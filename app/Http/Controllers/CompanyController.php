@@ -11,7 +11,9 @@ use App\Enums\WorkTypeEnum;
 use App\Http\Requests\CompanyUpdateRequest;
 use App\Http\Resources\CandidateAppliedResource;
 use App\Http\Resources\CareerResource;
+use App\Http\Resources\ChatResource;
 use App\Models\Career;
+use App\Models\Chat;
 use App\Models\CurriculumVitae;
 use App\Models\District;
 use App\Models\Province;
@@ -20,6 +22,7 @@ use App\Models\User;
 use App\Models\UserCareer;
 use App\Services\Career\CareerServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -125,5 +128,26 @@ class CompanyController extends Controller
         $statusCV = StatusCV::asSelectArray();
 
         return view('pages.companies.candidate-applied', compact('career', 'statusCV'));
+    }
+
+    public function showChat()
+    {
+        $latestMessages = Chat::query()
+            ->select('chats.*')
+            ->where([
+                'company_id' => Session::get('company')->id
+            ])
+            ->join(
+                DB::raw('(SELECT MAX(id) as latest_id FROM chats
+                WHERE company_id = ' . Session::get('company')->id . '
+                GROUP BY user_id) as latest'),
+                'chats.id',
+                '=',
+                'latest.latest_id'
+            )
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $latestMessages = ChatResource::make($latestMessages)->resolve();
+        return view('pages.companies.chat', compact('latestMessages'));
     }
 }

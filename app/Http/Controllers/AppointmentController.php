@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AppointmentAcceptEvent;
+use App\Events\AppointmentEvent;
+use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Session;
 
 class AppointmentController extends Controller
@@ -20,14 +24,19 @@ class AppointmentController extends Controller
         ]);
         $validated['company_id'] = Session::get('company')->id;
 
-//        $existingAppointment = Appointment::where('user_id', $validated['user_id'])
-//            ->first();
-//
+        $existingAppointment = Appointment::where('user_id', $validated['user_id'])
+            ->first();
+
 //        if ($existingAppointment) {
 //            return response()->json(['error' => 'Lịch hẹn đã tồn tại cho ứng viên này!'], 409);
 //        }
-
-        Appointment::create($validated);
+        $appointment = Appointment::query()->create($validated);
+        $message = Notification::query()->create([
+            'user_id' => $validated['user_id'],
+            'message' => 'Bạn có môt lịch hẹn chờ phản hồi từ '.Session::get('company')->company_name,
+            'from_id' => Session::get('company')->id,
+        ]);
+        broadcast(new AppointmentEvent($validated['user_id'], $message->message))->toOthers();
 
         return response()->json(['success' => 'Lịch hẹn đã được tạo thành công!']);
     }
@@ -38,8 +47,14 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::find($id);
         $appointment->status = 'accepted';
-        $appointment->save();
+//        $appointment->save();
 
+        $notification = Notification::query()->create([
+            'company_id' => $appointment->company_id,
+            'message' => "Ứng viên [". $appointment->user->fullname."] đã đồng ý lịch hẹn của bạn !",
+            'from_id' => $appointment->user_id,
+        ]);
+        broadcast(new AppointmentAcceptEvent($appointment->company_id, $notification->message))->toOthers();
         return response()->json(['success' => 'Bạn đã đồng ý cuộc hẹn.']);
     }
 

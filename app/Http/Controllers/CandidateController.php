@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CareerResource;
+use App\Http\Resources\ChatResource;
 use App\Models\Career;
+use App\Models\Chat;
 use App\Models\CurriculumVitae;
 use App\Models\ReportedUser;
 use App\Models\SaveCareer;
@@ -435,7 +437,19 @@ class CandidateController extends Controller
 
     public function showChat()
     {
-        return view('pages.candidates.chat');
+        $latestMessages = Chat::query()
+            ->select('chats.*')
+            ->where('user_id', auth()->user()->id)
+            ->join(
+                DB::raw('(SELECT MAX(id) as latest_id FROM chats WHERE user_id = ' . auth()->user()->id . ' GROUP BY company_id) as latest'),
+                'chats.id',
+                '=',
+                'latest.latest_id'
+            )
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $latestMessages = ChatResource::make($latestMessages)->resolve();
+        return view('pages.candidates.chat', compact('latestMessages'));
     }
 
 }

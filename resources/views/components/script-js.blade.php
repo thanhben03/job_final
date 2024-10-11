@@ -21,3 +21,4 @@
 <script  src="{{asset('/js/swiper-bundle.min.js')}}"></script><!-- Swiper JS -->
 <script  src="{{asset('/js/custom.js')}}"></script><!-- CUSTOM FUCTIONS  -->
 <script  src="{{asset('/js/toastr.min.js')}}"></script><!-- CUSTOM FUCTIONS  -->
+<script src="{{asset('/js/pusher.min.js')}}"></script>

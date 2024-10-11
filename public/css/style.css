@@ -12427,10 +12427,16 @@ strong {
   padding: 20px;
 }
 
+.noti-list {
+    height: 318px;
+    overflow-y: auto;
+}
+
 .noti-list ul {
   list-style: none;
   margin-bottom: 10px;
 }
+
 .noti-list ul li {
   position: relative;
   padding: 5px 15px 5px 20px;
@@ -25068,4 +25074,13 @@ HOME PAGE 15 START
     transition: width 200ms ease;
     -webkit-animation: progress-bar-animate 1s linear infinite;
     animation: progress-bar-animate 1s linear infinite;
+}
+
+.msg-user-info.active {
+    background: #f0f6fe !important;
+}
+
+.msg-user-discription.active {
+    color: black;
+    font-weight: 600;
 }
