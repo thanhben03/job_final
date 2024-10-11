@@ -40,6 +40,7 @@ Route::post('/candidates/report', [CandidateController::class, 'reportCandidate'
 Route::get('/candidates/review-cv', [CandidateController::class, 'showReviewCV'])->name('candidate.show.review-cv');
 Route::post('/candidates/review-cv', [CandidateController::class, 'reviewCV'])->name('candidate.review-cv');
 Route::get('/candidates/appointment', [CandidateController::class, 'showAppointment'])->name('candidate.show.appointment');
+Route::get('/candidates/chat', [CandidateController::class, 'showChat'])->name('candidate.show.chat');
 
 
 
