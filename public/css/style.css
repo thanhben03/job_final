@@ -12427,10 +12427,16 @@ strong {
   padding: 20px;
 }
 
+.noti-list {
+    height: 318px;
+    overflow-y: auto;
+}
+
 .noti-list ul {
   list-style: none;
   margin-bottom: 10px;
 }
+
 .noti-list ul li {
   position: relative;
   padding: 5px 15px 5px 20px;

@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+@php use Illuminate\Support\Facades\Session; @endphp
+    <!DOCTYPE html>
 
 <html lang="en">
 
@@ -7,14 +8,14 @@
     <!-- META -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="keywords" content="" />
-    <meta name="author" content="" />
-    <meta name="robots" content="" />
-    <meta name="description" content="" />
+    <meta name="keywords" content=""/>
+    <meta name="author" content=""/>
+    <meta name="robots" content=""/>
+    <meta name="description" content=""/>
 
     <!-- FAVICONS ICON -->
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png"/>
 
     <!-- PAGE TITLE HERE -->
     <title>jobzilla Template | dashboard</title>
@@ -22,9 +23,9 @@
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <x-head />
+    <x-head/>
 
-
+    @vite('resources/js/bootstrap.js')
 
 
 </head>
@@ -44,7 +45,7 @@
 
 <div class="page-wraper">
 
-    <x-company.header />
+    <x-company.header/>
     <!-- Sidebar Holder -->
     <nav id="sidebar-admin-wraper">
         <div class="page-logo">
@@ -72,8 +73,10 @@
                            @endif">
                     <a href="javascript:;"><i class="fa fa-suitcase"></i><span class="admin-nav-text">Jobs</span></a>
                     <ul class="sub-menu">
-                        <li> <a href="{{route('company.show.post-job')}}"><span class="admin-nav-text">Post a New Jobs</span></a></li>
-                        <li> <a href="{{route('company.manage-job')}}"><span class="admin-nav-text">Manage Jobs</span></a></li>
+                        <li><a href="{{route('company.show.post-job')}}"><span
+                                    class="admin-nav-text">Post a New Jobs</span></a></li>
+                        <li><a href="{{route('company.manage-job')}}"><span
+                                    class="admin-nav-text">Manage Jobs</span></a></li>
                     </ul>
                 </li>
                 <li>
@@ -88,10 +91,11 @@
                 </li>
 
                 <li>
-                    <a href="javascript:;"><i class="fa fa-envelope"></i><span class="admin-nav-text">Messages <sup class="twm-msg-noti">5</sup></span></a>
+                    <a href="javascript:;"><i class="fa fa-envelope"></i><span class="admin-nav-text">Messages <sup
+                                class="twm-msg-noti">5</sup></span></a>
                     <ul class="sub-menu">
-                        <li> <a href="dash-messages.html"><span class="admin-nav-text">MSG Style-1</span></a></li>
-                        <li> <a href="dash-messages_2.html"><span class="admin-nav-text">MSG Style-2</span></a></li>
+                        <li><a href="dash-messages.html"><span class="admin-nav-text">MSG Style-1</span></a></li>
+                        <li><a href="dash-messages_2.html"><span class="admin-nav-text">MSG Style-2</span></a></li>
                     </ul>
                 </li>
 
@@ -100,7 +104,8 @@
                 </li>
 
                 <li>
-                    <a href="dash-my-profile.html"><i class="fa fa-user"></i><span class="admin-nav-text">My Profile</span></a>
+                    <a href="dash-my-profile.html"><i class="fa fa-user"></i><span
+                            class="admin-nav-text">My Profile</span></a>
                 </li>
 
                 <li>
@@ -108,11 +113,13 @@
                 </li>
 
                 <li>
-                    <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#delete-dash-profile"><i class="fa fa-trash-alt"></i><span class="admin-nav-text">Delete Profile</span></a>
+                    <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#delete-dash-profile"><i
+                            class="fa fa-trash-alt"></i><span class="admin-nav-text">Delete Profile</span></a>
                 </li>
 
                 <li>
-                    <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#logout-dash-profile"><i class="fa fa-share-square"></i><span class="admin-nav-text">Logout</span></a>
+                    <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#logout-dash-profile"><i
+                            class="fa fa-share-square"></i><span class="admin-nav-text">Logout</span></a>
                 </li>
 
             </ul>
@@ -122,7 +129,8 @@
     @yield('content')
 
     <!--Delete Profile Popup-->
-    <div class="modal fade twm-model-popup" id="delete-dash-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  aria-hidden="true">
+    <div class="modal fade twm-model-popup" id="delete-dash-profile" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -141,7 +149,8 @@
 
 
     <!--Logout Profile Popup-->
-    <div class="modal fade twm-model-popup" id="logout-dash-profile" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal fade twm-model-popup" id="logout-dash-profile" data-bs-backdrop="static" data-bs-keyboard="false"
+         tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -162,10 +171,64 @@
 </div>
 
 
+<audio id="notification-sound" src="{{asset('/sound/ding.mp3')}}"></audio>
+
+
+
 <!-- JAVASCRIPT  FILES ========================================= -->
-<x-script-js />
+<x-script-js/>
 
 @stack('js')
+
+<script>
+    function playNotificationSound() {
+        const audio = document.getElementById('notification-sound');
+            /* the audio is now playable; play it if permissions allow */
+        var resp = audio.play();
+
+        if (resp!== undefined) {
+            resp.then(_ => {
+                audio.play()
+            }).catch(error => {
+                //show error
+            });
+        }
+        console.log('play sound')
+
+    }
+    // Function to update the browser tab title
+    function updateTabTitle(message) {
+        const originalTitle = document.title;
+        document.title = `(1) Bạn có một thông báo mới !`;
+
+        // Restore the original title after a few seconds (optional)
+        setTimeout(() => {
+            document.title = originalTitle;
+        }, 2000);
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        window.Echo.private('appointment.company.' + '{{Session::get('company')->id}}')
+            .listen('AppointmentAcceptEvent', (e) => {
+                toastr.success('Bạn có một thông báo mới !', 'Notification!');
+                updateTabTitle();
+                playNotificationSound()
+                let notiRead = $("#notification-read-count");
+                notiRead.text(parseInt(notiRead.text()) + 1)
+                let notiUnread = $("#notification-unread-count");
+                notiUnread.text(parseInt(notiUnread.text()) + 1)
+                $("#wrap-notification").append(`
+                    <li>
+                        <a href="#">
+                            <span class="noti-icon"><i
+                                    class="far fa-bell"></i></span>
+                            <span
+                                class="noti-texting">${e.message}</span>
+                        </a>
+                    </li>
+                `)
+            });
+    });
+</script>
 
 </body>
 

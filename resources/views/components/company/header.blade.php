@@ -1,4 +1,16 @@
-@php use Illuminate\Support\Facades\Session; $company = Session::get('company') @endphp
+@php
+    use Illuminate\Support\Facades\Session; $company = Session::get('company');
+    use App\Models\Notification;
+
+    $notifications = Notification::where('company_id', $company->id)->get();
+
+    // Filter unread notifications
+    $unreadNotifications = $notifications->where('read', 0);
+
+    // Filter read notifications
+    $readNotifications = $notifications->where('read', 1);
+
+@endphp
 <header id="header-admin-wrap" class="header-admin-fixed">
 
     <!-- Header Start -->
@@ -96,46 +108,30 @@
                     <li class="header-widget dashboard-noti-dropdown">
 
                         <div class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle jobzilla-admin-notification"
+                            <a href="javascript:;" onclick="readNoti()"
+                               class="dropdown-toggle jobzilla-admin-notification"
                                id="ID-NOTI_dropdown" data-bs-toggle="dropdown">
                                 <i class="far fa-bell"></i>
-                                <span class="notification-animate">8</span>
+                                <span class="notification-animate"
+                                      id="notification-unread-count">{{count($unreadNotifications)}}</span>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="ID-NOTI_dropdown">
-                                <div class="dashboard-widgets-header">You have 7 notifications</div>
+                            <div class="dropdown-menu" style="left: -142px !important;"
+                                 aria-labelledby="ID-NOTI_dropdown">
+                                <div class="dashboard-widgets-header">You
+                                    have <span id="notification-read-count">{{count($readNotifications)}}</span> notifications
+                                </div>
                                 <div class="noti-list dashboard-widget-scroll">
-                                    <ul>
-
-                                        <li>
-                                            <a href="#">
-                                                <span class="noti-icon"><i class="far fa-bell"></i></span>
-                                                <span class="noti-texting">Devid applied for <b>Webdesigner.</b> </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <span class="noti-icon"><i class="far fa-bell"></i></span>
-                                                <span class="noti-texting">Nikol sent you a message. </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <span class="noti-icon"><i class="far fa-bell"></i></span>
-                                                <span class="noti-texting">lucy bookmarked your <b>SEO Expert</b> Job! </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <span class="noti-icon"><i class="far fa-bell"></i></span>
-                                                <span class="noti-texting">Your job for <b>teacher</b> has been approved! </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <span class="noti-icon"><i class="far fa-bell"></i></span>
-                                                <span class="noti-texting">Thor applied for <b>Team Leader</b>. </span>
-                                            </a>
-                                        </li>
+                                    <ul id="wrap-notification">
+                                        @foreach($notifications as $noti)
+                                            <li>
+                                                <a href="#">
+                                                                        <span class="noti-icon"><i
+                                                                                class="far fa-bell"></i></span>
+                                                    <span
+                                                        class="noti-texting">{{$noti->message}}</span>
+                                                </a>
+                                            </li>
+                                        @endforeach
 
                                     </ul>
 
@@ -191,3 +187,16 @@
     <!-- Header End -->
 
 </header>
+@push('js')
+    <script>
+        function readNoti() {
+            $.ajax({
+                type: 'GET',
+                url: '{{route('read.all.company.message')}}',
+                success: function () {
+                    $("#notification-unread-count").text('0')
+                }
+            })
+        }
+    </script>
+@endpush

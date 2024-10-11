@@ -7,6 +7,7 @@ use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -65,7 +66,12 @@ Route::post('/appointments/{id}/accept', [AppointmentController::class, 'acceptA
 Route::post('/appointments/{id}/reject', [AppointmentController::class, 'rejectAppointment']);
 Route::post('/appointments/{appointmentId}/update', [AppointmentController::class, 'updateAppointment'])->name('appointment.update.time');
 
+Route::get('/notification/read-message', [NotificationController::class, 'readMessage'])->name('read.all.message');
+Route::get('/notification/read-message-company', [NotificationController::class, 'readMessageCompany'])->name('read.all.company.message');
 
+Route::get('/ahihi', function () {
+   return view('pusher');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

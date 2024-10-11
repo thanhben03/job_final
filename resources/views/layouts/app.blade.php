@@ -52,6 +52,8 @@
             background-color: #f1f1f1;
         }
     </style>
+    @vite('resources/js/bootstrap.js')
+
 </head>
 
 <body>
@@ -473,6 +475,7 @@
     </div>
     <!--Model Popup Section End-->
 
+    <audio id="notification-sound" src="{{asset('/sound/ding.mp3')}}"></audio>
 
 </div>
 
@@ -480,10 +483,81 @@
 
 <!-- JAVASCRIPT  FILES ========================================= -->
 <x-script-js />
+<script>
+    // Enable pusher logging - don't include this in production
+    {{--Pusher.logToConsole = true;--}}
 
+    {{--var pusher = new Pusher('9c0f2c0b02f71527fa5f', {--}}
+    {{--    cluster: 'ap1',--}}
+    {{--    channelAuthorization: {--}}
+    {{--        endpoint: `https://127.0.0.1:8001/broadcasting/auth`,--}}
+    {{--        headers: {--}}
+    {{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),--}}
+    {{--            "Access-Control-Allow-Origin": "*"--}}
+    {{--        }--}}
+    {{--    }--}}
+    {{--});--}}
+
+    {{--let channel = pusher.subscribe('private-appointment.' + '{{auth()->user()->id}}');--}}
+
+    {{--channel.bind('App\\Events\\AppointmentEvent', function(data) {--}}
+    {{--    toastr.success('Bạn có một tin nhắn mới từ admin', 'Notification !')--}}
+    {{--});--}}
+</script>
 
 @stack('js')
 
+<script>
+    function playNotificationSound() {
+        const audio = document.getElementById('notification-sound');
+        /* the audio is now playable; play it if permissions allow */
+        var resp = audio.play();
+
+        if (resp!== undefined) {
+            resp.then(_ => {
+                audio.play()
+            }).catch(error => {
+                //show error
+            });
+        }
+        console.log('play sound')
+
+    }
+    function updateTabTitle(message) {
+        const originalTitle = document.title;
+        document.title = `(1) Bạn có một thông báo mới !`;
+
+        // Restore the original title after a few seconds (optional)
+        setTimeout(() => {
+            document.title = originalTitle;
+        }, 5000);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+
+
+        window.Echo.private('appointment.' + '{{auth()->user()->id}}')
+            .listen('AppointmentEvent', (e) => {
+                toastr.success(e.message, 'Notification!');
+                updateTabTitle()
+                playNotificationSound()
+                let notiRead = $("#notification-read-count");
+                notiRead.text(parseInt(notiRead.text()) + 1)
+
+                let notiUnread = $("#notification-unread-count");
+                notiUnread.text(parseInt(notiUnread.text()) + 1)
+                $("#wrap-notification").append(`
+                    <li>
+                        <a href="#">
+                            <span class="noti-icon"><i
+                                    class="far fa-bell"></i></span>
+                            <span
+                                class="noti-texting">${e.message}</span>
+                        </a>
+                    </li>
+                `)
+            });
+    });
+</script>
 
 
 </body>

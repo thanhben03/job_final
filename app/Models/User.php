@@ -57,4 +57,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(SaveCareer::class, 'user_id', 'id');
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id', 'id');
+    }
 }
