@@ -1,5 +1,5 @@
 @php
-    use Illuminate\Support\Facades\Session; $company = Session::get('company');
+    use Illuminate\Support\Facades\Session; $company = auth()->guard('company')->user();
     use App\Models\Notification;
 
     $notifications = Notification::where('company_id', $company->id)->get();

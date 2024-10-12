@@ -11,13 +11,14 @@ use App\Models\Company;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class ChatController extends Controller
 {
     public function sendMessageToUser(Request $request)
     {
-        $company = Company::query()->where('id', '=',Session::get('company')->id)->first();
+        $company = Company::query()->where('id', '=',Auth::guard('company')->user()->id)->first();
         $message = $request->message;
 
         $user = User::query()->find($request->user_id);
@@ -100,7 +101,7 @@ class ChatController extends Controller
         Chat::query()
             ->where([
                 'user_id' => $userId,
-                'company_id' => Session::get('company')->id,
+                'company_id' => Auth::guard('company')->user()->id,
                 'sender' => 'user'
             ])
             ->latest('id') // Sort by 'id' in descending order and take the latest record
@@ -108,10 +109,9 @@ class ChatController extends Controller
             ->update(['read' => 1]); // Update the 'read' status
 
         // Retrieve all messages after the update
-        $messages = Chat::where('company_id', Session::get('company')->id)
-            ->where('user_id', auth()->id())
+        $messages = Chat::where('company_id', Auth::guard('company')->user()->id)
+            ->where('user_id', $userId)
             ->get();
-
         $messages = ChatResource::make($messages)->resolve();
         return response()->json($messages);
     }

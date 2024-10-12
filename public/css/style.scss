@@ -6,7 +6,7 @@ template.
 This files [Table of contents] are outlined below
 ---------------------------------------------------
 ** - ========================
-	 GENERAL 
+	 GENERAL
 	 ========================
 ** - Title separators
 ** - Title separators
@@ -79,8 +79,8 @@ This files [Table of contents] are outlined below
 ** - Work Experience
 2** - Social Share
 ** - Employer detail
-** - Home Page 2 Banner Section Css Start 
-** - Home Page 1 Banner Section Css Start 
+** - Home Page 2 Banner Section Css Start
+** - Home Page 1 Banner Section Css Start
 ** - Side Map
 ** - Side Map2
 ** - Sidebar Info
@@ -93,11 +93,11 @@ This files [Table of contents] are outlined below
 ** - Dashboard Header
 ** - My Account css
 ** - Dashboard message Dropdown
-** - Dashboard Notification Dropdown 
+** - Dashboard Notification Dropdown
 ** - Dashboard Message
 ** - Dashboard Notification
-** - Admin Nav 
-** - Form Elements 
+** - Admin Nav
+** - Form Elements
 ** - Dashboard Card
 ** - Upload Video Button
 ** - dashboard List
@@ -110,11 +110,11 @@ This files [Table of contents] are outlined below
 ** - msg user list side button
 ** - Chart
 ** - Dashboard candidates style
-** - Data Table Candidets 
+** - Data Table Candidets
 ** - default table
-** - Data Table Candidets 
+** - Data Table Candidets
 ** - Data Table
-** - Model Popup 
+** - Model Popup
 ---------------------------------------------------
 */
 
@@ -134,7 +134,7 @@ This files [Table of contents] are outlined below
 
 /*Title separators*/
 
-.wt-small-separator{  
+.wt-small-separator{
 	font-family:$heading-font;
 	margin-bottom: 10px;
 	position: relative;
@@ -178,7 +178,7 @@ This files [Table of contents] are outlined below
    &.left{
 		&.wt-small-separator-outer{text-align:left;
   			h2{ margin-bottom:35px;
-				
+
 				@include breakpoint_991{
 					font-size: 30px;
 				}
@@ -190,7 +190,7 @@ This files [Table of contents] are outlined below
 					font-size: 22px;
 			    }
 			}
-			p{margin-bottom:40px;}			
+			p{margin-bottom:40px;}
 		}
 	}
 	&.center{
@@ -215,11 +215,11 @@ This files [Table of contents] are outlined below
 				}
 				@include breakpoint_575{
 					font-size:22px;
-					
+
 				}
 			}
 		}
-			
+
 	}
 }
 
@@ -269,7 +269,7 @@ This files [Table of contents] are outlined below
 		border-right: 0px solid transparent;
 		border-top: 40px solid #b3c2d6;
 	}
-	
+
 }
 
 .counter-outer-two{
@@ -296,7 +296,7 @@ This files [Table of contents] are outlined below
 			font-size: 30px;
 			line-height: 30px;
 		}
-		@include breakpoint_768{ 
+		@include breakpoint_768{
 			font-size: 24px;
 		}
 	}
@@ -346,7 +346,7 @@ This files [Table of contents] are outlined below
 		}
 	}
 	.client-logo{
-		a{ 
+		a{
 			img{
 				width: auto;
 				height: 70px;
@@ -364,7 +364,7 @@ This files [Table of contents] are outlined below
 		margin-bottom: 30px;
 	}
 	.client-logo{
-		max-width: 130px; 
+		max-width: 130px;
 		margin-left: auto;
 		margin-right: auto;
 		a{
@@ -375,7 +375,7 @@ This files [Table of contents] are outlined below
 				width: auto;
 				height: auto;
 				filter: grayscale(100%); transition: $transition;
-				
+
 			}
 			&:hover{
 				img{
@@ -453,7 +453,7 @@ This files [Table of contents] are outlined below
 	.logo-footer{
 		margin-bottom: 25px;
 		max-width: 174px;
-		
+
 	}
 	.footer-top{
 		border-top: 1px solid rgba(255,255,255,0.1);
@@ -521,13 +521,13 @@ This files [Table of contents] are outlined below
 		color: $clr-white;
 		position: relative;
 		z-index: 1;
-		font-weight: 400;		
+		font-weight: 400;
 		.footer-bottom-info{
 			display: flex;
 			justify-content: space-between;
 			padding: 30px 0px;
 			align-items: center;
-			
+
 			@include breakpoint_991{
 				display: block;
 			}
@@ -605,7 +605,7 @@ This files [Table of contents] are outlined below
 			p{
 				margin-bottom: 0px;
 				font-size: 16px;
-				
+
 				span{
 					margin-right: 5px;
 					font-weight: 500;
@@ -655,13 +655,13 @@ This files [Table of contents] are outlined below
 		color: $clr-white;
 		position: relative;
 		z-index: 1;
-		font-weight: 400;		
+		font-weight: 400;
 		.footer-bottom-info{
 			display: flex;
 			justify-content: space-between;
 			padding: 30px 0px;
 			align-items: center;
-			
+
 			@include breakpoint_991{
 				display: block;
 			}
@@ -688,7 +688,7 @@ This files [Table of contents] are outlined below
 					}
 				}
 			}
-		}	
+		}
 	}
 }
 
@@ -718,13 +718,13 @@ This files [Table of contents] are outlined below
 		width: 90px;
 		float: left;
 		@include breakpoint_1024{
-			width: 60px;	
+			width: 60px;
 		}
 	}
 	.wt-post-info {
 		margin-left: 105px;
 		@include breakpoint_1024{
-			margin-left: 70px;	
+			margin-left: 70px;
 		}
 		.wt-post-header{
 			margin-bottom: 6px;
@@ -824,19 +824,19 @@ button{
 		background-color: $clr-light-purple;
 		position: absolute;
 		@include breakpoint_575{
-			top: -270px;	
+			top: -270px;
 		}
 
 	}
 	&.circle-yellow{
 		&:after{
 			background-color: #faf1de;
-		}	
+		}
 	}
 	&.circle-pink{
 		&:after{
 			background-color: #f3e9f5;
-		}	
+		}
 	}
 
 	.p-table-title{
@@ -897,7 +897,7 @@ button{
 				padding-right: 15px;
 				@include breakpoint_991{
 					font-size: 36px;
-					line-height: 26px;	
+					line-height: 26px;
 				}
 			}
 			p{
@@ -996,7 +996,7 @@ button{
 			padding-right: 0px;
 			&:after {display: none;}
 		}
-		&:first-child {	
+		&:first-child {
 			a{
 				i{font-size: 18px; vertical-align: text-top;}
 			}
@@ -1057,7 +1057,7 @@ button{
 				padding: 20px;
 			}
 		}
-		
+
 		&:before{
 			content: '';
 			position: absolute;
@@ -1073,9 +1073,9 @@ button{
 				display: none;
 			}
 		}
-		
+
 	}
-	
+
 	.contact-info-section{
 		.c-info-column{
 			padding:0px 0px 0px 100px;
@@ -1112,7 +1112,7 @@ button{
 					height: 50px;
 					line-height: 50px;
 				}
-				
+
 			}
 			span{
 				font-weight: 600;
@@ -1147,7 +1147,7 @@ button{
 			 }
 		}
 	}
-	
+
 }
 
 .cons-contact-form{
@@ -1162,11 +1162,11 @@ button{
 			background-color: $clr-gray;
 		}
 	}
-	
+
 	textarea.form-control{
 		padding-top:15px;
 		height: 80px;
-		margin-bottom:40px; 
+		margin-bottom:40px;
 		resize: none;
 	}
 }
@@ -1220,7 +1220,7 @@ button{
 						}
 					}
 				}
-				&.next{ 
+				&.next{
 					a {
 						width: 50px;
 						height: 50px;
@@ -1383,7 +1383,7 @@ button{
 					background: none;
 					font-size: 14px;
 					font-weight: 600;
-				}			
+				}
 
 			}
 		}
@@ -1403,7 +1403,7 @@ button{
 			float: left;
 			img{
 				border-radius: 10px;
-			}		
+			}
 		}
 
 		.wt-post-info {
@@ -1416,12 +1416,12 @@ button{
 				color: $clr-primary;
 				font-size: 14px;
 				display: block;
-			}	
+			}
 			.post-title {
 				margin-top: 0px;
 				font-size: 14px;
 				display: block;
-			}		
+			}
 		}
 
 	}
@@ -1669,19 +1669,19 @@ ol.comment-list {
 						padding-left: 10px;
 					}
 				}
-				
+
 			}
 		}
-		
+
 		.wt-post-info{padding-top: 0px;}
 		.post-title{
 			font-size: 46px;
 			margin-bottom: 15px;
 				@include breakpoint-991{
-					font-size: 30px;	
+					font-size: 30px;
 				}
 				@include breakpoint-575{
-					font-size: 22px;	
+					font-size: 22px;
 				}
 		}
 		.twm-blog-s-title{
@@ -1717,7 +1717,7 @@ ol.comment-list {
 							transform: translateY(-50%);
 						}
 						a{
-							color: $clr-white;	
+							color: $clr-white;
 						}
 						&:last-child{
 							&:after{
@@ -1737,7 +1737,7 @@ ol.comment-list {
 			overflow: hidden;
 			font-family: $common-font;
 			@include breakpoint-400{
-				padding: 30px;	
+				padding: 30px;
 			}
 			p{
 				font-size: 16px;
@@ -1755,7 +1755,7 @@ ol.comment-list {
 					top: -20px;
 				}
 			}
-			
+
 			strong{
 				text-transform: uppercase;
 				font-size: 16px;
@@ -1833,9 +1833,9 @@ ol.comment-list {
 			display: block;
 		}
 		span{
-			display: block; 
-			color: $clr-primary; 
-			font-size: 14px; 
+			display: block;
+			color: $clr-primary;
+			font-size: 14px;
 			font-weight: 500;
 			padding-bottom: 10px;
 		}
@@ -1876,7 +1876,7 @@ ol.comment-list {
 					line-height: 0.70;
 					color: $clr-primary;
 				}
-			
+
 			}
 			.nav-post-meta{
 				padding-right: 50px;
@@ -1915,7 +1915,7 @@ ol.comment-list {
 				flex-direction: row-reverse;
 				text-align: right;
 				.nav-post-meta{
-					padding-left: 50px; 
+					padding-left: 50px;
 					padding-right: 0px;
 					@include breakpoint-767{
 						padding-left: 15px;
@@ -1991,7 +1991,7 @@ ol.comment-list {
 		&:after{
 			content: "";
 			animation: 1.15s infinite linear;
-			width: 100%; 
+			width: 100%;
 			height: 100%;
 			border-radius: 50%;
 			position: absolute;
@@ -2039,7 +2039,7 @@ ol.comment-list {
 			height: 28px;
 			line-height: 28px;
 			border-radius: 50%;
-			
+
 		}
 		@include breakpoint-575{
 			padding-left: 30px;
@@ -2066,7 +2066,7 @@ ol.comment-list {
 		&:last-child{
 			margin-bottom: 0px;
 		}
-		i{  
+		i{
 			color:  $clr-primary;
 			line-height: 26px;
 			position: absolute;
@@ -2244,11 +2244,11 @@ ol.comment-list {
 		&:after {
 			transform: rotate(45deg);
 		}
-		
+
 		&:before {
 			transform: rotate(-45deg);
 		}
-		
+
 		&:hover:after,
 		&:hover:before {
 			cursor: pointer;
@@ -2308,7 +2308,7 @@ ol.comment-list {
 		display: flex;
 		flex-wrap: wrap;
 		margin: 0px;
-	
+
 		li{
 			width: 25%;
 			border-right: 4px solid $clr-white;
@@ -2377,7 +2377,7 @@ ol.comment-list {
 		list-style: none;
 		display: flex;
 		flex-wrap: wrap;
-		
+
 		[class*='col-']{
 			margin-bottom: 30px;
 			.tw-service-gallery-thumb{
@@ -2453,7 +2453,7 @@ ol.comment-list {
 	}
 }
 
-.play-now-video{ 
+.play-now-video{
 	.icon {
 		position: absolute;
 		left: 50%;
@@ -2487,7 +2487,7 @@ ol.comment-list {
 		border-radius: 50%;
 		box-shadow:0 0 0 0 rgb(255, 255, 255);
 		animation: ripple-video 3s infinite;
-		z-index: 1;	
+		z-index: 1;
 	}
 	.ripple:before {
 		animation-delay: .9s;
@@ -2498,9 +2498,9 @@ ol.comment-list {
 		animation-delay: .6s;
 		content: "";
 		position: absolute;
-	} 
+	}
 }
-	
+
 @keyframes ripple-video {
 	70% {box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);}
 	100% {box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);}
@@ -2623,11 +2623,11 @@ ol.comment-list {
 	@include breakpoint-991{
 		margin-top: 30px;
 	}
-	.row{ 
+	.row{
 		[class*="col-"]:nth-child(odd) {
 			margin-top: -30px;
 		}
-	} 
+	}
 }
 
 .twm-w-process-steps-2{
@@ -2689,14 +2689,14 @@ ol.comment-list {
 }
 .twm-testimonial-1{
 	position: relative;
-	
+
 	.twm-testimonial-1-content{
 		border-radius: 10px;
 		display: table;
 		width: 100%;
 		position: relative;
 		z-index: 1;
-		
+
 		&:after{
 			position: absolute;
 			right: 0px;
@@ -2708,7 +2708,7 @@ ol.comment-list {
 			z-index: -1;
 			border-radius: 10px;
 			@include breakpoint_575{
-				left: 0px;				
+				left: 0px;
 			}
 		}
 		.twm-testi-media{
@@ -2767,11 +2767,11 @@ ol.comment-list {
 						right: -30px;
 						top: 50%;
 						transform: translateY(-50%);
-						
+
 					}
 				}
 			}
-		
+
 		}
 
 		@include breakpoint_575{
@@ -2853,7 +2853,7 @@ ol.comment-list {
 					}
 				}
 			}
-		
+
 		}
 	}
 }
@@ -2880,14 +2880,14 @@ ol.comment-list {
 			border: 1px solid #f7f7f7;
 		}
 	}
-	
+
 }
 .twm-blog-post-1-outer{
 	background-color: $clr-white;
 	border-radius: 10px;
 	padding: 20px;
 	box-shadow: 0px 0px 25px rgba(180, 205, 237, 0.70);
-	
+
 	margin-bottom: 30px;
 	margin-top: 20px;
 	&.shadow-none{box-shadow: none;}
@@ -2904,7 +2904,7 @@ ol.comment-list {
 	.wt-post-info{
 		position: relative;
 		z-index: 1;
-		
+
 		.wt-post-meta{
 			position: relative;
 			margin-bottom: 20px;
@@ -2954,7 +2954,7 @@ ol.comment-list {
 						a{
 							color: $clr-primary;
 							display: inline-block;
-							
+
 						}
 					}
 				}
@@ -2991,7 +2991,7 @@ ol.comment-list {
 		padding: 25px 30px;
 		margin: -50px 10px 0px 10px;
 		position: relative;
-		
+
 		.wt-post-meta{
 			position: relative;
 			margin-bottom: 20px;
@@ -3059,7 +3059,7 @@ ol.comment-list {
 					left:20px;
 					top: 20px;
 				}
-			} 
+			}
 		}
 	}
 }
@@ -3152,7 +3152,7 @@ ol.comment-list {
 			color: #2db346;
 			font-size: 14px;
 		}
-		
+
 	}
 }
 
@@ -3255,7 +3255,7 @@ ol.comment-list {
 			margin-top: 10px;
 		}
 	}
-	
+
 }
 
 /*Employer List*/
@@ -3470,7 +3470,7 @@ ol.comment-list {
 		border-radius: 50%;
 		position: absolute;
 	}
-	
+
 }
 
 .twm-explore-media-wrap{
@@ -3483,15 +3483,15 @@ ol.comment-list {
 			margin-right: auto;
 			text-align: center;
 		}
-		
+
 		@include breakpoint-575{
-			
+
 			margin-right: 0px;
 			img{
 				width: 100%;
 			}
 		}
-		
+
 	}
 }
 
@@ -3677,15 +3677,15 @@ ol.comment-list {
 				font-weight: 600;
 				font-family: $heading-font;
 			}
-		
+
 			.icon-content-info{
 				color: $clr-white;
 				margin-bottom: 0px;
 				font-size: 16px;
 			}
-		
+
 		}
-	} 
+	}
 	.twm-explore-media-wrap2{
 		position: relative;
 		z-index: 1;
@@ -3711,7 +3711,7 @@ ol.comment-list {
 			right: -170px;
 			bottom:-40px;
 			@include breakpoint-600{
-				width:100%;			
+				width:100%;
 			}
 			@include breakpoint-991{
 				position: inherit;
@@ -3722,11 +3722,11 @@ ol.comment-list {
 			img{
 				width: auto;
 				@include breakpoint-600{
-					width:95%;				
+					width:95%;
 				}
 			}
 		}
-	} 
+	}
 }
 
 /*Explore New Life*/
@@ -3799,7 +3799,7 @@ ol.comment-list {
 				display: none;
 			}
 		}
-	
+
 		.twm-title-small{
 			margin-bottom: 10px;
 			color: $clr-dark;
@@ -3851,7 +3851,7 @@ ol.comment-list {
 }
 
 .twm-job-categories-section{
-	
+
 	margin-bottom: 30px;
 	&:after{
 		width: 100%;
@@ -3863,7 +3863,7 @@ ol.comment-list {
 		position: absolute;
 		z-index: -1;
 		@include breakpoint-991{
-			left: 0px;	
+			left: 0px;
 		}
 	}
 }
@@ -3886,7 +3886,7 @@ ol.comment-list {
 		padding: 30px 20px;
 	}
 	@include breakpoint_991{
-		
+
 		margin:0px 20px;
 	}
 	&:after{
@@ -3942,7 +3942,7 @@ ol.comment-list {
 			line-height: 70px;
 			display: flex;
 		}
-		
+
 	}
 	.twm-content{
 		.twm-jobs-available{
@@ -4032,9 +4032,9 @@ ol.comment-list {
 		align-items: center;
 		justify-content: center;
 		margin: 0px auto 30px;
-		
+
 		img{
-			width: auto; 
+			width: auto;
 			transition: $transition;
 		}
 		[class*='flaticon-']{
@@ -4098,10 +4098,10 @@ ol.comment-list {
 		}
 		.twm-media{
 			img{
-				transform: scale(0.8); 
+				transform: scale(0.8);
 			}
 			[class*='flaticon-']{
-				transform: scale(0.8); 
+				transform: scale(0.8);
 			}
 			&:after{
 				transform: translateX(-50%) translateY(-50%) scale(1);
@@ -4186,7 +4186,7 @@ ol.comment-list {
 		z-index: 5;
 		line-height: 34px;
 		text-align: center;
-		
+
 		font-size: 18px;
 	}
 }
@@ -4225,7 +4225,7 @@ ol.comment-list {
 		}
 		.twm-bnr-popular-search{margin-top: 10px;}
 	}
-	
+
 }
 
 /*trusted Logo*/
@@ -4246,13 +4246,13 @@ ol.comment-list {
 	.twm-trusted-logo{
 		a{
 			@include breakpoint-991{
-				text-align: center;	
+				text-align: center;
 				img{
 					margin: 0px auto;
 				}
 			}
-			
-			
+
+
 		}
 	}
 }
@@ -4303,7 +4303,7 @@ ol.comment-list {
 	  transform: translateY(-100px);
 	}
 }
-  
+
 .scale-up-center {
 	animation: scale-up-center 2s ease-in-out infinite alternate-reverse both;
 }
@@ -4351,7 +4351,7 @@ ol.comment-list {
 				}
 			}
 		}
-		
+
 	}
 }
 
@@ -4393,7 +4393,7 @@ ol.comment-list {
 				}
 			}
 		}
-		
+
 	}
 }
 
@@ -4510,8 +4510,8 @@ ol.comment-list {
 			display: block;
 		}
 		.woocommerce-result-count{
-			margin-right: 15px; 
-			font-size: 16px; 
+			margin-right: 15px;
+			font-size: 16px;
 			font-weight: 600;
 			@include breakpoint-767{
 				display: block;
@@ -4557,7 +4557,7 @@ ol.comment-list {
 			line-height: 150px;
 			@include breakpoint-991{
 				font-size: 58px;
-				line-height: 58px;	
+				line-height: 58px;
 			}
 		}
 		.twm-error-title2{
@@ -4649,13 +4649,13 @@ ol.comment-list {
 			}
 		}
 		.twm-left-info{
-			display: flex; 
+			display: flex;
 			justify-content: space-between;
 		}
 		.twm-candidate-address{
-			font-size: 14px; 
-			margin-bottom: 0px; 
-			margin-right: 30px; 
+			font-size: 14px;
+			margin-bottom: 0px;
+			margin-right: 30px;
 			font-weight: 500;
 			i{
 				margin-right: 5px;
@@ -4728,19 +4728,19 @@ ol.comment-list {
 			}
 		}
 		.twm-left-info{
-			display: flex; 
+			display: flex;
 			justify-content: space-between;
 		}
 		.twm-candidate-address{
 			font-size: 14px;
-			margin-bottom: 0px; 
-			margin-right: 30px; 
+			margin-bottom: 0px;
+			margin-right: 30px;
 			font-weight: 500;
 			i{
 				margin-right: 5px;
 			}
 		}
-		
+
 	}
 }
 
@@ -4873,7 +4873,7 @@ ol.comment-list {
 				margin-right: 0px;
 			}
 		}
-		
+
 	}
 }
 
@@ -4898,8 +4898,8 @@ ol.comment-list {
 	}
 	.twm-time-list-title{
 		color: $clr-primary;
-		font-size: 16px; 
-		font-weight: 500; 
+		font-size: 16px;
+		font-weight: 500;
 		position: relative;
 		&:before{
 			width: 20px;
@@ -4923,9 +4923,9 @@ ol.comment-list {
 		}
 	}
 	.twm-time-list-position{
-		margin: 10px 0px; 
-		font-weight: 500; 
-		font-size: 14px; 
+		margin: 10px 0px;
+		font-weight: 500;
+		font-size: 14px;
 		color: $clr-black;
 	}
 	.twm-time-list-discription{
@@ -4948,7 +4948,7 @@ ol.comment-list {
 		font-size: 14px;
 		&:hover {
 			opacity: 0.9;
-			
+
 		}
 		&.circle{
 			border-radius: 50%;
@@ -4960,11 +4960,11 @@ ol.comment-list {
 			outline: 1px solid;
 			transition: $transition;
 			&:hover{
-				
+
 				transform: scale(0.9) rotate(360deg);
-				
+
 			}
-			
+
 		}
 	}
 }
@@ -4972,7 +4972,7 @@ ol.comment-list {
 
 .fb-clr{background-color: #4d69b2;}
 .tw-clr{background-color: #38b2e1;}
-.link-clr{background-color: #0579b6;}                                           
+.link-clr{background-color: #0579b6;}
 .whats-clr{background-color: #2ca53b;}
 .pinte-clr{background-color: #f03c41;}
 
@@ -5061,7 +5061,7 @@ ol.comment-list {
 				}
 			}
 		}
-	
+
 		.twm-job-self-bottom{
 			position: absolute;
 			top: 20px;
@@ -5078,7 +5078,7 @@ ol.comment-list {
 					margin-right: 0px;
 				}
 			}
-			
+
 		}
 	}
 	&.twm-job-detail-v2{
@@ -5102,7 +5102,7 @@ ol.comment-list {
 							margin-top: 0px;
 						}
     				}
-	
+
 				}
 				.twm-jobs-category{
 					span {
@@ -5202,11 +5202,11 @@ ol.comment-list {
 						line-height: 36px;
 					}
 
-					
+
 					span{text-decoration: underline;}
 				}
 				.twm-bnr-discription{
-					font-size: 18px; 
+					font-size: 18px;
 					margin-bottom: 30px;
 				}
 			}
@@ -5263,7 +5263,7 @@ ol.comment-list {
 					width: 510px;
 					height: 510px;
 					position: relative;
-					border-radius: 50%;	
+					border-radius: 50%;
 					.outline-dot-1{
 						width: 17px;
 						height: 17px;
@@ -5391,7 +5391,7 @@ ol.comment-list {
 					border: 2px solid $clr-white;
 					overflow: hidden;
 					margin-left: -15px;
-					
+
 				}
 			}
 			.twm-content{
@@ -5417,7 +5417,7 @@ ol.comment-list {
 		}
 
 		.twm-bnr-blocks-position-1{
-			position: absolute; 
+			position: absolute;
 			z-index: 4;
 			top: 50px;
 			left: 40px;
@@ -5431,7 +5431,7 @@ ol.comment-list {
 			}
 		}
 		.twm-bnr-blocks-position-2{
-			position: absolute; 
+			position: absolute;
 			z-index: 4;
 			bottom: 150px;
 			left:160px;
@@ -5445,7 +5445,7 @@ ol.comment-list {
 			}
 		}
 		.twm-bnr-blocks-position-3{
-			position: absolute; 
+			position: absolute;
 			z-index: 4;
 			top: 300px;
 			transform: translateY(-50%);
@@ -5744,7 +5744,7 @@ ol.comment-list {
 				}
 			}
 		}
-	
+
 		.twm-small-ring-l{
 			width: 50px;
 			height: 50px;
@@ -5771,7 +5771,7 @@ ol.comment-list {
 			right:9%;
 			z-index: 5;
 		}
-		
+
 	}
 	.twm-gradient-text{
 		font-size: 150px;
@@ -5784,12 +5784,12 @@ ol.comment-list {
 		font-weight: 800;
 		text-transform: uppercase;
 		padding-right: 200px;
-	
+
 		background: -moz-linear-gradient(top,  rgba(192,213,240,0.65) 0%, rgba(0,0,0,0) 100%); /* FF3.6-15 */
 		background: -webkit-linear-gradient(top,  rgba(192,213,240,0.65) 0%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */
 		background: linear-gradient(to bottom,  rgba(192,213,240,0.65) 0%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6c0d5f0', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
-	
+
 		-webkit-background-clip: text;
 		background-clip: text;
 		-webkit-text-fill-color: transparent;
@@ -5800,7 +5800,7 @@ ol.comment-list {
 		@include breakpoint-767{
 			display: none;
 		}
-	
+
 	}
 	.twm-bnr-blocks{
 		display: flex;
@@ -5812,7 +5812,7 @@ ol.comment-list {
 		border-radius: 10px;
 		width:270px;
 		margin: 0px 4px;
-	
+
 		.twm-icon{
 			width: 70px;
 			margin-right: 20px;
@@ -5891,18 +5891,18 @@ ol.comment-list {
 		}
 	}
 	.twm-bnr-blocks-position-1{
-		position: absolute; 
+		position: absolute;
 		z-index: 4;
 		top: 200px;
 		left: 45px;
 		@include breakpoint-991{
-			position: inherit; 
+			position: inherit;
 			top: inherit;
 			left: inherit;
 		}
 	}
 	.twm-bnr-blocks-position-2{
-		position: absolute; 
+		position: absolute;
 		z-index: 4;
 		top: 90px;
 		right:0px;
@@ -5910,18 +5910,18 @@ ol.comment-list {
 			top: -30px;
 		}
 		@include breakpoint-991{
-			position: inherit; 
+			position: inherit;
 			top: inherit;
 			right: inherit;
 		}
 	}
 	.twm-bnr-blocks-position-3{
-		position: absolute; 
+		position: absolute;
 		z-index: 4;
 		bottom:50px;
 		right:20px;
 		@include breakpoint-991{
-			position: inherit; 
+			position: inherit;
 			right: inherit;
 			bottom: inherit;
 		}
@@ -6037,14 +6037,14 @@ ol.comment-list {
 					top: 15px;
 					font-size: 18px;
 					color: $clr-primary;
-					
+
 				}
 				.twm-title{
 					font-size: 14px;
 					color: #666666;
 				}
 				.twm-s-info-discription{
-					font-size: 16px; 
+					font-size: 16px;
 					color: $clr-dark;
 					word-break: break-word;
 				}
@@ -6129,19 +6129,19 @@ ol.comment-list {
 
 /*Faq*/
 .tw-faq-section{
-	max-width: 830px; 
+	max-width: 830px;
 	margin: 0px auto;
 	.tw-faq{
 		.accordion-item{
-			border: 1px solid transparent; 
-			margin-bottom: 20px; 
+			border: 1px solid transparent;
+			margin-bottom: 20px;
 			overflow: hidden;
 			border: 1px solid #efefef;
 			border-radius: 10px;
 			background-color: $clr-light-purple;
 			.accordion-button{
-				font-size: 18px; 
-				color: $clr-dark; 
+				font-size: 18px;
+				color: $clr-dark;
 				padding: 10px 16px 10px 16px;
 				font-weight: 500;
 				&:not(.collapsed){
@@ -6164,7 +6164,7 @@ ol.comment-list {
 	width: 40px;
 	height: 40px;
 	line-height: 40px;
-	color: $clr-dark; 
+	color: $clr-dark;
 	text-align: center;
 	font-size: 22px;
 }
@@ -6248,8 +6248,8 @@ ol.comment-list {
 		justify-content: space-between;
 	}
 	.site-button{
-		display: block; 
-		text-align: center; 
+		display: block;
+		text-align: center;
 		width: 100%;
 	}
 }
@@ -6292,8 +6292,8 @@ strong {
 			box-shadow: 0px 0px 25px rgba(56, 152, 226, 0.3);
 			border: 0px;
 			padding: 20px;
-		} 	
-	} 
+		}
+	}
 }
 
 .nav-btn-wrap {
@@ -6317,7 +6317,7 @@ strong {
 	.container{
 	min-width: 480px;
 	}
-} 
+}
 
 .header-left {
 	float: left;
@@ -6587,16 +6587,16 @@ strong {
 		border-radius: 10px;
 		box-shadow: 0px 0px 25px rgba(56, 152, 226, 0.3);
 		border: 0px;
-	}	
+	}
 }
 
-/*Dashboard Notification Dropdown*/ 
+/*Dashboard Notification Dropdown*/
 .dashboard-noti-dropdown{
 	.dropdown-menu{
 		border-radius: 10px;
 		box-shadow: 0px 0px 25px rgba(56, 152, 226, 0.3);
 		border: 0px;
-	}	
+	}
 }
 
 /*Dashboard Message*/
@@ -6683,7 +6683,7 @@ strong {
 		li {
 			float: none;
 			&:last-child {
-				border-bottom:none;	
+				border-bottom:none;
 			}
 			&.has-child {
 				position: relative;
@@ -6822,7 +6822,7 @@ strong {
 	.bootstrap-select{
 		.dropdown-toggle {
 			padding-left: 35px;
-		}	
+		}
 	}
 	.remove_field {
 		position: absolute;
@@ -6833,7 +6833,7 @@ strong {
 		text-align: center;
 		line-height: 36px;
 		display: block;
-	} 
+	}
 }
 
 /*Form Elements*/
@@ -7113,8 +7113,8 @@ strong {
 	.dashboard-message-reply-textarea{
 		.form-control {
 			border-radius: 10px !important;
-		}	
-	} 
+		}
+	}
 }
 
 .dashboard-message-reply {
@@ -7173,7 +7173,7 @@ strong {
 				left: 0px;
 				bottom: 0px;
 				border-radius: 10px;
-			}	
+			}
 		}
 	}
 }
@@ -7286,11 +7286,11 @@ strong {
 }
 
 /*Msg style 2*/
-.wt-admin-dashboard-msg-2 {	
+.wt-admin-dashboard-msg-2 {
 	display: flex;
-	
+
 	.user-msg-list-btn-open{
-		top: -62px;	
+		top: -62px;
 		right:20px;
 	}
 	.wt-dashboard-msg-user-list {
@@ -7314,12 +7314,12 @@ strong {
 			box-shadow: 0px 0px 40px rgba(56, 152, 226, 0.3);
 			transition: all 0.5s linear;
 		}
-		
+
 	}
 	&.active{
 		.user-msg-list-btn-open{
 			right:257px;
-			display:none;	
+			display:none;
 		}
 		.user-msg-list-btn-close{
 			display:block;
@@ -7328,67 +7328,67 @@ strong {
 			@include breakpoint-991{
 				right: 0%;
 			}
-			
+
 		}
 	}
-	.wt-dashboard-msg-box {	
-		display: block;	
-		background-color: $clr-white;	
-		position: relative; 
+	.wt-dashboard-msg-box {
+		display: block;
+		background-color: $clr-white;
+		position: relative;
 		flex: 1;
 	}
 	.wt-dashboard-msg-search {
-		position: relative; 
-		padding: 20px; 
+		position: relative;
+		padding: 20px;
 		background-color: $clr-white;
 		.form-control {
-			padding-right: 40px;	
-			border-radius: 10px !important;	
+			padding-right: 40px;
+			border-radius: 10px !important;
 			border: 0px;
 		}
-		.btn {	
-			outline: none !important;	
-			position: absolute;	
-			right: 0;	
-			top: 50%; 
-			transform: translateY(-50%);	
-			color: $clr-primary;	
-			font-size: 20px;	
-			z-index: 10;	
+		.btn {
+			outline: none !important;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			color: $clr-primary;
+			font-size: 20px;
+			z-index: 10;
 			background: none;
 		}
 	}
-	
+
 	.msg-find-list{
 		.bootstrap-select{
-			.dropdown-toggle {	
-				border: 0px;	
-				box-shadow: none !important;	
-				border-radius: 0px;	
-				border-style:solid;	
-				border-width:0px 0px 1px 0px;	
+			.dropdown-toggle {
+				border: 0px;
+				box-shadow: none !important;
+				border-radius: 0px;
+				border-style:solid;
+				border-width:0px 0px 1px 0px;
 				border-bottom: 1px solid #dbdbdb;
 				&:hover,
 				&:active,
-				&:focus {	
-					border:0px solid transparent !important;	
+				&:focus {
+					border:0px solid transparent !important;
 					border-bottom: 1px solid #dbdbdb !important;
 				}
 			}
 		}
 	}
 
-	
+
 	.wt-dashboard-msg-search-list {	background-color: $clr-white;	height: 700px;}
 
-	.wt-dashboard-msg-search-list-wrap {	
-		display: table;	
+	.wt-dashboard-msg-search-list-wrap {
+		display: table;
 		width: 100%;
 		.msg-user-info {
-			position: relative;	
+			position: relative;
 			display: block;
-			padding: 30px 80px 30px 20px;	
-			background-color: $clr-white; 
+			padding: 30px 80px 30px 20px;
+			background-color: $clr-white;
 			margin: 0px 20px;
 			border-radius: 10px;
 			@include breakpoint-1366{
@@ -7396,7 +7396,7 @@ strong {
 			}
 		}
 		&:hover{
-			.msg-user-info {background-color: $clr-light-purple;}	
+			.msg-user-info {background-color: $clr-light-purple;}
 		}
 	}
 
@@ -7407,26 +7407,26 @@ strong {
 	.msg-user-discription {font-size: 14px; color: #222;}
 
 	.single-msg-user-name-box {
-		display: flex; 
-		justify-content: space-between;	
-		padding: 15px 20px;	
-		background-color: $clr-white;	
-		border-bottom: 1px solid #dbdbdb;	
+		display: flex;
+		justify-content: space-between;
+		padding: 15px 20px;
+		background-color: $clr-white;
+		border-bottom: 1px solid #dbdbdb;
 		min-height: 85px;
 		.message-action{color: #ff0000;font-size: 13px;}
 		h4 {margin-bottom: 6px;}
 	}
-	
-	.single-user-msg-conversation {	
+
+	.single-user-msg-conversation {
 		padding: 0px;	margin: 30px 40px; height: 550px;
 		@include breakpoint-540{
 			margin: 10px;
 		}
 	}
 	.single-user-comment-block {	position: relative;}
-	
+
 	.single-user-comment-wrap{
-		padding: 15px 0px; 
+		padding: 15px 0px;
 		margin: 0px 15px;
 		&.sigle-user-reply {
 			margin-left: 0px;
@@ -7434,78 +7434,78 @@ strong {
 				background-color: #f5f5f5;
 			}
 			@include breakpoint-991{
-				margin-left: 15px;	
+				margin-left: 15px;
 			}
 		}
 		@include breakpoint-575{
-			margin: 0px 10px;	
+			margin: 0px 10px;
 		}
 	}
-	
+
 	.single-user-com-pic {
-		width: 60px;	
-		height: 60px;	
-		float: left;	
-		margin-right: 15px;	
-		overflow: hidden;	
-		padding: 3px;	
-		background-color: $clr-white; 
+		width: 60px;
+		height: 60px;
+		float: left;
+		margin-right: 15px;
+		overflow: hidden;
+		padding: 3px;
+		background-color: $clr-white;
 		@include breakpoint-575{
 			float: none;
 		}
 		img{border-radius: 6px;}
 	}
-	
+
 	.single-user-com-text {
-		overflow: hidden;	
+		overflow: hidden;
 		background-color: #edf6ff;
-		padding: 20px 30px;	
-		margin-top: 10px;	
+		padding: 20px 30px;
+		margin-top: 10px;
 		border-radius: 10px;
 	}
-	
+
 	.single-user-msg-time {
-		font-size: 12px;	
-		color: #969696;	
-		text-align: right;	
+		font-size: 12px;
+		color: #969696;
+		text-align: right;
 		padding-top: 10px;
 	}
-	
-	.single-msg-reply-comment {	
-		position: absolute;	
-		bottom: 0px;	
-		left: 0px;	
+
+	.single-msg-reply-comment {
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
 		width: 100%;
-		textarea {	
+		textarea {
 			resize: none;
 			&.form-control {
-				border-radius: 0px;	
-				border-left: 0px;	
-				border-right: 0px;	
-				border-bottom: 0px;	
-				box-shadow: none;	
-				padding: 15px 50px 15px 20px; 
+				border-radius: 0px;
+				border-left: 0px;
+				border-right: 0px;
+				border-bottom: 0px;
+				box-shadow: none;
+				padding: 15px 50px 15px 20px;
 				height: 60px;
 			}
 		}
 		.btn {
-			outline: none !important;	
-			position: absolute;	
-			right: 0;	
-			top: 50%;	
-			color: $clr-primary;	
-			font-size: 20px;	
-			z-index: 10;	
+			outline: none !important;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			color: $clr-primary;
+			font-size: 20px;
+			z-index: 10;
 			background: none;
 			transform: translateY(-50%)
 		}
 	}
 	.user-msg-list-btn-outer{
-		display:none; 
-		position:absolute;	
-		top:50%;	
-		right:99%;	
-		z-index:10;	
+		display:none;
+		position:absolute;
+		top:50%;
+		right:99%;
+		z-index:10;
 		transform: translateY(-50%);
 		@include breakpoint-991{
 			display:block; z-index:999;
@@ -7515,15 +7515,15 @@ strong {
 			.user-msg-list-btn-close{display:block;}
 		}
 		.user-msg-list-btn-open{
-			display: inline-block;	
+			display: inline-block;
 			cursor:pointer;
 			white-space: nowrap;
 			background-color:$clr-primary;
 			border: none;
 			padding: 2px 15px;
-			color: $clr-white;	
+			color: $clr-white;
 			position: absolute;
-			transform: rotate(270deg);	
+			transform: rotate(270deg);
 			transform-origin: center right;
 			border-radius: 8px;
 		}
@@ -7533,13 +7533,13 @@ strong {
 			background-color:$clr-primary;
 			border: none;
 			padding: 2px 15px;
-			color: $clr-white;	
+			color: $clr-white;
 			position: absolute;
 			transform: rotate(270deg);
-			transform-origin: center right;	
-			display:none;	
-			top: -31px;	
-			right:18px;		
+			transform-origin: center right;
+			display:none;
+			top: -31px;
+			right:18px;
 			z-index:10;
 			border-radius: 8px;
 		}
@@ -7588,7 +7588,7 @@ strong {
 			font-size: 13px;
 		}
 
-		
+
 	}
 	&.active{
 		.user-msg-list-btn-open{
@@ -7625,7 +7625,7 @@ strong {
 			height: auto !important;
 		}
 	}
-	
+
 }
 
 /*Dashboard candidates style*/
@@ -7696,7 +7696,7 @@ strong {
 				}
 			}
 			.twm-left-info{
-				display: flex; 
+				display: flex;
 				justify-content: space-between;
 				@include breakpoint-540{
 					display:block;
@@ -7719,7 +7719,7 @@ strong {
 				font-size: 18px;
 			}
 		}
-	
+
 		.twm-controls-icon{
 			display: flex;
 			margin-bottom: 0px;
@@ -7780,15 +7780,15 @@ strong {
 			font-weight: 500;
 		}
 	}
-	
+
 	.twm-candidate-address{
-		font-size: 14px; 
+		font-size: 14px;
 		margin-bottom: 0px;
 		i{
 			margin-right: 5px;
 		}
 	}
-	
+
 
 }
 
@@ -7834,7 +7834,7 @@ strong {
 
 .twm-D_table{
 	padding: 20px;
-	div.dataTables_wrapper{ 
+	div.dataTables_wrapper{
 		div.dataTables_length{
 			select{
 				width: 100px;
@@ -7843,8 +7843,8 @@ strong {
 				border: none;
 				height: 40px;
 				background-color: $clr-light-purple;
-			}	
-		} 
+			}
+		}
 	}
 	div.dataTables_wrapper{
 		div.dataTables_filter{
@@ -7852,11 +7852,11 @@ strong {
 				height: 40px;
 				border-radius: 6px;
 			}
-		} 
+		}
 	}
 
-	
-	
+
+
 	.page-link{
 		height: 50px;
 		line-height: 50px;
@@ -7890,7 +7890,7 @@ strong {
 	width: 100%;
 	thead {
 		border-radius: 8px;
-		
+
 		color:  $clr-white;
 		th {
 			position: relative;
@@ -7913,7 +7913,7 @@ strong {
 				color: $clr-dark;
 				font-weight: 400;
 				@include breakpoint-767{
-					padding: 20px 10px;	
+					padding: 20px 10px;
 				}
 				button{
 					border: none;
@@ -7940,7 +7940,7 @@ strong {
 		}
 	}
 }
-  
+
 .twm-table{
 	tr{
 		td {
@@ -7950,14 +7950,14 @@ strong {
 			color: #696969;
 			font-weight: 400;
 			@include breakpoint-767{
-				padding: 21px 10px;	
+				padding: 21px 10px;
 			}
 		}
 	}
 }
 
 /* Data Table Candidets */
-.twm-bookmark-list-wrap{ 
+.twm-bookmark-list-wrap{
 	.twm-bookmark-list{
 		position: relative;
 		display: flex;
@@ -7967,7 +7967,7 @@ strong {
 			max-width: 90px;
 			display: inline-block;
 			margin-right: 20px;
-			
+
 			border-radius: 10px;
 			height: 90px;
 			.twm-media-pic{
@@ -7990,7 +7990,7 @@ strong {
 			}
 		}
 		.twm-bookmark-address{
-			font-size: 14px; 
+			font-size: 14px;
 			margin-bottom: 10px;
 			i{
 				margin-right: 5px;
@@ -8069,7 +8069,7 @@ h3.twm-title{
 	0% {
 	  margin-top: -150px; }
 	100% {
-	  margin-top: 0; } 
+	  margin-top: 0; }
 }
 
 /*----------------------------
@@ -8160,7 +8160,7 @@ h3.twm-title{
 		align-items: center;
 	}
 	.client-logo{
-		max-width: 130px; 
+		max-width: 130px;
 		margin-left: auto;
 		margin-right: auto;
 		a{
@@ -8170,7 +8170,7 @@ h3.twm-title{
 			img{
 				width: auto;
 				height: auto;
-				
+
 			}
 			&:hover{
 				img{
@@ -8219,7 +8219,7 @@ h3.twm-title{
 			border-radius: 10px;
 		}
 		.twm-title{
-			color: $clr-dark; 
+			color: $clr-dark;
 			margin-bottom: 0px;
 		}
 	}
@@ -8233,10 +8233,10 @@ h3.twm-title{
 			object-fit: cover;
 			min-height: 520px;
 			@include breakpoint-1199{
-				min-height:426px;	
+				min-height:426px;
 			}
 			@include breakpoint-991{
-				min-height:auto;	
+				min-height:auto;
 			}
 		}
 	}
@@ -8268,14 +8268,14 @@ h3.twm-title{
 	padding-top: 315px;
 	overflow: hidden;
 	@include breakpoint-1600{
-		padding-top: 240px;	
+		padding-top: 240px;
 	}
 	@include breakpoint-767{
-		padding-top: 170px;	
+		padding-top: 170px;
 	}
 
 	.twm-home3-inner-section{
-		
+
 		.twm-bnr-mid-section{
 			max-width: 1176px;
 			width: 100%;
@@ -8292,7 +8292,7 @@ h3.twm-title{
 				padding: 0px 15px 30px 15px;
 
 			}
-			
+
 			.twm-bnr-title-large{
 				font-size: 66px;
 				max-width: 720px;
@@ -8332,8 +8332,8 @@ h3.twm-title{
 				}
 			}
 			.twm-bnr-discription{
-				font-size: 18px; 
-				margin-bottom: 50px; 
+				font-size: 18px;
+				margin-bottom: 50px;
 				color: $clr-white;
 				max-width: 720px;
 				margin-left: auto;
@@ -8358,10 +8358,10 @@ h3.twm-title{
 					}
 				}
 			}
-		
+
 		}
 	}
-	
+
 	.twm-bnr-bottom-section{
 		padding: 0px 50px;
 		display: flex;
@@ -8405,7 +8405,7 @@ h3.twm-title{
 					display: inline-block;
 					margin-bottom: 20px;
 				}
-			
+
 				.twm-content{
 					.tw-count-number {
 						font-size: 38px;
@@ -8437,7 +8437,7 @@ h3.twm-title{
 					max-width: 225px;
 					margin-bottom: 30px;
 				}
-				
+
 				.twm-pics{
 					margin-left: 15px;
 					margin-right: 15px;
@@ -8475,7 +8475,7 @@ h3.twm-title{
 				}
 			}
 		}
-		
+
 	}
 }
 
@@ -8602,7 +8602,7 @@ h3.twm-title{
 				span{text-decoration: underline;}
 			}
 			.twm-bnr-discription{
-				font-size: 18px; 
+				font-size: 18px;
 				margin-bottom: 30px;
 			}
 		}
@@ -8633,7 +8633,7 @@ h3.twm-title{
 			.twm-white-dotts{z-index: 3;left: 30%;top: 3%; width: 17%;}
 			.twm-top-shadow{z-index: 0;	left: -17%;	top: -10%;width: 68.6%;}
 			.twm-bottom-shadow{z-index: 0; right: -5%;	top: 38%; width: 68.6%;}
-			
+
 		}
 	}
 }
@@ -8678,7 +8678,7 @@ h3.twm-title{
 .twm-about-1-bottom-wrap{
 	max-width: 830px;
 	margin: 0px auto 30px;
-	
+
 	.row{
 		display: flex;
 		justify-content: center;
@@ -8690,7 +8690,7 @@ h3.twm-title{
 			}
 		}
 	}
-	
+
 	.twm-card-blocks{
 		display: flex;
 		align-items: center;
@@ -8755,7 +8755,7 @@ h3.twm-title{
 				border: 2px solid $clr-white;
 				overflow: hidden;
 				margin-left: -15px;
-				
+
 			}
 		}
 		.twm-content{
@@ -8809,7 +8809,7 @@ h3.twm-title{
 				margin-right: 0px;
 			}
 		}
-	
+
 		.twm-explore-right-section{
 			position: relative;
 			z-index: 1;
@@ -8836,7 +8836,7 @@ h3.twm-title{
 				width: 220px;
 				border-radius: 10px;
 				padding: 10px;
-				
+
 				.tw-count-number{
 					font-size: 38px;
 					line-height: 38px;
@@ -8849,7 +8849,7 @@ h3.twm-title{
 					font-weight: 600;
 					font-family: $heading-font;
 				}
-			
+
 				.icon-content-info{
 					color: $clr-dark;
 					margin-bottom: 0px;
@@ -8883,9 +8883,9 @@ h3.twm-title{
 					}
 					&.three{margin-bottom: 0px;}
 				}
-			
+
 			}
-		} 
+		}
 	}
 }
 
@@ -8919,7 +8919,7 @@ h3.twm-title{
 	&:hover:before {
 		transform: scale(50);
 	}
-  
+
 	@include breakpoint-420{
 		text-align: center;
 		margin-top: 0px;
@@ -8938,7 +8938,7 @@ h3.twm-title{
 		@include breakpoint-420{
 			margin-right: 0px;
 		}
-		
+
 		img{
 			display: block;
 		}
@@ -8957,9 +8957,9 @@ h3.twm-title{
 				}
 			}
 		}
-		
+
 	}
-	
+
 	.twm-bot-content{
 		display: flex;
 		justify-content: space-between;
@@ -8994,7 +8994,7 @@ h3.twm-title{
 			margin-top: 10px;
 		}
 	}
-	
+
 }
 
 
@@ -9017,7 +9017,7 @@ h3.twm-title{
 		margin: 10px;
 	}
 	.client-logo{
-		max-width: 130px; 
+		max-width: 130px;
 		margin-left: auto;
 		margin-right: auto;
 		a{
@@ -9027,7 +9027,7 @@ h3.twm-title{
 			img{
 				width: auto;
 				height: auto;
-				
+
 			}
 			&:hover{
 				img{
@@ -9076,7 +9076,7 @@ h3.twm-title{
 				margin-right: 20px;
 			}
 		}
-	
+
 		.twm-how-it-right-section{
 			position: relative;
 			z-index: 1;
@@ -9085,13 +9085,13 @@ h3.twm-title{
 				text-align: center;
 				position: relative;
 				width: 100%;
-				
+
 				.twm-bg-circle{position: relative; z-index: 1; left: 50%; transform: translateX(-50%);width: 90.1%;}
 				.twm-block-left{z-index: 1;	position: absolute;	left: 0px;	top: 0%; width: 16.5%;}
      			.twm-block-right{position: absolute; z-index: 1;	width: 12%;	right: -4%; bottom: -4%;}
 				.twm-main-bg{z-index: 1; position: absolute; left:0%; top: 0%; width: 91.7%;}
 			}
-		} 
+		}
 	}
 }
 
@@ -9388,7 +9388,7 @@ h3.twm-title{
 	@include breakpoint-420{
 		padding: 5px;
 	}
-	
+
 		> span {
 			display: block;
 			font-size: 20px;
@@ -9438,12 +9438,12 @@ h3.twm-title{
 		}
 	}
 }
-  
+
   @-webkit-keyframes hue {
 	from {
 	  -webkit-filter: hue-rotate(0deg);
 	}
-  
+
 	to {
 	  -webkit-filter: hue-rotate(-360deg);
 	}
@@ -9452,7 +9452,7 @@ h3.twm-title{
 	from {
 	  -webkit-filter: hue-rotate(0deg);
 	}
-  
+
 	to {
 	  -webkit-filter: hue-rotate(-360deg);
 	}
@@ -9520,7 +9520,7 @@ h3.twm-title{
 		li {
 			float: none;
 			&:last-child {
-				border-bottom:none;	
+				border-bottom:none;
 			}
 			&.has-child {
 				position: relative;
@@ -9618,7 +9618,7 @@ h3.twm-title{
 }
 
 /* Data Table Candidets */
-.twm-candidate-save-job-list-wrap{ 
+.twm-candidate-save-job-list-wrap{
 	.twm-candidate-save-job-list{
 		position: relative;
 		display: flex;
@@ -9697,7 +9697,7 @@ h3.twm-title{
 				display: inline-block;
 			}
 		}
-		
+
 	}
 	.twm-candidates-tag{
 		span{
@@ -9719,16 +9719,16 @@ h3.twm-title{
 			display: block;
 		}
 		.twm-left-info{
-			display: flex; 
+			display: flex;
 			justify-content: space-between;
 			@include breakpoint-420{
 				display: block;
 			}
 		}
 		.twm-candidate-address{
-			font-size: 14px; 
-			margin-bottom: 0px; 
-			margin-right: 20px; 
+			font-size: 14px;
+			margin-bottom: 0px;
+			margin-right: 20px;
 			font-weight: 500;
 			@include breakpoint-420{
 				margin-right: 0px;
@@ -9766,7 +9766,7 @@ h3.twm-title{
 
 .twm-table-controls{
 	.twm-DT-controls-icon{
-		li{ 
+		li{
 			a{
 				background-color: $clr-light-purple;
 				color: $clr-primary;
@@ -9831,11 +9831,11 @@ h3.twm-title{
 		padding: 20px;
 		margin-top: 30px;
 		.site-button{
-			display: inline-block; 
-			text-align: center; 
+			display: inline-block;
+			text-align: center;
 		}
 	}
-	
+
 }
 
 .twm-table {
@@ -9883,7 +9883,7 @@ h3.twm-title{
 	position: relative;
 	margin-bottom: 15px;
 	.twm-title{
-		font-size: 15px; 
+		font-size: 15px;
 		font-weight: 600;
 		color: $clr-dark;
 		word-break: break-word;
@@ -9980,7 +9980,7 @@ h3.twm-title{
 	.dropdown-toggle:after{
 		color: #17171d;
 	}
-	
+
 }
 
 .sidebar-elements{
@@ -9996,7 +9996,7 @@ h3.twm-title{
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	
+
 }
 .twm-log-reg-logo-head{
 	text-align: center;
@@ -10011,7 +10011,7 @@ h3.twm-title{
 
 .twm-log-reg-head{
 	text-align: center;
-	
+
 	.log-reg-form-title{
 		font-size: 32px;
 		display: block;
@@ -10024,7 +10024,7 @@ h3.twm-title{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	
+
 	.twm-l-media{
 		max-width: 720px;
 		margin: 0px auto;
@@ -10079,7 +10079,7 @@ h3.twm-title{
 			margin: 0px auto;
 			color: $clr-white;
 			i{font-size: 24px; margin-right: 10px;}
-		
+
 		}
 
 		.log_with_google{
@@ -10098,7 +10098,7 @@ h3.twm-title{
 			font-weight: 500;
 			color: $clr-dark;
 			img{width: 24px; margin-right: 10px;}
-		
+
 		}
 		.center-text-or{
 			font-size: 15px;
@@ -10155,7 +10155,7 @@ h3.twm-title{
 		@include breakpoint-575{
 			width: 30px;
 		}
-		
+
 		img {
 			border-radius: 50%;
 			width: 40px;
@@ -10189,7 +10189,7 @@ h3.twm-title{
 				display: block;
 				transition: .2s;
 				position: relative;
-				
+
 				i {
 					position: absolute;
 					left: 0px;
@@ -10258,16 +10258,16 @@ h3.twm-title{
 		border-bottom: 1px solid;
 		margin-top: 10px;
 		opacity: 0;
-		transition: opacity 0.35s, 
+		transition: opacity 0.35s,
 		transform 0.35s;
 		transform: scale(0,1);
 	}
-	
+
 	&:hover:after {
 	  opacity: 1;
 	  transform: scale(1);
 	}
-	
+
 }
 
 
@@ -10361,10 +10361,10 @@ h3.twm-title{
 		.map-show-btn-outer{
 			position:fixed;
 			top:50%;
-			right:12px;	
-			z-index:10;	
+			right:12px;
+			z-index:10;
 			transform: translateY(-50%);
-			transition: all 0.5s linear;		
+			transition: all 0.5s linear;
 		}
 		.map-show-btn-open{
 			display: inline-block;
@@ -10389,18 +10389,18 @@ h3.twm-title{
 			background-color: $clr-primary;
 			border: none;
 			padding: 2px 15px;
-			color: #fff;	
+			color: #fff;
 			position: absolute;
 			transform: rotate(270deg);
-			transform-origin: center right;	
-			display:none;	
+			transform-origin: center right;
+			display:none;
 			right:-20px;
-			top: 50%;	
+			top: 50%;
 			z-index:11;
 			font-size: 13px;
 			border-radius: 10px;
 			display: block;
-			
+
 		}
 	}
 	@include breakpoint-768{
@@ -10422,9 +10422,9 @@ h3.twm-title{
 				z-index:10;
 			}
 			.map-show-btn-outer{
-				
+
 				right:100%;
-			}	
+			}
 			.map-show-btn-open{
 				display:none;
 			}
@@ -10432,7 +10432,7 @@ h3.twm-title{
 				display: block;
 				right: 20px;
 			}
-				
+
 		}
 	}
 }
@@ -10479,7 +10479,7 @@ h3.twm-title{
 
 
 /*iconfont*/
-.icon-font-block{ 
+.icon-font-block{
 	text-align: center;
 	padding: 15px 10px;
 	color: $clr-dark;
@@ -10497,7 +10497,7 @@ h3.twm-title{
 /*Custom tooltip*/
 .custom-toltip{
 	position: relative;
-	.custom-toltip-block { 
+	.custom-toltip-block {
 		position: absolute;
 		top: -36px;
 		left: 50%;
@@ -10529,12 +10529,12 @@ h3.twm-title{
 		}
 	}
 
-	&:hover { 
-		overflow:visible; 
+	&:hover {
+		overflow:visible;
 		position:relative;
-		
+
 		.custom-toltip-block{
-			opacity:1; 
+			opacity:1;
 			display: block;
 		}
 	}
@@ -10624,9 +10624,9 @@ h3.twm-title{
 			}
 		}
 	}
-	
 
-	
+
+
 }
 .twm-ep-detail-tags{
 	.de-info {
@@ -10710,7 +10710,7 @@ h3.twm-title{
 				background-color: #3b5998;
 			}
 		}
-		
+
 		&.twitter{
 			.fab {
 				color: #3cf;
@@ -10718,7 +10718,7 @@ h3.twm-title{
 			&:before {
 				background-color: #3cf;
 			}
-		} 
+		}
 
 		&.google{
 			.fab {
@@ -10727,7 +10727,7 @@ h3.twm-title{
 			&:before {
 				background-color: #dc4a38;
 			}
-		} 
+		}
 
 		&.linkedin{
 			.fab {
@@ -10736,7 +10736,7 @@ h3.twm-title{
 			&:before {
 				background-color: #0579b6;
 			}
-		} 
+		}
 
 		&.skype{
 			.fab {
@@ -10752,13 +10752,13 @@ h3.twm-title{
 		  top: -20%;
 		  left: -20%;
 		}
-			 
+
 		&:hover{
 			.fab {
 				color: #fff;
 				transform: scale(1);
 			}
-		} 
+		}
 		&:focus {
 			.fab{
 				color: #fff;
@@ -10767,7 +10767,7 @@ h3.twm-title{
 		}
 
 	}
-	
+
 }
 
 
@@ -10817,7 +10817,7 @@ h3.twm-title{
 					color: #666666;
 				}
 				.twm-s-info-discription{
-					font-size: 16px; 
+					font-size: 16px;
 					color: $clr-dark;
 					word-break: break-word;
 				}
@@ -10827,7 +10827,7 @@ h3.twm-title{
 }
 
 
-.bg-clr-green{background-color:#56d8b1;}       
+.bg-clr-green{background-color:#56d8b1;}
 .ani-circle-1 {
 	display: block;
 	width: 200px;
@@ -10876,7 +10876,7 @@ h3.twm-title{
 			  transform: rotate(360deg);
 	}
   }
-  
+
 
 
 
@@ -10953,7 +10953,7 @@ h3.twm-title{
 	}
 	.twm-mid-content{
 		padding-top: 30px;
-		
+
 	}
 	.twm-right-content{
 		display: flex;
@@ -10992,7 +10992,7 @@ h3.twm-title{
 			margin-top: 10px;
 		}
 	}
-	
+
 }
 
 
@@ -11043,7 +11043,7 @@ h3.twm-title{
 	@include breakpoint-575{
 		padding: 40px 0px;
 	}
-	
+
 	.twm-candi-self-info-2{
 		position: relative;
 		z-index: 1;
@@ -11139,7 +11139,7 @@ h3.twm-title{
 			}
 		}
 	}
-} 
+}
 
 
 .twm-s-info-4{
@@ -11156,8 +11156,8 @@ h3.twm-title{
 		margin-bottom: 0px;
 		display: flex;
 		flex-wrap: wrap;
-		
-			
+
+
 		.twm-s-info-inner{
 			position: relative;
 			padding: 10px 10px 10px 50px;
@@ -11183,7 +11183,7 @@ h3.twm-title{
 				color: #666666;
 			}
 			.twm-s-info-discription{
-				font-size: 16px; 
+				font-size: 16px;
 				color: $clr-dark;
 				word-break: break-word;
 			}
@@ -11194,7 +11194,7 @@ h3.twm-title{
 				margin-bottom: 0px;
 			}
 		}
-		
+
 	}
 }
 
@@ -11225,7 +11225,7 @@ h3.twm-title{
 			font-weight: 400;
 			color: $clr-white;
 		}
-	} 
+	}
 }
 
 .block-gradient{
@@ -11315,7 +11315,7 @@ h3.twm-title{
 		text-align: center;
 		position: relative;
 		@include breakpoint-480{
-			padding: 20px;	
+			padding: 20px;
 		}
 		.twm-sub-title{
 			font-size: 28px;
@@ -11365,7 +11365,7 @@ h3.twm-title{
 		background-color: $clr-white;
 		border-radius: 50%;
 		position: absolute;
-		
+
 		&:after{
 			content: "";
 			position: absolute;
@@ -11393,7 +11393,7 @@ h3.twm-title{
 			&.nw-pic4{width: 63px; height: 63px; padding: 5px; bottom: 24%; right:0%;}
 			&.nw-pic5{width: 49px; height: 49px; padding: 4px; top: 8%; left: 30%;}
 			&.nw-pic6{width: 63px; height: 63px; padding: 5px; bottom: 24%; right:25%;}
-			&.nw-pic7{width: 33px; height: 33px; padding: 3px; bottom: 10%; left: 5%;}	
+			&.nw-pic7{width: 33px; height: 33px; padding: 3px; bottom: 10%; left: 5%;}
 		}
 	}
 }
@@ -11412,8 +11412,8 @@ h3.twm-title{
 	}
 }
 
-  
-  
+
+
 .bounce2 {
 	animation: bounce2 1.5s linear infinite alternate-reverse both;
 }
@@ -11427,7 +11427,7 @@ h3.twm-title{
 		transform: translateY(-10px);
 	}
 }
-  
+
 
 /*Blog style home-5*/
 
@@ -11437,7 +11437,7 @@ h3.twm-title{
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	}	
+	}
 }
 
 .twm-blog-post-h5-outer{
@@ -11446,7 +11446,7 @@ h3.twm-title{
 	padding: 10px;
 	margin-bottom: 30px;
 	border: 1px solid #f1f1f1;
-	
+
 	&.shadow-none{box-shadow: none;}
 	.wt-post-media{
 		border-radius: 10px;
@@ -11461,11 +11461,11 @@ h3.twm-title{
 	.wt-post-info{
 		position: relative;
 		z-index: 1;
-		
+
 		.wt-post-meta{
 			position: relative;
 			margin-bottom: 20px;
-			
+
 		}
 		.post-author{
 			margin-bottom: 20px;
@@ -11595,7 +11595,7 @@ h3.twm-title{
 
 
 
-/*Recruiters*/ 
+/*Recruiters*/
 .twm-column-5{
 	ul{
 		list-style: none;
@@ -11626,7 +11626,7 @@ h3.twm-title{
 						transition: $transition;
 					}
 				}
-				
+
 				&:after{
 					content: '';
 					position: absolute;
@@ -11742,7 +11742,7 @@ h3.twm-title{
 			.icon-content-info{
 				color: $clr-white;
 				font-size: 18px;
-				
+
 			}
 		}
 	}
@@ -11834,7 +11834,7 @@ h3.twm-title{
 					p{
 						margin-bottom: 20px;
 					}
-				} 
+				}
 			}
 		}
 	}
@@ -11955,7 +11955,7 @@ h3.twm-title{
 				border: 2px solid $clr-white;
 				overflow: hidden;
 				margin-left: -15px;
-				
+
 			}
 			.tot-view{
 				background-color: $clr-primary;
@@ -11980,7 +11980,7 @@ h3.twm-title{
 						display: block;
 					}
 				}
-				
+
 			}
 		}
 
@@ -12034,7 +12034,7 @@ h3.twm-title{
 		}
 	}
 	.twm-job-address{margin-bottom: 0px; font-size: 12px; font-weight: 500; color: #6b6b6b;}
-		
+
 	.twm-jobs-browse{font-weight: 600; font-size: 14px;}
 	.twm-job-st5-top{
 		display: flex;align-items: center; margin-bottom: 20px;
@@ -12043,7 +12043,7 @@ h3.twm-title{
 		}
 	}
 	.twm-job-com-name{
-		font-size: 18px; 
+		font-size: 18px;
 		font-weight: 500;
 	}
 }
@@ -12079,7 +12079,7 @@ h3.twm-title{
 			}
 		}
 		.twm-bnr-5-blocks {
-			
+
 			position: relative;
 			.twm-title{
 				display: block;
@@ -12158,7 +12158,7 @@ h3.twm-title{
 				span{text-decoration: underline;}
 			}
 			.twm-bnr-discription{
-				font-size: 24px; 
+				font-size: 24px;
 				margin-bottom: 30px;
 			}
 		}
@@ -12191,7 +12191,7 @@ h3.twm-title{
 			.twm-p2{z-index: 3;	right: 0%;	bottom: 0%;	width: 19%;}
 			.twm-p3{z-index: 3;	left: 10%; top: 12%; width:35.4%;}
 			.twm-p4{z-index: 3;	left: 8%; top: 18%;	width:35.4%;}
-			
+
 		}
 	}
 	.twm-banner-h5-r-b-info{
@@ -12218,7 +12218,7 @@ h3.twm-title{
 			}
 		}
 	}
-	
+
 }
 
 .twm-bdr-bottom-1{border-bottom: 1px solid #f1f1f1;}
@@ -12226,10 +12226,10 @@ h3.twm-title{
 .twm-jobs-grid-h5-section-outer{
 	margin:0px 80px 120px 80px;
 	@include breakpoint-1360{
-		margin:0px 15px 40px 15px;	
+		margin:0px 15px 40px 15px;
 	}
 	.overlay-main {
-		border-radius: 40px;	
+		border-radius: 40px;
 		@include breakpoint-480{
 			border-radius: 10px;
 		}
@@ -12241,7 +12241,7 @@ h3.twm-title{
 	border-radius: 40px;
 	padding: 70px 100px;
 	@include breakpoint-420{
-		padding:15px 15px 70px 15px;	
+		padding:15px 15px 70px 15px;
 	}
 }
 .job-categories-home-5{
@@ -12292,9 +12292,9 @@ h3.twm-title{
 		margin: 0px auto 30px;
 		border-radius: 50%;
 		transition: $transition;
-		
+
 		img{
-			width: auto; 
+			width: auto;
 			transition: $transition;
 		}
 		[class*='flaticon-']{
@@ -12348,7 +12348,7 @@ h3.twm-title{
 				z-index: 9;
 			}
 			[class*='flaticon-']{
-				transform: scale(0.8) rotate(-45deg); 
+				transform: scale(0.8) rotate(-45deg);
 				z-index: 9;
 			}
 		}
@@ -12361,14 +12361,14 @@ h3.twm-title{
 .cat-bg-clr-4{background-color: #ff5a5a;}
 
 .category-5-slider{
-	overflow: hidden; 
-	padding:18px; 
+	overflow: hidden;
+	padding:18px;
 	margin-bottom: -190px;
 	@include breakpoint-1360{
 		margin-bottom: 0px;
 		padding: 0px;
 	}
-	.swiper-button-next, 
+	.swiper-button-next,
 	.swiper-button-prev{
 		width: 50px;
 		height: 50px;
@@ -12398,8 +12398,8 @@ h3.twm-title{
 			bottom: 10px;
 		}
 	}
-	
-	.swiper-button-next::after, 
+
+	.swiper-button-next::after,
 	.swiper-button-prev::after {
 		border: 2px solid $clr-white;
 		width: 50px;
@@ -12439,7 +12439,7 @@ h3.twm-title{
 				margin: 5px auto;
 			}
 		}
-	} 
+	}
 	&:after {
 		width: 100%;
 		height: 100%;
@@ -12485,7 +12485,7 @@ h3.twm-title{
 					@include breakpoint-575{
 						padding: 0px;
 					}
-					
+
 					.twm-bnr-title-small{
 						font-size: 16px;
 						font-weight: 400;
@@ -12585,7 +12585,7 @@ h3.twm-title{
 				margin-right: -30px;
 			}
 			@include breakpoint-991{
-				margin-right: 0px;	
+				margin-right: 0px;
 			}
 			img{margin:0px auto; display: block;}
 		}
@@ -12676,7 +12676,7 @@ h3.twm-title{
 					position: absolute;
 					top: 54%;
 					left: -27%;
-					
+
 					.bnr-block-2-content{
 
 						border-radius: 20px;
@@ -12702,7 +12702,7 @@ h3.twm-title{
 									margin: 0px auto;
 								}
 							}
-							
+
 						}
 						.bnr-block-2-content-top{
 							display: flex;
@@ -12839,8 +12839,8 @@ h3.twm-title{
 				}
 			}
 		}
-		
-		
+
+
 	}
 
 	.twm-bnr-blocks{
@@ -12853,7 +12853,7 @@ h3.twm-title{
 		border-radius: 10px;
 		width:270px;
 		margin: 0px 4px;
-	
+
 		.twm-icon{
 			width: 70px;
 			margin-right: 20px;
@@ -12932,18 +12932,18 @@ h3.twm-title{
 		}
 	}
 	.twm-bnr-blocks-position-1{
-		position: absolute; 
+		position: absolute;
 		z-index: 4;
 		top: 200px;
 		left: 45px;
 		@include breakpoint-991{
-			position: inherit; 
+			position: inherit;
 			top: inherit;
 			left: inherit;
 		}
 	}
 	.twm-bnr-blocks-position-2{
-		position: absolute; 
+		position: absolute;
 		z-index: 4;
 		top: 90px;
 		right:0px;
@@ -12951,18 +12951,18 @@ h3.twm-title{
 			top: -30px;
 		}
 		@include breakpoint-991{
-			position: inherit; 
+			position: inherit;
 			top: inherit;
 			right: inherit;
 		}
 	}
 	.twm-bnr-blocks-position-3{
-		position: absolute; 
+		position: absolute;
 		z-index: 4;
 		bottom:50px;
 		right:20px;
 		@include breakpoint-991{
-			position: inherit; 
+			position: inherit;
 			right: inherit;
 			bottom: inherit;
 		}
@@ -13028,7 +13028,7 @@ h3.twm-title{
 		justify-content: center;
 		margin: 0px auto 20px;
 		img{
-			width: 38px; 
+			width: 38px;
 			transition: $transition;
 		}
 		[class*='flaticon-']{
@@ -13101,23 +13101,23 @@ h3.twm-title{
 				color: $clr-white;
 				span{
 					color: $clr-white;
-				}	
+				}
 			}
-				
+
 		}
 		.twm-media{
 			img{
-				transform: scale(0.8); 
+				transform: scale(0.8);
 			}
 			[class*='flaticon-']{
-				transform: scale(0.8); 
+				transform: scale(0.8);
 				color: $clr-primary;
 			}
 			&:after{
 				transform: translateX(-50%) translateY(-50%) scale(1);
 				opacity: 1;
 				background-color: $clr-light-purple;
-				
+
 			}
 		}
 	}
@@ -13401,7 +13401,7 @@ h3.twm-title{
 .twm-hpage-6-subs-wrap{
 	@include breakpoint-991{
 		padding: 40px 0px;
-	}	
+	}
 }
 .twm-hpage-6-subscribe-wrap{
 	position: relative;
@@ -13409,7 +13409,7 @@ h3.twm-title{
 	height: 100%;
 	display: flex;
 	align-items: center;
-	
+
 	.twm-hpage-6-subscribe{
 		background-color: #f3f7fd;
 		padding: 55px;
@@ -13545,7 +13545,7 @@ h3.twm-title{
 		img{
 			width: 100%;
 		}
-		
+
 	}
 }
 
@@ -13696,7 +13696,7 @@ h3.twm-title{
 		border-radius: 40px;
 		padding: 50px 20px 20px;
 		background-color: $clr-dark;
-		
+
 		.icon-media-wrap{
 			text-align: center;
 			.icon-media{
@@ -13725,7 +13725,7 @@ h3.twm-title{
 			.icon-content-info{
 				color: $clr-white;
 				font-size: 18px;
-				
+
 			}
 		}
 	}
@@ -13816,7 +13816,7 @@ h3.twm-title{
 	@include breakpoint-480{
 		margin-bottom: 60px;
 	}
-	
+
 }
 .testimonials-v{
 	position: relative;
@@ -13887,7 +13887,7 @@ h3.twm-title{
 				font-size: 14px;
 			}
 		}
-	}	  
+	}
 
 }
 
@@ -13898,7 +13898,7 @@ h3.twm-title{
 	z-index: 1;
 	overflow: hidden;
 	background-color: #eaf1fb;
-	
+
 	.h-page-6-client-slide-title{
 		font-size: 28px;
 		font-weight: 600;
@@ -13935,7 +13935,7 @@ h3.twm-title{
 				top: 20px;
 			}
 		}
-		
+
 	}
 	.h-page6-client-slider-outer{
 		position: relative;
@@ -13949,7 +13949,7 @@ h3.twm-title{
 			background-color: $clr-white;
 			position: absolute;
 			z-index: -1;
-			
+
 		}
 	}
 	.h-page6-client-slider{
@@ -13976,9 +13976,9 @@ h3.twm-title{
 				width: 100%;
 				border-radius: 10px;
 			}
-			
+
 		}
-		
+
 		.row{
 			display: flex;
 			align-items: center;
@@ -13995,12 +13995,12 @@ h3.twm-title{
 					display: flex;
 					align-items: center;
 				}
-			}		
+			}
 		}
-		
-	} 
+
+	}
 	.home-client-carousel6{
-		.client-logo{ 
+		.client-logo{
 			width: 150px;
 			margin: 0px auto;
 			&.client-logo-media{
@@ -14047,7 +14047,7 @@ h3.twm-title{
 		}
 		.twm-media{
 			position: relative;
-		    z-index: 1;	
+		    z-index: 1;
 			width: 660px;
 			height: 660px;
 			@include breakpoint-1199{
@@ -14069,7 +14069,7 @@ h3.twm-title{
 				margin: 0px auto;
 				display: block;
 				position: relative;
-		        z-index: 5;	
+		        z-index: 5;
 			}
 		}
 		.twm-media-bg-circle{
@@ -14083,7 +14083,7 @@ h3.twm-title{
 			z-index: 2;
 			transform: translate(-50% , -50%);
 			box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
-	
+
 		}
 		.twm-media-bg-circle2{
 			width: 85%;
@@ -14111,7 +14111,7 @@ h3.twm-title{
 			.rotate-center{
 				width: 100%;
 				height: 100%;
-				border-radius: 50%;	
+				border-radius: 50%;
 				border: 1px solid transparent;
 				position: absolute;
 			}
@@ -14178,10 +14178,10 @@ h3.twm-title{
 			@include breakpoint-767{
 				width: 50px;
 				height: 50px;
-				min-width: 50px;	
+				min-width: 50px;
 			}
 		}
-		
+
 	}
 	.twm-candidates-tag{
 		margin-bottom: 20px;
@@ -14214,19 +14214,19 @@ h3.twm-title{
 			}
 		}
 		.twm-left-info{
-			display: flex; 
+			display: flex;
 			justify-content: space-between;
 		}
 		.twm-candidate-address{
 			font-size: 14px;
-			margin-bottom: 0px; 
-			margin-right: 30px; 
+			margin-bottom: 0px;
+			margin-right: 30px;
 			font-weight: 500;
 			i{
 				margin-right: 5px;
 			}
 		}
-		
+
 	}
 }
 
@@ -14251,7 +14251,7 @@ h3.twm-title{
 	background-color: #002860;
 	box-shadow: 0px 0px 30px rgba(0,0,0,0.1);
 	border-radius: 10px;
-	
+
 	.twm-title{
 		color: $clr-white;
 	}
@@ -14289,7 +14289,7 @@ h3.twm-title{
 			border-radius: 10px;
 		}
 		.twm-title{
-			color: $clr-dark; 
+			color: $clr-dark;
 			margin-bottom: 0px;
 		}
 	}
@@ -14323,7 +14323,7 @@ h3.twm-title{
 		list-style: none;
 		display: flex;
 		flex-wrap: wrap;
-		
+
 		li{
 			padding-right: 20px;
 			width: 50%;
@@ -14416,7 +14416,7 @@ h3.twm-title{
 	padding: 30px;
 	margin-bottom: 30px;
 	overflow: hidden;
-	>{ 
+	>{
 		.row{
 		display: flex;
 		align-items: center;
@@ -14553,7 +14553,7 @@ h3.twm-title{
 				margin-bottom: 30px;
 			}
 			.twm-media{
-				
+
 				@include breakpoint-575{
 					margin-top: 60px;
 				}
@@ -14650,7 +14650,7 @@ h3.twm-title{
 		height: 70px;
 		border-radius: 50%;
 		margin: 0px auto 15px;
-		
+
 		overflow: hidden;
 		img{
 			width: 100%;
@@ -14679,7 +14679,7 @@ h3.twm-title{
 .twm-recommended-Jobs-mid{
 	max-width: 1380px;
 	margin: 0px auto;
-	position: relative;	
+	position: relative;
 	z-index: 1;
 	&:after{
 		content: '';
@@ -14790,7 +14790,7 @@ h3.twm-title{
 			display: inline-block;
 			padding: 0px 20px 20px;
 			@include breakpoint-575{
-				padding: 0px 3px 20px;	
+				padding: 0px 3px 20px;
 				font-size: 14px;
 			}
 			&.btn-filter.btn-active{
@@ -14841,16 +14841,16 @@ h3.twm-title{
 				}
 				@include breakpoint-575{
 					left: 0px;
-					
+
 				}
 			}
-			
+
 		}
 	}
 }
 
 
-   
+
 
 /* ---- Home Page 3 Banner Section Css Start ---- */
 .twm-home7-banner-section{
@@ -14858,17 +14858,17 @@ h3.twm-title{
 	padding-top: 315px;
 	overflow: hidden;
 	@include breakpoint-1600{
-		padding-top: 240px;	
+		padding-top: 240px;
 	}
 	@include breakpoint-767{
-		padding-top: 170px;	
+		padding-top: 170px;
 	}
 
 	.twm-home7-inner-section{
-		
+
 		.twm-bnr-mid-section{
 			padding-bottom: 40px;
-		
+
 			.twm-bnr-title-large{
 				font-size: 66px;
 				max-width: 720px;
@@ -14905,19 +14905,19 @@ h3.twm-title{
 				}
 			}
 			.twm-bnr-discription{
-				font-size: 18px; 
-				margin-bottom: 40px; 
+				font-size: 18px;
+				margin-bottom: 40px;
 				color: $clr-white;
 			}
 			.twm-bnr-search-bar{
 				max-width: 720px;
-				margin-bottom: 40px; 
+				margin-bottom: 40px;
 				box-shadow: none;
 			}
-	
+
 		}
 	}
-	
+
 	.twm-bnr-bottom-section{
 		padding: 0px 50px;
 		display: flex;
@@ -14941,7 +14941,7 @@ h3.twm-title{
 			@include breakpoint-1199{
 				font-size: 80px;
 			    line-height: 70px;
-				
+
 			}
 			@include breakpoint-767{
 				font-size: 50px;
@@ -14996,7 +14996,7 @@ h3.twm-title{
 	position: relative;
 	z-index: 1;
 	transition: $transition;
-	
+
 	.job-categories-home-7-top{
 		display: flex;
 	    align-items: center;
@@ -15018,9 +15018,9 @@ h3.twm-title{
 		transition: $transition;
 		border-radius: 10px;
 		background-color: $clr-primary;
-		
+
 		img{
-			width: auto; 
+			width: auto;
 			transition: $transition;
 		}
 		[class*='flaticon-']{
@@ -15070,7 +15070,7 @@ h3.twm-title{
 				z-index: 9;
 			}
 			[class*='flaticon-']{
-				transform: scale(0.8) rotate(-45deg); 
+				transform: scale(0.8) rotate(-45deg);
 				z-index: 9;
 				color: $clr-primary;
 			}
@@ -15115,8 +15115,8 @@ h3.twm-title{
 }
 
 .twm-testimonial-page8-section{
-	
-	>{ 
+
+	>{
 		.row{
 			display: flex;
 			align-items: center;
@@ -15205,7 +15205,7 @@ h3.twm-title{
 	position: relative;
 	z-index: 1;
 	transition: $transition;
-	
+
 	.twm-media{
 		width: 50px;
 		height: 50px;
@@ -15219,9 +15219,9 @@ h3.twm-title{
 		border-radius: 10px;
 		background-color: $clr-primary;
 		margin-bottom: 10px;
-		
+
 		img{
-			width: auto; 
+			width: auto;
 			transition: $transition;
 		}
 		[class*='flaticon-']{
@@ -15271,7 +15271,7 @@ h3.twm-title{
 				z-index: 9;
 			}
 			[class*='flaticon-']{
-				transform: scale(0.8) rotate(-45deg); 
+				transform: scale(0.8) rotate(-45deg);
 				z-index: 9;
 				color: $clr-primary;
 			}
@@ -15287,14 +15287,14 @@ h3.twm-title{
 	min-height: 750px;
 	overflow: hidden;
 	@include breakpoint-1600{
-		padding-top: 240px;	
+		padding-top: 240px;
 	}
 	@include breakpoint-767{
-		padding-top: 170px;	
+		padding-top: 170px;
 	}
 
 	.twm-home8-inner-section{
-		
+
 		.twm-bnr-left-section{
 			padding-bottom: 40px;
 			@include breakpoint-991{
@@ -15325,8 +15325,8 @@ h3.twm-title{
 			}
 
 			.twm-bnr-discription{
-				font-size: 36px; 
-				margin-bottom: 40px; 
+				font-size: 36px;
+				margin-bottom: 40px;
 				color: $clr-primary;
 				font-weight: 300;
 				@include breakpoint-1199{
@@ -15339,10 +15339,10 @@ h3.twm-title{
 			}
 			.twm-bnr-search-bar{
 				max-width: 720px;
-				margin-bottom: 40px; 
+				margin-bottom: 40px;
 				box-shadow: none;
 			}
-	
+
 		}
 		.bnr-media{
 			margin-right: -125px;
@@ -15358,7 +15358,7 @@ h3.twm-title{
 			}
 		}
 	}
-	
+
 	.twm-bnr-bottom-section{
 		padding: 0px 50px;
 		display: flex;
@@ -15381,7 +15381,7 @@ h3.twm-title{
 			display: block;
 			text-shadow: #cbdbed 0px -15px;
 			@include breakpoint-991{
-				
+
 				position: inherit;
 			}
 			@include breakpoint-767{
@@ -15476,10 +15476,10 @@ h3.twm-title{
 					width: 230px;
 				    height: 230px;
 				}
-				
+
 			}
 		}
-		
+
 	}
 }
 
@@ -15567,7 +15567,7 @@ h3.twm-title{
 							border: 2px solid $clr-white;
 							overflow: hidden;
 							margin-left: -15px;
-							
+
 						}
 					}
 					.twm-content{
@@ -15591,7 +15591,7 @@ h3.twm-title{
 						}
 					}
 				}
-				
+
 			}
 			.twm-about-9-section-right{
 				margin-left: 20px;
@@ -15634,7 +15634,7 @@ h3.twm-title{
 	.job-categories-3-wrap{
 		margin-top: 20px;
 	}
-	
+
 }
 
 /*Home page 9 banner*/
@@ -15713,7 +15713,7 @@ h3.twm-title{
 				}
 				span{display: inline-block;}
 			}
-			
+
 		}
 
 	}
@@ -15751,13 +15751,13 @@ h3.twm-title{
 			@include breakpoint-1440{
 				margin-right: 0px;
 			}
-			
+
 			img{
 				display: inline-block;
 			}
 		}
 	}
-	
+
 }
 .typewrite{
 	.wrap{
@@ -15816,7 +15816,7 @@ h3.twm-title{
 		left: auto;
 		top: 50%;
 	}
-	
+
 }
 @keyframes sliderShape{
   0%,100%{
@@ -15956,7 +15956,7 @@ h3.twm-title{
 		display: flex;
 		align-items:center;
 		justify-content: space-between;
-		
+
 		.twm-bnr-left-section{
 			margin-left: auto;
 			position: relative;
@@ -16014,7 +16014,7 @@ h3.twm-title{
 					line-height: 36px;
 				}
 			}
-			
+
 		}
 
 	}
@@ -16126,9 +16126,9 @@ h3.twm-title{
 				position: inherit;
 			}
 		}
-		
+
 	}
-	
+
 }
 
 
@@ -16138,7 +16138,7 @@ h3.twm-title{
 	top: -45px;
 	transform-origin: 50% 100%;
   }
- 
+
   @keyframes rotate {
 	from {
 	  transform: rotate(0deg);
@@ -16152,7 +16152,7 @@ h3.twm-title{
   .zoom-in-out-box {
 	animation: zoom-in-zoom-out 1s ease infinite;
   }
-  
+
   @keyframes zoom-in-zoom-out {
 	0% {
 	  transform: scale(1, 1);
@@ -16168,7 +16168,7 @@ h3.twm-title{
   .zoom-in-out-box2 {
 	animation: zoom-in-zoom-out2 1s ease-out infinite;
   }
-  
+
   @keyframes zoom-in-zoom-out2 {
 	0% {
 	  transform: scale(1, 1);
@@ -16209,7 +16209,7 @@ h3.twm-title{
 			padding-top:80px;
 		}
 	}
-	
+
 
 	.row{
 		display: flex;
@@ -16221,7 +16221,7 @@ h3.twm-title{
 			align-items: center;
 		}
 		.twm-bnr-5-blocks {
-			
+
 			position: relative;
 			.twm-title{
 				display: block;
@@ -16344,7 +16344,7 @@ h3.twm-title{
 				}
 			}
 			.twm-bnr-discription{
-				font-size: 24px; 
+				font-size: 24px;
 				margin-bottom: 30px;
 			}
 		}
@@ -16355,12 +16355,12 @@ h3.twm-title{
 
 	}
 
-	
+
 }
 
 
 /*-----------------------------------------------------------------
-	Home Page 12 
+	Home Page 12
 ------------------------------------------------------------------*/
 
 .twm-hpage12-bnr-pic{
@@ -16387,20 +16387,20 @@ h3.twm-title{
 	}
 	padding-top: 270px;
 	@include breakpoint-1600{
-		padding-top: 240px;	
+		padding-top: 240px;
 	}
 	@include breakpoint-767{
-		padding-top: 170px;	
+		padding-top: 170px;
 	}
 	.twm-home3-inner-section{
 		@include breakpoint-991{
 			max-width: 510px;
 		}
-		
+
 		.twm-bnr-mid-section{
 			text-align: left;
 			padding-bottom: 0px;
-			
+
 			.twm-bnr-title-large{
 				margin-left: 0px;
 			}
@@ -16431,10 +16431,10 @@ h3.twm-title{
 					}
 				}
 			}
-		
+
 		}
 	}
-	
+
 	.twm-banner-h12-r-outline-text{
 		display: block;
 		-webkit-text-fill-color: rgba(0, 0, 0, 0.05);
@@ -16463,7 +16463,7 @@ h3.twm-title{
 
 
 /*-----------------------------------------------------------------
-	Home Page 13 
+	Home Page 13
 ------------------------------------------------------------------*/
 .twm-home3-banner-section.twm-bnr-hpage-13{
 	background-color: #f7f7f7;
@@ -16482,12 +16482,12 @@ h3.twm-title{
 		background-color: $clr-white;
 		box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 		margin-top: 15px;
-		
+
 		.twm-bnr-mid-section{
 			text-align: left;
 			padding-bottom: 0px;
 			max-width: none;
-			
+
 			.twm-bnr-title-large{
 				margin-left: 0px;
 				color: $clr-primary;
@@ -16544,8 +16544,8 @@ h3.twm-title{
 				font-size: 14px;
 				margin-top: 30px;
 				margin-bottom: 30px;
-				
-				
+
+
 				@include breakpoint-991{
 					margin: 30px auto;
 					max-width: 710px;
@@ -16583,7 +16583,7 @@ h3.twm-title{
 					font-size: 24px;
 				}
 			}
-		
+
 		}
 	}
 
@@ -16643,7 +16643,7 @@ h3.twm-title{
 			padding:0px 12px;
 		}
 	}
-	
+
 }
 
 .twm-hpage-12-v-bnr{
@@ -16673,7 +16673,7 @@ h3.twm-title{
 		padding: 30px;
 		max-width: 100%;
 	}
-	
+
 	.v-easy-ticker{
 		overflow:hidden;
 		.v-easy-ticker-content{
@@ -16716,7 +16716,7 @@ h3.twm-title{
 			border-radius: 10px;
 			display: block;
 		}
-		
+
 		.v-jobs-list-icon{
 			min-width: 50px;
 			width: 50px;
@@ -16749,7 +16749,7 @@ h3.twm-title{
 
 
 /*-----------------------------------------------------------------
-	Home Page 14 
+	Home Page 14
 ------------------------------------------------------------------*/
 .twm-home3-banner-section.twm-bnr-hpage-14{
 	background-color: #0f0f11;
@@ -16801,7 +16801,7 @@ h3.twm-title{
 			text-align: left;
 			padding-bottom: 0px;
 			max-width: none;
-			
+
 			.twm-bnr-title-large{
 				margin-left: 0px;
 				color: $clr-white;
@@ -16863,8 +16863,8 @@ h3.twm-title{
 				margin-top: 30px;
 				margin-bottom: 30px;
 				color: #a5a5a5;
-				
-				
+
+
 				@include breakpoint-991{
 					margin: 30px auto;
 					max-width: 710px;
@@ -16902,13 +16902,13 @@ h3.twm-title{
 					font-size: 24px;
 				}
 			}
-		
+
 		}
 		.twm-hpage-14-bnr-left-content{
 			display: flex;
 			align-items: center;
-			
-		
+
+
 			.twm-bnr-mid-section{
 				margin-left: 140px;
 				padding: 80px 0px;
@@ -16937,7 +16937,7 @@ h3.twm-title{
 				@include breakpoint-480{
 					display: block;
 				}
-			
+
 				.twm-bnr-blocks{
 					display: flex;
 					position: relative;
@@ -16948,7 +16948,7 @@ h3.twm-title{
 						display: inline-block;
 						margin-bottom: 20px;
 					}
-				
+
 					.twm-content{
 						.tw-count-number {
 							font-size: 38px;
@@ -16969,7 +16969,7 @@ h3.twm-title{
 						}
 					}
 				}
-	
+
 				.twm-bnr-blocks-3{
 					display: flex;
 					position: relative;
@@ -16980,7 +16980,7 @@ h3.twm-title{
 						max-width: 225px;
 						margin-bottom: 30px;
 					}
-					
+
 					.twm-pics{
 						margin-left: 15px;
 						margin-right: 15px;
@@ -17020,7 +17020,7 @@ h3.twm-title{
 			}
 		}
 		.twm-hpage-14-bnr-right{
-			
+
 			.twm-media{
 				margin-left: 55px;
 				@include breakpoint-991{
@@ -17084,9 +17084,9 @@ h3.twm-title{
 		top: 20px;
 		width:24px;
 		height:1px;
-		background-color:#262423;	
+		background-color:#262423;
 	}
-		
+
 	&:after{
 		-moz-transform: rotate(135deg);
 		-webkit-transform: rotate(135deg);
@@ -17103,7 +17103,7 @@ h3.twm-title{
 		transform: rotate(45deg);
 	}
 }
-      
+
 .twm-side-navigation-menu{
 		position:fixed;
 		width:400px;
@@ -17147,14 +17147,14 @@ h3.twm-title{
 					}
 				}
 			}
-		}                
-		
+		}
+
 		&.navbar-collapse{align-items: start;}
 
-		
+
 		.nav>li {
 			position: relative;
-			font-family: $common-font;    
+			font-family: $common-font;
 			ul{
 				display: none;
 				position: static;
@@ -17162,7 +17162,7 @@ h3.twm-title{
 				width: auto;
 				background: #f9f9f9;
 				overflow: auto;
-			} 
+			}
 			&>a {
 				color: #2f2f2f;
 				font-size: 18px;
@@ -17179,18 +17179,18 @@ h3.twm-title{
 				&:focus {background-color: transparent;}
 			}
 			&.active>a,
-			&.current-menu-item>a {color: $clr-black;} 
+			&.current-menu-item>a {color: $clr-black;}
 
 			&>a:hover,
 			&>a:active,
 			&>a:focus{
 				text-decoration: none;
-			} 
+			}
 
 			&.active>a{
 				background-color: transparent;
 				color: $clr-black;
-			}               
+			}
 
 			&:hover>a {
 				color: $clr-primary;
@@ -17212,9 +17212,9 @@ h3.twm-title{
 				width: auto;
 				opacity: 1;
 				margin-left: 30px;
-				
+
 				background-color: transparent;
-				
+
 				li {
 					border-bottom: 1px solid #f4f4f4;
 					position: relative;
@@ -17242,7 +17242,7 @@ h3.twm-title{
 						}
 					}
 					&:hover>a {color: $clr-primary;}
-					&:last-child {border-bottom: 0px;}    
+					&:last-child {border-bottom: 0px;}
 					.fa {
 						color: $clr-black;
 						display: block;
@@ -17267,8 +17267,8 @@ h3.twm-title{
 							display: block;
 							width: auto;
 							margin-left: 20px;
-						} 
-					} 
+						}
+					}
 				}
 				li{
 					&:hover{
@@ -17288,10 +17288,10 @@ h3.twm-title{
 								position: absolute;
 								top: 0px;
 								width: 6px;
-							}                
+							}
 						}
 					}
-				} 
+				}
 					li {
 						.fa{
 							z-index: 1;
@@ -17307,8 +17307,8 @@ h3.twm-title{
 			}
 
 		}
-		.has-child{ 
-			position: relative;  
+		.has-child{
+			position: relative;
 			.submenu-toogle {
 				position: absolute;
 				right: 4px;
@@ -17326,8 +17326,8 @@ h3.twm-title{
 			li{
 				.submenu-toogle {opacity: 0.9;}
 			}
-	
-	
+
+
 			&.nav-active {
 				>a {
 					+ {
@@ -17338,11 +17338,11 @@ h3.twm-title{
 						}
 					}
 				}
-			}          
-	
-		} 
+			}
 
-		/*-- Submenu direction---*/                         
+		}
+
+		/*-- Submenu direction---*/
 		.submenu-direction {
 			.sub-menu {
 				left: auto;
@@ -17362,7 +17362,7 @@ h3.twm-title{
 					}
 				}
 			}
-		}                
+		}
 
 }
 
@@ -17443,7 +17443,7 @@ h3.twm-title{
 			box-shadow: none;
 		}
 	}
-	
+
 }
 
 
@@ -17466,9 +17466,9 @@ h3.twm-title{
 		top: 20px;
 		width:24px;
 		height:1px;
-		background-color:#262423;	
+		background-color:#262423;
 	}
-		
+
 	&:after{
 		-moz-transform: rotate(135deg);
 		-webkit-transform: rotate(135deg);
@@ -17485,7 +17485,7 @@ h3.twm-title{
 		transform: rotate(45deg);
 	}
 }
-   
+
 .twm-all-demo-list-wrap{
 	position:fixed;
 	width:360px;
@@ -17594,7 +17594,7 @@ HOME PAGE 15 START
 					}
 					&:last-child {
 						border-bottom: 0px;
-					}    
+					}
 					.fa {
 						color: $clr-black;
 						display: block;
@@ -17625,7 +17625,7 @@ HOME PAGE 15 START
 				display:block;
 				width:auto;
 			}
-		} 
+		}
 	}
 }
 @include breakpoint-991{
@@ -17707,7 +17707,7 @@ HOME PAGE 15 START
 		border-radius: 10px;
 		width:270px;
 		margin: 0px 4px;
-	
+
 		.twm-icon{
 			width: 70px;
 			margin-right: 20px;
@@ -17786,18 +17786,18 @@ HOME PAGE 15 START
 		}
 	}
 	.twm-bnr-blocks-position-1{
-		position: absolute; 
+		position: absolute;
 		z-index: 4;
 		top: 200px;
 		left: 45px;
 		@include breakpoint-991{
-			position: inherit; 
+			position: inherit;
 			top: inherit;
 			left: inherit;
 		}
 	}
 	.twm-bnr-blocks-position-2{
-		position: absolute; 
+		position: absolute;
 		z-index: 4;
 		top: 90px;
 		right:0px;
@@ -17805,18 +17805,18 @@ HOME PAGE 15 START
 			top: -30px;
 		}
 		@include breakpoint-991{
-			position: inherit; 
+			position: inherit;
 			top: inherit;
 			right: inherit;
 		}
 	}
 	.twm-bnr-blocks-position-3{
-		position: absolute; 
+		position: absolute;
 		z-index: 4;
 		bottom:50px;
 		right:20px;
 		@include breakpoint-991{
-			position: inherit; 
+			position: inherit;
 			right: inherit;
 			bottom: inherit;
 		}
@@ -17892,7 +17892,7 @@ HOME PAGE 15 START
 			border-radius: 20px;
 			width: 100%;
 		}
-		
+
 	}
 	.bnr-15-left-pic1{
 		position: absolute;
@@ -17950,9 +17950,9 @@ HOME PAGE 15 START
 			margin: 0px auto -25px;
 			border-radius: 50%;
 			transition: $transition;
-			
+
 			img{
-				width: auto; 
+				width: auto;
 				transition: $transition;
 			}
 			[class*='flaticon-']{
@@ -17977,7 +17977,7 @@ HOME PAGE 15 START
 					z-index: 9;
 				}
 				[class*='flaticon-']{
-					transform: scale(0.8) rotate(-45deg); 
+					transform: scale(0.8) rotate(-45deg);
 					z-index: 9;
 				}
 			}
@@ -17992,14 +17992,14 @@ HOME PAGE 15 START
 	.is-fixed{
 		.main-bar.color-fill{
 			.logo-header{
-				background-color: $clr-primary;	
+				background-color: $clr-primary;
 				border-radius: 5px;
 				padding: 10px;
 			}
-			
+
 		}
 	}
-}  
+}
 
 
 
@@ -18025,8 +18025,8 @@ HOME PAGE 15 START
 	.is-fixed{
 		.main-bar.color-fill{
 			top: 0px;
-		}	
-	} 
+		}
+	}
 }
 
 
@@ -18070,7 +18070,7 @@ HOME PAGE 15 START
 			@include breakpoint-575{
 				padding: 110px 20px 0px;
 			}
-			
+
 			.twm-bnr-title-small{
 				font-size: 20px;
 				font-weight: 500;
@@ -18097,7 +18097,7 @@ HOME PAGE 15 START
 				}
 			}
 			.twm-bnr-discription{
-				font-size: 18px; 
+				font-size: 18px;
 				margin-bottom: 30px;
 			}
 		}
@@ -18164,7 +18164,7 @@ HOME PAGE 15 START
 				@include breakpoint-575{
 					display:block;
 				}
-			
+
 				.twm-content{
 					.tw-count-number {
 						font-size: 38px;
@@ -18183,7 +18183,7 @@ HOME PAGE 15 START
 					}
 				}
 			}
-		
+
 			.twm-bnr-blocks-3{
 				background-color: $clr-white;
 				border: 10px;
@@ -18232,7 +18232,7 @@ HOME PAGE 15 START
 				}
 			}
 			.twm-bnr-blocks-position-1{
-				position: absolute; 
+				position: absolute;
 				z-index: 1;
 				bottom: 70%;
 				left: 125px;
@@ -18267,7 +18267,7 @@ HOME PAGE 15 START
 				}
 			}
 			.twm-bnr-blocks-position-2{
-				position: absolute; 
+				position: absolute;
 				z-index: 1;
 				bottom: 53%;
 				left: 60px;
@@ -18298,7 +18298,7 @@ HOME PAGE 15 START
 				}
 			}
 			.twm-bnr-blocks-position-3{
-				position: absolute; 
+				position: absolute;
 				z-index: 1;
 				bottom: 36%;
 				left: -40px;
@@ -18463,7 +18463,7 @@ HOME PAGE 15 START
 				margin: 5px auto;
 			}
 		}
-	} 
+	}
 	>{
 		.container{
 			.row{
@@ -18502,7 +18502,7 @@ HOME PAGE 15 START
 						padding: 0px;
 						margin-bottom: 40px;
 					}
-					
+
 					.twm-bnr-title-small{
 						font-size: 16px;
 						font-weight: 400;
@@ -18561,7 +18561,7 @@ HOME PAGE 15 START
 			position: relative;
 			z-index: 1;
 			height: 100%;
-			
+
 			.bnr-bg-circle{
 				position: absolute;
 				left: 50%;
@@ -18635,11 +18635,11 @@ HOME PAGE 15 START
 				margin-right:0px;
 			}
 			@include breakpoint-991{
-				margin-right: 0px;	
+				margin-right: 0px;
 			}
 			img{margin:0px auto; display: block;}
 		}
-		
+
 	}
 }
 
@@ -18688,7 +18688,7 @@ HOME PAGE 15 START
 			display: none;
 		}
 
-		
+
 		span{
 			font-size: 80px;
 			text-transform: uppercase;
@@ -18726,7 +18726,7 @@ HOME PAGE 15 START
 
 
 
- 
+
 
 /*------------------------------------------------------------------
 	Home Page 18
@@ -18814,7 +18814,7 @@ HOME PAGE 15 START
 				}
 			}
 			.twm-bnr-discription{
-				font-size: 18px; 
+				font-size: 18px;
 				margin-bottom: 30px;
 			}
 		}
@@ -18890,7 +18890,7 @@ HOME PAGE 15 START
 					bottom: auto;
 				}
 			}
-			
+
 			.twm-h-page16-bnr-pic{
 				text-align: right;
 				@include breakpoint-1199{
@@ -18950,7 +18950,7 @@ HOME PAGE 15 START
 		right: 10px;
 		bottom: -19px;
 		position: absolute;
-		z-index: 4;	
+		z-index: 4;
 		@include breakpoint-575{
 			bottom: 0px;
 		}
@@ -19003,5 +19003,6 @@ HOME PAGE 15 START
 		}
 	}
 }
+
 
 

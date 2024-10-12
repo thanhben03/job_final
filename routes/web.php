@@ -59,8 +59,8 @@ Route::get('/companies/candidate-applied/{job_id}', [CompanyController::class, '
 Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
 Route::get('/companies/chat', [CompanyController::class, 'showChat'])->name('company.show.chat');
 
-Route::get('/company/login', [AuthenticatedCompanyController::class, 'create'])->name('company.showLogin');
-Route::post('/company/login', [AuthenticatedCompanyController::class, 'store'])->name('company.login');
+//Route::get('/company/login', [AuthenticatedCompanyController::class, 'create'])->name('company.showLogin');
+//Route::post('/company/login', [AuthenticatedCompanyController::class, 'store'])->name('company.login');
 
 
 Route::post('/appointments', [AppointmentController::class, 'store'])->name('store.appointment');
@@ -77,9 +77,9 @@ Route::post('/chat/send-to-company', [ChatController::class, 'sendMessageToCompa
 Route::get('/chat/view-chat/{companyId}', [ChatController::class, 'viewChatForUser'])->name('chat.getChat');
 Route::get('/chat/view-chat-company/{userId}', [ChatController::class, 'viewChatForCompany'])->name('chat.getChat.company');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -90,3 +90,4 @@ Route::middleware('auth')->group(function () {
 Route::get('pdf-to-img', [CandidateController::class, 'pdfToImg'])->name('pdf-to-img');
 
 require __DIR__.'/auth.php';
+require __DIR__.'/company-auth.php';
