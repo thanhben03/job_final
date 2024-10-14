@@ -87,6 +87,8 @@ class JobController extends Controller
 
 
 
+
+
         $careers = $careers->paginate(10);
         $data = CareerResource::make($careers);
         $skills = $this->skillService->getAll();

@@ -41,7 +41,7 @@
                         </li>
                         <li class="has-child"><a href="{{route('jobs.index')}}">Jobs</a>
                         </li>
-                        <li class=""><a href="javascript:;">Employers</a>
+                        <li class=""><a href="{{route('company.list')}}">Employers</a>
                         </li>
                         <li class=""><a href="javascript:;">CV / Hồ sơ</a>
                             <ul class="sub-menu">

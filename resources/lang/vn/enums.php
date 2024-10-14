@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Enums\CompanySizeEnum;
 use App\Enums\GenderEnum;
 use App\Enums\JobExpEnum;
 use App\Enums\LevelEnum;
@@ -42,5 +43,10 @@ return [
         JobExpEnum::TWOYEAR => '2 Year',
         JobExpEnum::THREEYEAR => '3 Year',
         JobExpEnum::FOURYEAR => '4 Year',
+    ],
+    CompanySizeEnum::class => [
+        CompanySizeEnum::ZERO_TWENTY => '0 - 20 employee',
+        CompanySizeEnum::TWENTY_FIFTY => '20 - 50 employee',
+        CompanySizeEnum::GREATER_THAN_FIFTY => '> 50 employee',
     ]
 ];
