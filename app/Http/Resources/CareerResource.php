@@ -61,7 +61,7 @@ class CareerResource extends ResourceCollection
                 'appointments' => AppointmentResource::make($career->appointments)->resolve(),
                 'from_time' => $career->from_time,
                 'to_time' => $career->to_time,
-                'status' => StatusCV::getDescription($career->user_career->status),
+                'status' =>  !empty($career->user_career->status) ? StatusCV::getDescription($career->user_career->status) : "" ,
             ];
         });
 

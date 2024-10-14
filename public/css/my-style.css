@@ -21,3 +21,12 @@
     animation: l1 1s infinite;
 }
 @keyframes l1 {to{transform: rotate(.5turn)}}
+
+
+.apply-now-text {
+    border: 1px solid #ff67124a;
+    padding: 1px 3px;
+    border-radius: 4px;
+    background: antiquewhite;
+    cursor: pointer;
+}
