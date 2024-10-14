@@ -49,16 +49,21 @@ Route::post('/upload-cv', [CandidateController::class, 'uploadCv'])->name('api.f
 Route::post('/upload-avatar', [CandidateController::class, 'uploadAvatar'])->name('api.file.upload.avatar');
 Route::post('/upload-avatar-company', [CandidateController::class, 'uploadAvatarCompany'])->name('api.file.upload.avatar.company');
 
-Route::get('/companies/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
-Route::get('/companies/profile', [CompanyController::class, 'profile'])->name('company.profile');
-Route::get('/companies/post-job', [CompanyController::class, 'showPostJob'])->name('company.show.post-job');
-Route::get('/companies/manage-job', [CompanyController::class, 'showManageJob'])->name('company.manage-job');
-Route::get('/companies/detail-job/{slug}', [CompanyController::class, 'showDetailJob'])->name('company.show.detail-job');
-Route::get('/companies/candidate-applied/{job_id}', [CompanyController::class, 'showCandidateAppliedJob'])->name('company.show.detail-job');
+Route::middleware('auth:company')->group(function () {
+    Route::get('/companies/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
+    Route::get('/companies/profile', [CompanyController::class, 'profile'])->name('company.profile');
+    Route::get('/companies/post-job', [CompanyController::class, 'showPostJob'])->name('company.show.post-job');
+    Route::get('/companies/manage-job', [CompanyController::class, 'showManageJob'])->name('company.manage-job');
+    Route::get('/companies/detail-job/{slug}', [CompanyController::class, 'showDetailJob'])->name('company.show.detail-job');
+    Route::get('/companies/candidate-applied/{job_id}', [CompanyController::class, 'showCandidateAppliedJob'])->name('company.show.detail-job');
 //Route::get('/companies/resume', [CompanyController::class, 'resume'])->name('company.resume');
+
 Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
 Route::get('/companies/chat', [CompanyController::class, 'showChat'])->name('company.show.chat');
 Route::get('/companies/list', [CompanyController::class, 'list'])->name('company.list');
+Route::get('/companies/candidate-list', [CompanyController::class, 'showCandidateList'])->name('company.show.candidate.list');
+
+
 
 //Route::get('/company/login', [AuthenticatedCompanyController::class, 'create'])->name('company.showLogin');
 //Route::post('/company/login', [AuthenticatedCompanyController::class, 'store'])->name('company.login');

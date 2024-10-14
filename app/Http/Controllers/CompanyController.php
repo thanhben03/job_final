@@ -203,5 +203,9 @@ class CompanyController extends Controller
         $companies = $companies->paginate(10);
         $companyResources = CompanyResource::make($companies)->resolve();
         return view('pages.companies.company-list', compact('companies', 'companyResources'));
+  
+    public function showCandidateList()
+    {
+        return view('pages.companies.candidate-list');
     }
 }
