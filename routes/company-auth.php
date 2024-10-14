@@ -22,9 +22,7 @@ Route::prefix('companies')->as('company.')->middleware('guest:company')->group(f
 
 });
 
-Route::prefix('companies')->middleware('auth:company')->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)
-        ->name('verification.notice');
+Route::prefix('companies')->as('company.')->middleware('auth:company')->group(function () {
 
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
         ->middleware(['signed', 'throttle:6,1'])
@@ -41,6 +39,5 @@ Route::prefix('companies')->middleware('auth:company')->group(function () {
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
-    Route::post('logout', [LoginCompanyController::class, 'destroy'])
-        ->name('logout');
+    Route::post('logout', [LoginCompanyController::class, 'destroy'])->name('logout');
 });

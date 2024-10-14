@@ -104,11 +104,9 @@
                             <div class="single-user-comment-wrap sigle-user-reply">
                                 <div class="row justify-content-end">
                                     <div class="col-xl-9 col-lg-12">
-                                        <div class="single-user-comment-block clearfix">
-                                            <div class="single-user-com-pic">
-                                                <img src="${res.user.avatar.includes('http') ? res.user.avatar : `/images/avatar/${res.user.avatar}`}" alt="">
-                                            </div>
-                                            <div class="single-user-com-text">${res.message}</div>
+                                        <div style="float: right" class="single-user-comment-block clearfix">
+
+                                            <div style="width: max-content" class="single-user-com-text">${res.message}</div>
                                             <div class="single-user-msg-time">${res.created_at}</div>
                                         </div>
                                     </div>

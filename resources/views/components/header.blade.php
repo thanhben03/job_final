@@ -214,8 +214,13 @@
                                                                 <li><a href="dash-my-profile.html"><i
                                                                             class="fa fa-user"></i> Profile</a>
                                                                 </li>
-                                                                <li><a href="index.html"><i
-                                                                            class="fa fa-share-square"></i> Logout</a>
+                                                                <li><a onclick="logout()" href="#">
+                                                                        <i class="fa fa-share-square"></i>
+                                                                        <form id="formLogout" method="POST" action="{{route('logout')}}">
+                                                                            @csrf
+                                                                        </form>
+                                                                        Logout
+                                                                    </a>
                                                                 </li>
                                                             </ul>
 
@@ -276,6 +281,10 @@
                     $("#notification-unread-count").text('0')
                 }
             })
+        }
+
+        function logout() {
+            $("#formLogout").submit();
         }
     </script>
 @endpush

@@ -535,12 +535,12 @@
     document.addEventListener('DOMContentLoaded', function() {
 
 
-        window.Echo.private('appointment.' + '{{auth()->user()->id}}')
+        window.Echo.private('appointment.' + '{{auth()?->user()?->id}}')
             .listen('AppointmentEvent', (e) => {
                 createNoti(e)
             });
 
-        window.Echo.private('notification.' + '{{auth()->user()->id}}')
+        window.Echo.private('notification.' + '{{auth()?->user()?->id}}')
             .listen('NotificationEvent', (e) => {
                 createNoti(e)
             })

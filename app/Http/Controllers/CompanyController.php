@@ -150,4 +150,9 @@ class CompanyController extends Controller
         $latestMessages = ChatResource::make($latestMessages)->resolve();
         return view('pages.companies.chat', compact('latestMessages'));
     }
+
+    public function showCandidateList()
+    {
+        return view('pages.companies.candidate-list');
+    }
 }

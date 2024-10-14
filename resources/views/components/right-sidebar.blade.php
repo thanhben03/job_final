@@ -54,7 +54,12 @@
                 </li>
 {{--                <li><a href="candidate-job-alert.html"><i class="fa fa-bell"></i> Job Alerts</a></li>--}}
 {{--                <li><a href="candidate-change-password.html"><i class="fa fa-fingerprint"></i> Change Passeord</a></li>--}}
-                <li><a href="candidate-chat.html"><i class="fa fa-comments"></i>Chat</a></li>
+                <li class="@if(str_contains(request()->url(), 'chat')) active @endif">
+                    <a href="{{route('candidate.show.chat')}}">
+                        <i class="fa fa-comments"></i>
+                        Chat
+                    </a>
+                </li>
             </ul>
         </div>
 

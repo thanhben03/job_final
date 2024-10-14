@@ -92,7 +92,7 @@ class JobController extends Controller
         $skills = $this->skillService->getAll();
         $provinces = Province::query()->get(['code', 'name']);
         $careerIdSaved = SaveCareer::query()->where([
-            'user_id' => auth()->user()->id
+            'user_id' => auth()?->user()?->id
         ])->pluck('career_id')->toArray();
 
         return view('pages.jobs.job-list', [
