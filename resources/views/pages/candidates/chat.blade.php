@@ -94,7 +94,8 @@
                     url: '{{route('send.chat.to.company')}}',
                     data: {
                         'company_id': receiver_id,
-                        'message': message.val()
+                        'message': message.val(),
+                        '_token' : '{{csrf_token()}}'
                     },
                     success: function (res) {
                         console.log(res)
@@ -141,11 +142,11 @@
                                 <div class="single-user-comment-wrap">
                                     <div class="row">
                                         <div class="col-xl-9 col-lg-12">
-                                            <div class="single-user-comment-block clearfix">
-                                                <div class="single-user-com-pic">
+                                            <div class="single-user-comment-block clearfix" style="float: left">
+                                                <div class="single-user-com-pic custom-avatar-chat">
                                                     <img src="${ele.company.company_avatar.includes('http') ? ele.company.company_avatar : `/images/avatar/${ele.company.company_avatar}`}" alt="">
                                                 </div>
-                                                <div class="single-user-com-text">${ele.message}</div>
+                                                <div style="width: max-content" class="single-user-com-text">${ele.message}</div>
                                                 <div class="single-user-msg-time">${ele.created_at}</div>
                                             </div>
                                         </div>
@@ -160,9 +161,8 @@
                             <div class="single-user-comment-wrap sigle-user-reply">
                                 <div class="row justify-content-end">
                                     <div class="col-xl-9 col-lg-12">
-                                        <div class="single-user-comment-block clearfix">
-                                            <div class="single-user-com-pic"><img src="/images/avatar/${ele.user.avatar}" alt=""></div>
-                                            <div class="single-user-com-text">${ele.message}</div>
+                                        <div class="single-user-comment-block clearfix" style="float: right">
+                                            <div style="width: max-content" class="single-user-com-text">${ele.message}</div>
                                             <div class="single-user-msg-time">${ele.created_at}</div>
                                         </div>
                                     </div>

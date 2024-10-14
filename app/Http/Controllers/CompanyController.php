@@ -22,6 +22,7 @@ use App\Models\User;
 use App\Models\UserCareer;
 use App\Services\Career\CareerServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
@@ -39,20 +40,19 @@ class CompanyController extends Controller
 
     public function index()
     {
-
         return view('pages.companies.dashboard');
     }
 
     public function profile()
     {
 
-        $company = Session::get('company');
+        $company = Auth::guard("company")->user();
         return view('pages.companies.company-profile', compact('company'));
     }
 
     public function update(CompanyUpdateRequest $request)
     {
-        $company = Session::get('company');
+        $company = Auth::guard("company")->user();
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
         $company->fill($data);
@@ -68,7 +68,7 @@ class CompanyController extends Controller
 
     public function resume()
     {
-        $company = Session::get('company');
+        $company = Auth::guard("company")->user();
         return view('pages.companies.resume', compact('company'));
     }
 
@@ -97,7 +97,7 @@ class CompanyController extends Controller
 
     public function showManageJob()
     {
-        $company = Session::get('company');
+        $company = Auth::guard("company")->user();
         $careers = $this->service->getAllById($company->id);
         $careers = CareerResource::make($careers)->resolve();
         return view('pages.companies.manage-job', compact('careers'));
@@ -135,11 +135,11 @@ class CompanyController extends Controller
         $latestMessages = Chat::query()
             ->select('chats.*')
             ->where([
-                'company_id' => Session::get('company')->id
+                'company_id' => Auth::guard("company")->user()->id
             ])
             ->join(
                 DB::raw('(SELECT MAX(id) as latest_id FROM chats
-                WHERE company_id = ' . Session::get('company')->id . '
+                WHERE company_id = ' . Auth::guard("company")->user()->id . '
                 GROUP BY user_id) as latest'),
                 'chats.id',
                 '=',

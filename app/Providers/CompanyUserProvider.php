@@ -2,21 +2,25 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\EloquentUserProvider;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\EloquentUserProvider as UserProvider;
+use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
-class CompanyUserProvider extends EloquentUserProvider
-{
+
+class CompanyUserProvider extends UserProvider {
+
     /**
-     * Register services.
+     * Overrides the framework defaults validate credentials method
+     *
+     * @param UserContract $user
+     * @param array $credentials
+     * @return bool
      */
-    public function validateCredentials(UserContract|Authenticatable $user, array $credentials): bool
-    {
-        if (is_null($plain = $credentials['company_password'])) {
-            return false;
-        }
+    public function validateCredentials(UserContract $user, array $credentials) {
+        $plain = $credentials['password'];
 
-        return $this->hasher->check($plain, $user->company_password, ['salt' => $user->salt]);
+        // PUT YOUR CUSTOM VALIDATION HERE
+
+        return $this->hasher->check($plain, $user->getAuthPassword());
     }
+
 }

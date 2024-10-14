@@ -207,7 +207,7 @@
         }, 2000);
     }
     document.addEventListener('DOMContentLoaded', function () {
-        window.Echo.private('appointment.company.' + '{{Session::get('company')->id}}')
+        window.Echo.private('appointment.company.' + '{{auth()->guard('company')->user()->id}}')
             .listen('AppointmentAcceptEvent', (e) => {
                 toastr.success('Bạn có một thông báo mới !', 'Notification!');
                 updateTabTitle();
@@ -228,7 +228,7 @@
                 `)
             });
 
-        window.Echo.private('notification.' + '{{Session::get('company')->id}}')
+        window.Echo.private('notification.' + '{{auth()->guard('company')->user()->id}}')
             .listen('NotificationEvent', (e) => {
                 createNoti(e)
             })
