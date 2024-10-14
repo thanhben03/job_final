@@ -13,6 +13,16 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            .title-login-company {
+                font-size: 23px;
+                font-weight: lighter;
+                color: #0041a1;
+                background: #9ec5ff;
+                padding: 6px 34px;
+                border-radius: 5px;
+            }
+        </style>
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
@@ -21,7 +31,7 @@
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
                 </a>
             </div>
-
+            <div class="alert alert-primary title-login-company" >Đăng nhập dành cho nhà tuyển dụng</div>
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
