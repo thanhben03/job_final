@@ -86,7 +86,7 @@
                                                 <div class="twm-right-content">
                                                     <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
                                                     <div class="twm-jobs-amount">{{$career['max_salary']['convert']}} <span>/ Month</span></div>
-                                                    <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
+                                                    <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Status: {{$career['status']}}</a>
                                                 </div>
                                             </div>
                                         </li>

@@ -46,7 +46,6 @@ class CandidateController extends Controller
         // lay cac job
         $careers = Career::query()->whereIn('id', $ids)->paginate(10);
         $data = CareerResource::make($careers)->resolve();
-
         return view('pages.candidates.job-applied', compact('data', 'careers'));
     }
 
