@@ -19,3 +19,4 @@
 
 @stack('css')
 <link rel="stylesheet" type="text/css" href="{{{asset('/css/toastr.min.css')}}}"><!-- MAIN STYLE SHEET -->
+<link rel="stylesheet" type="text/css" href="{{{asset('/css/my-style.css')}}}"><!-- MAIN STYLE SHEET -->

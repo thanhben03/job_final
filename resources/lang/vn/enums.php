@@ -13,7 +13,7 @@ return [
     GenderEnum::class => [
         GenderEnum::MALE => 'Nam',
         GenderEnum::FEMALE => 'Nữ',
-        GenderEnum::NOT_REQUIRE => 'Không bắt buộc',
+        GenderEnum::NOT_REQUIRE => 'Khác',
     ],
     LevelEnum::class => [
         LevelEnum::INTERN => 'Intern',

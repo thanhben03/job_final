@@ -231,7 +231,7 @@
                                 </div>
                             @else
                                 <div class="twm-nav-btn-left">
-                                    <a class="twm-nav-sign-up" href="{{route('login')}}">
+                                    <a class="twm-nav-sign-up" id="btn-signup" href="{{route('login')}}">
                                         <i class="feather-log-in"></i> Sign In
                                     </a>
                                 </div>
@@ -277,5 +277,11 @@
                 }
             })
         }
+
+        $("#btn-signup").click(function (e) {
+            e.preventDefault();
+
+            $("#sign_up_popup2").modal('toggle')
+        })
     </script>
 @endpush

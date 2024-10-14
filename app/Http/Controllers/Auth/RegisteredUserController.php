@@ -27,28 +27,28 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        try {
-            $request->validate([
-                'fullname' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            ]);
 
-            $user = User::create([
-                'fullname' => $request->fullname,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
+        $request->validate([
+            'fullname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', Rules\Password::defaults()],
+            'phone' => ['required'],
+        ]);
 
-            event(new Registered($user));
+        $user = User::create([
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone
+        ]);
 
-            Auth::login($user);
-        } catch (\Throwable $th) {
-            dd($th->getMessage());
-        }
+        event(new Registered($user));
 
-        return redirect(route('dashboard', absolute: false));
+        Auth::login($user);
+
+
+        return response()->json($user, 200);
     }
 }
