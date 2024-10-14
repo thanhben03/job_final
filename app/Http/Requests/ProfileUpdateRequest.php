@@ -22,6 +22,8 @@ class ProfileUpdateRequest extends FormRequest
             'phone' => 'required|digits_between:9,15',
             'email' => 'required|email|max:255',
             'price_per_hours' => 'required|numeric|min:0',
+            'gender' => 'required|in:0,1,2',
+            'birthday' => 'required|date',
             'type_work' => ['required'], // Assuming these are the only two options
             'introduce' => 'nullable|string|max:500', // Optional field with a maximum length of 500 characters
         ];

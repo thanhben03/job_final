@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -21,5 +22,10 @@ class Company extends Authenticatable
 //            'password' => 'hashed',
 //        ];
 //    }
+
+    public function careers(): HasMany
+    {
+        return $this->hasMany(Career::class);
+    }
 
 }

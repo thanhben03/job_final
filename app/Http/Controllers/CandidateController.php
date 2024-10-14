@@ -46,7 +46,6 @@ class CandidateController extends Controller
         // lay cac job
         $careers = Career::query()->whereIn('id', $ids)->paginate(10);
         $data = CareerResource::make($careers)->resolve();
-
         return view('pages.candidates.job-applied', compact('data', 'careers'));
     }
 
@@ -126,6 +125,10 @@ class CandidateController extends Controller
             'skill' => 'nullable',
             'soft_skill' => 'nullable',
             'position' => 'nullable',
+            'province' => 'nullable',
+            'phone' => 'nullable',
+            'birthday' => 'nullable',
+            'email' => 'nullable',
         ]);
         $careerSuggest = [];
         $userProfile = '';
@@ -155,6 +158,10 @@ class CandidateController extends Controller
                             'skill' => $request->skill,
                             'soft_skill' => $request->soft_skill,
                             'position' => $request->position,
+                            'province' => $request->province,
+                            'phone' => $request->phone,
+                            'birthday' => $request->birthday,
+                            'email' => $request->email,
                         ]);
                         $cv = CurriculumVitae::query()->where('id', $userProfile->cv_id)->first();
                         unlink(storage_path('app/public/uploads/' . $cv->path));
@@ -181,6 +188,10 @@ class CandidateController extends Controller
                             'skill' => $request->skill,
                             'soft_skill' => $request->soft_skill,
                             'position' => $request->position,
+                            'province' => $request->province,
+                            'phone' => $request->phone,
+                            'birthday' => $request->birthday,
+                            'email' => $request->email,
                         ]);
 
 //                        $careerSuggest = $this->matchWithJob($cv->id);

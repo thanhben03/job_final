@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 @push('css')
     <!-- Styles -->
@@ -212,9 +213,16 @@
     </style>
 @endpush
 @section('content')
+
+    <!-- The Modal -->
+    <div class="my-modal-loading d-none">
+        <div class="loader"></div>
+    </div>
+
     <x-modal.modal-manage-profile />
     <!-- OUR BLOG START -->
     <div class="section-full p-t120  p-b90 site-bg-white" id="prepend-content-profile">
+
     @if($userProfile)
         {!! $userProfile->content !!}
     @else
@@ -246,19 +254,19 @@
                                 <div class="cv-block-content">
                                     <div class="row social-container align-items-center mb-2 flex-nowrap" >
                                         <i class="w-auto fas fa-map-marker-alt"></i>
-                                        <input class="input-info-basic cv-editable-elem active-color" placeholder="Tỉnh/thành phố" contenteditable="true" spellcheck="true" />
+                                        <input id="province" class="input-info-basic cv-editable-elem active-color" placeholder="Tỉnh/thành phố" contenteditable="true" spellcheck="true" />
                                     </div>
                                     <div class="row social-container align-items-center mb-2 flex-nowrap" >
                                         <i class="w-auto fas fa-phone"></i>
-                                        <input class="input-info-basic cv-editable-elem active-color" placeholder="Phone" contenteditable="true" spellcheck="true" />
+                                        <input id="phone" class="input-info-basic cv-editable-elem active-color" placeholder="Phone" contenteditable="true" spellcheck="true" />
                                     </div>
                                     <div class="row social-container align-items-center mb-2 flex-nowrap" >
                                         <i class="w-auto fas fa-calendar"></i>
-                                        <input class="input-info-basic cv-editable-elem active-color" placeholder="Ngày sinh" contenteditable="true" spellcheck="true" />
+                                        <input id="birthday" class="input-info-basic cv-editable-elem active-color" placeholder="Ngày sinh" contenteditable="true" spellcheck="true" />
                                     </div>
                                     <div class="row social-container align-items-center mb-2 flex-nowrap" >
                                         <i class="w-auto fas fa-mail-bulk"></i>
-                                        <input class="input-info-basic cv-editable-elem active-color" placeholder="Email" contenteditable="true" spellcheck="true" />
+                                        <input id="email" class="input-info-basic cv-editable-elem active-color" placeholder="Email" contenteditable="true" spellcheck="true" />
                                     </div>
 
                                 </div>
@@ -391,6 +399,14 @@
                     });
                 </script>
             @endif
+            @if($userProfile)
+                <script>
+                    $("#province").val('{{$userProfile->province}}')
+                    $("#phone").val('{{$userProfile->phone}}')
+                    $("#birthday").val('{{$userProfile->birthday}}')
+                    $("#email").val('{{$userProfile->email}}')
+                </script>
+            @endif
     <script>
 
         function exportToPdf (){
@@ -431,12 +447,16 @@
                         formData.append('skill', detectValue('.skill-value'))
                         formData.append('soft_skill', detectValue('.soft-skill-value'))
                         formData.append('position', detectValue('.position-value'))
+                        formData.append('province', $("#province").val())
+                        formData.append('phone', $("#phone").val())
+                        formData.append('birthday', $("#birthday").val())
+                        formData.append('email', $("#email").val())
 
                         formData.append('profile_id', '{{!empty(request()->route('id')) ? request()->route('id') : ''}}')
                     } catch (e) {
                         console.log(e)
                     }
-
+                    $(".my-modal-loading").toggleClass("d-none");
                     $.ajax({
                         url: '{{route('api.file.upload')}}',
                         type: 'POST',
@@ -447,10 +467,11 @@
                         },
                         data: formData,
                         success: function(response) {
-                            console.log(response)
+                            $(".my-modal-loading").toggleClass("d-none");
+
                             setTimeout(function () {
                                 window.location.href = response.redirect_url;
-                            }, 5000)
+                            }, 600)
 
                         },
                         error: function(xhr, status, error) {
@@ -531,5 +552,6 @@
 
             return str;
         }
+
     </script>
 @endpush

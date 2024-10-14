@@ -57,10 +57,13 @@ Route::middleware('auth:company')->group(function () {
     Route::get('/companies/detail-job/{slug}', [CompanyController::class, 'showDetailJob'])->name('company.show.detail-job');
     Route::get('/companies/candidate-applied/{job_id}', [CompanyController::class, 'showCandidateAppliedJob'])->name('company.show.detail-job');
 //Route::get('/companies/resume', [CompanyController::class, 'resume'])->name('company.resume');
-    Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
-    Route::get('/companies/chat', [CompanyController::class, 'showChat'])->name('company.show.chat');
-    Route::get('/companies/candidate-list', [CompanyController::class, 'showCandidateList'])->name('company.show.candidate.list');
-});
+
+Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
+Route::get('/companies/chat', [CompanyController::class, 'showChat'])->name('company.show.chat');
+Route::get('/companies/list', [CompanyController::class, 'list'])->name('company.list');
+Route::get('/companies/candidate-list', [CompanyController::class, 'showCandidateList'])->name('company.show.candidate.list');
+
+
 
 //Route::get('/company/login', [AuthenticatedCompanyController::class, 'create'])->name('company.showLogin');
 //Route::post('/company/login', [AuthenticatedCompanyController::class, 'store'])->name('company.login');

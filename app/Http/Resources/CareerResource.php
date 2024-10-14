@@ -6,6 +6,7 @@ use App\Enums\GenderEnum;
 use App\Enums\JobExpEnum;
 use App\Enums\LevelEnum;
 use App\Enums\QualificationEnum;
+use App\Enums\StatusCV;
 use App\Enums\WorkTypeEnum;
 use App\Trait\ConvertPriceString;
 use Illuminate\Http\Request;
@@ -60,6 +61,7 @@ class CareerResource extends ResourceCollection
                 'appointments' => AppointmentResource::make($career->appointments)->resolve(),
                 'from_time' => $career->from_time,
                 'to_time' => $career->to_time,
+                'status' =>  !empty($career->user_career->status) ? StatusCV::getDescription($career->user_career->status) : "" ,
             ];
         });
 

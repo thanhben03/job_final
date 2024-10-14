@@ -54,7 +54,7 @@
     <div class="page-content">
 
         <!-- INNER PAGE BANNER -->
-        <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url(images/banner/1.jpg);">
+        <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url(/images/banner/1.jpg);">
             <div class="overlay-main site-bg-white opacity-01"></div>
             <div class="container">
                 <div class="wt-bnr-inr-entry">
@@ -254,6 +254,9 @@
                 });
             });
 
+
+
+
         });
 
         function deleteCV(cvID) {
@@ -274,6 +277,26 @@
 
                 }
             })
+        }
+
+        function applyNow(jobId) {
+            $.ajax({
+                type: 'POST',
+                // make sure you respect the same origin policy with this url:
+                // http://en.wikipedia.org/wiki/Same_origin_policy
+                url: '{{route('api.v1.applyJob')}}',
+                data: {
+                    "jobId" : jobId,
+                    "_token": '{{csrf_token()}}'
+                },
+                success: function(msg){
+                    $("#apply_job_popup").modal('toggle');
+                    toastr.success('Apply Success !', 'Notification')
+                    $(".apply-now-text").css('cursor', 'not-allowed')
+
+                }
+            });
+
         }
 
         function matchWithJob(cvID) {
@@ -306,8 +329,11 @@
                             </div>
 {{--                            <p class="mb-1 mt-2"><strong>Description:</strong> {{ Str::limit(${ele.detail.desc}, 100) }}</p>--}}
                             <div>
-                            <small class="text-muted">Posted on: ${ele.created_at}</small>
-                            <small class="">Max salary: <strong style="color: green">${ele.max_salary.convert}</strong></small>
+                                <small class="text-muted">Posted on: ${ele.created_at}</small>
+                                <div class="d-flex justify-content-between">
+                                    <small class="">Max salary: <strong style="color: green">${ele.max_salary.convert}</strong></small>
+                                    <small ${ele.cv_applied ? '' : `onclick="applyNow(${ele.id})"`} class="apply-now-text">${ele.cv_applied ? 'Applied' : 'Apply now'}</small>
+                                </div>
                             </div>
                         </li>
                         `

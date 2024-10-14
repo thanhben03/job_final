@@ -149,85 +149,6 @@
                                     </ul>
                                 </div>
 
-                                <div class="twm-sidebar-ele-filter">
-{{--                                    <h4 class="section-head-small mb-4">Date Posts</h4>--}}
-{{--                                    <ul>--}}
-{{--                                        <li>--}}
-{{--                                            <div class="form-check">--}}
-{{--                                                <input type="radio" class="form-check-input" id="exampleradio1">--}}
-{{--                                                <label class="form-check-label" for="exampleradio1">Last hour</label>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <div class="form-check">--}}
-{{--                                                <input type="radio" class="form-check-input" id="exampleradio2">--}}
-{{--                                                <label class="form-check-label" for="exampleradio2">Last 24 hours</label>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-
-{{--                                        <li>--}}
-{{--                                            <div class="form-check">--}}
-{{--                                                <input type="radio" class="form-check-input" id="exampleradio3">--}}
-{{--                                                <label class="form-check-label" for="exampleradio3">Last 7 days</label>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-
-{{--                                        <li>--}}
-{{--                                            <div class="form-check">--}}
-{{--                                                <input type="radio" class="form-check-input" id="exampleradio4">--}}
-{{--                                                <label class="form-check-label" for="exampleradio4">Last 14 days</label>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-
-{{--                                        <li>--}}
-{{--                                            <div class="form-check">--}}
-{{--                                                <input type="radio" class="form-check-input" id="exampleradio5">--}}
-{{--                                                <label class="form-check-label" for="exampleradio5">Last 30 days</label>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-
-{{--                                        <li>--}}
-{{--                                            <div class="form-check">--}}
-{{--                                                <input type="radio" class="form-check-input" id="exampleradio6">--}}
-{{--                                                <label class="form-check-label" for="exampleradio6">All</label>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-
-{{--                                    </ul>--}}
-                                </div>
-
-                                <div class="twm-sidebar-ele-filter">
-{{--                                    <h4 class="section-head-small mb-4">Type of employment</h4>--}}
-{{--                                    <ul>--}}
-{{--                                        <li>--}}
-{{--                                            <div class="form-check">--}}
-{{--                                                <input type="radio" class="form-check-input" id="Freelance1">--}}
-{{--                                                <label class="form-check-label" for="Freelance1">Freelance</label>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <div class="form-check">--}}
-{{--                                                <input type="radio" class="form-check-input" id="FullTime1">--}}
-{{--                                                <label class="form-check-label" for="FullTime1">Full Time</label>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-
-{{--                                        <li>--}}
-{{--                                            <div class="form-check">--}}
-{{--                                                <input type="radio" class="form-check-input" id="Intership1">--}}
-{{--                                                <label class="form-check-label" for="Intership1">Intership</label>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-
-{{--                                        <li>--}}
-{{--                                            <div class="form-check">--}}
-{{--                                                <input type="radio" class="form-check-input" id="Part-Time1">--}}
-{{--                                                <label class="form-check-label" for="Part-Time1">Part Time</label>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-
-{{--                                    </ul>--}}
-                                </div>
 
                             </form>
                         </div>
@@ -262,14 +183,6 @@
                                 </option>
 
                             </select>
-{{--                            <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">--}}
-{{--                                <option>Show 10</option>--}}
-{{--                                <option>Show 20</option>--}}
-{{--                                <option>Show 30</option>--}}
-{{--                                <option>Show 40</option>--}}
-{{--                                <option>Show 50</option>--}}
-{{--                                <option>Show 60</option>--}}
-{{--                            </select>--}}
                         </form>
 
                     </div>
@@ -434,6 +347,8 @@
 
             function getKeyword() {
                 let keyword = $("#keyword").val()
+                if (keyword == '')
+                    return;
                 url += url.includes("?") ? `&search=${keyword}` : `?search=${keyword}`;
             }
 

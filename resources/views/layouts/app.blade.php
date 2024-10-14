@@ -71,9 +71,6 @@
 
 <div class="page-wraper">
 
-
-
-
     <!-- HEADER START -->
     <x-header />
     <!-- HEADER END -->
@@ -224,7 +221,8 @@
     <div class="modal fade twm-sign-up" id="sign_up_popup" aria-hidden="true" aria-labelledby="sign_up_popupLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="#">
+                <form action="{{route('register')}}" id="formSigup" method="POST">
+                    @csrf
                     <div class="modal-header">
                         @if(Session::has('msg'))
                             <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
@@ -232,87 +230,110 @@
                         <h2 class="modal-title" id="sign_up_popupLabel">Sign Up</h2>
                         <p>Sign Up and get access to all the features of Jobzilla</p>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="wrap-errors">
+                        </div>
                     </div>
 
                     <div class="modal-body">
                         <div class="twm-tabs-style-2">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
 
-                                <!--Signup Candidate-->
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#sign-candidate" type="button"><i class="fas fa-user-tie"></i>Candidate</button>
-                                </li>
-                                <!--Signup Employer-->
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#sign-Employer" type="button"><i class="fas fa-building"></i>Employer</button>
-                                </li>
+{{--                                <!--Signup Candidate-->--}}
+{{--                                <li class="nav-item" role="presentation">--}}
+{{--                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#sign-candidate" type="button"><i class="fas fa-user-tie"></i>Candidate</button>--}}
+{{--                                </li>--}}
+{{--                                <!--Signup Employer-->--}}
+{{--                                <li class="nav-item" role="presentation">--}}
+{{--                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#sign-Employer" type="button"><i class="fas fa-building"></i>Employer</button>--}}
+{{--                                </li>--}}
 
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                <!--Signup Candidate Content-->
-                                <div class="tab-pane fade show active" id="sign-candidate">
-                                    <div class="row">
+                                <!--Signup Company Content-->
+{{--                                <div class="tab-pane fade show active" id="sign-candidate">--}}
+{{--                                    <div class="row">--}}
 
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <input id="fullname" name="fullname" type="text" required="" class="form-control" placeholder="Full Name">
-                                            </div>
-                                        </div>
+{{--                                        <div class="col-lg-12">--}}
+{{--                                            <div class="form-group mb-3">--}}
+{{--                                                <input id="fullname"--}}
+{{--                                                       name="company_name"--}}
+{{--                                                       type="text"--}}
+{{--                                                       required=""--}}
+{{--                                                       class="form-control"--}}
+{{--                                                       placeholder="Company Name">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <input id="email" name="email" type="text" class="form-control" required="" placeholder="Email">
-                                            </div>
-                                        </div>
+{{--                                        <div class="col-lg-12">--}}
+{{--                                            <div class="form-group mb-3">--}}
+{{--                                                <input--}}
+{{--                                                    id="email"--}}
+{{--                                                    name="company_email"--}}
+{{--                                                    type="text"--}}
+{{--                                                    class="form-control"--}}
+{{--                                                    required=""--}}
+{{--                                                    placeholder="Company Email">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <input id="password" name="password" type="text" class="form-control" required="" placeholder="Password">
-                                            </div>
-                                        </div>
+{{--                                        <div class="col-lg-12">--}}
+{{--                                            <div class="form-group mb-3">--}}
+{{--                                                <input id="password" name="company_password" type="text" class="form-control" required="" placeholder="Password">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <input id="phone" name="phone" type="text" class="form-control" required="" placeholder="Phone">
-                                            </div>
-                                        </div>
+{{--                                        <div class="col-lg-12">--}}
+{{--                                            <div class="form-group mb-3">--}}
+{{--                                                <input id="phone" name="company_phone" type="text" class="form-control" required="" placeholder="Phone">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-lg-12">--}}
+{{--                                            <div class="form-group mb-3">--}}
+{{--                                                <input id="website" name="website" type="text" class="form-control" required="" placeholder="Website">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-lg-12">--}}
+{{--                                            <div class="form-group mb-3">--}}
+{{--                                                <input id="company_address" name="company_address" type="text" class="form-control" required="" placeholder="Address">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <div class=" form-check">
-                                                    <input type="checkbox" class="form-check-input" id="agree1">
-                                                    <label class="form-check-label" for="agree1">I agree to the <a href="javascript:;">Terms and conditions</a></label>
-                                                    <p>Already registered?
-                                                        <button class="twm-backto-login" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</button>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <button type="button" onclick="signup()" class="site-button">Sign Up</button>
-                                        </div>
+{{--                                        <div class="col-lg-12">--}}
+{{--                                            <div class="form-group mb-3">--}}
+{{--                                                <div class=" form-check">--}}
+{{--                                                    <input type="checkbox" class="form-check-input" id="agree1">--}}
+{{--                                                    <label class="form-check-label" for="agree1">I agree to the <a href="javascript:;">Terms and conditions</a></label>--}}
+{{--                                                    <p>Already registered?--}}
+{{--                                                        <button class="twm-backto-login" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</button>--}}
+{{--                                                    </p>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-md-12">--}}
+{{--                                            <button type="submit" class="site-button">Sign Up</button>--}}
+{{--                                        </div>--}}
 
-                                    </div>
-                                </div>
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <!--Signup Employer Content-->
-                                <div class="tab-pane fade" id="sign-Employer">
+                                <div class="tab-pane fade show active" id="sign-Employer">
                                     <div class="row">
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="fullname" type="text" required="" class="form-control" placeholder="Usearname*">
+                                                <input name="fullname" type="text" required="" class="form-control" placeholder="Full Name">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="email" type="text" class="form-control" required="" placeholder="Password*">
+                                                <input name="password" type="text" class="form-control" required="" placeholder="Password*">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="phone" type="text" class="form-control" required="" placeholder="Email*">
+                                                <input name="email" type="text" class="form-control" required="" placeholder="Email*">
                                             </div>
                                         </div>
 
@@ -334,7 +355,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <button type="submit" class="site-button">Sign Up</button>
+                                            <button type="button" onclick="signup()" class="site-button">Sign Up</button>
                                         </div>
 
                                     </div>
@@ -364,26 +385,18 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
-                <form>
+                <form id="formLogin" action="{{route('login')}}" method="POST">
+                    @csrf
                     <div class="modal-header">
                         <h2 class="modal-title" id="sign_up_popupLabel2">Login</h2>
                         <p>Login and get access to all the features of Jobzilla</p>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="wrap-errors-login">
+
+                        </div>
                     </div>
                     <div class="modal-body">
                         <div class="twm-tabs-style-2">
-                            <ul class="nav nav-tabs" id="myTab2" role="tablist">
-
-                                <!--Login Candidate-->
-                                <li class="nav-item">
-                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#login-candidate" type="button"><i class="fas fa-user-tie"></i>Candidate</button>
-                                </li>
-                                <!--Login Employer-->
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#login-Employer" type="button"><i class="fas fa-building"></i>Employer</button>
-                                </li>
-
-                            </ul>
 
                             <div class="tab-content" id="myTab2Content">
                                 <!--Login Candidate Content-->
@@ -392,13 +405,13 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="username" type="text" required="" class="form-control" placeholder="Usearname*">
+                                                <input name="email" type="text" required="" class="form-control" placeholder="Email">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="email" type="text" class="form-control" required="" placeholder="Password*">
+                                                <input name="password" type="password" class="form-control" required="" placeholder="Password">
                                             </div>
                                         </div>
 
@@ -413,7 +426,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <button type="submit" class="site-button">Log in</button>
+                                            <button type="button" onclick="signin()" class="site-button">Log in</button>
                                             <div class="mt-3 mb-3">Don't have an account ?
                                                 <button class="twm-backto-login" data-bs-target="#sign_up_popup" data-bs-toggle="modal" data-bs-dismiss="modal">Sign Up</button>
                                             </div>
@@ -422,40 +435,40 @@
                                     </div>
                                 </div>
                                 <!--Login Employer Content-->
-                                <div class="tab-pane fade" id="login-Employer">
-                                    <div class="row">
+{{--                                <div class="tab-pane fade" id="login-Employer">--}}
+{{--                                    <div class="row">--}}
 
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <input name="username" type="text" required="" class="form-control" placeholder="Usearname*">
-                                            </div>
-                                        </div>
+{{--                                        <div class="col-lg-12">--}}
+{{--                                            <div class="form-group mb-3">--}}
+{{--                                                <input name="username" type="text" required="" class="form-control" placeholder="Usearname*">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <input name="email" type="text" class="form-control" required="" placeholder="Password*">
-                                            </div>
-                                        </div>
+{{--                                        <div class="col-lg-12">--}}
+{{--                                            <div class="form-group mb-3">--}}
+{{--                                                <input name="email" type="text" class="form-control" required="" placeholder="Password*">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
 
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <div class=" form-check">
-                                                    <input type="checkbox" class="form-check-input" id="Password4">
-                                                    <label class="form-check-label rem-forgot" for="Password4">Remember me <a href="javascript:;">Forgot Password</a></label>
-                                                </div>
-                                            </div>
-                                        </div>
+{{--                                        <div class="col-lg-12">--}}
+{{--                                            <div class="form-group mb-3">--}}
+{{--                                                <div class=" form-check">--}}
+{{--                                                    <input type="checkbox" class="form-check-input" id="Password4">--}}
+{{--                                                    <label class="form-check-label rem-forgot" for="Password4">Remember me <a href="javascript:;">Forgot Password</a></label>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
-                                        <div class="col-md-12">
-                                            <button type="submit" class="site-button">Log in</button>
-                                            <div class="mt-3 mb-3">Don't have an account ?
-                                                <button class="twm-backto-login" data-bs-target="#sign_up_popup" data-bs-toggle="modal" data-bs-dismiss="modal">Sign Up</button>
-                                            </div>
-                                        </div>
+{{--                                        <div class="col-md-12">--}}
+{{--                                            <button type="submit" class="site-button">Log in</button>--}}
+{{--                                            <div class="mt-3 mb-3">Don't have an account ?--}}
+{{--                                                <button class="twm-backto-login" data-bs-target="#sign_up_popup" data-bs-toggle="modal" data-bs-dismiss="modal">Sign Up</button>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
-                                    </div>
-                                </div>
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                             </div>
                         </div>
@@ -565,7 +578,73 @@
                     </li>
                 `)
         }
+
+
+
+
     });
+    function signup() {
+        let formData = $("#formSigup").serialize();
+        $.ajax({
+            type: 'POST',
+            url: '/register',
+            data: formData,
+            success: function (res) {
+                window.location.reload()
+
+            },
+            error: function (xhr) {
+                const errors = xhr.responseJSON.errors;
+                let html = '';
+
+                for (const field in errors) {
+                    if (errors.hasOwnProperty(field)) {
+                        // Get the array of error messages for each field
+                        const errorMessages = errors[field];
+                        // Loop through each error message in the array
+                        errorMessages.forEach((message) => {
+                            console.log(message)
+                            html += `
+                                <div class="alert alert-danger text-left mt-2">${field}: ${message}</div>
+
+                            `
+                        });
+
+                    }
+                }
+                $(".wrap-errors").html(html)
+
+            }
+        })
+    }
+
+
+    function signin() {
+        let formDataLogin = $("#formLogin").serialize();
+        $.ajax({
+            type: 'POST',
+            url: '/login',
+            data: formDataLogin,
+            beforeSend: function() {
+                $(".wrap-errors-login").empty()
+            },
+            success: function (res) {
+                $(".wrap-errors-login").html(
+                    `<div class="alert alert-success text-left">${res.msg}</div>`
+                )
+
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1500)
+            },
+            error: function (xhr) {
+                $(".wrap-errors-login").html(
+                    '<div class="alert alert-danger text-left">Email or password is invalid</div>'
+                )
+            }
+        })
+    }
+
 </script>
 
 

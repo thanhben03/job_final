@@ -1,0 +1,32 @@
+.my-modal-loading {
+    background: #d7d7d7b0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid;
+    border-color: #000 #0000;
+    animation: l1 1s infinite;
+}
+@keyframes l1 {to{transform: rotate(.5turn)}}
+
+
+.apply-now-text {
+    border: 1px solid #ff67124a;
+    padding: 1px 3px;
+    border-radius: 4px;
+    background: antiquewhite;
+    cursor: pointer;
+}

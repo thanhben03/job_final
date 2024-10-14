@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Company\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterCompanyRequest;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -12,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
-class RegisteredUserController extends Controller
+class RegisteredCompanyController extends Controller
 {
     /**
      * Display the registration view.
@@ -27,20 +29,12 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(RegisterCompanyRequest $request): RedirectResponse
     {
         try {
-            $request->validate([
-                'fullname' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            ]);
+            $data = $request->validated();
 
-            $user = User::create([
-                'fullname' => $request->fullname,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
+            $user = Company::create($data);
 
             event(new Registered($user));
 
@@ -49,6 +43,6 @@ class RegisteredUserController extends Controller
             dd($th->getMessage());
         }
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('company.dashboard', absolute: false));
     }
 }

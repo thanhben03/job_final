@@ -41,7 +41,7 @@
                         </li>
                         <li class="has-child"><a href="{{route('jobs.index')}}">Jobs</a>
                         </li>
-                        <li class=""><a href="javascript:;">Employers</a>
+                        <li class=""><a href="{{route('company.list')}}">Employers</a>
                         </li>
                         <li class=""><a href="javascript:;">CV / Hồ sơ</a>
                             <ul class="sub-menu">
@@ -236,7 +236,7 @@
                                 </div>
                             @else
                                 <div class="twm-nav-btn-left">
-                                    <a class="twm-nav-sign-up" href="{{route('login')}}">
+                                    <a class="twm-nav-sign-up" id="btn-signup" href="{{route('login')}}">
                                         <i class="feather-log-in"></i> Sign In
                                     </a>
                                 </div>
@@ -283,8 +283,16 @@
             })
         }
 
+
+        $("#btn-signup").click(function (e) {
+            e.preventDefault();
+
+            $("#sign_up_popup2").modal('toggle')
+        })
+
         function logout() {
             $("#formLogout").submit();
         }
+
     </script>
 @endpush

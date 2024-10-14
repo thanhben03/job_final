@@ -53,9 +53,14 @@ class Career extends Model
         });
     }
 
-    public function user_career()
+    public function user_careers()
     {
         return $this->hasMany(UserCareer::class, 'career_id', 'id');
+    }
+
+    public function user_career()
+    {
+        return $this->hasOne(UserCareer::class, 'career_id', 'id');
     }
 
 }

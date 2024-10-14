@@ -12,8 +12,10 @@ use App\Http\Requests\CompanyUpdateRequest;
 use App\Http\Resources\CandidateAppliedResource;
 use App\Http\Resources\CareerResource;
 use App\Http\Resources\ChatResource;
+use App\Http\Resources\CompanyResource;
 use App\Models\Career;
 use App\Models\Chat;
+use App\Models\Company;
 use App\Models\CurriculumVitae;
 use App\Models\District;
 use App\Models\Province;
@@ -151,6 +153,57 @@ class CompanyController extends Controller
         return view('pages.companies.chat', compact('latestMessages'));
     }
 
+    public function list(Request $request)
+    {
+        Session::flash('locations');
+        Session::forget('keyword');
+        Session::forget('company-size');
+        Session::forget('sort');
+        $companies = Company::query();
+
+
+
+        if ($request['search']) {
+            $companies = $companies->where('company_name', 'like', '%' . $request['search'] . '%');
+            Session::flash('keyword', $request['search']);
+        }
+
+        if ($request->has('locations')) {
+            $locationFilter = explode(',', $request['locations']);
+            Session::flash('locations', $request['locations']);
+            $locationIds = Province::query()->whereIn('name', $locationFilter)->pluck('code')->toArray();
+            $companies = $companies->whereIn('province_id', $locationIds);
+        }
+
+        if ($request->has('company-size')) {
+            $companySize = $request['company-size'];
+            switch ($companySize) {
+                case '1':
+                    $companies = $companies->where('employee', '<=', 20);
+                    break;
+                case '2':
+                    $companies = $companies->whereBetween('employee', [20, 50]);
+                    break;
+                case '3':
+                    $companies = $companies->where('employee', '>', 50);
+                    break;
+            }
+            Session::flash('company-size', $companySize);
+        }
+
+        if ($request->has('sort')) {
+            $sort = $request['sort'] == 'latest' ? 'desc' : 'asc';
+            Session::flash('sort', $request['sort']);
+            $companies = $companies->orderBy('created_at', $sort);
+        } else {
+            $companies = $companies->orderBy('created_at', 'desc');
+        }
+
+
+        $companies = $companies->paginate(10);
+        $companyResources = CompanyResource::make($companies)->resolve();
+        return view('pages.companies.company-list', compact('companies', 'companyResources'));
+  
     public function showCandidateList()
     {
         return view('pages.companies.candidate-list');
