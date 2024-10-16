@@ -221,7 +221,7 @@
     <div class="modal fade twm-sign-up" id="sign_up_popup" aria-hidden="true" aria-labelledby="sign_up_popupLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="{{route('register')}}" id="formSigup" method="POST">
+                <form  id="formSigup">
                     @csrf
                     <div class="modal-header">
                         @if(Session::has('msg'))
@@ -385,8 +385,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
-                <form id="formLogin" action="{{route('login')}}" method="POST">
-                    @csrf
+                <div id="formLogin">
                     <div class="modal-header">
                         <h2 class="modal-title" id="sign_up_popupLabel2">Login</h2>
                         <p>Login and get access to all the features of Jobzilla</p>
@@ -405,13 +404,13 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="email" type="text" required="" class="form-control" placeholder="Email">
+                                                <input name="email" id="email" type="text" required="" class="form-control" placeholder="Email">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="password" type="password" class="form-control" required="" placeholder="Password">
+                                                <input name="password" id="password" type="password" class="form-control" required="" placeholder="Password">
                                             </div>
                                         </div>
 
@@ -482,7 +481,7 @@
                             <li><a href="javascript" class="google-clr"><i class="fab fa-google"></i></a></li>
                         </ul>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -620,11 +619,15 @@
 
 
     function signin() {
-        let formDataLogin = $("#formLogin").serialize();
+        // let formDataLogin = $("#formLogin").serialize();
         $.ajax({
             type: 'POST',
             url: '/login',
-            data: formDataLogin,
+            data: {
+                'email': $("#email").val(),
+                'password': $("#password").val(),
+                '_token': '{{csrf_token()}}'
+            },
             beforeSend: function() {
                 $(".wrap-errors-login").empty()
             },

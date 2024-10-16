@@ -110,9 +110,9 @@
                                                     <img
                                                         src="
                                                         {{
-                                                        str_contains($company->company_avatar, 'http')
-                                                        ? $company->company_avatar
-                                                        : asset('/images/avatar/'.$company->company_avatar)
+                                                        str_contains(auth()->guard('company')->user()->company_avatar, 'http')
+                                                        ? auth()->guard('company')->user()->company_avatar
+                                                        : asset('/images/avatar/'.auth()->guard('company')->user()->company_avatar)
                                                         }}"
                                                         alt="#">
                                                 </div>

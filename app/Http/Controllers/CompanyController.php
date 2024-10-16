@@ -162,7 +162,6 @@ class CompanyController extends Controller
         $companies = Company::query();
 
 
-
         if ($request['search']) {
             $companies = $companies->where('company_name', 'like', '%' . $request['search'] . '%');
             Session::flash('keyword', $request['search']);
@@ -203,9 +202,22 @@ class CompanyController extends Controller
         $companies = $companies->paginate(10);
         $companyResources = CompanyResource::make($companies)->resolve();
         return view('pages.companies.company-list', compact('companies', 'companyResources'));
-  
+    }
+
     public function showCandidateList()
     {
         return view('pages.companies.candidate-list');
+    }
+
+    public function companyDetail(Request $request, $companyId)
+    {
+        $company = Company::query()->where('id',$companyId)->get();
+        $company = CompanyResource::make($company)->resolve()[0];
+        if ($request->wantsJson()) {
+            return response()->json($company);
+        }
+        $company['careers'] = $company['careers']->sortByDesc('created_at')->take(10);
+
+        return view('pages.companies.company-detail', compact('company'));
     }
 }

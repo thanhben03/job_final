@@ -196,7 +196,8 @@ class CandidateController extends Controller
 
 //                        $careerSuggest = $this->matchWithJob($cv->id);
                     }
-                } else {
+                }
+                else {
                     CurriculumVitae::query()->create([
                         'user_id' => auth()->user()->id,
                         'path' => $fileName,
@@ -214,6 +215,7 @@ class CandidateController extends Controller
 
                 return response()->json([
                     'success' => true,
+                    'msg' => 'File has been uploaded successfully!',
                     'redirect_url' => route('candidate.create-cv', $userProfile->id ?? 0)
                 ]);
             }
@@ -328,10 +330,10 @@ class CandidateController extends Controller
             DB::beginTransaction();
             $cv = CurriculumVitae::query()->findOrFail($cvID);
             if ($cv) {
+                $cv->delete();
                 unlink(storage_path('app/public/uploads/' . $cv->path));
                 unlink(storage_path('app/public/uploads/'. $cv->thumbnail));
 
-                $cv->delete();
             }
             DB::commit();
             return response()->json([

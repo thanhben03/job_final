@@ -30,3 +30,15 @@
     background: antiquewhite;
     cursor: pointer;
 }
+
+.link-quickview-company {
+
+}
+.item-quickview-company span {
+    display: inline-block;
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}

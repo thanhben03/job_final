@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <!-- Modal -->
+    <!-- Modal Upload CV -->
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -19,7 +19,7 @@
                             <label for="formFile" class="form-label">Choose file</label>
                             <input class="form-control" type="file" id="formFile" name="file">
                         </div>
-                        <button type="submit" class="btn btn-primary">Upload</button>
+                        <button type="submit" id="btn-upload" class="btn btn-primary">Upload</button>
                     </form>
                 </div>
             </div>
@@ -47,6 +47,25 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal QuickView Company-->
+    <div class="modal fade" id="modal-view-company" tabindex="-1" aria-labelledby="companyInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="companyInfoModalLabel">Company Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="company-content">
+                </div>
+                <div class="modal-footer">
+                    <a type="button" onclick="directViewCompany()" class="btn btn-primary">View Detail</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <x-modal.modal-progress />
 
@@ -225,6 +244,7 @@
         $(document).ready(function (e) {
             $('#uploadForm').on('submit', function (e) {
                 e.preventDefault();
+                const btnUpload = $("#btn-upload");
 
                 var formData = new FormData(this);
 
@@ -235,6 +255,10 @@
                     cache: false,
                     contentType: false,
                     processData: false,
+                    beforeSend: function () {
+                        btnUpload.text('Process...')
+                        btnUpload.prop('disabled', true)
+                    },
                     success: function (response) {
                         if (response.success) {
                             $('#uploadResult').html('<div class="alert alert-success">' + response.msg + '</div>');
@@ -250,6 +274,10 @@
                     },
                     error: function (response) {
                         $('#uploadResult').html('<div class="alert alert-danger">Upload failed. Please try again.</div>');
+                    },
+                    complete: function () {
+                        btnUpload.text('Upload')
+                        btnUpload.prop('disabled', false)
                     }
                 });
             });
@@ -294,6 +322,9 @@
                     toastr.success('Apply Success !', 'Notification')
                     $(".apply-now-text").css('cursor', 'not-allowed')
 
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
                 }
             });
 
@@ -316,11 +347,16 @@
                     let html = ''
                     res.careers.forEach(ele => {
                         html += `
-                        <li class="list-group-item">
+                        <li class="list-group-item item-quickview-company">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <h5 class="mb-1">${ele.title}</h5>
-                                    <p class="mb-0"><strong>Company:</strong> ${ele.company.company_name}</p>
+                                    <p class="mb-0 d-flex">
+                                        <strong>Company:</strong>
+                                        <span style="color: blue" onclick="viewCompany(${ele.company.id})" class="link-quickview-company">
+                                            ${ele.company.company_name}
+                                        </span>
+                                    </p>
                                     <p class="mb-0"><strong>Location:</strong> ${ele.address}</p>
                                 </div>
                                 <div>
@@ -356,6 +392,45 @@
                     toastr.error(xhr.responseJSON.msg, 'Notification !')
                 }
             })
+        }
+        let mathJobModal = new bootstrap.Modal(document.getElementById('modal-math-job'));
+        let companyInfoModal = new bootstrap.Modal(document.getElementById('modal-view-company'));
+
+        document.getElementById('modal-view-company').addEventListener('show.bs.modal', function () {
+            mathJobModal.hide();
+        });
+
+        // Khi đóng modal thông tin công ty, mở lại modal hiện tại
+        document.getElementById('modal-view-company').addEventListener('hidden.bs.modal', function () {
+            mathJobModal.show();
+        });
+
+        function viewCompany(companyId) {
+            $.ajax({
+                type: "GET",
+                url: '{{route('company.detail', ':companyId')}}'.replace(':companyId', companyId),
+                dataType: "json",
+                success: function (res) {
+
+
+                    let html = `
+                    <input hidden id="current-choose-company" value="${companyId}" />
+                    <h6><strong>Tên công ty:</strong> <span id="companyName">${res.company_name}</span></h6>
+                    <p><strong>Địa chỉ:</strong> ${res.company_address}</p>
+                    <p><strong>Mô tả:</strong> ${res.introduce}</p>
+                    <p><strong>Liên hệ:</strong> ${res.email} | SĐT: ${res.company_phone}</p>`;
+
+                    $("#company-content").html(html)
+                    $("#modal-view-company").modal('toggle')
+                },
+                error: function (xhr) {
+
+                }
+            })
+        }
+
+        function directViewCompany() {
+            window.location.href = '{{route('company.detail', ':companyId')}}'.replace(':companyId', $("#current-choose-company").val())
         }
     </script>
 @endpush

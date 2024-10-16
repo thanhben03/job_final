@@ -129,6 +129,16 @@ class JobController extends Controller
         $cv = CurriculumVitae::query()
             ->where('user_id', auth()->user()->id)
             ->first();
+        $userCareer = UserCareer::query()->where([
+            'career_id' => $jobId,
+            'cv_id' => $cv->id,
+        ])->first();
+
+        if ($userCareer) {
+            return response()->json([
+                'msg' => 'You have already applied for this job'
+            ], 500);
+        }
         UserCareer::query()->create([
             'career_id' => $jobId,
             'cv_id' => $cv->id,

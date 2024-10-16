@@ -92,17 +92,25 @@
                                 </div>
 
                                 <h4 class="twm-s-title">Job Description:</h4>
-                                {!!$career['detail']?->description !!}
+                                @if(!empty($career['detail']->description))
+                                    {!! $career['detail']->description !!}
+                                @else
+                                    <x-empty text="No description for this job" />
+                                @endif
 
-                                <h4 class="twm-s-title">Requirments:</h4>
-
-                                {!!$career['detail']?->requirement !!}
-
+                                <h4 class="twm-s-title">Requirements:</h4>
+                                @if(!empty($career['detail']->requirement))
+                                    {!! $career['detail']->requirement !!}
+                                @else
+                                    <x-empty text="No requirements for this job" />
+                                @endif
 
                                 <h4 class="twm-s-title">Responsabilities:</h4>
-                                {!!$career['detail']?->key_responsibilities !!}
-
-
+                                @if(!empty($career['detail']->key_responsibilities))
+                                    {!! $career['detail']->key_responsibilities !!}
+                                @else
+                                    <x-empty text="No responsibilities for this job" />
+                                @endif
 
 
                             </div>
