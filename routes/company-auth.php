@@ -9,15 +9,15 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Company\Auth\LoginCompanyController;
 use Illuminate\Support\Facades\Route;
+Route::get('/companies/login', [LoginCompanyController::class, 'create'])->name('company.login');
+Route::post('/companies/login', [LoginCompanyController::class, 'store'])->name('company.login.store');
 
 Route::prefix('companies')->as('company.')->middleware('guest:company')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store'])->name('register.store');
 
-    Route::get('login', [LoginCompanyController::class, 'create'])->name('login');
 
-    Route::post('login', [LoginCompanyController::class, 'store'])->name('login.store');
 
 
 });

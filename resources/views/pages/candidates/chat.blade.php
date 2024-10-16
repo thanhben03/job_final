@@ -80,6 +80,29 @@
                     positionChat.prependTo('#msg-list-wrap') // push to top
 
                     $(`#wrap-item-list-${e.message.company.id}`).addClass('active') // add class active to new message
+
+
+                    let html = `
+                    <div class="single-user-comment-wrap">
+                        <div class="row">
+                            <div class="col-xl-9 col-lg-12">
+                                <div class="single-user-comment-block clearfix" style="float: left">
+                                    <div class="single-user-com-pic custom-avatar-chat">
+                                        <img src="${e.message.company.company_avatar.includes('http') ? e.message.company.company_avatar : `/images/avatar/${e.message.company.company_avatar}`}" alt="">
+                                    </div>
+                                    <div style="width: max-content" class="single-user-com-text">${e.message.message}</div>
+                                    <div class="single-user-msg-time">${e.message.created_at}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                    if($("#current-receiver-id").val() == e.message.company.id) {
+                        $("#msg-chat-wrap").append(html)
+                    }
+                    scrollToBottom()
+
+
                 })
 
 
@@ -127,6 +150,7 @@
         })
 
         function viewChat(companyId, companyName) {
+            // luu company id dang nhan hien tai
             $("#current-receiver-id").val(companyId)
 
             $.ajax({
@@ -169,12 +193,15 @@
                             `
                         }
                     })
+
+                    // Chuyển tin nhắn sang đã xem đồng thời in đậm dòng tin nhắn ở bên trái
                     $(`.msg-user-info.active`).removeClass('active')
                     let wrapItemList = $("#wrap-item-list-"+companyId)
                     wrapItemList.toggleClass('active')
                     let descriptionElement = wrapItemList.find('.msg-user-discription');
                     descriptionElement.removeClass('active')
 
+                    // Hiển thị ten nguoười dùng đang nhắn
                     $(".single-msg-user-name").text(companyName)
                     $("#msg-chat-wrap").html(html)
                     scrollToBottom()
