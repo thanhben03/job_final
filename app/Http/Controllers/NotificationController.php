@@ -15,7 +15,11 @@ class NotificationController extends Controller
 
     public function readMessageCompany(): void
     {
-        Notification::query()->where('company_id', Session::get('company')->id)->update(['read' => 1]);
+        Notification::query()
+            ->where(
+                'company_id', auth()->guard('company')->user()->id
+            )
+            ->update(['read' => 1]);
 
     }
 }

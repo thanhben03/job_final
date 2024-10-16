@@ -2,7 +2,7 @@
     use Illuminate\Support\Facades\Session; $company = auth()->guard('company')->user();
     use App\Models\Notification;
 
-    $notifications = Notification::where('company_id', $company->id)->get();
+    $notifications = Notification::where('company_id', $company->id)->orderBy('created_at', 'desc')->get();
 
     // Filter unread notifications
     $unreadNotifications = $notifications->where('read', 0);
