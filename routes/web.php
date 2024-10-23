@@ -42,7 +42,7 @@ Route::post('/candidates/report', [CandidateController::class, 'reportCandidate'
 Route::get('/candidates/review-cv', [CandidateController::class, 'showReviewCV'])->name('candidate.show.review-cv');
 Route::post('/candidates/review-cv', [CandidateController::class, 'reviewCV'])->name('candidate.review-cv');
 Route::get('/candidates/appointment', [CandidateController::class, 'showAppointment'])->name('candidate.show.appointment');
-Route::get('/candidates/chat', [CandidateController::class, 'showChat'])->name('candidate.show.chat');
+Route::get('/candidates/chat/{to_user?}', [CandidateController::class, 'showChat'])->name('candidate.show.chat');
 Route::get('/candidates/list', [CandidateController::class, 'showListCandidate'])->name('candidate.list');
 Route::get('/candidates/detail/{id}', [CandidateController::class, 'showDetailCandidate'])->name('candidate.detail');
 
@@ -84,6 +84,7 @@ Route::post('/chat/send-to-user', [ChatController::class, 'sendMessageToUser'])-
 Route::post('/chat/send-to-company', [ChatController::class, 'sendMessageToCompany'])->name('send.chat.to.company');
 Route::get('/chat/view-chat/{companyId}', [ChatController::class, 'viewChatForUser'])->name('chat.getChat');
 Route::get('/chat/view-chat-company/{userId}', [ChatController::class, 'viewChatForCompany'])->name('chat.getChat.company');
+Route::post('/chat/quick-chat/', [ChatController::class, 'quickChat'])->name('quick.chat');
 
 //Route::get('/dashboard', function () {
 //    return view('dashboard');

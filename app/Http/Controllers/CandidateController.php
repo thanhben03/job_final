@@ -9,6 +9,7 @@ use App\Http\Resources\CareerResource;
 use App\Http\Resources\ChatResource;
 use App\Models\Career;
 use App\Models\Chat;
+use App\Models\Company;
 use App\Models\CurriculumVitae;
 use App\Models\Province;
 use App\Models\ReportedUser;
@@ -455,6 +456,7 @@ class CandidateController extends Controller
 
     public function showChat()
     {
+
         $latestMessages = Chat::query()
             ->select('chats.*')
             ->where('user_id', auth()->user()->id)
@@ -467,7 +469,9 @@ class CandidateController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         $latestMessages = ChatResource::make($latestMessages)->resolve();
-        return view('pages.candidates.chat', compact('latestMessages'));
+        return view('pages.candidates.chat', [
+            'latestMessages' => $latestMessages
+        ]);
     }
 
     public function showListCandidate(Request $request)

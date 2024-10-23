@@ -115,4 +115,9 @@ class ChatController extends Controller
         $messages = ChatResource::make($messages)->resolve();
         return response()->json($messages);
     }
+
+    public function quickChat(Request $request)
+    {
+
+    }
 }
