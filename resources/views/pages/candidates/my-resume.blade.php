@@ -307,14 +307,15 @@
             })
         }
 
-        function applyNow(jobId) {
+        function applyNow(jobId, cvId) {
             $.ajax({
                 type: 'POST',
                 // make sure you respect the same origin policy with this url:
                 // http://en.wikipedia.org/wiki/Same_origin_policy
                 url: '{{route('api.v1.applyJob')}}',
                 data: {
-                    "jobId" : jobId,
+                    "job_id" : jobId,
+                    "cv_id": cvId,
                     "_token": '{{csrf_token()}}'
                 },
                 success: function(msg){
@@ -368,7 +369,7 @@
                                 <small class="text-muted">Posted on: ${ele.created_at}</small>
                                 <div class="d-flex justify-content-between">
                                     <small class="">Max salary: <strong style="color: green">${ele.max_salary.convert}</strong></small>
-                                    <small ${ele.cv_applied ? '' : `onclick="applyNow(${ele.id})"`} class="apply-now-text">${ele.cv_applied ? 'Applied' : 'Apply now'}</small>
+                                    <small ${ele.cv_applied.length > 0 ? '' : `onclick="applyNow(${ele.id}, ${cvID})"`} class="apply-now-text">${ele.cv_applied.length > 0 ? 'Applied' : 'Apply now'}</small>
                                 </div>
                             </div>
                         </li>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Enums\WorkTypeEnum;
+use App\Http\Requests\ApplyJobRequest;
 use App\Http\Requests\PostJobRequest;
 use App\Http\Requests\UpdateJobRequest;
 use App\Http\Resources\CandidateResource;
@@ -122,15 +123,22 @@ class JobController extends Controller
             'resumes' => $resumes,
         ]);
     }
-    public function applyJob(Request $request)
+    public function applyJob(ApplyJobRequest $request)
     {
-        $jobId = $request->input('jobId');
-        $cv = CurriculumVitae::query()
-            ->where('user_id', auth()->user()->id)
-            ->first();
+        $data = $request->validated();
+        $today = now();
+
+        $job = Career::query()->findOrFail($data['job_id']);
+
+        // Neu thoi gian ung tuyen da het
+        if ($today->greaterThan($job->expiration_day)) {
+            return response()->json([
+                'msg' => 'Application period has expired!'
+            ], 500);
+        }
         $userCareer = UserCareer::query()->where([
-            'career_id' => $jobId,
-            'cv_id' => $cv->id,
+            'career_id' => $data['job_id'],
+            'cv_id' => $data['cv_id'],
         ])->first();
 
         if ($userCareer) {
@@ -139,8 +147,8 @@ class JobController extends Controller
             ], 500);
         }
         UserCareer::query()->create([
-            'career_id' => $jobId,
-            'cv_id' => $cv->id,
+            'career_id' => $data['job_id'],
+            'cv_id' => $data['cv_id'],
         ]);
     }
 

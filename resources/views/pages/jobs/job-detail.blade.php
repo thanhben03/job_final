@@ -294,7 +294,7 @@
 {{--                                                <small>If you do not have a resume document, you may write your brief professional profile <a class="site-text-primary" href="javascript:void(0);">here</a></small>--}}
 {{--                                            </div>--}}
 
-                                            <select class="form-select mb-3" aria-label="Default select example">
+                                            <select id="cv_id" class="form-select mb-3" aria-label="Default select example">
                                                 <option selected>Select your CV</option>
                                                 @foreach($resumes as $resume)
                                                     <option value="{{$resume->id}}">{{$resume->path}}</option>
@@ -340,13 +340,17 @@
                   // http://en.wikipedia.org/wiki/Same_origin_policy
                   url: '{{route('api.v1.applyJob')}}',
                   data: {
-                      "jobId" : {{$career['id']}},
+                      "job_id" : {{$career['id']}},
+                      'cv_id': $("#cv_id").val(),
                       "_token": '{{csrf_token()}}'
                   },
                   success: function(msg){
                       $("#apply_job_popup").modal('toggle');
                       toastr.success('Apply Success !', 'Notification')
 
+                  },
+                  error: function (xhr) {
+                      toastr.error(xhr.responseJSON.msg, 'Error !')
                   }
               });
           })

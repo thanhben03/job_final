@@ -381,7 +381,7 @@ class CandidateController extends Controller
     public function reportCandidate(Request $request)
     {
         $candidate = User::query()->find($request->candidate_id);
-        $company = Session::get('company');
+        $company = auth()->guard('company')->user();
         $existReport = ReportedUser::query()->where([
             'user_id' => $candidate->id,
             'company_id' => $company->id

@@ -196,7 +196,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="twm-mid-content">
-                                                        <a href="#" class="twm-job-title">
+                                                        <a href="{{route('candidate.detail', $candidate['info']->id)}}" class="twm-job-title">
                                                             <h4>{{$candidate['info']->fullname}}</h4>
                                                             <p class="twm-candidate-address">
                                                                 <i class="feather-map-pin"></i>{{$candidate['info']->email}}

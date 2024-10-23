@@ -57,11 +57,14 @@ class CareerResource extends ResourceCollection
                 'gender' => GenderEnum::getDescription($career->gender),
                 'qualification' => QualificationEnum::getDescription($career->qualification),
                 'detail' => $career->detail,
-                'cv_applied' => $career->user_career,
+                'cv_applied' => $career->user_careers ?? null,
                 'appointments' => AppointmentResource::make($career->appointments)->resolve(),
                 'from_time' => $career->from_time,
                 'to_time' => $career->to_time,
-                'status' =>  !empty($career->user_career->status) ? StatusCV::getDescription($career->user_career->status) : "" ,
+                'status' => auth()->user() && $career->user_careers->count() > 0
+                    ? StatusCV::getDescription($career->user_careers->whereIn('cv_id', auth()->user()->cv()->pluck('id')->toArray())[0]->status)
+                    : ''
+//                'status' =>  !empty($career->user_career->status) ? StatusCV::getDescription($career->user_career->status) : "" ,
             ];
         });
 

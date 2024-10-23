@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\UserAuthenticated;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -29,22 +30,24 @@ Route::post('/match-with-candidate', [JobController::class, 'matchWithCandidate'
 Route::get('/match-with-job/{id}', [CandidateController::class, 'matchWithJob'])->name('match.with.job');
 
 
-Route::get('/candidates/dashboard', [CandidateController::class, 'index'])->name('candidate.dashboard');
-Route::get('/candidates/profile', [CandidateController::class, 'profile'])->name('candidate.profile');
-Route::get('/candidates/job-applied', [CandidateController::class, 'jobApplied'])->name('candidate.job-applied');
-Route::get('/candidates/my-resume', [CandidateController::class, 'myResume'])->name('candidate.my-resume');
-Route::get('/candidates/saved-job', [CandidateController::class, 'savedJob'])->name('candidate.saved-job');
-Route::post('/candidates/saved-job', [CandidateController::class, 'processSavedJob'])->name('candidate.process.saved-job');
-Route::get('/candidates/create-cv/{id?}', [CandidateController::class, 'createCv'])->name('candidate.create-cv');
-Route::get('/candidates/store-cv', [CandidateController::class, 'storeCV'])->name('candidate.store-cv');
-Route::get('/candidates/delete-cv/{cvId}', [CandidateController::class, 'deleteCV'])->name('candidate.delete-cv');
-Route::post('/candidates/report', [CandidateController::class, 'reportCandidate'])->name('candidate.report');
-Route::get('/candidates/review-cv', [CandidateController::class, 'showReviewCV'])->name('candidate.show.review-cv');
-Route::post('/candidates/review-cv', [CandidateController::class, 'reviewCV'])->name('candidate.review-cv');
-Route::get('/candidates/appointment', [CandidateController::class, 'showAppointment'])->name('candidate.show.appointment');
-Route::get('/candidates/chat/{to_user?}', [CandidateController::class, 'showChat'])->name('candidate.show.chat');
-Route::get('/candidates/list', [CandidateController::class, 'showListCandidate'])->name('candidate.list');
-Route::get('/candidates/detail/{id}', [CandidateController::class, 'showDetailCandidate'])->name('candidate.detail');
+Route::middleware(UserAuthenticated::class)->group(function () {
+    Route::get('/candidates/dashboard', [CandidateController::class, 'index'])->name('candidate.dashboard');
+    Route::get('/candidates/profile', [CandidateController::class, 'profile'])->name('candidate.profile');
+    Route::get('/candidates/job-applied', [CandidateController::class, 'jobApplied'])->name('candidate.job-applied');
+    Route::get('/candidates/my-resume', [CandidateController::class, 'myResume'])->name('candidate.my-resume');
+    Route::get('/candidates/saved-job', [CandidateController::class, 'savedJob'])->name('candidate.saved-job');
+    Route::post('/candidates/saved-job', [CandidateController::class, 'processSavedJob'])->name('candidate.process.saved-job');
+    Route::get('/candidates/create-cv/{id?}', [CandidateController::class, 'createCv'])->name('candidate.create-cv');
+    Route::get('/candidates/store-cv', [CandidateController::class, 'storeCV'])->name('candidate.store-cv');
+    Route::get('/candidates/delete-cv/{cvId}', [CandidateController::class, 'deleteCV'])->name('candidate.delete-cv');
+    Route::post('/candidates/report', [CandidateController::class, 'reportCandidate'])->name('candidate.report');
+    Route::get('/candidates/review-cv', [CandidateController::class, 'showReviewCV'])->name('candidate.show.review-cv');
+    Route::post('/candidates/review-cv', [CandidateController::class, 'reviewCV'])->name('candidate.review-cv');
+    Route::get('/candidates/appointment', [CandidateController::class, 'showAppointment'])->name('candidate.show.appointment');
+    Route::get('/candidates/chat/{to_user?}', [CandidateController::class, 'showChat'])->name('candidate.show.chat');
+    Route::get('/candidates/list', [CandidateController::class, 'showListCandidate'])->name('candidate.list');
+    Route::get('/candidates/detail/{id}', [CandidateController::class, 'showDetailCandidate'])->name('candidate.detail');
+});
 
 
 

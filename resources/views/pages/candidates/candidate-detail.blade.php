@@ -21,6 +21,27 @@
         </div>
     </div>
 
+    <!-- Modal Report Career-->
+    <div class="modal fade" id="modal-report-candidate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Báo cáo vi phạm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">Nếu bạn cho rằng đây là ứng viên giả mạo/span vi phạm tiêu chuẩn vui lòng báo cáo về cho chúng tôi !</div>
+                    <input hidden id="candidate-id" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="reportCandidate()" id="btn-send-report" class="btn btn-primary">Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Candidate Detail V2 START -->
     <div class="section-full p-b90 bg-white">
         <div class="twm-candi-self-wrap-2 overlay-wraper" style="background-image:url(/images/candidates/candidate-bg2.jpg);">
@@ -41,18 +62,15 @@
                         </div>
                         <div class="twm-mid-content">
 
-                            <h4 class="twm-job-title">Wanda Montgomery </h4>
+                            <h4 class="twm-job-title">{{$candidate['fullname']}}</h4>
 
                             <p>Senior UI / UX Designer and Developer at Google INC</p>
-                            <p class="twm-candidate-address"><i class="feather-map-pin"></i>United States</p>
+                            <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{$candidate['province']->name}}</p>
 
                         </div>
                     </div>
                     <div class="twm-ep-detail-tags">
-                        <button class="de-info twm-bg-green"><i class="fa fa-share-alt"></i> Share</button>
-                        <button class="de-info twm-bg-brown"><i class="fa fa-file-signature"></i> Shortlist</button>
-                        <button class="de-info twm-bg-purple"><i class="fa fa-exclamation-triangle"></i> Report</button>
-                        <button class="de-info twm-bg-sky"><i class="fa fa-save"></i> Save</button>
+                        <button onclick="showModalReportCandidate({{$candidate['id']}})" class="de-info twm-bg-purple"><i class="fa fa-exclamation-triangle"></i> Report</button>
                     </div>
                     <div class="twm-candi-self-bottom">
                         <button onclick="showModalQuickChat()" class="site-button">Contact Us</button>
@@ -193,6 +211,13 @@
 @endsection
 @push('js')
     <script>
+        function showModalReportCandidate(candidateId) {
+            $("#modal-report-candidate").modal('toggle')
+            $("#btn-send-report").prop("disabled", false)
+            $("#candidate-id").val(candidateId)
+        }
+
+
         function sendMessage() {
             let message = $("#message");
             let user_id = $("#user_id");
@@ -212,6 +237,28 @@
                 }
             })
 
+        }
+
+
+        function reportCandidate() {
+            $.ajax({
+                type: 'POST',
+                url: '{{route('candidate.report')}}',
+                data: {
+                    '_token': '{{csrf_token()}}',
+                    'candidate_id': $("#candidate-id").val()
+                },
+                success: function (res) {
+                    toastr.success('Reported Successfully !', 'Notification !')
+                    $("#btn-send-report").prop('disabled', true)
+
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                    $("#btn-send-report").prop('disabled', true)
+                }
+
+            })
         }
 
         function showModalQuickChat() {

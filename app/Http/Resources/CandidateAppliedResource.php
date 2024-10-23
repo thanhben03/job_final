@@ -33,7 +33,7 @@ class CandidateAppliedResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'candidates' => $this->user_career->map(function ($user_career) {
+            'candidates' => $this->user_careers->map(function ($user_career) {
                 return [
                     'user_career_id' => $user_career->id,
                     'info' => $user_career->curriculum_vitae->user ?? null,
