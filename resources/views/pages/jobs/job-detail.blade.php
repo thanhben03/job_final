@@ -332,8 +332,12 @@
     <script>
         $(document).ready(function() {
           const btnSend = $("#btn-send-application");
+            // check flag job
 
           btnSend.click(function () {
+              if ({{$career['flag']}} == 1) {
+                  return confirm('This job is being flagged. Are you sure you want to continue?')
+              }
               $.ajax({
                   type: 'POST',
                   // make sure you respect the same origin policy with this url:

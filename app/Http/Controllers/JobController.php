@@ -81,7 +81,6 @@ class JobController extends Controller
 
         if ($request->has('locations')) {
             $locationFilter = explode(',', $request['locations']);
-            dd($request['locations']);
             Session::flash('locations', $request['locations']);
             $locationIds = Province::query()->whereIn('name', $locationFilter)->pluck('code')->toArray();
             $careers = $careers->whereIn('province_id', $locationIds);

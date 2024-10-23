@@ -39,6 +39,7 @@ class CareerResource extends ResourceCollection
                     'origin' => $career->max_salary,
                     'convert' => $this->convertPriceString(intval($career->max_salary))
                 ],
+                'flag' => $career->reported->count() > 1,
                 'address' => $career->address,
                 'phone' => $career->phone,
                 'experience' => JobExpEnum::getDescription(intval($career->experience)),

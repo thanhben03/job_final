@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 class Career extends Model
 {
@@ -61,6 +62,11 @@ class Career extends Model
     public function user_career()
     {
         return $this->hasOne(UserCareer::class, 'career_id', 'id');
+    }
+
+    public function reported()
+    {
+        return $this->hasMany(ReportedCareer::class, 'career_id', 'id');
     }
 
 }
