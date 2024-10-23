@@ -80,12 +80,11 @@ class JobController extends Controller
 
         if ($request->has('locations')) {
             $locationFilter = explode(',', $request['locations']);
+            dd($request['locations']);
             Session::flash('locations', $request['locations']);
             $locationIds = Province::query()->whereIn('name', $locationFilter)->pluck('code')->toArray();
             $careers = $careers->whereIn('province_id', $locationIds);
         }
-
-
 
 
 
@@ -113,9 +112,9 @@ class JobController extends Controller
         $career = CareerResource::make($career)->resolve();
         $isApplied  = UserCareer::query()->where([
             'career_id' => $career[0]['id'],
-            'cv_id' => auth()->user()->cv()->pluck('id')->toArray()
+            'cv_id' => auth()?->user()?->cv()->pluck('id')->toArray()
         ])->first();
-        $resumes = auth()->user()->cv;
+        $resumes = auth()?->user()?->cv;
         return view('pages.jobs.job-detail', [
             'career' => $career[0],
             'cv_id' => auth()->user()->cv[0]?->id ?? 0,

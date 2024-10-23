@@ -1,6 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+    <!-- Modal Report Career-->
+    <div class="modal fade" id="modal-report-career" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Báo cáo vi phạm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">Nếu bạn cho rằng đây là tin giả, vi phạm tiêu chuẩn hãy cho chúng tôi biết</div>
+                    <input hidden id="career-id" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="reportCareer()" id="btn-send-report" class="btn btn-primary">Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- CONTENT START -->
     <div class="page-content">
 
@@ -60,7 +80,13 @@
                                             : $career['company']->company_avatar}}" alt="#">
                                                 </div>
 
-                                                <h4 class="twm-job-title">{{$career['title']}}<span class="twm-job-post-duration">/ {{$career['updated_at']}}</span></h4>
+                                                <h4 class="twm-job-title d-flex">
+                                                    {{$career['title']}}
+                                                    <span class="twm-job-post-duration">/ {{$career['updated_at']}}</span>
+                                                    <div class="">
+                                                        <span onclick="showModalReportCareer({{$career['id']}})" class="btn-report">Report</span>
+                                                    </div>
+                                                </h4>
                                                 <p class="twm-job-address"><i class="feather-map-pin"></i>{{$career['address']}}</p>
                                                 <div class="twm-job-self-mid">
                                                     <div class="twm-job-self-mid-left">
@@ -85,6 +111,7 @@
 
                                                     </button>
                                                 @endif
+
                                             </div>
                                         </div>
 
@@ -325,5 +352,32 @@
           })
 
         })
+
+        function showModalReportCareer (careerId) {
+            $("#modal-report-career").modal('toggle')
+            $("#btn-send-report").prop("disabled", false)
+            $("#career-id").val(careerId)
+        }
+
+        function reportCareer() {
+            $.ajax({
+                type: 'POST',
+                url: '{{route('job.report')}}',
+                data: {
+                    '_token': '{{csrf_token()}}',
+                    'career_id': $("#career-id").val()
+                },
+                success: function (res) {
+                    toastr.success('Reported Successfully !', 'Notification !')
+                    $("#btn-send-report").prop('disabled', true)
+
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                    $("#btn-send-report").prop('disabled', true)
+                }
+
+            })
+        }
     </script>
 @endpush

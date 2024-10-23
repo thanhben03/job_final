@@ -334,7 +334,8 @@
 
             function filterLocation() {
                 let provinces = $("#select-province").val()
-
+                console.log(provinces)
+                return;
                 for (let i = 0; i < provinces.length; i++) {
                     if (i === 0) {
                         filterProvinceStr += url.includes("?") ? `&locations=${provinces[i]}` : `?locations=${provinces[i]}`

@@ -18,7 +18,7 @@ class HomeController extends Controller
         $this->service = $careerService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $skills = Skill::all();
         $provinces = Province::all();

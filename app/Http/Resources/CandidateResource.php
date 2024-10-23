@@ -4,12 +4,14 @@ namespace App\Http\Resources;
 
 use App\Enums\GenderEnum;
 use App\Enums\WorkTypeEnum;
+use App\Trait\ConvertPriceString;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CandidateResource extends ResourceCollection
 {
+    use ConvertPriceString;
     /**
      * Transform the resource into an array.
      *
@@ -22,9 +24,16 @@ class CandidateResource extends ResourceCollection
                 'id' => $item->id,
                 'fullname' => $item->fullname,
                 'email' => $item->email,
+                'introduce' => $item->introduce,
+                'experiences' => $item->experiences,
+                'avatar' => $item->avatar,
+                'skills' => $item->skills,
+                'address' => $item->address,
                 'phone' => $item->phone,
-                'type_work' => WorkTypeEnum::getValue($item->type_work),
+                'province' => $item?->province ?? '',
+                'type_work' => WorkTypeEnum::getDescription($item->type_work),
                 'gender' => GenderEnum::getDescription($item->gender),
+                'price_per_hours' => $this->convertPriceString(intval($item->price_per_hours)),
             ];
         });
     }

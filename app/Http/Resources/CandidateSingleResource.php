@@ -21,6 +21,7 @@ class CandidateSingleResource extends JsonResource
         return [
             'id' => $this->id,
             'fullname' => $this->fullname,
+            'avatar' => $this->avatar,
             'email' => $this->email,
             'phone' => $this->phone,
             'type_work' => WorkTypeEnum::getDescription($this?->type_work) ?? null,

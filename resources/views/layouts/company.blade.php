@@ -80,7 +80,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="dash-candidates.html"><i class="fa fa-user-friends"></i><span class="admin-nav-text">Candidates</span></a>
+                    <a href="{{route('candidate.list')}}"><i class="fa fa-user-friends"></i><span class="admin-nav-text">Candidates</span></a>
                 </li>
                 <li>
                     <a href="dash-bookmark.html"><i class="fa fa-bookmark"></i><span class="admin-nav-text">Bookmark Resumes</span></a>

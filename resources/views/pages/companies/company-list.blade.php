@@ -147,7 +147,7 @@
                                             <img src="{{str_contains($company['company_avatar'], 'http') ? $company['company_avatar'] : asset('/images/avatar/'.$company['company_avatar'])}}" alt="">
                                         </div>
                                         <div class="twm-mid-content">
-                                            <a href="employer-detail.html" class="twm-job-title">
+                                            <a href="{{route('company.detail', $company['id'])}}" class="twm-job-title">
                                                 <h4>{{$company['company_name']}}</h4>
                                             </a>
                                             <p class="twm-job-address">{{$company['company_address']}}</p>

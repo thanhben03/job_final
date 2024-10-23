@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\WorkTypeEnum;
+use App\Http\Resources\CandidateResource;
+use App\Http\Resources\CandidateSingleResource;
 use App\Http\Resources\CareerResource;
 use App\Http\Resources\ChatResource;
 use App\Models\Career;
 use App\Models\Chat;
 use App\Models\CurriculumVitae;
+use App\Models\Province;
 use App\Models\ReportedUser;
 use App\Models\SaveCareer;
 use App\Models\User;
@@ -15,6 +19,7 @@ use App\Models\UserProfile;
 use App\Services\User\UserService;
 use ConvertApi\ConvertApi;
 use Gemini\Data\Blob;
+use Gemini\Data\Candidate;
 use Gemini\Enums\MimeType;
 use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Http\Request;
@@ -463,6 +468,46 @@ class CandidateController extends Controller
             ->get();
         $latestMessages = ChatResource::make($latestMessages)->resolve();
         return view('pages.candidates.chat', compact('latestMessages'));
+    }
+
+    public function showListCandidate(Request $request)
+    {
+        $candidates = User::query();
+
+        if ($request['search']) {
+            $candidates = $candidates->where('fullname', 'like', '%' . $request['search'] . '%');
+            Session::flash('keyword', $request['search']);
+        }
+        if ($request->has('job-type') && $request->input('job-type') != 'all') {
+            // Chuyển chuỗi 'job_type' thành mảng
+            $jobTypeFilter = explode(',', $request->input('job-type'));
+            Session::flash('job-type', $request['job-type']);
+            // Lọc theo các giá trị trong mảng $jobTypeFilter
+            $candidates = $candidates->whereIn('type_work', array_map(function($jobType) {
+                return WorkTypeEnum::getValue($jobType); // Áp dụng enum mapping
+            }, $jobTypeFilter));
+        }
+
+        if ($request->has('locations')) {
+            $locationFilter = explode(',', $request['locations']);
+            Session::flash('locations', $request['locations']);
+            $locationIds = Province::query()->whereIn('name', $locationFilter)->pluck('code')->toArray();
+            $candidates = $candidates->whereIn('province_id', $locationIds);
+        }
+
+        $candidates = $candidates->paginate(10);
+        $data = CandidateResource::make($candidates);
+        return view('pages.candidates.candidate-list', [
+            'data' => $data->resolve(),
+            'candidates' => $candidates
+        ]);
+    }
+
+    public function showDetailCandidate($candidateId)
+    {
+        $candidate = User::query()->where('id', $candidateId)->get();
+        $candidate = CandidateResource::make($candidate)->resolve()[0];
+        return view('pages.candidates.candidate-detail', compact('candidate'));
     }
 
 }

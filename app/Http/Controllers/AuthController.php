@@ -42,6 +42,10 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
+            if ($request->wantsJson()) {
+                $user = Auth::user();
+                return response()->json($user);
+            }
             return redirect()->intended('/');
         } else {
             return back();

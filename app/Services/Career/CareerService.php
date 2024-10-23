@@ -58,7 +58,7 @@ class CareerService implements CareerServiceInterface
 
             $result->skills()->attach($skillIds);
             DB::commit();
-            return $mathCandidates;
+            return true;
         } catch (\Exception $exception) {
             DB::rollBack();
 

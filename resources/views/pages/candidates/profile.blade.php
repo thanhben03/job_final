@@ -1,6 +1,75 @@
-@php use App\Enums\GenderEnum;use App\Enums\WorkTypeEnum; @endphp
+@php use App\Enums\GenderEnum;use App\Enums\WorkTypeEnum;use App\Models\Province;use App\Models\Skill; @endphp
 @extends('layouts.app')
 @section('content')
+    <!-- Modal Add Skill -->
+    <div class="modal fade" id="modal-add-skill" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <select name="" id="select-skill" class="form-select">
+                        @foreach(Skill::all() as $skill)
+                            <option value="{{$skill->name}}">{{$skill->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button onclick="addSkill()" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add Experience -->
+    <div class="modal fade" id="modal-add-experience" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>From Date</label>
+                        <select name="" id="from-date" class="form-select">
+                            @for($i = 1980; $i <= 2024; $i++)
+                                <option value="{{$i}}">{{$i}}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>To Date</label>
+                        <select name="" id="to-date" class="form-select">
+                            @for($i = 1980; $i <= 2024; $i++)
+                                <option value="{{$i}}">{{$i}}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Title</label>
+                        <input id="title" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Position</label>
+                        <input id="position" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Description</label>
+                        <input id="description" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button onclick="addExperienceProfile()" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- CONTENT START -->
     <div class="page-content">
 
@@ -155,7 +224,9 @@
                                                                         <select name="gender"
                                                                                 class="form-select custom-select">
                                                                             @foreach(GenderEnum::asSelectArray() as $key => $value)
-                                                                                <option @if(auth()->user()->gender == $key) selected @endif value="{{$key}}">{{$value}}</option>
+                                                                                <option
+                                                                                    @if(auth()->user()->gender == $key) selected
+                                                                                    @endif value="{{$key}}">{{$value}}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
@@ -174,22 +245,36 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-
+                                                            <div class="col-xl-6 col-lg-6 col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Province</label>
+                                                                    <div class="ls-inputicon-box">
+                                                                        <select class="form-control" name="province_id"
+                                                                                id="">
+                                                                            @foreach(Province::all() as $province)
+                                                                                <option
+                                                                                    @if(auth()->user()->province_id == $province->code) selected
+                                                                                    @endif value="{{$province->code}}">{{$province->name}}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                        <i class="fs-input-icon fas fa-at"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>Address</label>
+                                                                    <div class="ls-inputicon-box">
+                                                                        <input value="{{auth()->user()->address}}" name="address" class="form-control" type="text" >
+                                                                        <i class="fs-input-icon fas fa-at"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <label>Introduce</label>
                                                                     <textarea name="introduce" class="form-control"
                                                                               rows="3">{{auth()->user()->introduce}}</textarea>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="text-left">
-                                                                    <button type="submit" class="site-button">Save
-                                                                        Changes
-                                                                    </button>
                                                                 </div>
                                                             </div>
 
@@ -206,37 +291,80 @@
                                             <button class="accordion-button collapsed" type="button"
                                                     data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
                                                     aria-expanded="false" aria-controls="flush-collapseTwo">
-                                                Accordion Item #2
+                                                Professional skills
                                             </button>
                                         </h2>
                                         <div id="flush-collapseTwo" class="accordion-collapse collapse"
                                              aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">Placeholder content for this accordion, which is
-                                                intended to demonstrate the <code>.accordion-flush</code> class. This is
-                                                the second item's accordion body. Let's imagine this being filled with
-                                                some actual content.
+                                            <div class="accordion-body d-flex justify-content-between">
+                                                <div class="tw-sidebar-tags-wrap">
+                                                    <div class="tagcloud">
+                                                        @foreach(auth()->user()?->skills as $skill)
+                                                            <input name="skill_ids[]" value="{{$skill->name}}" />
+                                                        @endforeach
+                                                    </div>
+
+                                                    <button type="button" onclick="showModalAddSkillProfile()"
+                                                            style="background: #006aff;
+                                                                    border: navajowhite;
+                                                                    color: white;
+                                                                    border-radius: 5px;" href="">+ New Skill
+                                                    </button>
+                                                </div>
+
                                             </div>
+
                                         </div>
+
                                     </div>
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-headingThree">
                                             <button class="accordion-button collapsed" type="button"
                                                     data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
                                                     aria-expanded="false" aria-controls="flush-collapseThree">
-                                                Accordion Item #3
+                                                Work Experience
                                             </button>
                                         </h2>
                                         <div id="flush-collapseThree" class="accordion-collapse collapse"
                                              aria-labelledby="flush-headingThree"
                                              data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">Placeholder content for this accordion, which is
-                                                intended to demonstrate the <code>.accordion-flush</code> class. This is
-                                                the third item's accordion body. Nothing more exciting happening here in
-                                                terms of content, but just filling up the space to make it look, at
-                                                least at first glance, a bit more representative of how this would look
-                                                in a real-world application.
+                                            <div class="accordion-body">
+                                                <div class="twm-timing-list-wrap wrap-experience">
+
+                                                    @foreach(auth()->user()->experiences as $exp)
+                                                        <div class="twm-timing-list">
+                                                            <div class="twm-time-list-date">{{$exp->from_date}} to {{$exp->to_date}}</div>
+                                                            <input value="{{$exp->from_date}}" name="from_date[]" hidden />
+                                                            <input value="{{$exp->to_date}}" name="to_date[]" hidden />
+                                                            <div class="twm-time-list-title">{{$exp->title}}</div>
+                                                            <input value="{{$exp->title}}" name="title[]" hidden />
+                                                            <div class="twm-time-list-position">{{$exp->position}}</div>
+                                                            <input value="{{$exp->position}}" name="position[]" hidden />
+                                                            <div class="twm-time-list-discription">
+                                                                <p>{{$exp->description}}</p>
+                                                            </div>
+                                                            <input value="{{$exp->description}}" name="description[]" hidden />
+
+                                                        </div>
+                                                    @endforeach
+
+
+                                                </div>
+                                                <button type="button" onclick="showModalAddExpProfile()"
+                                                        style="
+                                                        background: #006aff;
+                                                        border: navajowhite;
+                                                        color: white;
+                                                        border-radius: 5px;" href="">+ New Experience
+                                                </button>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 mt-3">
+                                    <div class="text-left">
+                                        <button type="submit" class="site-button">Save All
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -252,3 +380,52 @@
     </div>
     <!-- CONTENT END -->
 @endsection
+@push('js')
+    <script>
+        function showModalAddSkillProfile() {
+            $("#modal-add-skill").modal('toggle')
+        }
+
+        function addSkill() {
+            let selectedSkill = $("#select-skill").val()
+
+            $(".tagcloud").append(`<input name="skill_ids[]" value="${selectedSkill}" />`)
+            $("#modal-add-skill").modal('toggle')
+        }
+
+        function addExperienceProfile() {
+            let fromDate = $("#from-date");
+            let toDate = $("#to-date");
+            let title = $("#title");
+            let position = $("#position");
+            let description = $("#description");
+
+            $(".wrap-experience").append(`
+                <div class="twm-timing-list">
+                    <div class="twm-time-list-date">${fromDate.val()} to ${toDate.val()}</div>
+                    <input value="${fromDate.val()}" name="from_date[]" hidden />
+                    <input value="${toDate.val()}" name="to_date[]" hidden />
+                    <div class="twm-time-list-title">${title.val()}</div>
+                    <input value="${title.val()}" name="title[]" hidden />
+                    <div class="twm-time-list-position">${position.val()}</div>
+                    <input value="${position.val()}" name="position[]" hidden />
+                    <div class="twm-time-list-discription">
+                        <p>${description.val()}</p>
+                    </div>
+                    <input value="${description.val()}" name="description[]" hidden />
+
+                </div>
+            `)
+            fromDate.val('1980')
+            toDate.val('1980')
+            title.val('')
+            position.val('')
+            description.val('')
+            $("#modal-add-experience").modal('toggle')
+        }
+
+        function showModalAddExpProfile() {
+            $("#modal-add-experience").modal('toggle')
+        }
+    </script>
+@endpush

@@ -12,6 +12,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -42,6 +43,8 @@ Route::get('/candidates/review-cv', [CandidateController::class, 'showReviewCV']
 Route::post('/candidates/review-cv', [CandidateController::class, 'reviewCV'])->name('candidate.review-cv');
 Route::get('/candidates/appointment', [CandidateController::class, 'showAppointment'])->name('candidate.show.appointment');
 Route::get('/candidates/chat', [CandidateController::class, 'showChat'])->name('candidate.show.chat');
+Route::get('/candidates/list', [CandidateController::class, 'showListCandidate'])->name('candidate.list');
+Route::get('/candidates/detail/{id}', [CandidateController::class, 'showDetailCandidate'])->name('candidate.detail');
 
 
 
@@ -58,11 +61,11 @@ Route::middleware('auth:company')->group(function () {
     Route::get('/companies/candidate-applied/{job_id}', [CompanyController::class, 'showCandidateAppliedJob'])->name('company.show.detail-job');
     Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
     Route::get('/companies/chat', [CompanyController::class, 'showChat'])->name('company.show.chat');
-    Route::get('/companies/list', [CompanyController::class, 'list'])->name('company.list');
     Route::get('/companies/candidate-list', [CompanyController::class, 'showCandidateList'])->name('company.show.candidate.list');
 
 });
 Route::get('/companies/detail/{companyId}', [CompanyController::class, 'companyDetail'])->name('company.detail');
+Route::get('/companies/list', [CompanyController::class, 'list'])->name('company.list');
 
 //Route::get('/company/login', [AuthenticatedCompanyController::class, 'create'])->name('company.showLogin');
 //Route::post('/company/login', [AuthenticatedCompanyController::class, 'store'])->name('company.login');
@@ -96,3 +99,6 @@ Route::get('pdf-to-img', [CandidateController::class, 'pdfToImg'])->name('pdf-to
 
 require __DIR__.'/auth.php';
 require __DIR__.'/company-auth.php';
+require __DIR__.'/social-auth.php';
+require __DIR__.'/api.php';
+

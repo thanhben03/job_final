@@ -15,7 +15,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'http://127.0.0.1:8001/candidates/review-cv', // <-- exclude this route,
             'http://127.0.0.1:8001/chat/send-to-user', // <-- exclude this route,
-            'http://127.0.0.1:8001/chat/send-to-company' // <-- exclude this route,
+            'http://127.0.0.1:8001/chat/send-to-company', // <-- exclude this route,
+            'http://127.0.0.1:8000/api/v1/auth/login'
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

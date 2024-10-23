@@ -53,7 +53,6 @@
         }
     </style>
     @vite('resources/js/bootstrap.js')
-
 </head>
 
 <body>
@@ -368,10 +367,8 @@
                     <div class="modal-footer">
                         <span class="modal-f-title">Login or Sign up with</span>
                         <ul class="twm-modal-social">
-                            <li><a href="javascript" class="facebook-clr"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="javascript" class="twitter-clr"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="javascript" class="linkedin-clr"><i class="fab fa-linkedin-in"></i></a></li>
-                            <li><a href="javascript" class="google-clr"><i class="fab fa-google"></i></a></li>
+                            <li><a href="{{route('auth.login', 'github')}}" class="facebook-clr"><i class="fab fa-github"></i></a></li>
+                            <li><a href="{{route('auth.login', 'google')}}" class="google-clr"><i class="fab fa-google"></i></a></li>
                         </ul>
                     </div>
 
@@ -475,10 +472,8 @@
                     <div class="modal-footer">
                         <span class="modal-f-title">Login or Sign up with</span>
                         <ul class="twm-modal-social">
-                            <li><a href="javascript" class="facebook-clr"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="javascript" class="twitter-clr"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="javascript" class="linkedin-clr"><i class="fab fa-linkedin-in"></i></a></li>
-                            <li><a href="javascript" class="google-clr"><i class="fab fa-google"></i></a></li>
+                            <li><a href="{{route('auth.login', 'github')}}" class="facebook-clr"><i class="fab fa-github"></i></a></li>
+                            <li><a href="{{route('auth.login', 'google')}}" class="google-clr"><i class="fab fa-google"></i></a></li>
                         </ul>
                     </div>
                 </div>

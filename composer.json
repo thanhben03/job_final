@@ -10,6 +10,7 @@
         "convertapi/convertapi-php": "^3.0",
         "google-gemini-php/laravel": "^1.0",
         "laravel/framework": "^11.9",
+        "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
         "pusher/pusher-php-server": "^7.2"
     },
