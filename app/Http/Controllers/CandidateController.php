@@ -11,6 +11,7 @@ use App\Models\Career;
 use App\Models\Chat;
 use App\Models\Company;
 use App\Models\CurriculumVitae;
+use App\Models\InviteInterview;
 use App\Models\Province;
 use App\Models\ReportedUser;
 use App\Models\SaveCareer;
@@ -24,6 +25,7 @@ use Gemini\Data\Candidate;
 use Gemini\Enums\MimeType;
 use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -512,6 +514,24 @@ class CandidateController extends Controller
         $candidate = User::query()->where('id', $candidateId)->get();
         $candidate = CandidateResource::make($candidate)->resolve()[0];
         return view('pages.candidates.candidate-detail', compact('candidate'));
+    }
+
+    public function acceptInterview(Request $request)
+    {
+        $code = $request->query('code');
+
+        $inviteExists = InviteInterview::query()->where('code', $code)->first();
+
+        if ($inviteExists && !$inviteExists->status) {
+            $inviteExists->status = 1;
+            $inviteExists->accepted_at = Carbon::now()->toDateTimeString();
+            $inviteExists->save();
+            return view('pages.candidates.accept-invite');
+
+        }
+
+        return redirect()->route('home');
+
     }
 
 }

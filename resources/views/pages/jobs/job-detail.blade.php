@@ -335,7 +335,7 @@
             // check flag job
 
           btnSend.click(function () {
-              if ({{$career['flag']}} == 1) {
+              if ({{$career['flag']}}) {
                   return confirm('This job is being flagged. Are you sure you want to continue?')
               }
               $.ajax({
@@ -361,11 +361,7 @@
 
         })
 
-        function showModalReportCareer (careerId) {
-            $("#modal-report-career").modal('toggle')
-            $("#btn-send-report").prop("disabled", false)
-            $("#career-id").val(careerId)
-        }
+
 
         function reportCareer() {
             $.ajax({
@@ -386,6 +382,12 @@
                 }
 
             })
+        }
+        function showModalReportCareer (careerId) {
+
+            $("#modal-report-career").modal('toggle')
+            $("#btn-send-report").prop("disabled", false)
+            $("#career-id").val(careerId)
         }
     </script>
 @endpush

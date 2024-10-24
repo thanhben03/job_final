@@ -13,19 +13,21 @@ use App\Http\Resources\CandidateAppliedResource;
 use App\Http\Resources\CareerResource;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CompanyResource;
+use App\Http\Resources\ListInviteResource;
+use App\Mail\InviteInterview;
 use App\Models\Career;
 use App\Models\Chat;
 use App\Models\Company;
-use App\Models\CurriculumVitae;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Skill;
 use App\Models\User;
-use App\Models\UserCareer;
+use App\Models\InviteInterview as Interview;
 use App\Services\Career\CareerServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
@@ -219,5 +221,65 @@ class CompanyController extends Controller
         $company['careers'] = $company['careers']->sortByDesc('created_at')->take(10);
 
         return view('pages.companies.company-detail', compact('company'));
+    }
+
+    public function sendInviteInterview(Request $request)
+    {
+        $request->validate([
+            'candidate_id' => 'required|exists:users,id',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'position' => 'required',
+            'email' => 'required|string|email|max:255',
+            'phone' => 'required|string|max:255',
+            'location' => 'required|string',
+            'time' => 'required'
+        ]);
+
+        $data = $request->all();
+        $code = rand(100000, 999999);
+        try {
+            $userExist  = User::query()->find($data['candidate_id']);
+            $body = [
+                'title' => $data['title'],
+                'content' => $data['content'],
+                'position' => $data['position'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'time' => $data['time'],
+                'location' => $data['location'],
+                'company_name' => \auth()->guard('company')->user()->company_name,
+                'user' => $userExist,
+                'code' => $code
+            ];
+
+            Mail::to($userExist->email)->send(new InviteInterview($body));
+            Interview::query()->create([
+                'user_id' => $userExist->id,
+                'company_id' => \auth()->guard('company')->user()->id,
+                'code' => $code
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Invitation sent'
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'msg' => $e->getMessage(),
+            ], 404);
+        }
+    }
+
+    public function showListInvite()
+    {
+        $invites = Interview::query()->where([
+            'company_id' => \auth()->guard('company')->user()->id
+        ])
+            ->orderBy('id','desc')
+            ->get();
+
+        $invites = ListInviteResource::make($invites)->resolve();
+        return view('pages.companies.list-invite', compact('invites'));
     }
 }

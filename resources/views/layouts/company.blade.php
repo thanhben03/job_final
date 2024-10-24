@@ -83,12 +83,13 @@
                     <a href="{{route('candidate.list')}}"><i class="fa fa-user-friends"></i><span class="admin-nav-text">Candidates</span></a>
                 </li>
                 <li>
+                    <a href="{{route('company.show.invite')}}"><i class="fa fa-money-bill-alt"></i><span class="admin-nav-text">Invites</span></a>
+                </li>
+                <li>
                     <a href="dash-bookmark.html"><i class="fa fa-bookmark"></i><span class="admin-nav-text">Bookmark Resumes</span></a>
                 </li>
 
-                <li>
-                    <a href="dash-package.html"><i class="fa fa-money-bill-alt"></i><span class="admin-nav-text">Packages</span></a>
-                </li>
+
 
                 <li>
                     <a href="javascript:;"><i class="fa fa-envelope"></i><span class="admin-nav-text">Messages <sup

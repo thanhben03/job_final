@@ -208,7 +208,7 @@
                                                             <ul>
                                                                 <li><a href="{{route('candidate.dashboard')}}"><i
                                                                             class="fa fa-home"></i>Dashboard</a></li>
-                                                                <li><a href="dash-messages.html"><i
+                                                                <li><a href="{{route('candidate.show.chat')}}"><i
                                                                             class="fa fa-envelope"></i> Messages</a>
                                                                 </li>
                                                                 <li><a href="dash-my-profile.html"><i

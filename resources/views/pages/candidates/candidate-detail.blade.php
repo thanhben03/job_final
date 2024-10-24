@@ -21,6 +21,67 @@
         </div>
     </div>
 
+    <!-- Modal Send Interview Invitation Letter-->
+    <div class="modal fade" id="modal-invite-interview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Interview Invitation Letter</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Title: </label>
+                        <input value="Thư Mời Tham Gia Phỏng Vấn !" placeholder="Enter a title for gmail !" id="title" class="form-control" type="text" name="message">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Position: </label>
+                        <input value="Intern Laravel" placeholder="Ex: Intern Laravel !" id="position" class="form-control" type="text" name="message">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Time: </label>
+                                <input type="datetime-local" placeholder="Enter a the time !" id="time" class="form-control" name="message">
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Location: </label>
+                                <input value="Hai Bà Trưng, Hà Nội" placeholder="Enter a location !" id="location" class="form-control" type="text" name="message">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Email: </label>
+                                <input value="abc@gmail.com" placeholder="Enter a location !" id="email" class="form-control" type="text" name="message">
+                            </div>
+
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="">Phone: </label>
+                                <input value="0772857483" placeholder="Enter a location !" id="phone" class="form-control" type="text" name="message">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Content: </label>
+                        <textarea placeholder="Enter a content for gmail !" id="content-gmail" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" onclick="sendInviteInterview()" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Report Career-->
     <div class="modal fade" id="modal-report-candidate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -74,7 +135,7 @@
                     </div>
                     <div class="twm-candi-self-bottom">
                         <button onclick="showModalQuickChat()" class="site-button">Contact Us</button>
-                        <a href="contact.html" class="site-button twm-bg-green">Hire Me</a>
+                        <button onclick="showModalInviteInterview()" class="site-button twm-bg-green">Hire Me</button>
                         <a href="files/pdf-sample.pdf" class="site-button secondry">Download CV</a>
                     </div>
                 </div>
@@ -261,8 +322,44 @@
             })
         }
 
+        function sendInviteInterview() {
+            let title = $("#title").val();
+            let content = $("#content-gmail").val();
+            let position = $("#position").val();
+            let time = $("#time").val();
+            let location = $("#location").val();
+            let email = $("#email").val();
+            let phone = $("#phone").val();
+            $.ajax({
+                type: "POST",
+                url: "{{route('company.send.invite.interview')}}",
+                data: {
+                    "_token": "{{csrf_token()}}",
+                    "candidate_id": "{{$candidate['id']}}",
+                    "title": title,
+                    position,
+                    time,
+                    content,location,email,phone
+                    // "content": content.text()
+                },
+                success: function (res) {
+                    toastr.success(res.msg, 'Notification !')
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1200)
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Error !')
+                }
+            })
+        }
+
         function showModalQuickChat() {
             $("#modal-quickchat-candidate").modal('toggle')
+        }
+
+        function showModalInviteInterview() {
+            $("#modal-invite-interview").modal('toggle')
         }
     </script>
 @endpush

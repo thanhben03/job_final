@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\CompanyAuthenticated;
 use App\Http\Middleware\UserAuthenticated;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -45,8 +46,6 @@ Route::middleware(UserAuthenticated::class)->group(function () {
     Route::post('/candidates/review-cv', [CandidateController::class, 'reviewCV'])->name('candidate.review-cv');
     Route::get('/candidates/appointment', [CandidateController::class, 'showAppointment'])->name('candidate.show.appointment');
     Route::get('/candidates/chat/{to_user?}', [CandidateController::class, 'showChat'])->name('candidate.show.chat');
-    Route::get('/candidates/list', [CandidateController::class, 'showListCandidate'])->name('candidate.list');
-    Route::get('/candidates/detail/{id}', [CandidateController::class, 'showDetailCandidate'])->name('candidate.detail');
 });
 
 
@@ -55,7 +54,7 @@ Route::post('/upload-cv', [CandidateController::class, 'uploadCv'])->name('api.f
 Route::post('/upload-avatar', [CandidateController::class, 'uploadAvatar'])->name('api.file.upload.avatar');
 Route::post('/upload-avatar-company', [CandidateController::class, 'uploadAvatarCompany'])->name('api.file.upload.avatar.company');
 
-Route::middleware('auth:company')->group(function () {
+Route::middleware(CompanyAuthenticated::class)->group(function () {
     Route::get('/companies/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
     Route::get('/companies/profile', [CompanyController::class, 'profile'])->name('company.profile');
     Route::get('/companies/post-job', [CompanyController::class, 'showPostJob'])->name('company.show.post-job');
@@ -64,14 +63,18 @@ Route::middleware('auth:company')->group(function () {
     Route::get('/companies/candidate-applied/{job_id}', [CompanyController::class, 'showCandidateAppliedJob'])->name('company.show.detail-job');
     Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
     Route::get('/companies/chat', [CompanyController::class, 'showChat'])->name('company.show.chat');
+    Route::get('/companies/list-invite', [CompanyController::class, 'showListInvite'])->name('company.show.invite');
     Route::get('/companies/candidate-list', [CompanyController::class, 'showCandidateList'])->name('company.show.candidate.list');
+    Route::post('/companies/send-invite-interview', [CompanyController::class, 'sendInviteInterview'])->name('company.send.invite.interview');
+
+    Route::get('/candidates/list', [CandidateController::class, 'showListCandidate'])->name('candidate.list');
+    Route::get('/candidates/detail/{id}', [CandidateController::class, 'showDetailCandidate'])->name('candidate.detail');
 
 });
+
 Route::get('/companies/detail/{companyId}', [CompanyController::class, 'companyDetail'])->name('company.detail');
 Route::get('/companies/list', [CompanyController::class, 'list'])->name('company.list');
 
-//Route::get('/company/login', [AuthenticatedCompanyController::class, 'create'])->name('company.showLogin');
-//Route::post('/company/login', [AuthenticatedCompanyController::class, 'store'])->name('company.login');
 
 
 Route::post('/appointments', [AppointmentController::class, 'store'])->name('store.appointment');
@@ -100,6 +103,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('pdf-to-img', [CandidateController::class, 'pdfToImg'])->name('pdf-to-img');
+
+Route::get('invite-interview', [CandidateController::class, 'acceptInterview']);
 
 require __DIR__.'/auth.php';
 require __DIR__.'/company-auth.php';
