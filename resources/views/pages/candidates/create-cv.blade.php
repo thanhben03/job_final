@@ -219,6 +219,24 @@
         <div class="loader"></div>
     </div>
 
+    <!-- Modal Load Data To Select -->
+    <div class="modal fade" id="modal-select-data" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body wrap-select-data">
+
+                </div>
+                <div class="modal-footer wrap-btn-select-data">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <x-modal.modal-manage-profile />
     <!-- OUR BLOG START -->
     <div class="section-full p-t120  p-b90 site-bg-white" id="prepend-content-profile">
@@ -233,10 +251,9 @@
                         <div class="col-md-4 text-center">
                             <div class="part-1">
                                 <div style="display: block; border: none" class="dashboard-profile-photo">
-                                    <img src="https://employer.jobsgo.vn/media/img/male.jpg" alt="">
+                                    <img id="avatar-current" src="https://employer.jobsgo.vn/media/img/male.jpg" alt="">
+                                    <input hidden id="avatar">
                                     <div class="upload-btn-wrapper">
-                                        <div id="upload-image-grid">
-                                        </div>
                                         <div id="upload-avatar">
                                             <button class="site-button button-sm hide-btn-upload">Upload Photo</button>
                                             <input onchange="uploadAvatar(this)" type="file" class="hide-btn-upload" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png">
@@ -244,7 +261,7 @@
                                     </div>
                                 </div>
                                 <p class="resume-name-style resume-name cv-editable-elem candidate-name active-color arial-text-font-weight mt-3 medium-editor-element" data-placeholder="Tên" info-group="candidate" info-name="name" contenteditable="true" spellcheck="true" data-medium-editor-element="true" role="textbox" aria-multiline="true" data-medium-editor-editor-index="1" >Bền Nguyễn</p>
-                                <p class="position-value resume-tagline-style resume-tagline cv-editable-elem candidate-name active-color arial-text-font-weight mt-3 medium-editor-element" data-placeholder="Tên" info-group="candidate" info-name="name" contenteditable="true" spellcheck="true" data-medium-editor-element="true" role="textbox" >Vị trí mong muốn</p>
+                                <p onclick="fetchData('position')" class="position-value resume-tagline-style resume-tagline cv-editable-elem candidate-position active-color arial-text-font-weight mt-3 medium-editor-element" data-placeholder="Tên" info-group="candidate" info-name="name" contenteditable="true" spellcheck="true" data-medium-editor-element="true" role="textbox" >Vị trí mong muốn</p>
 
                             </div>
                             <div class="info-profile">
@@ -254,7 +271,7 @@
                                 <div class="cv-block-content">
                                     <div class="row social-container align-items-center mb-2 flex-nowrap" >
                                         <i class="w-auto fas fa-map-marker-alt"></i>
-                                        <input id="province" class="input-info-basic cv-editable-elem active-color" placeholder="Tỉnh/thành phố" contenteditable="true" spellcheck="true" />
+                                        <input onclick="fetchData('province')" id="province" class="input-info-basic cv-editable-elem active-color" placeholder="Tỉnh/thành phố" contenteditable="true" spellcheck="true" />
                                     </div>
                                     <div class="row social-container align-items-center mb-2 flex-nowrap" >
                                         <i class="w-auto fas fa-phone"></i>
@@ -262,7 +279,7 @@
                                     </div>
                                     <div class="row social-container align-items-center mb-2 flex-nowrap" >
                                         <i class="w-auto fas fa-calendar"></i>
-                                        <input id="birthday" class="input-info-basic cv-editable-elem active-color" placeholder="Ngày sinh" contenteditable="true" spellcheck="true" />
+                                        <input type="date" id="birthday" class="input-info-basic cv-editable-elem active-color" placeholder="Ngày sinh" contenteditable="true" spellcheck="true" />
                                     </div>
                                     <div class="row social-container align-items-center mb-2 flex-nowrap" >
                                         <i class="w-auto fas fa-mail-bulk"></i>
@@ -279,7 +296,7 @@
                                 <div class="cv-block-content" id="skill-wrap">
                                     {{--                                    <span class="block-language-item position-relative">JavaScript <i class="icon-delete-item fas fa-minus"></i></span>--}}
                                 </div>
-                                <div id="activity-container" onclick="showModalAddSkill()" >
+                                <div id="activity-container" onclick="showModalAddSkill('soft-skill')" >
                                     <div class="add-new-btn text-center" id="add-activity-template" data-toggle="tooltip" data-placement="top" title="" data-original-title="Thêm biểu mẫu" aria-describedby="tooltip575513" bis_skin_checked="1">
                                         Thêm mới
                                     </div>
@@ -409,6 +426,37 @@
             @endif
     <script>
 
+
+        function uploadAvatar(input) {
+            // Kiểm tra nếu có file được chọn
+            if (input.files && input.files[0]) {
+                // Tạo đối tượng FormData
+                let formData = new FormData();
+                formData.append('avatar', input.files[0]); // Thêm file vào FormData
+                formData.append('type', 'create-cv'); // Thêm file vào FormData
+                formData.append('_token', '{{ csrf_token() }}');
+                console.log(input.files[0])
+                // Gửi yêu cầu AJAX
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'JSON',
+                    url: '{{ route("api.file.upload.avatar") }}', // Route Laravel xử lý upload
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        $("#avatar").val(response.image)
+                        $("#avatar-current").attr('src', '{{asset('/images/avatar/:name')}}'.replace(':name', response.image))
+                        toastr.success(response.msg, 'Notification !')
+                    },
+                    error: function(xhr) {
+                        console.log(xhr)
+                        toastr.error(xhr.responseJSON.msg, 'Notification !')
+                    }
+                });
+            }
+        }
+
         function exportToPdf (){
             let htmlUploadBtn = `
             <button class="site-button button-sm hide-btn-upload">Upload Photo</button>
@@ -451,6 +499,7 @@
                         formData.append('phone', $("#phone").val())
                         formData.append('birthday', $("#birthday").val())
                         formData.append('email', $("#email").val())
+                        formData.append('avatar', $("#avatar").val())
 
                         formData.append('profile_id', '{{!empty(request()->route('id')) ? request()->route('id') : ''}}')
                     } catch (e) {
@@ -551,6 +600,62 @@
             str = str.startsWith('|') ? str.slice(1) : str;
 
             return str;
+        }
+
+        function fetchData(typeData) {
+            $.ajax({
+                type: "GET",
+                url: "{{route('fetch.data.select', ':type')}}".replace(':type', typeData),
+                success: function (res) {
+                    let html = ''
+
+                    if (typeData == 'position') {
+                        html += '<select class="form-control" id="position">'
+                        res.forEach(ele => {
+                            html += `
+                                <option value="${ele}">${ele}</option>
+                        `
+                        })
+                        html += '</select>'
+                        $(".wrap-btn-select-data").html(`
+                            <button onclick="insertPosition()" type="button" class="btn btn-primary">Save changes</button>
+
+                        `)
+                        $(".wrap-select-data").html(html)
+                    } else if (typeData == 'province') {
+                        html += '<select class="form-control" id="province-select">'
+                        res.forEach(ele => {
+                            html += `
+                                <option value="${ele}">${ele}</option>
+                        `
+                        })
+                        html += '</select>'
+                        $(".wrap-btn-select-data").html(`
+                            <button onclick="insertProvince()" type="button" class="btn btn-primary">Save changes</button>
+
+                        `)
+                        $(".wrap-select-data").html(html)
+
+                    }
+
+                    $("#modal-select-data").modal('toggle')
+
+                }
+            })
+
+
+        }
+
+        function insertPosition() {
+            $(".candidate-position").text($("#position").val())
+            $("#modal-select-data").modal('toggle')
+
+        }
+
+        function insertProvince() {
+            $("#province").val($("#province-select").val())
+            $("#modal-select-data").modal('toggle')
+
         }
 
     </script>

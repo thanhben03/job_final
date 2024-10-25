@@ -137,6 +137,7 @@ class CandidateController extends Controller
             'phone' => 'nullable',
             'birthday' => 'nullable',
             'email' => 'nullable',
+            'avatar' => 'nullable',
         ]);
         $careerSuggest = [];
         $userProfile = '';
@@ -170,6 +171,7 @@ class CandidateController extends Controller
                             'phone' => $request->phone,
                             'birthday' => $request->birthday,
                             'email' => $request->email,
+                            'avatar' => $request->avatar,
                         ]);
                         $cv = CurriculumVitae::query()->where('id', $userProfile->cv_id)->first();
                         unlink(storage_path('app/public/uploads/' . $cv->path));
@@ -200,6 +202,7 @@ class CandidateController extends Controller
                             'phone' => $request->phone,
                             'birthday' => $request->birthday,
                             'email' => $request->email,
+                            'avatar' => $request->avatar,
                         ]);
 
 //                        $careerSuggest = $this->matchWithJob($cv->id);
@@ -273,6 +276,7 @@ class CandidateController extends Controller
         // Validate input
         $request->validate([
             'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:5000',
+            'type' => 'nullable',
         ]);
         // Lưu file vào thư mục 'public/images'
         try {
@@ -281,9 +285,11 @@ class CandidateController extends Controller
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images/avatar'), $imageName);
 
-                auth()->user()->update([
-                    'avatar' => $imageName
-                ]);
+                if (!$request->type) {
+                    auth()->user()->update([
+                        'avatar' => $imageName
+                    ]);
+                }
                 // Trả về phản hồi JSON
                 return response()->json(['msg' => 'Image uploaded successfully.', 'image' => $imageName]);
             }

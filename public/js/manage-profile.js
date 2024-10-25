@@ -94,13 +94,87 @@ function showModalAddCertificate() {
     $("#modal-add-certificate").modal('toggle');
 }
 
+let selectedSkills = [];
+let skills = [];
+
 function showModalAddSkill() {
+    if ($("#skill").length <= 0) {
+        $.ajax({
+            type: "GET",
+            url: "/fetch-data-select/skill",
+            success: function (res) {
+                skills = res;
+                renderSkillSelect(); // Gọi hàm để render select sau khi lấy dữ liệu
+            }
+        });
+    } else {
+        renderSkillSelect(); // Gọi hàm render nếu modal đã mở trước đó
+    }
+
     $("#modal-add-skill").modal('toggle');
 }
 
+
+let selectedSoftSkills = [];
+let softSkills = [];
+
 function showModalAddSoftSkilll() {
-    $("#modal-add-soft-skill").modal('toggle');
+    // Kiểm tra xem modal có được mở lần đầu không
+    if ($("#soft-skill").length <= 0) {
+        $.ajax({
+            type: "GET",
+            url: "/fetch-data-select/soft-skill",
+            success: function (res) {
+                softSkills = res;
+                renderSoftSkillSelect(); // Gọi hàm để render select sau khi lấy dữ liệu
+            }
+        });
+    } else {
+        renderSoftSkillSelect(); // Gọi hàm render nếu modal đã mở trước đó
+    }
+
+    $("#modal-add-soft-skill").modal('toggle'); // Mở modal
 }
+
+function renderSkillSelect() {
+
+    // Lọc ra các kỹ năng chưa được chọn
+    const availableSkills = skills.filter(skill => !selectedSkills.includes(skill));
+    let html = '<select class="form-control" id="skill">';
+
+    availableSkills.forEach((ele, index) => {
+        html += `
+            <option ${index === 0 ? 'selected' : ''} value="${ele}">${ele}</option>
+        `;
+    });
+
+    html += '</select>';
+
+    $(".wrap-btn-skill").html(`
+        <button onclick="addSkill()" type="button" data-bs-dismiss="modal" class="btn btn-primary">Save changes</button>
+    `);
+    $(".wrap-select-data-skill").html(html);
+}
+
+function renderSoftSkillSelect() {
+    // Lọc ra các kỹ năng chưa được chọn
+    const availableSkills = softSkills.filter(skill => !selectedSoftSkills.includes(skill));
+    let html = '<select class="form-control" id="soft-skill">';
+
+    availableSkills.forEach((ele, index) => {
+        html += `
+            <option ${index === 0 ? 'selected' : ''} value="${ele}">${ele}</option>
+        `;
+    });
+
+    html += '</select>';
+
+    $(".wrap-btn-select-data").html(`
+        <button onclick="addSoftSkill()" type="button" class="btn btn-primary">Save changes</button>
+    `);
+    $(".wrap-select-data-soft-skill").html(html);
+}
+
 
 let countLanguage = 0;
 function addLanguage() {
@@ -153,7 +227,9 @@ function addCertificate() {
 
 let countSkill = 0;
 function addSkill() {
-    let skillInput = document.querySelector('#skill-input')
+    let skillInput = document.querySelector('#skill')
+    selectedSkills.push(skillInput.value);
+
     document.querySelector('#skill-wrap').insertAdjacentHTML('beforeend', `
          <span class="hover-delete block-language-item position-relative skill-item-${countSkill}">
                 <p class="skill-value">${skillInput.value}</p>
@@ -161,29 +237,38 @@ function addSkill() {
          </span>
     `)
     countSkill++;
-    skillInput.value = ''
 }
 
 let countSoftSkill = 0;
 function addSoftSkill() {
-    let softSkillInput = document.querySelector('#soft-skill-input')
+    let softSkillInput = document.querySelector('#soft-skill');
+
+    // Thêm kỹ năng vào danh sách đã chọn
+    selectedSoftSkills.push(softSkillInput.value);
+
     document.querySelector('#soft-skill-wrap').insertAdjacentHTML('beforeend', `
-         <li class="hover-delete position-relative soft-skill-item-${countSoftSkill}" ">
+        <li class="hover-delete position-relative soft-skill-item-${countSoftSkill}">
             <p class="soft-skill-value">${softSkillInput.value}</p>
             <i onclick="deleteSoftSkill(${countSoftSkill})" class="icon-delete-item fas fa-minus"></i>
-         </li>
-    `)
+        </li>
+    `);
     countSoftSkill++;
-    softSkillInput.value = ''
 }
 
 
 function deleteSkill(elementId) {
-    $(".skill-item-"+elementId).remove();
+    let skillItem = $(".skill-item-"+elementId);
+    let value = skillItem.children().first().text()
+    selectedSkills = selectedSkills.filter(item => item !== value)
+    skillItem.remove();
 }
 
 function deleteSoftSkill(elementId) {
-    $(".soft-skill-item-" + elementId).remove()
+    let softSkill = $(".soft-skill-item-" + elementId);
+    let value = softSkill.children().first().text()
+    selectedSoftSkills = selectedSoftSkills.filter(item => item !== value)
+
+   softSkill.remove()
 }
 
 function deleteCertificate(elementId) {

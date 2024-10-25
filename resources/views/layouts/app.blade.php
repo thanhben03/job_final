@@ -78,8 +78,6 @@
     <div class="page-content">
 
         @yield('content')
-
-
     </div>
     <!-- CONTENT END -->
 
@@ -483,7 +481,7 @@
     <!--Model Popup Section End-->
 
     <audio id="notification-sound" src="{{asset('/sound/ding.mp3')}}"></audio>
-
+    <x-chat.popup-chat />
 </div>
 
 

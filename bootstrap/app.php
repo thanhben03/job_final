@@ -16,7 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'http://127.0.0.1:8001/candidates/review-cv', // <-- exclude this route,
             'http://127.0.0.1:8001/chat/send-to-user', // <-- exclude this route,
             'http://127.0.0.1:8001/chat/send-to-company', // <-- exclude this route,
-            'http://127.0.0.1:8000/api/v1/auth/login'
+            'http://127.0.0.1:8000/api/v1/auth/login',
+            'http://127.0.0.1:8000/chatbot',
+            'http://127.0.0.1:8000/chatbot/search-job',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -9,6 +9,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CompanyAuthenticated;
 use App\Http\Middleware\UserAuthenticated;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/fetch-data-select/{type}', [HomeController::class, 'fetchDataSelect'])->name('fetch.data.select');
 
 Route::resource('/jobs', JobController::class);
 
@@ -105,6 +107,8 @@ Route::middleware('auth')->group(function () {
 Route::get('pdf-to-img', [CandidateController::class, 'pdfToImg'])->name('pdf-to-img');
 
 Route::get('invite-interview', [CandidateController::class, 'acceptInterview']);
+Route::post('/chatbot', [OpenAIController::class, 'getResponse'])->name('chat.bot');
+Route::post('/chatbot/search-job', [OpenAIController::class, 'searchJobs']);
 
 require __DIR__.'/auth.php';
 require __DIR__.'/company-auth.php';

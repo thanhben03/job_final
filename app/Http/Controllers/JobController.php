@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Enums\WorkTypeEnum;
+use App\Http\Middleware\UserAuthenticated;
 use App\Http\Requests\ApplyJobRequest;
 use App\Http\Requests\PostJobRequest;
 use App\Http\Requests\UpdateJobRequest;
@@ -37,6 +38,9 @@ class JobController extends Controller
     {
         $this->service = $careerService;
         $this->skillService = $skillService;
+
+        $this->middleware(UserAuthenticated::class)->except(['index']);
+
     }
 
     public function index(Request $request)

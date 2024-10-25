@@ -114,18 +114,6 @@
                             <div class="product-filter-wrap d-flex justify-content-between align-items-center">
                                 <span class="woocommerce-result-count-left">CV Manager</span>
 
-                                <form class="woocommerce-ordering twm-filter-select" method="get">
-                                    <span class="woocommerce-result-count">Short By</span>
-                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
-                                        <option>Last 2 Months</option>
-                                        <option>Last 1 Months</option>
-                                        <option>15 days ago</option>
-                                        <option>Weekly</option>
-                                        <option>Yesterday</option>
-                                        <option>Today</option>
-                                    </select>
-                                </form>
-
                             </div>
 
                             <div class="twm-cv-manager-list-wrap">
@@ -154,7 +142,7 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title">{{$resume->path}}</h5>
                                                     <p class="card-text">Cập nhật lần cuối {{$resume->updated_at}}</p>
-                                                    <div class="d-flex justify-content-around">
+                                                    <div class="d-flex justify-content-between">
                                                         <button class="btn btn-outline-secondary">
                                                             <a
                                                                 download
@@ -213,19 +201,7 @@
                                 </div>
                             </div>
 
-                            <div class="pagination-outer">
-                                <div class="pagination-style1">
-                                    <ul class="clearfix">
-                                        <li class="prev"><a href="javascript:;"><span> <i class="fa fa-angle-left"></i> </span></a></li>
-                                        <li><a href="javascript:;">1</a></li>
-                                        <li class="active"><a href="javascript:;">2</a></li>
-                                        <li><a href="javascript:;">3</a></li>
-                                        <li><a class="javascript:;" href="javascript:;"><i class="fa fa-ellipsis-h"></i></a></li>
-                                        <li><a href="javascript:;">5</a></li>
-                                        <li class="next"><a href="javascript:;"><span> <i class="fa fa-angle-right"></i> </span></a></li>
-                                    </ul>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -273,7 +249,7 @@
                         }, 1500)
                     },
                     error: function (response) {
-                        $('#uploadResult').html('<div class="alert alert-danger">Upload failed. Please try again.</div>');
+                        $('#uploadResult').html(`<div class="alert alert-danger">${response.responseJSON.message}</div>`);
                     },
                     complete: function () {
                         btnUpload.text('Upload')
@@ -367,6 +343,8 @@
 {{--                            <p class="mb-1 mt-2"><strong>Description:</strong> {{ Str::limit(${ele.detail.desc}, 100) }}</p>--}}
                             <div>
                                 <small class="text-muted">Posted on: ${ele.created_at}</small>
+                                <br>
+                                <small class="text-muted">Expiration: ${ele.expiration_day}</small>
                                 <div class="d-flex justify-content-between">
                                     <small class="">Max salary: <strong style="color: green">${ele.max_salary.convert}</strong></small>
                                     <small ${ele.cv_applied.length > 0 ? '' : `onclick="applyNow(${ele.id}, ${cvID})"`} class="apply-now-text">${ele.cv_applied.length > 0 ? 'Applied' : 'Apply now'}</small>

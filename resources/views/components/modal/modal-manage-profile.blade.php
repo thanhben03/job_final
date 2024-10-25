@@ -51,7 +51,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Add Skill</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body wrap-select-data-skill">
                 <div class="row">
                     <div class="col-6">
                         <input type="text" id="skill-input" placeholder="NodeJS, PHP... v.v" class="form-control">
@@ -59,7 +59,7 @@
 
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer wrap-btn-skill">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="addSkill()">Save changes</button>
             </div>
         </div>
@@ -74,7 +74,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Add Soft Skill</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body wrap-select-data-soft-skill">
                 <div class="row">
                     <div class="col-6">
                         <input type="text" id="soft-skill-input" placeholder="Kỹ năng abc ...." class="form-control">
