@@ -32,7 +32,7 @@ class ProfileController extends Controller
     {
         $data = $request->validated();
         $dataUser = Arr::except($data, ['from_date', 'to_date', 'title', 'position', 'description', 'skill_ids']);
-        $skill_ids = $data['skill_ids'];
+        $skill_ids = $data['skill_ids'] ?? [];
         $data_experience = Arr::only($data, ['from_date', 'to_date', 'title', 'position', 'description']);
 
         if ($request->user()->isDirty('email')) {
@@ -60,7 +60,7 @@ class ProfileController extends Controller
 
 
             $skill_ids = Skill::query()->whereIn('name', $skill_ids)->get()->pluck('id')->toArray();
-            $request->user()->skills()->attach($skill_ids);
+            $request->user()->skills()->sync($skill_ids);
             UserExperience::query()->insert($insertDataExperience);
 
             $request->user()->fill($dataUser);

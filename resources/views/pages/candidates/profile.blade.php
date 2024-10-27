@@ -117,6 +117,15 @@
 
                                 <!--Basic Information-->
                                 <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <div class="panel-heading wt-panel-heading p-a20">
+                                        {{--                                                        <h4 class="panel-tittle m-a0">Basic Informations</h4>--}}
+                                        @foreach ($errors->all() as $error)
+                                            <p>{{ $error }}</p>
+                                        @endforeach
+                                        @if(Session::has('msg'))
+                                            <p class="alert alert-success">{{ Session::get('msg') }}</p>
+                                        @endif
+                                    </div>
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-headingOne">
                                             <button class="accordion-button collapsed" type="button"
@@ -130,15 +139,7 @@
                                             <div class="accordion-body">
 
                                                 <div class="panel panel-default">
-                                                    <div class="panel-heading wt-panel-heading p-a20">
-                                                        {{--                                                        <h4 class="panel-tittle m-a0">Basic Informations</h4>--}}
-                                                        @foreach ($errors->all() as $error)
-                                                            <p>{{ $error }}</p>
-                                                        @endforeach
-                                                        @if(Session::has('msg'))
-                                                            <p class="alert alert-success">{{ Session::get('msg') }}</p>
-                                                        @endif
-                                                    </div>
+
                                                     <div class="panel-body wt-panel-body p-a20 m-b30 ">
 
                                                         <div class="row">
@@ -300,7 +301,9 @@
                                                 <div class="tw-sidebar-tags-wrap">
                                                     <div class="tagcloud">
                                                         @foreach(auth()->user()?->skills as $skill)
-                                                            <input name="skill_ids[]" value="{{$skill->name}}" />
+                                                            <div class="removable-element">
+                                                                <input name="skill_ids[]" value="{{$skill->name}}" />
+                                                            </div>
                                                         @endforeach
                                                     </div>
 
@@ -332,7 +335,9 @@
                                                 <div class="twm-timing-list-wrap wrap-experience">
 
                                                     @foreach(auth()->user()->experiences as $exp)
-                                                        <div class="twm-timing-list">
+                                                        <div class="twm-timing-list removable-element ">
+                                                            <button onclick="$(this).closest('.removable-element').remove();" class="remove-btn">X</button>
+
                                                             <div class="twm-time-list-date">{{$exp->from_date}} to {{$exp->to_date}}</div>
                                                             <input value="{{$exp->from_date}}" name="from_date[]" hidden />
                                                             <input value="{{$exp->to_date}}" name="to_date[]" hidden />
@@ -382,6 +387,24 @@
 @endsection
 @push('js')
     <script>
+
+        // Duyệt qua tất cả các phần tử có thể xóa được
+        document.querySelectorAll('.removable-element').forEach(function(element) {
+            // Tạo nút xóa
+            var removeBtn = document.createElement('button');
+            removeBtn.innerText = 'X';
+            removeBtn.classList.add('remove-btn');
+
+            // Gắn sự kiện click để xóa phần tử khi nhấn vào nút X
+            removeBtn.addEventListener('click', function() {
+                element.remove(); // Xóa phần tử khỏi DOM
+            });
+
+            // Thêm nút vào trong phần tử
+            element.appendChild(removeBtn);
+        });
+
+
         function showModalAddSkillProfile() {
             $("#modal-add-skill").modal('toggle')
         }
@@ -389,7 +412,12 @@
         function addSkill() {
             let selectedSkill = $("#select-skill").val()
 
-            $(".tagcloud").append(`<input name="skill_ids[]" value="${selectedSkill}" />`)
+            $(".tagcloud").append(`
+                <div class="removable-element">
+                    <input name="skill_ids[]" value="${selectedSkill}" />
+                    <button onclick="$(this).closest('.removable-element').remove();" class="remove-btn">X</button>
+                </div>
+            `)
             $("#modal-add-skill").modal('toggle')
         }
 
@@ -401,7 +429,9 @@
             let description = $("#description");
 
             $(".wrap-experience").append(`
-                <div class="twm-timing-list">
+                <div class="twm-timing-list removable-element ">
+                     <button onclick="$(this).closest('.removable-element').remove();" class="remove-btn">X</button>
+
                     <div class="twm-time-list-date">${fromDate.val()} to ${toDate.val()}</div>
                     <input value="${fromDate.val()}" name="from_date[]" hidden />
                     <input value="${toDate.val()}" name="to_date[]" hidden />

@@ -44,7 +44,7 @@ class OpenAIService
 
 
         $content = $this->client->chat()->create([
-            'model' => 'gpt-4o-all', // Sử dụng GPT-4 hoặc mô hình khác
+            'model' => 'gpt-4o', // Sử dụng GPT-4 hoặc mô hình khác
             'messages' => [
                 ['role' => 'assistant', 'content' => 'You are a virtual assistant for a job search system called Job Board'],
                 ['role' => 'user', 'content' => $prompt],

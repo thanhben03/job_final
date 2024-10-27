@@ -368,18 +368,31 @@ class CandidateController extends Controller
         try {
             $cv = UserProfile::query()->where('cv_id', $cvId)->first();
             $skillOfCv = $cv->skill; // NodeJS,PHP
+            $location = $cv->province;
             $certificate = $cv->certificate;
-            $careers = Career::query('careers')
+            $bestCareers = Career::query()
                 ->join('career_details', 'careers.id', '=', 'career_details.career_id')
                 ->whereRaw("
-            MATCH(careers.title) AGAINST(? IN NATURAL LANGUAGE MODE)
-            OR MATCH(career_details.description, career_details.requirement) AGAINST(? IN NATURAL LANGUAGE MODE)
-        ", [$skillOfCv, $certificate])
+                MATCH(careers.title) AGAINST(? IN NATURAL LANGUAGE MODE)
+                AND MATCH(careers.address) AGAINST(? IN NATURAL LANGUAGE MODE)
+                AND MATCH(career_details.description, career_details.requirement) AGAINST(? IN NATURAL LANGUAGE MODE)
+                ", [$skillOfCv,$location, $certificate. ' '. $skillOfCv. ' '. $location])
                 ->get();
+            $careers = Career::query()
+                ->join('career_details', 'careers.id', '=', 'career_details.career_id')
+                ->whereRaw("
+                    MATCH(careers.title) AGAINST(? IN NATURAL LANGUAGE MODE)
+                    OR MATCH(careers.address) AGAINST(? IN NATURAL LANGUAGE MODE)
+                    OR MATCH(career_details.description, career_details.requirement) AGAINST(? IN NATURAL LANGUAGE MODE)
+                    ", [$skillOfCv,$location, $certificate])
+                ->get();
+            $careers = $careers->whereNotIn('id', $bestCareers->pluck('id')->toArray());
             $careers = CareerResource::make($careers);
+            $bestCareers = CareerResource::make($bestCareers);
             return response()->json([
                 'success' => true,
-                'careers' => $careers
+                'careers' => $careers,
+                'bestCareers' => $bestCareers,
             ]);
         } catch (\Throwable $th) {
             dd($th->getMessage());

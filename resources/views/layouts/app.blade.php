@@ -378,7 +378,7 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="email" id="email" type="text" required="" class="form-control" placeholder="Email">
+                                                <input name="email" id="email-login" type="text" required="" class="form-control" placeholder="Email">
                                             </div>
                                         </div>
 
@@ -599,7 +599,7 @@
             type: 'POST',
             url: '/login',
             data: {
-                'email': $("#email").val(),
+                'email': $("#email-login").val(),
                 'password': $("#password").val(),
                 '_token': '{{csrf_token()}}'
             },

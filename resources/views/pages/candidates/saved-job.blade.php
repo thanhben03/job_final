@@ -59,7 +59,14 @@
                                                 <div class="twm-candidate-save-job-list">
                                                     <div class="twm-media">
                                                         <div class="twm-media-pic">
-                                                            <img src="{{$career['company']->company_avatar}}" alt="#">
+                                                            <img
+                                                                src="
+                                                        {{
+                                                        str_contains($career['company']->company_avatar, 'http')
+                                                        ? $career['company']->company_avatar
+                                                        : asset('/images/avatar/'.$career['company']->company_avatar)
+                                                        }}"
+                                                                alt="#">
                                                         </div>
                                                     </div>
                                                     <div class="twm-mid-content">

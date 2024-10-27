@@ -364,3 +364,29 @@
 .chat-start {
     font-size: 13px;
 }
+.removable-element {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+}
+
+.removable-element input {
+    padding-right: 20px; /* Để chừa chỗ cho nút X */
+}
+
+.remove-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 2px 5px;
+    font-size: 14px;
+    display: none; /* Ẩn nút X ban đầu */
+}
+
+.removable-element:hover .remove-btn {
+    display: inline; /* Hiển thị nút X khi rê chuột vào */
+}

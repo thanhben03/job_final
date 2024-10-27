@@ -34,10 +34,19 @@
                     <h5 class="modal-title" id="exampleModalLabel">Công việc phù hợp</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div
+                    class="modal-body"
+                    style="
+                        height: 465px;
+                        overflow: auto;"
+                >
                     <p>Chúng tôi gợi ý cho bạn một số công việc phù hợp với hồ sơ của bạn</p>
+                    <div class="alert alert-primary">The Best For You !</div>
                     <ul class="list-group" id="suggest-job">
 
+                    </ul>
+                    <div class="alert alert-success mt-3">There are similarities</div>
+                    <ul class="list-group see-more-match-job" id="suggest-job">
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -353,6 +362,42 @@
                         </li>
                         `
                     })
+
+                    let html2 = '';
+
+                    res.bestCareers.forEach(ele => {
+                        html2 += `
+                        <li class="list-group-item item-quickview-company">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-1">${ele.title}</h5>
+                                    <p class="mb-0 d-flex">
+                                        <strong>Company:</strong>
+                                        <span style="color: blue" onclick="viewCompany(${ele.company.id})" class="link-quickview-company">
+                                            ${ele.company.company_name}
+                                        </span>
+                                    </p>
+                                    <p class="mb-0"><strong>Location:</strong> ${ele.address}</p>
+                                </div>
+                                <div>
+                                    <a href="/jobs/${ele.slug}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                </div>
+                            </div>
+{{--                            <p class="mb-1 mt-2"><strong>Description:</strong> {{ Str::limit(${ele.detail.desc}, 100) }}</p>--}}
+                        <div>
+                            <small class="text-muted">Posted on: ${ele.created_at}</small>
+                                <br>
+                                <small class="text-muted">Expiration: ${ele.expiration_day}</small>
+                                <div class="d-flex justify-content-between">
+                                    <small class="">Max salary: <strong style="color: green">${ele.max_salary.convert}</strong></small>
+                                    <small ${ele.cv_applied.length > 0 ? '' : `onclick="applyNow(${ele.id}, ${cvID})"`} class="apply-now-text">${ele.cv_applied.length > 0 ? 'Applied' : 'Apply now'}</small>
+                                </div>
+                            </div>
+                        </li>
+                        `
+                    })
+
+
                     clearInterval(progress);
                     $('.progress').removeClass('active');
                     $bar.width(500);
@@ -361,7 +406,8 @@
 
                     setTimeout(function () {
                         $("#modal-progress").modal('toggle')
-                        $("#suggest-job").html(html)
+                        $("#suggest-job").html(html2)
+                        $(".see-more-match-job").html(html)
                         $("#modal-math-job").modal('toggle')
                     }, 1000)
 
