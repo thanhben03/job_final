@@ -213,6 +213,47 @@
     <!-- BUTTON TOP START -->
     <button class="scroltop"><span class="fa fa-angle-up  relative" id="btn-vibrate"></span></button>
 
+    <!-- Modal Reset Password-->
+    <div class="modal fade" style="z-index: " id="modal-reset-password" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4 text-sm text-gray-600">
+                        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+                    </div>
+
+                    <!-- Session Status -->
+                    <x-auth-session-status class="mb-4" :status="session('status')" />
+
+                    <form method="POST" action="{{ route('password.email') }}">
+                        @csrf
+
+                        <!-- Email Address -->
+                        <div>
+                            <x-input-label for="email" :value="__('Email')" />
+                            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        </div>
+
+                        <div class="flex items-center justify-end mt-4">
+                            <x-primary-button>
+                                {{ __('Email Password Reset Link') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--Model Popup Section Start-->
     <!--Signup popup -->
     <div class="modal fade twm-sign-up" id="sign_up_popup" aria-hidden="true" aria-labelledby="sign_up_popupLabel" tabindex="-1">
@@ -246,73 +287,6 @@
 
                             </ul>
                             <div class="tab-content" id="myTabContent">
-                                <!--Signup Company Content-->
-{{--                                <div class="tab-pane fade show active" id="sign-candidate">--}}
-{{--                                    <div class="row">--}}
-
-{{--                                        <div class="col-lg-12">--}}
-{{--                                            <div class="form-group mb-3">--}}
-{{--                                                <input id="fullname"--}}
-{{--                                                       name="company_name"--}}
-{{--                                                       type="text"--}}
-{{--                                                       required=""--}}
-{{--                                                       class="form-control"--}}
-{{--                                                       placeholder="Company Name">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-lg-12">--}}
-{{--                                            <div class="form-group mb-3">--}}
-{{--                                                <input--}}
-{{--                                                    id="email"--}}
-{{--                                                    name="company_email"--}}
-{{--                                                    type="text"--}}
-{{--                                                    class="form-control"--}}
-{{--                                                    required=""--}}
-{{--                                                    placeholder="Company Email">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-lg-12">--}}
-{{--                                            <div class="form-group mb-3">--}}
-{{--                                                <input id="password" name="company_password" type="text" class="form-control" required="" placeholder="Password">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-lg-12">--}}
-{{--                                            <div class="form-group mb-3">--}}
-{{--                                                <input id="phone" name="company_phone" type="text" class="form-control" required="" placeholder="Phone">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="col-lg-12">--}}
-{{--                                            <div class="form-group mb-3">--}}
-{{--                                                <input id="website" name="website" type="text" class="form-control" required="" placeholder="Website">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="col-lg-12">--}}
-{{--                                            <div class="form-group mb-3">--}}
-{{--                                                <input id="company_address" name="company_address" type="text" class="form-control" required="" placeholder="Address">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-lg-12">--}}
-{{--                                            <div class="form-group mb-3">--}}
-{{--                                                <div class=" form-check">--}}
-{{--                                                    <input type="checkbox" class="form-check-input" id="agree1">--}}
-{{--                                                    <label class="form-check-label" for="agree1">I agree to the <a href="javascript:;">Terms and conditions</a></label>--}}
-{{--                                                    <p>Already registered?--}}
-{{--                                                        <button class="twm-backto-login" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</button>--}}
-{{--                                                    </p>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="col-md-12">--}}
-{{--                                            <button type="submit" class="site-button">Sign Up</button>--}}
-{{--                                        </div>--}}
-
-{{--                                    </div>--}}
-{{--                                </div>--}}
-                                <!--Signup Employer Content-->
                                 <div class="tab-pane fade show active" id="sign-Employer">
                                     <div class="row">
 
@@ -324,7 +298,13 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="password" type="text" class="form-control" required="" placeholder="Password*">
+                                                <input name="password" type="password" class="form-control" required="" placeholder="Password*">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="form-group mb-3">
+                                                <input name="confirm_password" type="password" class="form-control" required="" placeholder="Confirm Password*">
                                             </div>
                                         </div>
 
@@ -344,7 +324,6 @@
                                             <div class="form-group mb-3">
                                                 <div class=" form-check">
                                                     <input type="checkbox" class="form-check-input" id="agree2">
-                                                    <label class="form-check-label" for="agree2">I agree to the <a href="javascript:;">Terms and conditions</a></label>
                                                     <p>Already registered?
                                                         <button class="twm-backto-login" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</button>
                                                     </p>
@@ -414,7 +393,10 @@
                                             <div class="form-group mb-3">
                                                 <div class=" form-check">
                                                     <input type="checkbox" class="form-check-input" id="Password3">
-                                                    <label class="form-check-label rem-forgot" for="Password3">Remember me <a href="javascript:;">Forgot Password</a></label>
+                                                    <label class="form-check-label rem-forgot" for="Password3">
+                                                        Remember me
+                                                        <a href="/forgot-password">Forgot Password</a>
+                                                    </label>
 
                                                 </div>
                                             </div>
@@ -597,7 +579,7 @@
                         errorMessages.forEach((message) => {
                             console.log(message)
                             html += `
-                                <div class="alert alert-danger text-left mt-2">${field}: ${message}</div>
+                                <div class="alert alert-danger text-left mt-2">${message}</div>
 
                             `
                         });
@@ -639,6 +621,10 @@
                 )
             }
         })
+    }
+
+    function showModalForgotPassword() {
+        $("#modal-reset-password").modal('toggle')
     }
 
 </script>

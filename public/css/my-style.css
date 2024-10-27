@@ -126,10 +126,10 @@
     transition: background 0.2s ease;
 }
 
-.chat-pop-up a:hover,
-a:active {
-    background: #FF8D4E;
-}
+/*.chat-pop-up a:hover,*/
+/*a:active {*/
+/*    background: #FF8D4E;*/
+/*}*/
 
 .chat-pop-up a span {
     margin-right: 8px;
