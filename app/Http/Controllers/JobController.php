@@ -12,6 +12,7 @@ use App\Http\Resources\CandidateResource;
 use App\Http\Resources\CareerDetailResource;
 use App\Http\Resources\CareerResource;
 use App\Models\Career;
+use App\Models\Category;
 use App\Models\CurriculumVitae;
 use App\Models\Province;
 use App\Models\ReportedCareer;
@@ -43,13 +44,16 @@ class JobController extends Controller
 
     }
 
-    public function index(Request $request)
+    public function index($category, Request $request)
     {
         Session::flash('job-type');
         Session::flash('skills');
         Session::flash('locations');
         Session::flash('sort');
         Session::forget('keyword');
+
+        $category = Category::query()->where('slug', $category)->firstOrFail();
+
         if ($request->has('sort')) {
             $sort = $request['sort'] == 'latest' ? 'desc' : 'asc';
             Session::flash('sort', $request['sort']);
@@ -91,7 +95,7 @@ class JobController extends Controller
         }
 
 
-
+        $careers->where('category_id', $category->id);
         $careers = $careers->paginate(10);
         $data = CareerResource::make($careers);
         $skills = $this->skillService->getAll();
@@ -105,12 +109,14 @@ class JobController extends Controller
             'skills' => $skills,
             'provinces' => $provinces,
             'data' => $data->resolve(),
+            'category' => $category,
             'careerIdSaved' => $careerIdSaved,
         ]);
     }
 
-    public function show($slug)
+    public function show($category, $slug)
     {
+
         $career = $this->service->getQueryBuilderWithRelations(['company', 'skills']);
         $career = $career->where('slug', $slug)->get();
         $career = CareerResource::make($career)->resolve();

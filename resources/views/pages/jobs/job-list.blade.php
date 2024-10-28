@@ -22,7 +22,7 @@
     </div>
 
     <!-- INNER PAGE BANNER -->
-    <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url(images/banner/1.jpg);">
+    <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image:url(/images/banner/1.jpg);">
         <div class="overlay-main site-bg-white opacity-01"></div>
         <div class="container">
             <div class="wt-bnr-inr-entry">
@@ -36,6 +36,7 @@
                 <div>
                     <ul class="wt-breadcrumb breadcrumb-style-2">
                         <li><a href="index.html">Home</a></li>
+                        <li>{{__('category.name.'.$category->trans_key)}}</li>
                         <li>Jobs List</li>
                     </ul>
                 </div>
@@ -199,7 +200,7 @@
                                             : $career['company']->company_avatar}}" alt="#">
                                         </div>
                                         <div class="twm-mid-content">
-                                            <a href="{{route('jobs.show', $career['slug'])}}" class="twm-job-title">
+                                            <a href="{{route('jobs.show', ['category' => $category->slug, 'job' => $career['slug']])}}" class="twm-job-title">
                                                 <h4>{{$career['title']}}<span class="twm-job-post-duration">/ {{$career['updated_at']}}</span></h4>
                                             </a>
                                             <p class="twm-job-address">{{$career['address']}}</p>

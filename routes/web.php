@@ -20,7 +20,12 @@ use Laravel\Socialite\Facades\Socialite;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/fetch-data-select/{type}', [HomeController::class, 'fetchDataSelect'])->name('fetch.data.select');
 
-Route::resource('/jobs', JobController::class);
+//Route::resource('/jobs', JobController::class);
+
+Route::get('/jobs/{category}', [JobController::class, 'index'])->name('jobs.index');
+Route::get('/jobs/{category}/{job}', [JobController::class, 'show'])->name('jobs.show');
+Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
+Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
 
 Route::post('/api/v1/applyJob', [JobController::class, 'applyJob'])->name('api.v1.applyJob');
 Route::get('/api/v1/get-district/{province_id}', [LocationController::class, 'getDistrict'])->name('api.v1.get-district');

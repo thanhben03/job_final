@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CareerResource;
+use App\Models\Category;
 use App\Models\Province;
 use App\Models\Skill;
 use App\Services\Career\CareerService;
@@ -29,11 +30,13 @@ class HomeController extends Controller
             ->getQueryBuilderWithRelations(['company', 'skills']);
         $careers = $careers->paginate(10);
         $data = CareerResource::make($careers)->resolve();
+        $categories = Category::all();
         return view('pages.home', [
             'skills' => $skills,
             'provinces' => $provinces,
             'data' => $data,
             'careers' => $careers,
+            'categories' => $categories,
         ]);
     }
 

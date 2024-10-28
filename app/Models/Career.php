@@ -69,4 +69,9 @@ class Career extends Model
         return $this->hasMany(ReportedCareer::class, 'career_id', 'id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
 }

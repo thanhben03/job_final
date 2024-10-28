@@ -38,8 +38,9 @@
 
                     <div>
                         <ul class="wt-breadcrumb breadcrumb-style-2">
-                            <li><a href="index.html">Home</a></li>
-                            <li>Job Detail</li>
+                            <li><a href="index.html">{{__('messages.home')}}</a></li>
+                            <li>{{$career['category']->name}}</li>
+                            <li>{{$career['title']}}</li>
                         </ul>
                     </div>
 

@@ -70,7 +70,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="twm-mid-content">
-                                                        <a href="{{route('jobs.show', $career['slug'])}}" class="twm-job-title">
+                                                        <a href="{{route('jobs.show', [$career['category']->slug, $career['slug']])}}" class="twm-job-title">
                                                             <h4>{{$career['title']}}</h4>
                                                         </a>
 
@@ -87,7 +87,7 @@
                                                 <div class="twm-table-controls">
                                                     <ul class="twm-DT-controls-icon list-unstyled">
                                                         <li>
-                                                            <a data-bs-toggle="modal" href="{{route('jobs.show', $career['slug'])}}" role="button" class="custom-toltip">
+                                                            <a data-bs-toggle="modal" href="{{route('jobs.show', [$career['category']->slug, $career['slug']])}}" role="button" class="custom-toltip">
                                                                 <span class="fa fa-eye"></span>
                                                                 <span class="custom-toltip-block">Veiw</span>
                                                             </a>

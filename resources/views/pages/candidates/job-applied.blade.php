@@ -75,7 +75,7 @@
                                                         alt="#">
                                                 </div>
                                                 <div class="twm-mid-content">
-                                                    <a href="{{route('jobs.show', $career['slug'])}}" class="twm-job-title">
+                                                    <a href="{{route('jobs.show', [$career['category']->slug, $career['slug']])}}" class="twm-job-title">
                                                         <h4>{{$career['title']}}<span class="twm-job-post-duration">/ {{$career['updated_at']}}</span></h4>
                                                     </a>
                                                     <p class="twm-job-address">{{$career['address']}}</p>

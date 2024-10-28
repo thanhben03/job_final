@@ -39,7 +39,15 @@
                     <ul class=" nav navbar-nav">
                         <li class="has-mega-menu"><a href="{{route('home')}}">Home</a>
                         </li>
-                        <li class="has-child"><a href="{{route('jobs.index')}}">Jobs</a>
+                        <li class="has-child">
+                            <a href="#">Jobs</a>
+                            <ul class="sub-menu">
+                                @foreach(\App\Models\Category::query()->get() as $category)
+                                    <li><a href="{{route('jobs.index', $category->slug)}}">
+                                            {{__('category.'.$category->trans_key)}}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </li>
                         <li class=""><a href="{{route('company.list')}}">Employers</a>
                         </li>

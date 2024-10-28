@@ -66,9 +66,8 @@ class CareerResource extends ResourceCollection
                     ? ($careerCV = $career->user_careers->whereIn('cv_id', auth()->user()->cv()->pluck('id')->toArray())->first())
                         ? StatusCV::getDescription($careerCV->status)
                         : ''
-                    : ''
-
-//                'status' =>  !empty($career->user_career->status) ? StatusCV::getDescription($career->user_career->status) : "" ,
+                    : '',
+                'category' => $career->category
             ];
         });
 
