@@ -177,10 +177,11 @@
 
                                                         </ul>
 
-                                                        <div class="noti-view-all">
-                                                            <a href="javascript:;">View All</a>
-                                                        </div>
 
+
+                                                    </div>
+                                                    <div class="noti-view-all">
+                                                        <a onclick="deleteAllMessage()" href="javascript:;">Delete All</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -292,6 +293,20 @@
 
         function logout() {
             $("#formLogout").submit();
+        }
+
+        function deleteAllMessage() {
+            if (confirm('Are you sure ?')) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{route('delete.all')}}",
+                    success: function (res) {
+                        console.log(res)
+
+                        window.location.reload();
+                    }
+                })
+            }
         }
 
     </script>

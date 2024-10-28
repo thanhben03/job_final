@@ -2,6 +2,7 @@
 @props(['receiver_id', 'message', 'created_at', 'receiver_avatar', 'receiver_name','isRead', 'sender'])
 
 
+
 <div id="position-chat-{{$receiver_id}}" onclick="viewChat({{$receiver_id}}, '{{$receiver_name}}')" class="wt-dashboard-msg-search-list-wrap mb-1">
     <a href="javascript:;" id="wrap-item-list-{{$receiver_id}}" class="msg-user-info clearfix">
         <div class="msg-user-timing">{{$created_at}}</div>
@@ -14,3 +15,4 @@
         </div>
     </a>
 </div>
+

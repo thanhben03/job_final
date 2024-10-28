@@ -23,14 +23,14 @@
                                 <!-- Search Section Start-->
                                 <div class="wt-dashboard-msg-search">
                                     <div class="input-group">
-                                        <input onchange="searchMessage()" class="form-control" placeholder="Search Messages" type="text">
-                                        <button class="btn" type="button"><i class="fa fa-search"></i></button>
+                                        <input id="search-message" class="form-control" placeholder="Search Messages" type="text">
+                                        <button onclick="searchMessage()" class="btn" type="button"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                                 <!-- Search Section End-->
 
                                 <!-- Search Section End-->
-                                <div class="msg-find-list">
+                                <div class="msg-find-list d-none">
                                     <select class="wt-select-box bs-select-hidden">
                                         <option>Recent Chats</option>
                                         <option>Short by Time</option>
@@ -40,18 +40,20 @@
                                 <!-- Search Section End-->
 
                                 <!-- user msg list start-->
-                                @foreach($latestMessages as $message)
-                                    <x-chat.message-item
-                                        :receiver_id="$message['company']['id']"
-                                        :message="$message['message']"
-                                        :created_at="$message['created_at']"
-                                        :receiver_avatar="$message['company']['company_avatar']"
-                                        :receiver_name="$message['company']['company_name']"
-                                        :isRead="$message['read']"
-                                        :sender="$message['sender']"
+                                <div class="msg-current-list">
+                                    @foreach($latestMessages as $message)
+                                        <x-chat.message-item
+                                            :receiver_id="$message['company']['id']"
+                                            :message="$message['message']"
+                                            :created_at="$message['created_at']"
+                                            :receiver_avatar="$message['company']['company_avatar']"
+                                            :receiver_name="$message['company']['company_name']"
+                                            :isRead="$message['read']"
+                                            :sender="$message['sender']"
 
-                                    />
-                                @endforeach
+                                        />
+                                    @endforeach
+                                </div>
                                 <!-- user msg list End-->
 
                             </div>
@@ -72,6 +74,7 @@
 @push('js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
             window.Echo.private('message.' + '{{auth()->user()->id}}')
                 .listen('MessageSentEvent', (e) => {
                     let positionChat = $("#position-chat-" + e.message.company.id)
@@ -111,6 +114,11 @@
             document.getElementById('btn-send-message').addEventListener('click',function sendMessage() {
                 let message = $("#message");
                 let receiver_id = $("#current-receiver-id").val();
+
+                if (receiver_id === '') {
+                    message.val('')
+                    return;
+                }
 
                 $.ajax({
                     type: 'POST',
@@ -216,9 +224,36 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
-    function searchMessage(e) {
-        console.log('312321')
-    }
+        function searchMessage() {
+            let textToFind = $("#search-message").val(); // Văn bản bạn muốn tìm
+            let cloneListMsg = $(".wt-dashboard-msg-search-list-wrap").clone(); // Lưu trữ các phần tử ban đầu
+
+
+            // let matchingElement = $(".msg-user-name").filter(function() {
+            //     return $(this).text().trim() === textToFind;
+            // });
+
+            if (textToFind === '') {
+                $(".msg-find-list").toggleClass('d-none')
+                $(".msg-current-list").toggleClass('d-none')
+                return;
+            }
+
+            $(".msg-user-name").each(function() {
+                // Nếu nội dung của phần tử này khác với nội dung bạn tìm thấy, thì xóa nó
+                if ($(this).text().trim().includes(textToFind)) {
+                    let ele = $(this).parent().parent().parent().clone();
+
+                    $(".msg-find-list").html(ele);
+
+                    $(".msg-current-list").toggleClass('d-none')
+                    $(".msg-find-list").toggleClass('d-none')
+
+                }
+            });
+
+
+        }
 
     </script>
 @endpush

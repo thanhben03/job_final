@@ -22,4 +22,14 @@ class NotificationController extends Controller
             ->update(['read' => 1]);
 
     }
+
+    public function deleteAll()
+    {
+        Notification::query()->where('user_id', auth()->user()->id)->delete();
+
+        return response()->json([
+            'success' => true,
+            'msg' => 'ok'
+        ]);
+    }
 }

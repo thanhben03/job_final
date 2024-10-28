@@ -12428,7 +12428,7 @@ strong {
 }
 
 .noti-list {
-    height: 318px;
+    max-height: 318px;
     overflow-y: auto;
 }
 
@@ -12459,7 +12459,7 @@ strong {
 }
 
 .noti-view-all {
-  padding: 0px;
+  padding: 6px 17px;
 }
 .noti-view-all a {
   color: #1967d2;

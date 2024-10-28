@@ -2,9 +2,8 @@
     <div class="single-msg-user-name-box">
         <div class="single-msg-short-discription">
             <h4 class="single-msg-user-name">{{$receiver->company_name ?? 'No contact !'}}</h4>
-{{--            IT Contractor--}}
+
         </div>
-{{--        <a href="#" class="message-action"><i class="far fa-trash-alt"></i> Delete Conversation</a>--}}
     </div>
     <div id="msg-chat-wrap" class="single-user-msg-conversation scrollbar-macosx">
 

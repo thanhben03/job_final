@@ -86,6 +86,7 @@ Route::post('/appointments/{id}/reject', [AppointmentController::class, 'rejectA
 Route::post('/appointments/{appointmentId}/update', [AppointmentController::class, 'updateAppointment'])->name('appointment.update.time');
 
 Route::get('/notification/read-message', [NotificationController::class, 'readMessage'])->name('read.all.message');
+Route::get('/notification/delete-all', [NotificationController::class, 'deleteAll'])->name('delete.all');
 Route::get('/notification/read-message-company', [NotificationController::class, 'readMessageCompany'])->name('read.all.company.message');
 
 Route::post('/chat/send-to-user', [ChatController::class, 'sendMessageToUser'])->name('send.chat.to.user');

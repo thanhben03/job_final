@@ -31,7 +31,7 @@
                 <div class="wt-bnr-inr-entry">
                     <div class="banner-title-outer">
                         <div class="banner-title-name">
-                            <h2 class="wt-title">IT Department Manager</h2>
+                            <h2 class="wt-title">{{$career['title']}}</h2>
                         </div>
                     </div>
                     <!-- BREADCRUMB ROW -->
@@ -149,20 +149,20 @@
                                 <div class="twm-s-info2-wrap mb-5">
                                     <div class="twm-s-info2">
                                         <h4 class="section-head-small mb-4">Job Information</h4>
-                                        <ul class="twm-job-hilites">
-                                            <li>
-                                                <i class="fas fa-calendar-alt"></i>
-                                                <span class="twm-title">Date Posted</span>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-eye"></i>
-                                                <span class="twm-title">8160 Views</span>
-                                            </li>
-                                            <li>
-                                                <i class="fas fa-file-signature"></i>
-                                                <span class="twm-title">6 Applicants</span>
-                                            </li>
-                                        </ul>
+{{--                                        <ul class="twm-job-hilites">--}}
+{{--                                            <li>--}}
+{{--                                                <i class="fas fa-calendar-alt"></i>--}}
+{{--                                                <span class="twm-title">Date Posted</span>--}}
+{{--                                            </li>--}}
+{{--                                            <li>--}}
+{{--                                                <i class="fas fa-eye"></i>--}}
+{{--                                                <span class="twm-title">8160 Views</span>--}}
+{{--                                            </li>--}}
+{{--                                            <li>--}}
+{{--                                                <i class="fas fa-file-signature"></i>--}}
+{{--                                                <span class="twm-title">6 Applicants</span>--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
                                         <ul class="twm-job-hilites2">
 
                                             <li>
