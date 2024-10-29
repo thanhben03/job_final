@@ -39,10 +39,23 @@
                         </div>
 
                         <div class="col-lg-12 col-md-12">
-                            <div class="dashboard-cover-pic">
-                                <form action="upload.php" class="dropzone"></form>
-                                <p><b>Background Banner Image :- </b> Max file size is 1MB, Minimum dimension: 770 x 310 And Suitable files are .jpg & .png</p>
-                            </div>
+                            <h4>Upload Banner</h4>
+                            <form id="formUploadBanner" method="POST" action="/upload-banner" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="banner" class="form-label">Choose a banner to upload:</label>
+                                    <input class="form-control" type="file" id="banner" name="banner" accept="image/*" onchange="previewImage(event)">
+                                </div>
+                                <div class="mb-3">
+                                    <img
+                                        id="bannerPreview"
+                                        src="{{str_contains($company->banner, 'http') ? $company->banner : asset('/images/avatar/'.$company->banner)}}"
+                                        alt="Banner Preview"
+                                        class="img-fluid"
+                                        style="max-height: 300px; @if(!$company->banner) display: none; @endif">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Upload</button>
+                            </form>
+
                         </div>
 
                     </div>
@@ -96,7 +109,7 @@
                                         <div class="form-group">
                                             <label>Email Address</label>
                                             <div class="ls-inputicon-box">
-                                                <input class="form-control"  value="{{old('company_email', $company->company_email)}}" name="company_email" type="email" placeholder="Devid@example.com">
+                                                <input class="form-control"  value="{{old('email', $company->email)}}" name="email" type="email" placeholder="Devid@example.com">
                                                 <i class="fs-input-icon fas fa-at"></i>
                                             </div>
                                         </div>
@@ -217,7 +230,7 @@
                 let formData = new FormData();
                 formData.append('avatar', input.files[0]); // Thêm file vào FormData
                 formData.append('_token', '{{ csrf_token() }}');
-                console.log(input.files[0])
+
                 // Gửi yêu cầu AJAX
                 $.ajax({
                     type: 'POST',
@@ -236,5 +249,46 @@
                 });
             }
         }
+
+        $("#formUploadBanner").submit(function (e) {
+            e.preventDefault();
+            let formData = new FormData();
+            let input = document.querySelector("#banner");
+
+            formData.append('avatar', input.files[0]); // Thêm file vào FormData
+            formData.append('_token', '{{ csrf_token() }}');
+            formData.append('type', 'banner');
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'JSON',
+                url: '{{ route("api.file.upload.avatar.company") }}', // Route Laravel xử lý upload
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    toastr.success(response.msg, 'Notification !')
+                },
+                error: function(xhr) {
+                    console.log(xhr)
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                }
+            });
+
+        })
+
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+
+            reader.onload = function(){
+                var imgElement = document.getElementById('bannerPreview');
+                imgElement.src = reader.result;
+                imgElement.style.display = 'block'; // Hiển thị hình ảnh
+            };
+
+            reader.readAsDataURL(input.files[0]); // Đọc dữ liệu ảnh
+        }
     </script>
+
 @endpush

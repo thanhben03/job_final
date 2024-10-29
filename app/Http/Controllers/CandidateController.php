@@ -303,6 +303,7 @@ class CandidateController extends Controller
         // Validate input
         $request->validate([
             'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:5000',
+            'type' => 'nullable'
         ]);
         // Lưu file vào thư mục 'public/images'
         try {
@@ -311,9 +312,15 @@ class CandidateController extends Controller
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images/avatar/company'), $imageName);
 
-                Session::get('company')->update([
-                    'company_avatar' => 'company/' . $imageName
-                ]);
+                if ($request->has('type')) {
+                    auth()->guard('company')->user()->update([
+                        'banner' => 'company/' . $imageName
+                    ]);
+                } else {
+                    auth()->guard('company')->user()->update([
+                        'company_avatar' => 'company/' . $imageName
+                    ]);
+                }
                 // Trả về phản hồi JSON
                 return response()->json(['msg' => 'Image uploaded successfully.', 'image' => $imageName]);
             }
