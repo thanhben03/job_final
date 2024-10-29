@@ -13,6 +13,7 @@ use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CompanyAuthenticated;
 use App\Http\Middleware\UserAuthenticated;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -21,6 +22,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/fetch-data-select/{type}', [HomeController::class, 'fetchDataSelect'])->name('fetch.data.select');
 
 //Route::resource('/jobs', JobController::class);
+
 
 Route::get('/jobs/{category}', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{category}/{job}', [JobController::class, 'show'])->name('jobs.show');

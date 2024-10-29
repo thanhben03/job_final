@@ -40,7 +40,7 @@ class JobController extends Controller
         $this->service = $careerService;
         $this->skillService = $skillService;
 
-        $this->middleware(UserAuthenticated::class)->except(['index']);
+        $this->middleware(UserAuthenticated::class)->except(['index', 'store']);
 
     }
 

@@ -43,14 +43,15 @@ class CareerService implements CareerServiceInterface
 
     public function store(Request $request){
         try {
+
             DB::beginTransaction();
             $this->data = $request->validated();
-            $career = Arr::except($this->data, ['skill_ids', 'desc', 'require', 'benefit', 'key_responsibilities']);
-            $career['company_id'] = Session::get('company')->id;
+            $career = Arr::except($this->data, ['skill_ids', 'description', 'requirement', 'benefit', 'key_responsibilities']);
+            $career['company_id'] = auth()->guard('company')->user()->id;
             $career['slug'] = Str::slug($career['title']);
             $result = $this->repository->create($career);
 
-            $careerDetailData = Arr::only($this->data, ['desc', 'require', 'benefit', 'key_responsibilities']);
+            $careerDetailData = Arr::only($this->data, ['description', 'requirement', 'benefit', 'key_responsibilities']);
             $careerDetailData['career_id'] = $result->id;
             $this->careerDetailRepository->create($careerDetailData);
 

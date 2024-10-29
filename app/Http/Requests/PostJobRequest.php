@@ -47,10 +47,10 @@ class PostJobRequest extends FormRequest
 //            'company_id' => 'required|integer|exists:companies,id',
             'province_id' => 'nullable|string|max:255',
             'district_id' => 'nullable|string|max:255',
-            'desc' => 'required',
+            'description' => 'required',
             'benefit' => 'required',
             'key_responsibilities' => 'required',
-            'require' => 'required',
+            'requirement' => 'required',
             'skill_ids' => 'required',
         ];
     }

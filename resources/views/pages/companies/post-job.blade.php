@@ -309,9 +309,9 @@
                                 <div class="form-group">
                                     <label>Description</label>
                                     <textarea id="desc"
-                                              name="desc" class="form-control" rows="3"
+                                              name="description" class="form-control" rows="3"
                                     >
-                                        {{old('address', 'DESC DEFAULT')}}
+                                        {{old('description', 'DESC DEFAULT')}}
                                     </textarea>
                                 </div>
                             </div>
@@ -321,12 +321,12 @@
                                 <div class="form-group">
                                     <label>Require</label>
                                     <textarea
-                                        id="require"
-                                        name="require"
+                                        id="requirements"
+                                        name="requirement"
                                         class="form-control"
                                         rows="3"
                                         >
-                                        {{old('require', 'REQUIRE DEFAULT')}}
+                                        {{old('requirement', 'REQUIRE DEFAULT')}}
                                     </textarea>
                                 </div>
                             </div>
@@ -354,7 +354,7 @@
                                         id="key_responsibility"
                                         class="form-control" rows="3"
                                     >
-                                        {{old('key_responsibility', 'RESPONSIBILITY DEFAULT')}}
+                                        {{old('key_responsibilities', 'RESPONSIBILITY DEFAULT')}}
                                     </textarea>
                                 </div>
                             </div>
@@ -387,16 +387,11 @@
     <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
     <script>
         tinymce.init({
-            selector: '#key_responsibility,#benefit,#desc,#require',
+            selector: '#key_responsibility,#benefit,#desc,#requirements',
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
         });
     </script>
-    @if(session()->has('matchedCandidates'))
-       <script>
-           alert('hi')
-       </script>
-    @endif
     <script>
         function selectProvince(e) {
             $.ajax({
