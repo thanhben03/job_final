@@ -16,6 +16,7 @@ use App\Http\Resources\CompanyResource;
 use App\Http\Resources\ListInviteResource;
 use App\Mail\InviteInterview;
 use App\Models\Career;
+use App\Models\Category;
 use App\Models\Chat;
 use App\Models\Company;
 use App\Models\District;
@@ -36,8 +37,7 @@ class CompanyController extends Controller
 
     public function __construct(
         CareerServiceInterface $careerService,
-    )
-    {
+    ) {
         parent::__construct();
         $this->service = $careerService;
     }
@@ -86,15 +86,20 @@ class CompanyController extends Controller
         $genders = GenderEnum::asSelectArray();
         $levels = LevelEnum::asSelectArray();
         $provinces = Province::all()->pluck('name', 'code');
-        return view('pages.companies.post-job', compact(
-            'skills',
-            'workType',
-            'exps',
-            'qualifications',
-            'provinces',
-            'genders',
-            'levels')
-                    );
+        $categories = Category::all();
+        return view(
+            'pages.companies.post-job',
+            compact(
+                'skills',
+                'workType',
+                'exps',
+                'qualifications',
+                'provinces',
+                'genders',
+                'levels',
+                'categories'
+            )
+        );
     }
 
     public function showManageJob()
@@ -119,8 +124,10 @@ class CompanyController extends Controller
         $levels = LevelEnum::asSelectArray();
         $provinces = Province::all()->pluck('name', 'code');
         $districts = District::query()->where('province_code', $career['province']->code)->get();
-        return view('pages.companies.detail-job',
-            compact('career', 'skills', 'workType', 'exps', 'qualifications', 'genders', 'levels', 'provinces', 'districts'));
+        return view(
+            'pages.companies.detail-job',
+            compact('career', 'skills', 'workType', 'exps', 'qualifications', 'genders', 'levels', 'provinces', 'districts')
+        );
     }
 
     public function showCandidateAppliedJob($job_id)
@@ -211,7 +218,7 @@ class CompanyController extends Controller
 
     public function companyDetail(Request $request, $companyId)
     {
-        $company = Company::query()->where('id',$companyId)->get();
+        $company = Company::query()->where('id', $companyId)->get();
         $company = CompanyResource::make($company)->resolve()[0];
         if ($request->wantsJson()) {
             return response()->json($company);
@@ -274,7 +281,7 @@ class CompanyController extends Controller
         $invites = Interview::query()->where([
             'company_id' => \auth()->guard('company')->user()->id
         ])
-            ->orderBy('id','desc')
+            ->orderBy('id', 'desc')
             ->get();
 
         $invites = ListInviteResource::make($invites)->resolve();

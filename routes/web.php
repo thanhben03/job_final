@@ -118,6 +118,10 @@ Route::get('invite-interview', [CandidateController::class, 'acceptInterview']);
 Route::post('/chatbot', [OpenAIController::class, 'getResponse'])->name('chat.bot');
 Route::post('/chatbot/search-job', [OpenAIController::class, 'searchJobs']);
 
+Route::get('/info', function () {
+    phpinfo();
+})->name('search');
+
 require __DIR__.'/auth.php';
 require __DIR__.'/company-auth.php';
 require __DIR__.'/social-auth.php';

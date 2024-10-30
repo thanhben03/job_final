@@ -52,6 +52,7 @@ class PostJobRequest extends FormRequest
             'key_responsibilities' => 'required',
             'requirement' => 'required',
             'skill_ids' => 'required',
+            'category_id' => 'required|integer|exists:categories,id',
         ];
     }
 }

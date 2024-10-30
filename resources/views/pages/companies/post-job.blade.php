@@ -294,11 +294,24 @@
                             </div>
 
                             <!--Complete Address-->
-                            <div class="col-xl-12 col-lg-6 col-md-12">
+                            <div class="col">
                                 <div class="form-group">
                                     <label>Complete Address</label>
                                     <div class="ls-inputicon-box">
                                         <input class="form-control" value="{{old('address', 'AN BINH, AN THANH TRUNG')}}" name="address" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA">
+                                        <i class="fs-input-icon fa fa-home"></i>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <div class="ls-inputicon-box">
+                                        <select class="wt-select-box selectpicker"  data-live-search="true" title="" name="category_id" data-bv-field="size">
+                                            @foreach($categories as $category)
+                                                <option value="{{$category->id}}}}">{{$category->name}}</option>
+                                            @endforeach
+                                        </select>
                                         <i class="fs-input-icon fa fa-home"></i>
                                     </div>
                                 </div>
