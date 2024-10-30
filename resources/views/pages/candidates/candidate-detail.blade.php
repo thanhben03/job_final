@@ -30,6 +30,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <p>
+                        <i style="color: red" class="fas fa-exclamation-triangle"></i>
+                        This user is being flagged!
+                    </p>
                     <div class="form-group">
                         <label for="">Title: </label>
                         <input value="Thư Mời Tham Gia Phỏng Vấn !" placeholder="Enter a title for gmail !" id="title" class="form-control" type="text" name="message">

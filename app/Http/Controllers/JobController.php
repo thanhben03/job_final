@@ -22,6 +22,7 @@ use App\Models\UserCareer;
 use App\Services\Career\CareerServiceInterface;
 use App\Services\Skill\SkillServiceInterface;
 use Dflydev\DotAccessData\Data;
+use Illuminate\Contracts\Queue\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
@@ -40,7 +41,7 @@ class JobController extends Controller
         $this->service = $careerService;
         $this->skillService = $skillService;
 
-        $this->middleware(UserAuthenticated::class)->except(['index', 'store']);
+        $this->middleware(UserAuthenticated::class)->except(['index', 'store', 'update']);
 
     }
 

@@ -165,9 +165,9 @@
                             <div class="twm-D_table p-a20 table-responsive">
                                 <!-- Filter Dropdown Section -->
                                 <div class="filter-section mb-3">
-                                    <label for="statusFilter">Filter by Status:</label>
-                                    <x-modal.modal-progress />
-                                    <button onclick="matchWithCandidate({{$career['id']}}, 'filter_cv')" class="btn btn-primary">Fitler CV</button>
+                                    
+                                    {{-- <x-modal.modal-progress />
+                                    <button onclick="matchWithCandidate({{$career['id']}}, 'filter_cv')" class="btn btn-primary">Fitler CV</button> --}}
                                 </div>
                                 <table id="candidate_data_table" class="table table-bordered">
                                     <thead>
@@ -401,7 +401,6 @@
                                     <a href="" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                 </div>
                             </div>
-{{--                            <p class="mb-1 mt-2"><strong>Description:</strong> {{ Str::limit(${ele.candidate.detail.desc}, 100) }}</p>--}}
                         <div>
                             <small class="text-muted">Join Day: ${ele.candidate.created_at}</small>
                                 <small class="">Email: <strong style="color: green">${ele.candidate.email}</strong></small>

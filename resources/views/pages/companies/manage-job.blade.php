@@ -119,7 +119,7 @@
                                             </div>
                                             <div class="twm-mid-content">
                                                 <a href="#" class="twm-job-title">
-                                                    <a href="{{route('company.show.detail-job', $career['slug'])}}">
+                                                    <a href="{{route('company.show.detail-job', $career['id'])}}">
                                                         <h4>{{$career['title']}}</h4>
                                                     </a>
                                                     <p class="twm-bookmark-address">
@@ -131,7 +131,7 @@
 
                                         </div>
                                     </td>
-                                    <td>{{$career['level']}}</td>
+                                    <td>{{$career['category']->name}}</td>
                                     <td>
                                         <div class="twm-jobs-category"><span class="twm-bg-green">Part Time</span></div>
                                     </td>
@@ -160,7 +160,7 @@
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <a href="{{route('company.show.detail-job', $career['slug'])}}">
+                                                    <a href="{{route('company.show.edit-job', $career['id'])}}">
                                                         <button title="Edit" data-bs-toggle="tooltip"
                                                                 data-bs-placement="top">
                                                             <span class="far fa-edit"></span>
@@ -231,7 +231,7 @@
                         <li class="list-group-item">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h5 class="mb-1">${ele.candidate.fullname}</h5>
+                                    <h5 class="mb-1"><a href="/candidates/detail/${ele.candidate.id}">${ele.candidate.fullname}</a></h5>
                                     <p class="mb-0"><strong>Gender:</strong> ${ele.candidate.gender}</p>
                                     <p class="mb-0"><strong>Price Per Hours:</strong> ${ele.candidate.price_per_hours}</p>
 
@@ -240,7 +240,6 @@
                                     <a href="" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                 </div>
                             </div>
-{{--                            <p class="mb-1 mt-2"><strong>Description:</strong> {{ Str::limit(${ele.candidate.detail.desc}, 100) }}</p>--}}
                             <div>
                                 <small class="text-muted">Join Day: ${ele.candidate.created_at}</small>
                                 <small class="">Email: <strong style="color: green">${ele.candidate.email}</strong></small>

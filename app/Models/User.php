@@ -78,4 +78,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserExperience::class, 'user_id', 'id');
     }
+
+    public function reported () {
+        return $this->hasMany(ReportedUser::class, 'user_id', 'id');
+    }
 }

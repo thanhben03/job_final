@@ -102,6 +102,25 @@ class CompanyController extends Controller
         );
     }
 
+    public function showEditJob ($id) {
+        $career = Career::query()->where('id', $id)->get();
+        $career = CareerResource::make($career)->resolve()[0];
+        $skills = Skill::all();
+        $workType = WorkTypeEnum::asSelectArray();
+        $exps = JobExpEnum::asSelectArray();
+        $qualifications = QualificationEnum::asSelectArray();
+        $genders = GenderEnum::asSelectArray();
+        $provinces = Province::all()->pluck('name', 'code');
+        $levels = LevelEnum::asSelectArray();
+        $categories = Category::all();
+        $districts = District::query()->where('province_code', $career['province']->code)->get();
+
+
+        return view('pages.companies.edit-job', 
+        compact('districts','career', 'skills', 'workType', 'exps', 'qualifications', 'genders', 'provinces', 'levels', 'categories')
+        );
+    }
+
     public function showManageJob()
     {
         $company = Auth::guard("company")->user();

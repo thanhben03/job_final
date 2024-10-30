@@ -22,7 +22,6 @@ class UpdateJobRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'nullable|integer|exists:jobs,id',
             'title' => 'required|string|max:255',
 //            'slug' => 'required|string|max:255',
             'min_salary' => 'nullable|integer|min:0',
@@ -41,11 +40,12 @@ class UpdateJobRequest extends FormRequest
 //            'company_id' => 'required|integer|exists:companies,id',
             'province_id' => 'nullable|string|max:255',
             'district_id' => 'nullable|string|max:255',
-            'desc' => 'required',
+            'description' => 'required',
             'benefit' => 'required',
             'key_responsibilities' => 'required',
-            'require' => 'required',
+            'requirement' => 'required',
             'skill_ids' => 'required',
+            'category_id' => 'required|integer|exists:categories,id',
         ];
     }
 }

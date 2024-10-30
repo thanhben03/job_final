@@ -17,24 +17,24 @@ class AppointmentController extends Controller
     {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'date' => 'required|date',
+            'date' => 'required|date|after:today',
             'time' => 'required',
             'note' => 'nullable|string',
             'career_id' => 'required|exists:careers,id',
         ]);
-        $validated['company_id'] = Session::get('company')->id;
+        $validated['company_id'] = auth()->guard('company')->user()->id;
 
         $existingAppointment = Appointment::where('user_id', $validated['user_id'])
             ->first();
 
-//        if ($existingAppointment) {
-//            return response()->json(['error' => 'Lịch hẹn đã tồn tại cho ứng viên này!'], 409);
-//        }
+        if ($existingAppointment) {
+            return response()->json(['error' => 'Lịch hẹn đã tồn tại cho ứng viên này!'], 409);
+        }
         $appointment = Appointment::query()->create($validated);
         $message = Notification::query()->create([
             'user_id' => $validated['user_id'],
-            'message' => 'Bạn có môt lịch hẹn chờ phản hồi từ '.Session::get('company')->company_name,
-            'from_id' => Session::get('company')->id,
+            'message' => 'Bạn có môt lịch hẹn chờ phản hồi từ ' . auth()->guard('company')->user()->company_name,
+            'from_id' => auth()->guard('company')->user()->id,
         ]);
         broadcast(new AppointmentEvent($validated['user_id'], $message->message))->toOthers();
 
@@ -47,11 +47,11 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::find($id);
         $appointment->status = 'accepted';
-//        $appointment->save();
+        $appointment->save();
 
         $notification = Notification::query()->create([
             'company_id' => $appointment->company_id,
-            'message' => "Ứng viên [". $appointment->user->fullname."] đã đồng ý lịch hẹn của bạn !",
+            'message' => "Ứng viên [" . $appointment->user->fullname . "] đã đồng ý lịch hẹn của bạn !",
             'from_id' => $appointment->user_id,
         ]);
         broadcast(new AppointmentAcceptEvent($appointment->company_id, $notification->message))->toOthers();

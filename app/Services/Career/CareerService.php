@@ -168,7 +168,7 @@ class CareerService implements CareerServiceInterface
     public function extractInfoRequire($data)
     {
         $extract = [];
-//        $gender = GenderEnum::getDescription($data['gender']);
+        //        $gender = GenderEnum::getDescription($data['gender']);
         $level = LevelEnum::getDescription($data['level']);
         $experience = JobExpEnum::getDescription($data['experience']);
         $qualification = QualificationEnum::getDescription($data['qualification']);
@@ -198,12 +198,13 @@ class CareerService implements CareerServiceInterface
         try {
             DB::beginTransaction();
             $this->data = $request->validated();
-            $careerData = Arr::except($this->data, ['skill_ids', 'desc', 'require', 'benefit', 'key_responsibilities']);
-            $careerData['slug'] = Str::slug($careerData['title']);
-            $career = $this->repository->update($id, $careerData);
+            $career = Arr::except($this->data, ['skill_ids', 'description', 'requirement', 'benefit', 'key_responsibilities']);
+            $career['slug'] = Str::slug($career['title']);
+
+            $career = $this->repository->update($id, $career);
 
             // Cập nhật thông tin chi tiết career_detail
-            $careerDetailData = Arr::only($this->data, ['desc', 'require', 'benefit', 'key_responsibilities']);
+            $careerDetailData = Arr::only($this->data, ['description', 'requirement', 'benefit', 'key_responsibilities']);
             $this->careerDetailRepository->update($career->detail->id, $careerDetailData);
 
             // Lấy mảng skill_ids
