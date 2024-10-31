@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Log;
 use OpenAI\Client as OpenAIClient;
 
 class OpenAIService
@@ -37,18 +38,12 @@ class OpenAIService
 
     public function callFunction($prompt, $functions)
     {
-        // Lấy lịch sử hội thoại từ session
-        $history = session()->get('conversation_history', []);
-
-        $history[] = ['role' => 'user', 'content' => $prompt];
-
-
+        
         $content = $this->client->chat()->create([
             'model' => 'gpt-4o', // Sử dụng GPT-4 hoặc mô hình khác
             'messages' => [
                 ['role' => 'assistant', 'content' => 'You are a virtual assistant for a job search system called Job Board'],
                 ['role' => 'user', 'content' => $prompt],
-                ...$history
             ],
             'functions' => $functions, // Danh sách các function đã định nghĩa
             'function_call' => 'auto' // Để OpenAI tự động gọi function khi cần
@@ -57,7 +52,6 @@ class OpenAIService
 //        // Thêm phản hồi của chatbot vào lịch sử
 //        $history[] = ['role' => 'assistant', 'content' => $chatbotResponse];
         // Lưu lịch sử vào session
-        session()->put('conversation_history', $history);
 
         return $content;
 

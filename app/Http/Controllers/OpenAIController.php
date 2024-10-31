@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Services\OpenAIService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class OpenAIController extends Controller
 {
@@ -22,7 +24,8 @@ class OpenAIController extends Controller
         // Prompt của người dùng từ request
         $prompt = $request->input('prompt');
 
-        // Định nghĩa function get_product_details và search_jobs_by_title
+
+        // Định nghĩa function 
         $functions = [
             [
                 'name' => 'get_job_details',
@@ -82,9 +85,33 @@ class OpenAIController extends Controller
             ]
 
         ];
+        $functions2 = [
+            [
+                'name' => 'search_job',
+                'description' => 'Fetches jobs details from the database based on skills, location and salary',
+                'parameters' => [
+                    'type' => 'object',
+                    'properties' => [
+                        'skills' => [
+                            'type' => 'string',
+                            'description' => 'The skills required for the job'
+                        ],
+                        'location' => [
+                            'type' => 'string',
+                            'description' => 'The location of the job'
+                        ],
+                        'salary' => [
+                            'type' => 'integer',
+                            'description' => 'The minimum salary required for the job'
+                        ]
+                    ]
+                    // 'required' => ['skills', 'location', 'salary']
+                ]
+            ]
+        ];
 
         // Gọi OpenAI API
-        $response = $this->openAIService->callFunction($prompt, $functions);
+        $response = $this->openAIService->callFunction($prompt, $functions2);
 
         // Kiểm tra nếu OpenAI yêu cầu gọi function
         if (isset($response['choices'][0]['message']['function_call'])) {
@@ -94,8 +121,8 @@ class OpenAIController extends Controller
             // Gọi hàm get_product_details
             if ($functionName === 'get_job_details') {
                 $productId = $arguments['job_id'];
-//                $product = $this->getJobDetails($productId);
-//                dd($product);
+                //                $product = $this->getJobDetails($productId);
+                //                dd($product);
                 return response()->json([
                     'role' => 'assistant',
                     'content' => $this->getProductDetails($productId)
@@ -106,6 +133,20 @@ class OpenAIController extends Controller
             if ($functionName === 'search_jobs_by_title') {
                 $skills = $arguments['skills'];
                 $jobs = $this->searchJobsByTitle($skills);
+                $html = $this->getListJobHtml($jobs);
+                return response()->json([
+                    'role' => 'assistant',
+                    'content' => $html
+                ]);
+            }
+
+            // Gọi hàm search_jobs_by_title
+            if ($functionName === 'search_job') {
+                $skills = $arguments['skills'] ?? null;
+                $location = $arguments['location'] ?? null;
+                $salary = $arguments['salary'] ?? null;
+
+                $jobs = $this->searchJob($skills, $location, $salary);
                 $html = $this->getListJobHtml($jobs);
                 return response()->json([
                     'role' => 'assistant',
@@ -133,7 +174,7 @@ class OpenAIController extends Controller
                                      alt="avatar 1" style="width: 45px; height: 100%;">
                                 <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
                                     <p class="small mb-0">
-                                        '.$content['content'].'
+                                        ' . $content['content'] . '
                                     </p>
                                 </div>
                             </div>
@@ -144,16 +185,42 @@ class OpenAIController extends Controller
         ]);
     }
 
+    // hàm search tổng hợp
+    public function searchJob ($skills = null, $location = null, $salary = null) {
+        $careers = Career::query()
+            ->when($salary, function ($query) use ($salary) {
+                $query->where('max_salary', '>=', $salary);
+            })
+            ->when($skills, function ($query) use ($skills) {
+                // $skillsString = implode(',', $skills);
+                $query->join('career_details', 'careers.id', '=', 'career_details.career_id')
+                ->whereRaw(
+                    "MATCH(careers.title) AGAINST(? IN BOOLEAN MODE)
+                    OR MATCH(career_details.description) AGAINST(? IN BOOLEAN MODE)
+                    OR MATCH(career_details.requirement) AGAINST(? IN BOOLEAN MODE)
+                    ",
+                    [$skills, $skills, $skills]
+                );
+            })
+            ->when($location, function ($query) use ($location) {
+                $query->whereRaw(
+                    "MATCH(careers.address) AGAINST(? IN BOOLEAN MODE)",
+                    [$location]);
+            })
+            ->orderBy('careers.created_at', 'desc')
+            ->take(10)
+            ->get();
+
+
+        return $careers;
+    }
+
     // Hàm lấy thông tin sản phẩm
     public function getJobDetails($productId)
     {
         $product = Career::find($productId); // Giả sử Product là model sản phẩm của bạn
 
-        if ($product) {
-            return $product;
-        } else {
-            return response()->json(['error' => 'Product not found'], 404);
-        }
+        return $product ?? response()->json(['error' => 'Product not found'], 404);
     }
 
     // Hàm tìm công việc dựa theo tiêu đề và kỹ năng bằng Full-Text Search
@@ -162,7 +229,15 @@ class OpenAIController extends Controller
         // Sử dụng Full-Text Search trên cột 'title' của bảng Career
         $skillsString = implode(' ', $skills);
 
-        $jobs = Career::whereRaw("MATCH(title) AGAINST(? IN BOOLEAN MODE)", [$skillsString])
+        $jobs = Career::query()
+            ->join('career_details', 'careers.id', '=', 'career_details.career_id')
+            ->whereRaw(
+                "MATCH(careers.title) AGAINST(? IN BOOLEAN MODE)
+                OR MATCH(career_details.description) AGAINST(? IN BOOLEAN MODE)
+                OR MATCH(career_details.requirement) AGAINST(? IN BOOLEAN MODE)
+                ",
+                [$skillsString, $skillsString, $skillsString]
+            )
             ->get();
 
         return $jobs;
@@ -185,7 +260,8 @@ class OpenAIController extends Controller
     public function getListJobHtml($items)
     {
         $item = $items->map(function ($item) {
-            $slug = "/jobs/$item->slug";
+            $category = $item->category;
+            $slug = "/jobs/$category->slug/$item->slug";
             return "<li><a href='$slug'>$item->title</a></li>";
         })->toArray();
 
@@ -199,7 +275,7 @@ class OpenAIController extends Controller
                                     <p class="small mb-0">
                                         <p>Một số công việc gợi ý cho bạn</p>
                                         <ul class="mx-3">
-                                            '.$item.'
+                                            ' . $item . '
                                         </ul>
                                     </p>
                                 </div>
@@ -208,5 +284,4 @@ class OpenAIController extends Controller
 
         return $html;
     }
-
 }
