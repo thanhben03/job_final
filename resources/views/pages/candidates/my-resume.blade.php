@@ -176,34 +176,55 @@
                                     <div class="row" style="flex-wrap: nowrap; overflow-x: auto">
                                         <!-- CV Card 1 -->
                                         @foreach($resumeOnSys as $resume)
-                                            <div class="card mx-1 my-1 card-cv" >
-                                                <img src="{{asset('storage/uploads/'. $resume->cv->thumbnail)}}" class="card-img-top card-cv-img" alt="Profile">
-
-                                                <div class="card-body">
-                                                    <h5 class="card-title">{{$resume->cv->path}}</h5>
-                                                    <p class="card-text">Cập nhật lần cuối {{$resume->cv->updated_at}}</p>
-                                                    <div class="d-flex justify-content-around">
-                                                        <button class="btn btn-outline-secondary">
-                                                            <a
-                                                                download
-                                                                href="{{asset('storage/uploads/'. $resume->cv->path)}}">
-                                                                <i class="fas fa-download"></i>
+                                        <div class="card mx-1 my-1 card-cv">
+                                            <img src="{{ asset('storage/uploads/' . $resume->cv->thumbnail) }}" class="card-img-top card-cv-img" alt="Profile">
+                                        
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $resume->cv->path }}</h5>
+                                                <p class="card-text">Cập nhật lần cuối {{ $resume->cv->updated_at }}</p>
+                                        
+                                                <!-- Three-dot menu for actions -->
+                                                <div class="dropdown float-end">
+                                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Menu
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <li>
+                                                            <button class="dropdown-item" onclick="setMainCV({{ $resume->cv->id }})">
+                                                                <i class="fas fa-wrench"></i> Set Main CV
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" download href="{{ asset('storage/uploads/' . $resume->cv->path) }}">
+                                                                <i class="fas fa-download"></i> Download
                                                             </a>
-                                                        </button>
-                                                        <button class="btn btn-outline-info">
-                                                            <a href="{{route('candidate.create-cv', $resume->id)}}">
-                                                                <i class="fas fa-edit"></i>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="{{ route('candidate.create-cv', $resume->id) }}">
+                                                                <i class="fas fa-edit"></i> Edit
                                                             </a>
-                                                        </button>
-                                                        <button onclick="deleteCV({{$resume->cv->id}})" class="btn btn-outline-danger">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                        <button title="Tìm kiếm công việc tự động" class="btn btn-outline-warning" onclick="matchWithJob({{$resume->cv->id}})">
-                                                            <i class="fas fa-magic"></i>
-                                                        </button>
-                                                    </div>
+                                                        </li>
+                                                        <li>
+                                                            <button class="dropdown-item text-danger" onclick="deleteCV({{ $resume->cv->id }})">
+                                                                <i class="fas fa-trash-alt"></i> Delete
+                                                            </button>
+                                                        </li>
+                                                        <li>
+                                                            <button class="dropdown-item text-warning" onclick="matchWithJob({{ $resume->cv->id }})">
+                                                                <i class="fas fa-magic"></i> Match with Job
+                                                            </button>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
+
+                                            @if(auth()->user()->main_cv == $resume->cv->id)
+                                                
+                                                <div class="main-cv">Main CV</div>
+                                            @endif
+
+                                        </div>
+                                        
                                         @endforeach
 
                                     </div>
@@ -271,6 +292,23 @@
 
 
         });
+
+
+        function setMainCV(cvID) {  
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('set.main.cv', ':cvID') }}".replace(':cvID', cvID),
+                success: function (res) {
+                    toastr.success(res.msg, 'Notification !')
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 1500)
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                }
+            })
+        }
 
         function deleteCV(cvID) {
             let check = confirm('Are you sure ?')
@@ -349,7 +387,6 @@
                                     <a href="/jobs/${ele.slug}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                 </div>
                             </div>
-{{--                            <p class="mb-1 mt-2"><strong>Description:</strong> {{ Str::limit(${ele.detail.desc}, 100) }}</p>--}}
                             <div>
                                 <small class="text-muted">Posted on: ${ele.created_at}</small>
                                 <br>
@@ -383,7 +420,6 @@
                                     <a href="/jobs/${ele.slug}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                 </div>
                             </div>
-{{--                            <p class="mb-1 mt-2"><strong>Description:</strong> {{ Str::limit(${ele.detail.desc}, 100) }}</p>--}}
                         <div>
                             <small class="text-muted">Posted on: ${ele.created_at}</small>
                                 <br>

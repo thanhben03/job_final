@@ -33,14 +33,37 @@ class CandidateController extends Controller
 {
     public function __construct(
         UserService $userService
-    )
-    {
+    ) {
         $this->service = $userService;
     }
 
     public function index()
     {
         return view('pages.candidates.dashboard');
+    }
+
+    public function setMainCv($cvID)
+    {
+        $exists = CurriculumVitae::query()
+            ->where('id', $cvID)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+
+        if ($exists) {
+            auth()->user()->update([
+                'main_cv' => $exists->id
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Set main CV successfully'
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'msg' => 'Set main CV failed'
+        ]);
     }
 
     public function jobApplied()
@@ -115,7 +138,6 @@ class CandidateController extends Controller
             'success' => (bool) $savedJob,
             'msg' => $savedJob ? 'Job Applied Successfully' : 'Failed to apply for job'
         ], $savedJob ? 200 : 400);
-
     }
 
     public function uploadCV(Request $request)
@@ -175,16 +197,16 @@ class CandidateController extends Controller
                         ]);
                         $cv = CurriculumVitae::query()->where('id', $userProfile->cv_id)->first();
                         unlink(storage_path('app/public/uploads/' . $cv->path));
-                        unlink(storage_path('app/public/uploads/'. $cv->thumbnail));
+                        unlink(storage_path('app/public/uploads/' . $cv->thumbnail));
                         $cv->update([
                             'path' => $fileName,
-                            'thumbnail' => 'img-cv/' . $fileName. '.png',
+                            'thumbnail' => 'img-cv/' . $fileName . '.png',
                         ]);
                     } else {
                         $cv = CurriculumVitae::query()->create([
                             'user_id' => auth()->user()->id,
                             'path' => $fileName,
-                            'thumbnail' => 'img-cv/' . $fileName. '.png',
+                            'thumbnail' => 'img-cv/' . $fileName . '.png',
                         ]);
 
                         $userProfile = UserProfile::query()->create([
@@ -205,14 +227,13 @@ class CandidateController extends Controller
                             'avatar' => $request->avatar,
                         ]);
 
-//                        $careerSuggest = $this->matchWithJob($cv->id);
+                        //                        $careerSuggest = $this->matchWithJob($cv->id);
                     }
-                }
-                else {
+                } else {
                     CurriculumVitae::query()->create([
                         'user_id' => auth()->user()->id,
                         'path' => $fileName,
-                        'thumbnail' => 'img-cv/' . $fileName. '.png',
+                        'thumbnail' => 'img-cv/' . $fileName . '.png',
                     ]);
                 }
                 DB::commit();
@@ -255,18 +276,20 @@ class CandidateController extends Controller
 
 
         return $exp;
-
     }
 
     public function pdfToImg($pdfName)
     {
-        $path = storage_path('app/public/uploads/'. $pdfName);
-        $pathImg = storage_path('app/public/uploads/img-cv/'. $pdfName . '.png');
+        $path = storage_path('app/public/uploads/' . $pdfName);
+        $pathImg = storage_path('app/public/uploads/img-cv/' . $pdfName . '.png');
         ConvertApi::setApiCredentials('jwS8EwQy8QsTlY6O');
-        $result = ConvertApi::convert('png', [
-            'File' => $path,
-            'PageRange' => '1-1',
-        ], 'pdf'
+        $result = ConvertApi::convert(
+            'png',
+            [
+                'File' => $path,
+                'PageRange' => '1-1',
+            ],
+            'pdf'
         );
         $result->saveFiles($pathImg);
     }
@@ -296,7 +319,6 @@ class CandidateController extends Controller
         } catch (\Exception $exception) {
             return response()->json(['msg' => $exception->getMessage()], 400);
         }
-
     }
     public function uploadAvatarCompany(Request $request)
     {
@@ -327,7 +349,6 @@ class CandidateController extends Controller
         } catch (\Exception $exception) {
             return response()->json(['msg' => $exception->getMessage()], 400);
         }
-
     }
 
     public function createCV($id = null)
@@ -340,10 +361,7 @@ class CandidateController extends Controller
         return view('pages.candidates.create-cv', compact('userProfile', 'response'));
     }
 
-    public function storeCV()
-    {
-
-    }
+    public function storeCV() {}
 
     public function deleteCV($cvID)
     {
@@ -353,8 +371,7 @@ class CandidateController extends Controller
             if ($cv) {
                 $cv->delete();
                 unlink(storage_path('app/public/uploads/' . $cv->path));
-                unlink(storage_path('app/public/uploads/'. $cv->thumbnail));
-
+                unlink(storage_path('app/public/uploads/' . $cv->thumbnail));
             }
             DB::commit();
             return response()->json([
@@ -365,9 +382,6 @@ class CandidateController extends Controller
             DB::rollBack();
             return response()->json(['msg' => $exception->getMessage()], 400);
         }
-
-
-
     }
 
     public function matchWithJob($cvId)
@@ -383,7 +397,7 @@ class CandidateController extends Controller
                 MATCH(careers.title) AGAINST(? IN NATURAL LANGUAGE MODE)
                 AND MATCH(careers.address) AGAINST(? IN NATURAL LANGUAGE MODE)
                 AND MATCH(career_details.description, career_details.requirement) AGAINST(? IN NATURAL LANGUAGE MODE)
-                ", [$skillOfCv,$location, $certificate. ' '. $skillOfCv. ' '. $location])
+                ", [$skillOfCv, $location, $certificate . ' ' . $skillOfCv . ' ' . $location])
                 ->get();
             $careers = Career::query()
                 ->join('career_details', 'careers.id', '=', 'career_details.career_id')
@@ -391,7 +405,7 @@ class CandidateController extends Controller
                     MATCH(careers.title) AGAINST(? IN NATURAL LANGUAGE MODE)
                     OR MATCH(careers.address) AGAINST(? IN NATURAL LANGUAGE MODE)
                     OR MATCH(career_details.description, career_details.requirement) AGAINST(? IN NATURAL LANGUAGE MODE)
-                    ", [$skillOfCv,$location, $certificate])
+                    ", [$skillOfCv, $location, $certificate])
                 ->get();
             $careers = $careers->whereNotIn('id', $bestCareers->pluck('id')->toArray());
             $careers = CareerResource::make($careers);
@@ -449,11 +463,10 @@ class CandidateController extends Controller
     public function reviewCV(Request $request)
     {
         $cv = CurriculumVitae::query()->find($request->cvId);
-        $filePath = storage_path('/app/public/uploads/'.$cv->thumbnail); // Đường dẫn tới file PDF
+        $filePath = storage_path('/app/public/uploads/' . $cv->thumbnail); // Đường dẫn tới file PDF
         $pdfContent = base64_encode(file_get_contents($filePath));
 
-        $result = Gemini::
-        generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
+        $result = Gemini::generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
             ->generateContent([
                 'Hãy phân tích cv dưới dạng này đầu ra phải ở dạng, các key sẽ là các mục lớn như, achievement, experience, soft skill, language, career_goal v.v bạn nhìn thấy những mục lớn nào thì cứ ghi rõ ra, đồng thời các key đó ví dụ career_goal thì thêm một field nữa chứa là Career Goal và value sẽ gồm 3 mục score (đánh giá trên thang điểm 10), reason, suggestion [{
               "personal_info": {
@@ -461,8 +474,7 @@ class CandidateController extends Controller
                 "reason": "Thiếu thông tin như ngày sinh và địa chỉ.",
                 "suggestion": "Cung cấp đầy đủ thông tin cá nhân bao gồm ngày sinh và địa chỉ để tạo sự tin cậy.",
                 "field": "Personal Info"
-              },]'
-                ,
+              },]',
                 new Blob(
                     mimeType: MimeType::IMAGE_JPEG,
                     data: base64_encode(
@@ -470,7 +482,7 @@ class CandidateController extends Controller
                     )
                 )
             ]);
-        $res = str_replace(['`', 'json'],'', $result->text());
+        $res = str_replace(['`', 'json'], '', $result->text());
         $res = json_decode($res);
 
 
@@ -515,7 +527,7 @@ class CandidateController extends Controller
             $jobTypeFilter = explode(',', $request->input('job-type'));
             Session::flash('job-type', $request['job-type']);
             // Lọc theo các giá trị trong mảng $jobTypeFilter
-            $candidates = $candidates->whereIn('type_work', array_map(function($jobType) {
+            $candidates = $candidates->whereIn('type_work', array_map(function ($jobType) {
                 return WorkTypeEnum::getValue($jobType); // Áp dụng enum mapping
             }, $jobTypeFilter));
         }
@@ -553,11 +565,8 @@ class CandidateController extends Controller
             $inviteExists->accepted_at = Carbon::now()->toDateTimeString();
             $inviteExists->save();
             return view('pages.candidates.accept-invite');
-
         }
 
         return redirect()->route('home');
-
     }
-
 }

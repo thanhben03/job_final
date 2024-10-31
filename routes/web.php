@@ -121,24 +121,7 @@ Route::get('invite-interview', [CandidateController::class, 'acceptInterview']);
 Route::middleware(StartSession::class)->post('/chatbot', [OpenAIController::class, 'getResponse'])->name('chat.bot');
 Route::post('/chatbot/search-job', [OpenAIController::class, 'searchJobs']);
 
-Route::get('/info', function () {
-    // Lấy lịch sử hội thoại từ session
-    $history = session()->get('conversation_history') ?? [];
-        
-        
-    if (true) {
-        $history[] = ['role' => 'user', 'content' => 'ahihi'];
-    } else {
-        Log::warning('Prompt is empty or null.');
-    }
-    Log::info($history);
-    
-    try {
-        session()->put('conversation_history', $history);
-    } catch (\Exception $e) {
-        Log::error('Failed to update conversation history: ' . $e->getMessage());
-    }
-})->name('search');
+Route::get('/set-main-cv/{id}', [CandidateController::class, 'setMainCv'])->name('set.main.cv');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/company-auth.php';

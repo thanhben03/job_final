@@ -177,31 +177,12 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="username" type="text" required class="form-control" placeholder="Name">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <input name="email" type="text" class="form-control" required placeholder="Email">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <input name="phone" type="text" class="form-control" required placeholder="Phone">
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-lg-12">
-                                            <div class="form-group mb-3">
-                                                <textarea name="message" class="form-control" rows="3" placeholder="Message"></textarea>
+                                                <textarea id="message" name="message" class="form-control" rows="3" placeholder="Message"></textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-md-12">
-                                            <button type="submit" class="site-button">Submit Now</button>
+                                            <button onclick="sendMessageToCompany({{$company['id']}})" type="button" class="site-button">Submit Now</button>
                                         </div>
 
                                     </div>
@@ -224,3 +205,25 @@
     </div>
     <!-- Employer Detail END -->
 @endsection
+@push('js')
+    <script>
+        function sendMessageToCompany(companyId) {
+            let message = document.querySelector('#message').value;
+            $.ajax({
+                type: 'POST',
+                url: "{{route('send.chat.to.company')}}",
+                data: {
+                    '_token': '{{csrf_token()}}',
+                    'company_id': companyId,
+                    'message': message
+                },
+                success: function(res){
+                    toastr.success(res.msg, 'Notification !')
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1200);
+                }
+            });
+        }
+    </script>
+@endpush

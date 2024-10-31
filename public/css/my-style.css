@@ -20,7 +20,12 @@
     border-color: #000 #0000;
     animation: l1 1s infinite;
 }
-@keyframes l1 {to{transform: rotate(.5turn)}}
+
+@keyframes l1 {
+    to {
+        transform: rotate(.5turn)
+    }
+}
 
 
 .apply-now-text {
@@ -31,9 +36,8 @@
     cursor: pointer;
 }
 
-.link-quickview-company {
+.link-quickview-company {}
 
-}
 .item-quickview-company span {
     display: inline-block;
     width: 300px;
@@ -218,7 +222,7 @@
     width: 400px;
 }
 
-.bubble{
+.bubble {
     background-color: #F2F2F2;
     border-radius: 5px;
     box-shadow: 0 0 6px #B2B2B2;
@@ -235,12 +239,12 @@
     height: 16px;
     position: absolute;
     top: 11px;
-    transform:             rotate( 29deg ) skew( -35deg );
-    -moz-transform:    rotate( 29deg ) skew( -35deg );
-    -ms-transform:     rotate( 29deg ) skew( -35deg );
-    -o-transform:      rotate( 29deg ) skew( -35deg );
-    -webkit-transform: rotate( 29deg ) skew( -35deg );
-    width:  20px;
+    transform: rotate(29deg) skew(-35deg);
+    -moz-transform: rotate(29deg) skew(-35deg);
+    -ms-transform: rotate(29deg) skew(-35deg);
+    -o-transform: rotate(29deg) skew(-35deg);
+    -webkit-transform: rotate(29deg) skew(-35deg);
+    width: 20px;
 }
 
 .bot {
@@ -249,7 +253,7 @@
 }
 
 .bot::before {
-    box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
+    box-shadow: -2px 2px 2px 0 rgba(178, 178, 178, .4);
     left: -9px;
 }
 
@@ -261,12 +265,11 @@
 }
 
 .you::before {
-    box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
+    box-shadow: 2px -2px 2px 0 rgba(178, 178, 178, .4);
     right: -9px;
 }
 
-.you-wrap {
-}
+.you-wrap {}
 
 .chat-header {
     background: #424242;
@@ -364,6 +367,7 @@
 .chat-start {
     font-size: 13px;
 }
+
 .removable-element {
     position: relative;
     display: inline-block;
@@ -371,7 +375,8 @@
 }
 
 .removable-element input {
-    padding-right: 20px; /* Để chừa chỗ cho nút X */
+    padding-right: 20px;
+    /* Để chừa chỗ cho nút X */
 }
 
 .remove-btn {
@@ -384,9 +389,22 @@
     cursor: pointer;
     padding: 2px 5px;
     font-size: 14px;
-    display: none; /* Ẩn nút X ban đầu */
+    display: none;
+    /* Ẩn nút X ban đầu */
 }
 
 .removable-element:hover .remove-btn {
-    display: inline; /* Hiển thị nút X khi rê chuột vào */
+    display: inline;
+    /* Hiển thị nút X khi rê chuột vào */
+}
+
+.main-cv {
+    position: absolute;
+    z-index: 1;
+    background: crimson;
+    color: yellow;
+    padding: 3px 7px;
+    border-radius: 4px;
+    font-size: 13px;
+    right: 0px;
 }

@@ -82,4 +82,8 @@ class User extends Authenticatable
     public function reported () {
         return $this->hasMany(ReportedUser::class, 'user_id', 'id');
     }
+
+    public function mainCV () {
+        return $this->belongsTo(CurriculumVitae::class, 'main_cv', 'id');
+    }
 }

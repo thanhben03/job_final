@@ -32,6 +32,7 @@ class CandidateResource extends ResourceCollection
                 'address' => $item->address,
                 'phone' => $item->phone,
                 'province' => $item?->province ?? '',
+                'main_cv' => $item->mainCV,
                 'type_work' => WorkTypeEnum::getDescription($item->type_work),
                 'gender' => GenderEnum::getDescription($item->gender),
                 'price_per_hours' => $this->convertPriceString(intval($item->price_per_hours)),

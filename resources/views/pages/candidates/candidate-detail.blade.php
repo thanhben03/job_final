@@ -140,7 +140,7 @@
                     <div class="twm-candi-self-bottom">
                         <button onclick="showModalQuickChat()" class="site-button">Contact Us</button>
                         <button onclick="showModalInviteInterview()" class="site-button twm-bg-green">Hire Me</button>
-                        <a href="files/pdf-sample.pdf" class="site-button secondry">Download CV</a>
+                        <a download href="{{ asset('storage/uploads/' . $candidate['main_cv']->path) }}" class="site-button secondry">Download CV</a>
                     </div>
                 </div>
             </div>
