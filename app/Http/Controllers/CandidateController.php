@@ -12,6 +12,7 @@ use App\Models\Chat;
 use App\Models\Company;
 use App\Models\CurriculumVitae;
 use App\Models\InviteInterview;
+use App\Models\Notification;
 use App\Models\Province;
 use App\Models\ReportedUser;
 use App\Models\SaveCareer;
@@ -39,7 +40,21 @@ class CandidateController extends Controller
 
     public function index()
     {
-        return view('pages.candidates.dashboard');
+        $messageCount = Chat::query()
+                            ->where('user_id', auth()->user()->id)
+                            ->count();
+        $appliedCount = UserCareer::query()
+                            ->whereIn('cv_id', auth()->user()->cv()->pluck('id')->toArray())
+                            ->count();
+        $notificationCount = Notification::query()
+                            ->where('user_id', auth()->user()->id)
+                            ->count();
+        $savedJobCount = SaveCareer::query()
+                            ->where('user_id', auth()->user()->id)
+                            ->count();
+
+
+        return view('pages.candidates.dashboard', compact('messageCount', 'appliedCount', 'notificationCount', 'savedJobCount'));
     }
 
     public function setMainCv($cvID)
