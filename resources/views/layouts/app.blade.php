@@ -617,7 +617,7 @@
             },
             error: function (xhr) {
                 $(".wrap-errors-login").html(
-                    '<div class="alert alert-danger text-left">Email or password is invalid</div>'
+                    `<div class="alert alert-danger text-left">${xhr.responseJSON.msg}</div>`
                 )
             }
         })

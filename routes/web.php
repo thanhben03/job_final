@@ -11,6 +11,7 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\CheckBannedUser;
 use App\Http\Middleware\CompanyAuthenticated;
 use App\Http\Middleware\UserAuthenticated;
 use Illuminate\Session\Middleware\StartSession;
@@ -42,7 +43,7 @@ Route::post('/match-with-candidate', [JobController::class, 'matchWithCandidate'
 Route::get('/match-with-job/{id}', [CandidateController::class, 'matchWithJob'])->name('match.with.job');
 
 
-Route::middleware(UserAuthenticated::class)->group(function () {
+Route::middleware([UserAuthenticated::class, CheckBannedUser::class])->group(function () {
     Route::get('/candidates/dashboard', [CandidateController::class, 'index'])->name('candidate.dashboard');
     Route::get('/candidates/profile', [CandidateController::class, 'profile'])->name('candidate.profile');
     Route::get('/candidates/job-applied', [CandidateController::class, 'jobApplied'])->name('candidate.job-applied');
@@ -104,10 +105,6 @@ Route::post('/chat/send-to-company', [ChatController::class, 'sendMessageToCompa
 Route::get('/chat/view-chat/{companyId}', [ChatController::class, 'viewChatForUser'])->name('chat.getChat');
 Route::get('/chat/view-chat-company/{userId}', [ChatController::class, 'viewChatForCompany'])->name('chat.getChat.company');
 Route::post('/chat/quick-chat/', [ChatController::class, 'quickChat'])->name('quick.chat');
-
-//Route::get('/dashboard', function () {
-//    return view('dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

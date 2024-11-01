@@ -13,4 +13,16 @@ final class LevelEnum extends Enum implements LocalizedEnum
     const MIDDLE = 3;
     const SENIOR = 4;
     const TECH_LEAD = 5;
+
+    public static function getLabels(): array
+    {
+        return [
+            self::INTERN => 'Intern',
+            self::FRESHER => 'Fresher',
+            self::JUNIOR => 'Junior',
+            self::MIDDLE => 'Middle',
+            self::SENIOR => 'Senior',
+            self::TECH_LEAD => 'Tech Lead',
+        ];
+    }
 }

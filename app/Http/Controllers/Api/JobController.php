@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ApplyJobRequest;
 use App\Http\Resources\CareerDetailResource;
 use App\Http\Resources\CareerResource;
 use App\Models\Career;
 use App\Models\Province;
 use App\Models\Skill;
+use App\Models\UserCareer;
 use App\Services\Career\CareerServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -65,4 +67,41 @@ class JobController extends Controller
         return response()->json($job);
     }
 
+
+    public function applyJob(ApplyJobRequest $request)
+    {
+        $data = $request->validated();
+        $today = now();
+
+        try {
+            $job = Career::query()->findOrFail($data['job_id']);
+
+            // Neu thoi gian ung tuyen da het
+            if ($today->greaterThan($job->expiration_day)) {
+                return response()->json([
+                    'msg' => 'Application period has expired!'
+                ], 500);
+            }
+            $userCareer = UserCareer::query()->where([
+                'career_id' => $data['job_id'],
+                'cv_id' => $data['cv_id'],
+            ])->first();
+
+            if ($userCareer) {
+                return response()->json([
+                    'msg' => 'You have already applied for this job'
+                ], 500);
+            }
+            UserCareer::query()->create([
+                'career_id' => $data['job_id'],
+                'cv_id' => $data['cv_id'],
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+
+            return response()->json([
+                'msg' => $th->getMessage()
+            ], 500);
+        }
+    }
 }

@@ -12,4 +12,15 @@ final class JobExpEnum extends Enum implements LocalizedEnum
     const TWOYEAR = 2;
     const THREEYEAR = 3;
     const FOURYEAR = 4;
+
+    public static function getLabels ():array
+    {
+        return [
+            self::UNDERONEYEAR => 'Under One Year',
+            self::ONEYEAR => 'One Year',
+            self::TWOYEAR => 'Two Year',
+            self::THREEYEAR => 'Three Year',
+            self::FOURYEAR => 'Four Year',
+        ];
+    }
 }

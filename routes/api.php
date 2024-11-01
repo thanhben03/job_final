@@ -3,8 +3,10 @@
 
 use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserController;
 use App\Models\Province;
 use App\Models\Skill;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,6 +19,7 @@ Route::prefix('api/v1')->group(function () {
         Route::get('/all', [JobController::class, 'getAll']);
         Route::get('/filter', [JobController::class, 'getFilterJob']);
         Route::get('/{id}', [JobController::class, 'show']);
+        Route::post('/apply-job', [JobController::class, 'applyJob']);
 
     });
 
@@ -26,6 +29,8 @@ Route::prefix('api/v1')->group(function () {
             return response()->json($provinces);
         });
     });
+
+    Route::get('info-system', [UserController::class, 'infoSystem']);
 
     Route::prefix('/skills')->group(function () {
         Route::get('/', function () {
@@ -37,4 +42,6 @@ Route::prefix('api/v1')->group(function () {
     Route::prefix('/auth')->group(function () {
         Route::post('/login', [AuthController::class, 'signin']);
     });
+
+    Route::get('/get-cv/{user_id}', [UserController::class, 'getAllCV']);
 });

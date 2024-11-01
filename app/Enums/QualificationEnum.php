@@ -9,4 +9,12 @@ final class QualificationEnum extends Enum implements LocalizedEnum
 {
     const UNIVERSITY = 0;
     const COLLEGE = 1;
+
+    public static function getLabels(): array
+    {
+        return [
+            self::UNIVERSITY => 'University',
+            self::COLLEGE => 'College',
+        ];
+    }
 }

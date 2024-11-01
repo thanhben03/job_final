@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\GenderEnum;
+use App\Enums\RoleUserEnum;
+use App\Enums\WorkTypeEnum;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
@@ -9,6 +12,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -49,10 +53,11 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('type_work')
                     ->numeric()
                     ->default(1),
-                Forms\Components\TextInput::make('role')
+                Forms\Components\Select::make('role')
+                    ->options(RoleUserEnum::asSelectArray())
                     ->required(),
-                Forms\Components\TextInput::make('gender')
-                    ->numeric()
+                Forms\Components\Select::make('gender')
+                    ->options(GenderEnum::asSelectArray())
                     ->default(0),
                 Forms\Components\TextInput::make('province_id')
                     ->numeric(),
@@ -71,50 +76,49 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('birthday')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('avatar')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('introduce')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('price_per_hours')
-                    ->numeric()
+                TextColumn::make('reported_count')
+                    ->label('Reported Count')
+                    ->counts('reported') // Use the counts method for relationship counting
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type_work')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('role'),
+                // Tables\Columns\TextColumn::make('avatar')
+                //     ->searchable(),
+                // Tables\Columns\TextColumn::make('price_per_hours')
+                //     ->money('VND')
+                //     ->sortable(),
+                // Tables\Columns\SelectColumn::make('type_work')
+                //     ->options(WorkTypeEnum::asSelectArray())
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('gender')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('province_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('address')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('main_cv')
-                    ->numeric()
+                // Tables\Columns\SelectColumn::make('gender')
+                //     ->options(GenderEnum::asSelectArray())
+                //     ->sortable(),
+                // Tables\Columns\TextColumn::make('province.name')
+                //     ->numeric()
+                //     ->sortable(),
+                Tables\Columns\SelectColumn::make('ban')
+                    ->options([
+                        0 => 'Active',
+                        1 => 'Ban',
+                    ])
                     ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ViewAction::make()
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

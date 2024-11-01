@@ -20,4 +20,14 @@ final class WorkTypeEnum extends Enum implements LocalizedEnum
         // Kiểm tra nếu $type tồn tại trong enum, nếu không trả về null
         return $types[$type] ?? null;
     }
+
+    public static function getLabels(): array
+    {
+        return [
+            self::PART_TIME => 'Part Time',
+            self::FULL_TIME => 'Full Time',
+        ];
+    }
+
+
 }
