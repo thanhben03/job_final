@@ -83,6 +83,13 @@ class CompanyResource extends Resource
                         1 => 'Banned',
                     ])
                     ->sortable(),
+                Tables\Columns\SelectColumn::make('is_active')
+                    ->label('Active')
+                    ->options([
+                        0 => 'Peding',
+                        1 => 'Active',
+                    ])
+                    ->sortable(),
                 // ->selectablePlaceholder(false),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),

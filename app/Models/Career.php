@@ -74,4 +74,5 @@ class Career extends Model
         return $this->belongsTo(Category::class);
     }
 
+
 }

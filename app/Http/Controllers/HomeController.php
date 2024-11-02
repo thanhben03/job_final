@@ -22,6 +22,12 @@ class HomeController extends Controller
         $this->service = $careerService;
     }
 
+    public function testSS () {
+        Session::forget('history');
+
+        print_r(Session::get('history'));
+    }
+
     public function setLanguage ($locale) {
         Session::put('locale', $locale);
         return redirect()->back();

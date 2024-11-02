@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Career;
+use App\Models\Category;
 use App\Models\Product;
 use App\Services\OpenAIService;
 use Illuminate\Http\Request;
@@ -85,30 +86,40 @@ class OpenAIController extends Controller
             ]
 
         ];
+        $categories = $this->getCategory();
         $functions2 = [
             [
                 'name' => 'search_job',
-                'description' => 'Fetches jobs details from the database based on skills, location and salary',
+                'description' => "Search for job listings based on user input. You can specify one or more of the following parameters: skills, location, salary, or categories. Each field is optional, and the system will return relevant job listings based on the criteria provided.",
                 'parameters' => [
                     'type' => 'object',
                     'properties' => [
                         'skills' => [
                             'type' => 'string',
-                            'description' => 'The skills required for the job'
+                            'description' => 'Specify the skills required for the job (e.g., programming, management).'
                         ],
                         'location' => [
                             'type' => 'string',
-                            'description' => 'The location of the job'
+                            'description' => 'Specify the location where the job is based (e.g., New York, remote).'
                         ],
                         'salary' => [
                             'type' => 'integer',
-                            'description' => 'The minimum salary required for the job'
+                            'description' => 'Specify the minimum salary required for the job (e.g., 50000 for $50,000/year).'
+                        ],
+                        'categories' => [
+                            'type' => 'array',
+                            'description' => 'Specify one or more categories or fields for the job (e.g., IT, healthcare, finance).',
+                            'items' => [
+                                'type' => 'string',
+                                'enum' => $categories
+                            ]
                         ]
                     ]
                     // 'required' => ['skills', 'location', 'salary']
                 ]
             ]
         ];
+
 
         // Gọi OpenAI API
         $response = $this->openAIService->callFunction($prompt, $functions2);
@@ -145,8 +156,8 @@ class OpenAIController extends Controller
                 $skills = $arguments['skills'] ?? null;
                 $location = $arguments['location'] ?? null;
                 $salary = $arguments['salary'] ?? null;
-
-                $jobs = $this->searchJob($skills, $location, $salary);
+                $categories = $arguments['categories'] ?? null;
+                $jobs = $this->searchJob($skills, $location, $salary, $categories);
                 $html = $this->getListJobHtml($jobs);
                 return response()->json([
                     'role' => 'assistant',
@@ -186,31 +197,37 @@ class OpenAIController extends Controller
     }
 
     // hàm search tổng hợp
-    public function searchJob ($skills = null, $location = null, $salary = null) {
+    public function searchJob($skills = null, $location = null, $salary = null, $categories)
+    {
         $careers = Career::query()
             ->when($salary, function ($query) use ($salary) {
                 $query->where('max_salary', '>=', $salary);
             })
+            ->when($categories, function ($query) use ($categories) {
+                $query->whereHas('category', function ($query) use ($categories) {
+                    $query->whereIn('name', $categories);
+                });
+            })
             ->when($skills, function ($query) use ($skills) {
                 // $skillsString = implode(',', $skills);
                 $query->join('career_details', 'careers.id', '=', 'career_details.career_id')
-                ->whereRaw(
-                    "MATCH(careers.title) AGAINST(? IN BOOLEAN MODE)
+                    ->whereRaw(
+                        "MATCH(careers.title) AGAINST(? IN BOOLEAN MODE)
                     OR MATCH(career_details.description) AGAINST(? IN BOOLEAN MODE)
                     OR MATCH(career_details.requirement) AGAINST(? IN BOOLEAN MODE)
                     ",
-                    [$skills, $skills, $skills]
-                );
+                        [$skills, $skills, $skills]
+                    );
             })
             ->when($location, function ($query) use ($location) {
                 $query->whereRaw(
                     "MATCH(careers.address) AGAINST(? IN BOOLEAN MODE)",
-                    [$location]);
+                    [$location]
+                );
             })
             ->orderBy('careers.created_at', 'desc')
             ->take(10)
             ->get();
-
 
         return $careers;
     }
@@ -284,4 +301,10 @@ class OpenAIController extends Controller
 
         return $html;
     }
+
+    public function getCategory()
+    {
+        return Category::all()->pluck('name')->toArray();
+    }
+
 }
