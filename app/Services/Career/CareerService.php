@@ -245,7 +245,10 @@ class CareerService implements CareerServiceInterface
     public function getAllById($company_id)
     {
         $instance = $this->repository->getQueryBuilder();
-        return $instance->where('company_id', $company_id)->get();
+        return $instance->where([
+            'company_id' => $company_id,
+            'status' => 1
+        ])->get();
     }
 
     public function getBySlug($slug)

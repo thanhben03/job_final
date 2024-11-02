@@ -16,6 +16,7 @@ use App\Models\District;
 use App\Models\Province;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -130,6 +131,10 @@ class CareerResource extends Resource
                 Tables\Columns\TextColumn::make('category.name')
                     ->label('Chuyên mục')
                     ->numeric()
+                    ->sortable(),
+                Tables\Columns\SelectColumn::make('status')
+                    ->label('Published')
+                    ->options([0 => 'Pending', 1 => 'Active'])
                     ->sortable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),

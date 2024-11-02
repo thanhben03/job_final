@@ -158,4 +158,6 @@ return [
     'hello' => 'Hello',
     'Latest Job' => 'Latest Job',
     'Hello, how can i help you ?' => 'Hello, how can i help you ?',
+    'active' => 'Hoạt động',
+    'pending' => 'Chờ duyệt',
 ];

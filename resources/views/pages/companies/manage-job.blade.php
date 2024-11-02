@@ -94,6 +94,7 @@
                                 <th>Job Title</th>
                                 <th>Category</th>
                                 <th>Job Types</th>
+                                <th>Publish</th>
                                 <th>Applications</th>
                                 <th>Created & Expired</th>
                                 <th>Action</th>
@@ -134,6 +135,13 @@
                                     <td>{{$career['category']->name}}</td>
                                     <td>
                                         <div class="twm-jobs-category"><span class="twm-bg-green">Part Time</span></div>
+                                    </td>
+                                    <td>
+                                        <div class="twm-jobs-category">
+                                            <span class="{{$career['published'] ? 'twm-bg-green' : 'twm-bg-golden'}}">
+                                                {{$career['published'] ? trans('lang.active') : trans('lang.pending') }}
+                                            </span>
+                                        </div>
                                     </td>
                                     <td>
                                         <a href="{{route('company.show.detail-job', $career['id'])}}"

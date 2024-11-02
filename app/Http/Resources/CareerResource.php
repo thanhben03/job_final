@@ -62,6 +62,7 @@ class CareerResource extends ResourceCollection
                 'appointments' => AppointmentResource::make($career->appointments)->resolve(),
                 'from_time' => $career->from_time,
                 'to_time' => $career->to_time,
+                'published' => $career->status,
                 'status' => auth()->user() && $career->user_careers->count() > 0 && auth()->user()->cv() !== null
                     ? ($careerCV = $career->user_careers->whereIn('cv_id', auth()->user()->cv()->pluck('id')->toArray())->first())
                         ? StatusCV::getDescription($careerCV->status)
