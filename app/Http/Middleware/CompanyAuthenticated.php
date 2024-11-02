@@ -19,6 +19,9 @@ class CompanyAuthenticated
         if (!Auth::guard('company')->user()) {
             return redirect()->route('company.login');
         }
+        if (Auth::guard('company')->check() && !Auth::guard('company')->user()->is_active) {
+            return redirect()->route('company.account-not-active');
+        }
         return $next($request);
     }
 }

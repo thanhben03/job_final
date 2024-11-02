@@ -44,6 +44,16 @@ class CompanyController extends Controller
         $this->service = $careerService;
     }
 
+    public function accountNotActive () {
+
+        if (Auth::guard('company')->user()->is_active == 0) {
+            return view('pages.companies.account-not-active');
+        }
+
+        return redirect()->route('company.dashboard');
+
+    }
+
     public function index()
     {
         $company = Auth::guard('company')->user();

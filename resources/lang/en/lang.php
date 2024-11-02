@@ -158,6 +158,9 @@ return [
     'hello' => 'Hello',
     'Latest Job' => 'Latest Job',
     'Hello, how can i help you ?' => 'Hello, how can i help you ?',
-    'active' => 'Hoạt động',
-    'pending' => 'Chờ duyệt',
+    'active' => 'Active',
+    'pending' => 'Pending',
+    'active.header' => 'Your account has not been activated. We will review and activate your account within a few minutes hour',
+    'active.content' => 'If you do not receive a response, please contact the administrator via email for support.'
+   
 ];

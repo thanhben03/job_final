@@ -82,6 +82,7 @@ Route::middleware(CompanyAuthenticated::class)->group(function () {
 
 Route::get('/companies/detail/{companyId}', [CompanyController::class, 'companyDetail'])->name('company.detail');
 Route::get('/companies/list', [CompanyController::class, 'list'])->name('company.list');
+Route::get('/companies/account-not-active', [CompanyController::class, 'accountNotActive'])->name('company.account-not-active');
 
 
 

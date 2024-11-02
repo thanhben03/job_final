@@ -158,4 +158,8 @@ return [
     'hello' => 'Xin chào',
     'Latest Job' => 'Công việc mới nhất',
     'Hello, how can i help you ?' => 'Xin chào, tôi có thể giúp gì cho bạn ?',
+    'active' => 'Hoạt động',
+    'pending' => 'Chờ duyệt',
+    'active.header' => 'Tài khoản của bạn chưa được kích hoạt. chúng tôi sẽ xem xét và kích hoạt tài khoản của bạn trong vòng vài giờ',
+    'active.content' => 'Nếu bạn không nhận được phản hồi, vui lòng liên hệ với quản trị viên qua email để được hỗ trợ.'
 ];
