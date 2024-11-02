@@ -10,15 +10,15 @@
                 <div class="wt-bnr-inr-entry">
                     <div class="banner-title-outer">
                         <div class="banner-title-name">
-                            <h2 class="wt-title">Candidate Saved Jobs</h2>
+                            <h2 class="wt-title">{{ trans('lang.Saved Job') }}</h2>
                         </div>
                     </div>
                     <!-- BREADCRUMB ROW -->
 
                     <div>
                         <ul class="wt-breadcrumb breadcrumb-style-2">
-                            <li><a href="index.html">Home</a></li>
-                            <li>Candidate Saved Jobs</li>
+                            <li><a href="index.html">{{ trans('lang.header.home') }}</a></li>
+                            <li>{{ trans('lang.Saved Job') }}</li>
                         </ul>
                     </div>
 

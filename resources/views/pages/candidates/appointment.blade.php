@@ -30,15 +30,15 @@
                 <div class="wt-bnr-inr-entry">
                     <div class="banner-title-outer">
                         <div class="banner-title-name">
-                            <h2 class="wt-title">Candidate Jobs Applied</h2>
+                            <h2 class="wt-title">{{ trans('lang.Appointment Manager') }}</h2>
                         </div>
                     </div>
                     <!-- BREADCRUMB ROW -->
 
                     <div>
                         <ul class="wt-breadcrumb breadcrumb-style-2">
-                            <li><a href="index.html">Home</a></li>
-                            <li>Candidate Jobs Applied</li>
+                            <li><a href="index.html">{{ trans('lang.header.home') }}</a></li>
+                            <li>{{ trans('lang.Appointment Manager') }}</li>
                         </ul>
                     </div>
 
@@ -62,7 +62,7 @@
                     <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
                         <div class="twm-right-section-panel candidate-save-job site-bg-gray">
                             <div class="product-filter-wrap d-flex justify-content-between align-items-center">
-                                <span class="woocommerce-result-count-left">Manage Appointment</span>
+                                <span class="woocommerce-result-count-left">{{ trans('lang.Appointment Manager') }}</span>
 
                             </div>
                             <div class="container mt-1">
@@ -76,15 +76,15 @@
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="appointmentModalLabel">Chi tiết cuộc hẹn</h5>
+                                            <h5 class="modal-title" id="appointmentModalLabel">{{ trans('lang.Appointment Details') }}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p><strong>Công ty:</strong> <span id="modal-company-name"></span></p>
-                                            <p><strong>Ngày:</strong> <span id="modal-date"></span></p>
-                                            <p><strong>Thời gian:</strong> <span id="modal-time"></span></p>
-                                            <p><strong>Ghi chú:</strong> <span id="modal-note"></span></p>
-                                            <p><strong>Trạng thái:</strong> <span id="modal-status"></span></p>
+                                            <p><strong>{{ trans('lang.company') }}:</strong> <span id="modal-company-name"></span></p>
+                                            <p><strong>{{ trans('lang.date') }}:</strong> <span id="modal-date"></span></p>
+                                            <p><strong>{{ trans('lang.time') }}:</strong> <span id="modal-time"></span></p>
+                                            <p><strong>{{ trans('lang.note') }}:</strong> <span id="modal-note"></span></p>
+                                            <p><strong>{{ trans('lang.status') }}:</strong> <span id="modal-status"></span></p>
                                             <div id="modal-actions" class="text-end mt-3">
                                                 <button class="btn btn-success me-2" id="accept-appointment-btn">Đồng ý</button>
                                                 <button class="btn btn-danger" id="reject-appointment-btn">Từ chối</button>

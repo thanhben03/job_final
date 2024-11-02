@@ -5,15 +5,15 @@
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="twm-bnr-left-section">
                 <div class="twm-bnr-title-small">We Have <span class="site-text-primary">208,000+</span> Live Jobs</div>
-                <div class="twm-bnr-title-large">Find the <span class="site-text-primary">job</span> that fits your life</div>
-                <div class="twm-bnr-discription">Type your keyword, then click search to find your perfect job.</div>
+                <div class="twm-bnr-title-large">{{__('lang.home.Find the job that fits your life')}}</div>
+                <div class="twm-bnr-discription">{{__('lang.home.Type your keyword, then click search to find your perfect job.')}}</div>
 
                 <div class="twm-bnr-search-bar">
                     <form>
                         <div class="row" style="justify-content: space-between;">
                             <!--Title-->
                             <div class="form-group col-xl-3 col-lg-6 col-md-6">
-                                <label>What</label>
+                                <label>{{__('lang.category')}}</label>
                                 <select class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="select-skill" data-bv-field="size">
                                     <option disabled selected value="">Select Category</option>
                                     @foreach($skills as $skill)
@@ -23,7 +23,7 @@
                             </div>
                             <!--Title-->
                             <div class="form-group col-xl-3 col-lg-6 col-md-6">
-                                <label>Location</label>
+                                <label>{{__('lang.location')}}</label>
                                 <select class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="select-province" data-bv-field="size">
                                     <option disabled selected value="">Select Category</option>
                                     @foreach($provinces as $province)
@@ -34,7 +34,7 @@
 
                             <!--Find job btn-->
                             <div class="form-group col-xl-3 col-lg-6 col-md-6">
-                                <button type="button" onclick="searchJob()" class="site-button">Find Job</button>
+                                <button type="button" onclick="searchJob()" class="site-button">{{__('lang.home.Find Jobs')}}</button>
                             </div>
 
                         </div>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="twm-bnr-popular-search">
-                    <span class="twm-title">Popular Searches:</span>
+                    <span class="twm-title">{{__('lang.home.Popular Searches')}}:</span>
                     <a href="job-list.html">Developer</a> ,
                     <a href="job-list.html">Designer</a> ,
                     <a href="job-list.html">Architect</a> ,

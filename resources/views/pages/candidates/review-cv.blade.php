@@ -10,15 +10,15 @@
                 <div class="wt-bnr-inr-entry">
                     <div class="banner-title-outer">
                         <div class="banner-title-name">
-                            <h2 class="wt-title">AI | Review CV</h2>
+                            <h2 class="wt-title">AI | {{ trans('lang.Review CV') }}</h2>
                         </div>
                     </div>
                     <!-- BREADCRUMB ROW -->
 
                     <div>
                         <ul class="wt-breadcrumb breadcrumb-style-2">
-                            <li><a href="index.html">Home</a></li>
-                            <li>Review CV</li>
+                            <li><a href="index.html">{{ trans('lang.header.home') }}</a></li>
+                            <li>{{ trans('lang.Review CV') }}</li>
                         </ul>
                     </div>
 
@@ -43,17 +43,17 @@
                         <div class="twm-right-section-panel candidate-save-job site-bg-gray">
                             <!--Filter Short By-->
                             <div class="product-filter-wrap d-flex justify-content-between align-items-center">
-                                <span class="woocommerce-result-count-left">Review CV</span>
+                                <span class="woocommerce-result-count-left">{{ trans('lang.Review CV') }}</span>
                             </div>
                             <div class="">
-                                <label class="form-label">Choose CV: </label>
+                                <label class="form-label">{{ trans('lang.Choose CV') }}: </label>
                                 <select class="form-select" name="" id="select-cv">
                                     @foreach($cvs as $cv)
                                         <option value="{{$cv->id}}">{{$cv->path}}</option>
                                     @endforeach
                                 </select>
                                 <div class="wrap-btn-review d-flex align-items-center">
-                                    <button onclick="reviewCV()" class="mt-2 btn btn-success">Review</button>
+                                    <button onclick="reviewCV()" class="mt-2 btn btn-success">{{ trans('lang.review') }}</button>
                                 </div>
 
                                 <!-- HTML cho Progress Bar -->
@@ -69,8 +69,8 @@
                                         <table class="table table-lg">
                                             <thead>
                                                 <tr>
-                                                    <th>Score</th>
-                                                    <th>Description</th>
+                                                    <th>{{ trans('lang.score') }}</th>
+                                                    <th>{{ trans('lang.description') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="wrap-reviews-body">

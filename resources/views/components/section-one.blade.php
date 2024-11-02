@@ -5,9 +5,9 @@
         <!-- TITLE START-->
         <div class="section-head center wt-small-separator-outer">
             <div class="wt-small-separator site-text-primary">
-                <div>Working Process</div>
+                <div>{{__('lang.home.working_process')}}</div>
             </div>
-            <h2 class="wt-title">How It Works</h2>
+            <h2 class="wt-title">{{__('lang.home.how_it_work')}}</h2>
 
         </div>
         <!-- TITLE END-->
@@ -21,9 +21,9 @@
                             <div class="twm-media">
                                 <span><img src="images/work-process/icon1.png" alt="icon1"></span>
                             </div>
-                            <h4 class="twm-title">Register<br>Your Account</h4>
+                            <h4 class="twm-title">{{__('lang.register')}}<br>{{__('lang.your_account')}}</h4>
                         </div>
-                        <p>You need to create an account to find the best and preferred job.</p>
+                        <p>{{__('lang.You need to create an account to find the best and preferred job.')}}</p>
                     </div>
                 </div>
 
@@ -34,10 +34,10 @@
                             <div class="twm-media">
                                 <span><img src="images/work-process/icon2.png" alt="icon1"></span>
                             </div>
-                            <h4 class="twm-title">Apply <br>
-                                For Dream Job</h4>
+                            <h4 class="twm-title">{{__('lang.apply')}} <br>
+                                {{__('lang.home.for_dream_job')}}</h4>
                         </div>
-                        <p>You need to create an account to find the best and preferred job.</p>
+                        <p>{{__('lang.You need to create an account to find the best and preferred job.')}}</p>
                     </div>
                 </div>
 
@@ -48,9 +48,9 @@
                             <div class="twm-media">
                                 <span><img src="images/work-process/icon3.png" alt="icon1"></span>
                             </div>
-                            <h4 class="twm-title">Upload <br>Your Resume</h4>
+                            <h4 class="twm-title">{{__('lang.apply')}} <br>{{__('lang.home.your_resume')}}</h4>
                         </div>
-                        <p>You need to create an account to find the best and preferred job.</p>
+                        <p>{{__('lang.You need to create an account to find the best and preferred job.')}}</p>
                     </div>
                 </div>
 

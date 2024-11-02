@@ -106,7 +106,7 @@
 
                 <li>
                     <a href="dash-my-profile.html"><i class="fa fa-user"></i><span
-                            class="admin-nav-text">My Profile</span></a>
+                            class="admin-nav-text">My Profile1</span></a>
                 </li>
 
                 <li>

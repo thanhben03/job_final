@@ -6,7 +6,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ trans('lang.Add new skill') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -17,8 +17,8 @@
                     </select>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button onclick="addSkill()" type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('lang.close') }}</button>
+                    <button onclick="addSkill()" type="button" class="btn btn-primary">{{ trans('lang.save') }}</button>
                 </div>
             </div>
         </div>
@@ -29,12 +29,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ trans('lang.Add new experience') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>From Date</label>
+                        <label>{{ trans('lang.From Date') }}</label>
                         <select name="" id="from-date" class="form-select">
                             @for($i = 1980; $i <= 2024; $i++)
                                 <option value="{{$i}}">{{$i}}</option>
@@ -42,7 +42,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>To Date</label>
+                        <label>{{ trans('lang.To Date') }}</label>
                         <select name="" id="to-date" class="form-select">
                             @for($i = 1980; $i <= 2024; $i++)
                                 <option value="{{$i}}">{{$i}}</option>
@@ -50,21 +50,21 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="">Title</label>
+                        <label for="">{{ trans('lang.title') }}</label>
                         <input id="title" type="text" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="">Position</label>
+                        <label for="">{{ trans('lang.position') }}</label>
                         <input id="position" type="text" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="">Description</label>
+                        <label for="">{{ trans('lang.description') }}</label>
                         <input id="description" type="text" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button onclick="addExperienceProfile()" type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('lang.close') }}</button>
+                    <button onclick="addExperienceProfile()" type="button" class="btn btn-primary">{{ trans('lang.save') }}</button>
                 </div>
             </div>
         </div>
@@ -80,15 +80,15 @@
                 <div class="wt-bnr-inr-entry">
                     <div class="banner-title-outer">
                         <div class="banner-title-name">
-                            <h2 class="wt-title">Candidate Profile</h2>
+                            <h2 class="wt-title">{{ trans('lang.Candidate Profile') }}</h2>
                         </div>
                     </div>
                     <!-- BREADCRUMB ROW -->
 
                     <div>
                         <ul class="wt-breadcrumb breadcrumb-style-2">
-                            <li><a href="index.html">Home</a></li>
-                            <li>Candidate Profile</li>
+                            <li><a href="index.html">{{ trans('lang.header.home') }}</a></li>
+                            <li>{{ trans('lang.Candidate Profile') }}</li>
                         </ul>
                     </div>
 
@@ -126,12 +126,13 @@
                                             <p class="alert alert-success">{{ Session::get('msg') }}</p>
                                         @endif
                                     </div>
+                                    {{-- Start Basic Infomation --}}
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-headingOne">
                                             <button class="accordion-button collapsed" type="button"
                                                     data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
                                                     aria-expanded="false" aria-controls="flush-collapseOne">
-                                                Basic Information
+                                                {{ trans('lang.Basic Information') }}
                                             </button>
                                         </h2>
                                         <div id="flush-collapseOne" class="accordion-collapse collapse"
@@ -287,12 +288,15 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- End Basic Information --}}
+
+                                    {{-- Start Professional skills --}}
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-headingTwo">
                                             <button class="accordion-button collapsed" type="button"
                                                     data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
                                                     aria-expanded="false" aria-controls="flush-collapseTwo">
-                                                Professional skills
+                                                {{ trans('lang.Professional skills') }}
                                             </button>
                                         </h2>
                                         <div id="flush-collapseTwo" class="accordion-collapse collapse"
@@ -320,12 +324,15 @@
                                         </div>
 
                                     </div>
+                                    {{-- End Professional skills --}}
+
+                                    {{-- Start Work Experience --}}
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-headingThree">
                                             <button class="accordion-button collapsed" type="button"
                                                     data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
                                                     aria-expanded="false" aria-controls="flush-collapseThree">
-                                                Work Experience
+                                                {{ trans('lang.Work Experience') }}
                                             </button>
                                         </h2>
                                         <div id="flush-collapseThree" class="accordion-collapse collapse"
@@ -365,10 +372,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{-- End Work Experience --}}
                                 </div>
                                 <div class="col-lg-12 col-md-12 mt-3">
                                     <div class="text-left">
-                                        <button type="submit" class="site-button">Save All
+                                        <button type="submit" class="site-button">{{ trans('lang.Save All') }}
                                         </button>
                                     </div>
                                 </div>

@@ -21,9 +21,9 @@
         <!-- TITLE START-->
         <div class="section-head center wt-small-separator-outer">
             <div class="wt-small-separator site-text-primary">
-                <div>Top Companies</div>
+                <div>{{__('lang.home.Top Companies')}}</div>
             </div>
-            <h2 class="wt-title">Get hired in top companies</h2>
+            <h2 class="wt-title">{{__('lang.home.Get hired in top companies')}}</h2>
         </div>
         <!-- TITLE END-->
 
@@ -158,9 +158,9 @@
             <!-- TITLE START-->
             <div class="section-head center wt-small-separator-outer">
                 <div class="wt-small-separator site-text-primary">
-                    <div>All Jobs Post</div>
+                    <div>{{__('lang.home.All Jobs Post')}}</div>
                 </div>
-                <h2 class="wt-title">Find Your Career You Deserve it</h2>
+                <h2 class="wt-title">{{__('lang.home.Find Your Career You Deserve it')}}</h2>
             </div>
             <!-- TITLE END-->
 

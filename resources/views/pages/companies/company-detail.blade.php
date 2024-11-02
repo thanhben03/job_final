@@ -9,7 +9,7 @@
             <div class="wt-bnr-inr-entry">
                 <div class="banner-title-outer">
                     <div class="banner-title-name">
-                        <h2 class="wt-title">Employer Detail</h2>
+                        <h2 class="wt-title">{{__('company.Company Detail')}}</h2>
                     </div>
                 </div>
                 <!-- BREADCRUMB ROW -->
@@ -17,7 +17,7 @@
                 <div>
                     <ul class="wt-breadcrumb breadcrumb-style-2">
                         <li><a href="index.html">Home</a></li>
-                        <li>Employer Detail</li>
+                        <li>{{__('company.Company Detail')}}</li>
                     </ul>
                 </div>
 
@@ -79,12 +79,12 @@
                                 </div>
                             </div>
 
-                            <h4 class="twm-s-title">About Company</h4>
+                            <h4 class="twm-s-title">{{__('company.About Company')}}</h4>
                             <!-- Introduce -->
                             {!! $company['introduce'] !!}
 
                             {{--Available Job--}}
-                            <h4 class="twm-s-title">Available Jobs</h4>
+                            <h4 class="twm-s-title">{{__('company.Available Jobs')}}</h4>
                             <div class="twm-jobs-list-wrap">
                                 <ul>
                                     @foreach($company['careers'] as $career)
@@ -125,7 +125,7 @@
                         <div class="side-bar-2">
 
                             <div class="twm-s-info-wrap mb-5">
-                                <h4 class="section-head-small mb-4">Profile Info</h4>
+                                <h4 class="section-head-small mb-4">{{__('company.Profile Info')}}</h4>
                                 <div class="twm-s-info">
                                     <ul>
                                         <li>
@@ -171,7 +171,7 @@
                             </div>
 
                             <div class="twm-s-contact-wrap mb-5">
-                                <h4 class="section-head-small mb-4">Contact us</h4>
+                                <h4 class="section-head-small mb-4">{{__('company.Contact us')}}</h4>
                                 <div class="twm-s-contact">
                                     <div class="row">
 
@@ -182,7 +182,7 @@
                                         </div>
 
                                         <div class="col-md-12">
-                                            <button onclick="sendMessageToCompany({{$company['id']}})" type="button" class="site-button">Submit Now</button>
+                                            <button onclick="sendMessageToCompany({{$company['id']}})" type="button" class="site-button">{{__('company.Submit Now')}}</button>
                                         </div>
 
                                     </div>

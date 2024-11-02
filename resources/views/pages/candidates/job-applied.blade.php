@@ -10,15 +10,15 @@
                 <div class="wt-bnr-inr-entry">
                     <div class="banner-title-outer">
                         <div class="banner-title-name">
-                            <h2 class="wt-title">Candidate Jobs Applied</h2>
+                            <h2 class="wt-title">{{ trans('lang.Candidate Jobs Applied') }}</h2>
                         </div>
                     </div>
                     <!-- BREADCRUMB ROW -->
 
                     <div>
                         <ul class="wt-breadcrumb breadcrumb-style-2">
-                            <li><a href="index.html">Home</a></li>
-                            <li>Candidate Jobs Applied</li>
+                            <li><a href="index.html">{{ trans('lang.header.home') }}</a></li>
+                            <li>{{ trans('lang.Candidate Jobs Applied') }}</li>
                         </ul>
                     </div>
 
@@ -43,7 +43,7 @@
                         <div class="twm-right-section-panel candidate-save-job site-bg-gray">
                             <!--Filter Short By-->
                             <div class="product-filter-wrap d-flex justify-content-between align-items-center">
-                                <span class="woocommerce-result-count-left">Applied {{count($data)}} jobs</span>
+                                <span class="woocommerce-result-count-left">{{ trans('lang.applied') }} {{count($data)}} {{ trans('lang.jobs') }}</span>
 
 {{--                                <form class="woocommerce-ordering twm-filter-select" method="get">--}}
 {{--                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">--}}
@@ -86,7 +86,7 @@
                                                 <div class="twm-right-content">
                                                     <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
                                                     <div class="twm-jobs-amount">{{$career['max_salary']['convert']}} <span>/ Month</span></div>
-                                                    <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Status: {{$career['status']}}</a>
+                                                    <a href="job-detail.html" class="twm-jobs-browse site-text-primary">{{ trans('lang.status') }}: {{$career['status']}}</a>
                                                 </div>
                                             </div>
                                         </li>

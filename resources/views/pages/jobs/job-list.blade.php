@@ -28,16 +28,16 @@
             <div class="wt-bnr-inr-entry">
                 <div class="banner-title-outer">
                     <div class="banner-title-name">
-                        <h2 class="wt-title">The Most Exciting Jobs</h2>
+                        <h2 class="wt-title">{{__('job-list.The Most Exciting Jobs')}}</h2>
                     </div>
                 </div>
                 <!-- BREADCRUMB ROW -->
 
                 <div>
                     <ul class="wt-breadcrumb breadcrumb-style-2">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html">{{__('lang.header.home')}}</a></li>
                         <li>{{__('category.name.'.$category->trans_key)}}</li>
-                        <li>Jobs List</li>
+                        <li>{{__('job-list.Jobs List')}}</li>
                     </ul>
                 </div>
 
@@ -64,7 +64,7 @@
                             <form id="formFilter">
 
                                 <div class="form-group mb-4">
-                                    <h4 class="section-head-small mb-4">Skill</h4>
+                                    <h4 class="section-head-small mb-4">{{__('lang.skill')}}</h4>
                                     <select multiple name="skills[]" id="select-skill" class="wt-select-bar-large selectpicker"  data-live-search="true" data-bv-field="size">
                                         @foreach($skills as $skill)
                                             <option
@@ -80,7 +80,7 @@
                                 </div>
 
                                 <div class="form-group mb-4">
-                                    <h4 class="section-head-small mb-4">Keyword</h4>
+                                    <h4 class="section-head-small mb-4">{{__('lang.keyword')}}</h4>
                                     <div class="input-group">
                                         <input
                                             type="text"
@@ -93,7 +93,7 @@
                                 </div>
 
                                 <div class="form-group mb-4">
-                                    <h4 class="section-head-small mb-4">Location</h4>
+                                    <h4 class="section-head-small mb-4">{{__('lang.location')}}</h4>
                                     <div class="input-group">
                                         <select name="provinces[]" multiple class="wt-select-bar-large selectpicker" id="select-province"  data-live-search="true" data-bv-field="size">
                                             @foreach($provinces as $province)
@@ -112,7 +112,7 @@
 
                                 <div class="twm-sidebar-ele-filter">
 
-                                    <h4 class="section-head-small mb-4">Job Type</h4>
+                                    <h4 class="section-head-small mb-4">{{__('job-list.Job Type')}}</h4>
                                     <ul>
                                         <li>
                                             <div class=" form-check">
@@ -162,7 +162,7 @@
                 <div class="col-lg-8 col-md-12">
                     <!--Filter Short By-->
                     <div class="product-filter-wrap d-flex justify-content-between align-items-center m-b30">
-                        <span class="woocommerce-result-count-left">Showing {{$careers->perPage()}} / {{$careers->total()}} jobs</span>
+                        <span class="woocommerce-result-count-left">{{__('lang.showing')}} {{$careers->perPage()}} / {{$careers->total()}} {{__('lang.jobs')}}</span>
 
                         <form id="formSort" class="woocommerce-ordering twm-filter-select" method="get">
                             <span class="woocommerce-result-count">Short By</span>

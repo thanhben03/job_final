@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\AppointmentController;
-use App\Http\Controllers\Auth\AuthenticatedCompanyController;
 use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CompanyController;
@@ -14,12 +13,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckBannedUser;
 use App\Http\Middleware\CompanyAuthenticated;
 use App\Http\Middleware\UserAuthenticated;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Session\Middleware\StartSession;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/fetch-data-select/{type}', [HomeController::class, 'fetchDataSelect'])->name('fetch.data.select');
@@ -82,7 +78,6 @@ Route::middleware(CompanyAuthenticated::class)->group(function () {
 
     Route::get('/candidates/list', [CandidateController::class, 'showListCandidate'])->name('candidate.list');
     Route::get('/candidates/detail/{id}', [CandidateController::class, 'showDetailCandidate'])->name('candidate.detail');
-
 });
 
 Route::get('/companies/detail/{companyId}', [CompanyController::class, 'companyDetail'])->name('company.detail');
@@ -120,8 +115,9 @@ Route::post('/chatbot/search-job', [OpenAIController::class, 'searchJobs']);
 
 Route::get('/set-main-cv/{id}', [CandidateController::class, 'setMainCv'])->name('set.main.cv');
 
-require __DIR__.'/auth.php';
-require __DIR__.'/company-auth.php';
-require __DIR__.'/social-auth.php';
-require __DIR__.'/api.php';
+Route::get('/language/{locale?}', [HomeController::class, 'setLanguage'])->name('set.language');
 
+require __DIR__ . '/auth.php';
+require __DIR__ . '/company-auth.php';
+require __DIR__ . '/social-auth.php';
+require __DIR__ . '/api.php';

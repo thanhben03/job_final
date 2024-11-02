@@ -37,10 +37,10 @@
                 <div class="nav-animation header-nav navbar-collapse collapse d-flex justify-content-center">
 
                     <ul class=" nav navbar-nav">
-                        <li class="has-mega-menu"><a href="{{route('home')}}">Home</a>
+                        <li class="has-mega-menu"><a href="{{route('home')}}">{{trans('lang.header.home')}}</a>
                         </li>
                         <li class="has-child">
-                            <a href="#">Jobs</a>
+                            <a href="#">{{trans('lang.header.jobs')}}</a>
                             <ul class="sub-menu">
                                 @foreach(\App\Models\Category::query()->get() as $category)
                                     <li><a href="{{route('jobs.index', $category->slug)}}">
@@ -49,15 +49,20 @@
                                 @endforeach
                             </ul>
                         </li>
-                        <li class=""><a href="{{route('company.list')}}">Employers</a>
+                        <li class=""><a href="{{route('company.list')}}">{{trans('lang.header.employers')}}</a>
                         </li>
-                        <li class=""><a href="javascript:;">CV / Hồ sơ</a>
+                        <li class=""><a href="javascript:;">{{trans('lang.header.cvs')}}</a>
                             <ul class="sub-menu">
                                 <li><a href="{{route('candidate.show.review-cv')}}">Đánh giá CV</a></li>
                                 <li><a href="{{route('candidate.create-cv')}}">Tạo CV</a></li>
                             </ul>
                         </li>
-
+                        <li class=""><a href="javascript:;">{{trans('lang.language')}}</a>
+                            <ul class="sub-menu">
+                                <li><a href="{{route('set.language', 'en')}}">{{ trans('lang.english') }}</a></li>
+                                <li><a href="{{route('set.language', 'vn')}}">{{ trans('lang.vietnamese') }}</a></li>
+                            </ul>
+                        </li>
                     </ul>
 
                 </div>
@@ -75,84 +80,7 @@
                             @if(auth()->user())
                                 <div class="header-right">
                                     <ul class="header-widget-wrap">
-                                        <!--Message-->
-                                        <li class="header-widget dashboard-message-dropdown">
-
-                                            <div class="dropdown">
-                                                <a href="javascript:;" class="dropdown-toggle jobzilla-admin-messange"
-                                                   id="ID-MSG_dropdown"
-                                                   data-bs-toggle="dropdown">
-                                                    <i class="far fa-envelope"></i>
-                                                    <span class="notification-animate">4</span>
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="ID-MSG_dropdown">
-                                                    <div class="message-list dashboard-widget-scroll">
-                                                        <ul>
-                                                            <li class="clearfix">
-                                                    <span class="msg-avtar">
-                                                        <img src="images/user-avtar/pic1.jpg" alt="">
-                                                    </span>
-
-                                                                <div class="msg-texting">
-                                                                    <strong>Alexa Johnson</strong>
-                                                                    <small class="msg-time">
-                                                                        <span class="far fa-clock p-r-5"></span>12 mins
-                                                                        ago
-                                                                    </small>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                                                </div>
-                                                            </li>
-                                                            <li class="clearfix">
-                                                    <span class="msg-avtar">
-                                                        <img src="images/user-avtar/pic2.jpg" alt="">
-                                                    </span>
-
-                                                                <div class="msg-texting">
-                                                                    <strong>Johan Smith</strong>
-                                                                    <small class="msg-time">
-                                                                        <span class="far fa-clock p-r-5"></span>2 hours
-                                                                        ago
-                                                                    </small>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                                                </div>
-                                                            </li>
-                                                            <li class="clearfix">
-                                                    <span class="msg-avtar">
-                                                        <img src="images/user-avtar/pic3.jpg" alt="">
-                                                    </span>
-
-                                                                <div class="msg-texting">
-                                                                    <strong>Bobby Brown</strong>
-                                                                    <small class="msg-time">
-                                                                        <span class="far fa-clock p-r-5"></span>3 hours
-                                                                        ago
-                                                                    </small>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                                                </div>
-                                                            </li>
-                                                            <li class="clearfix">
-                                                    <span class="msg-avtar">
-                                                        <img src="images/user-avtar/pic4.jpg" alt="">
-                                                    </span>
-
-                                                                <div class="msg-texting">
-                                                                    <strong>David Deo</strong>
-                                                                    <small class="msg-time">
-                                                                        <span class="far fa-clock p-r-5"></span>4 hours
-                                                                        ago
-                                                                    </small>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="message-view-all">
-                                                            <a href="javascript:;">View All</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </li>
+                                        
 
                                         <!--Notification-->
                                         <li class="header-widget dashboard-noti-dropdown">
@@ -216,19 +144,19 @@
                                                              aria-labelledby="ID-ACCOUNT_dropdown">
                                                             <ul>
                                                                 <li><a href="{{route('candidate.dashboard')}}"><i
-                                                                            class="fa fa-home"></i>Dashboard</a></li>
+                                                                            class="fa fa-home"></i>{{__('lang.user.dashboard')}}</a></li>
                                                                 <li><a href="{{route('candidate.show.chat')}}"><i
-                                                                            class="fa fa-envelope"></i> Messages</a>
+                                                                            class="fa fa-envelope"></i>{{__('lang.user.message')}}</a>
                                                                 </li>
                                                                 <li><a href="dash-my-profile.html"><i
-                                                                            class="fa fa-user"></i> Profile</a>
+                                                                            class="fa fa-user"></i>{{__('lang.user.profile')}}</a>
                                                                 </li>
                                                                 <li><a onclick="logout()" href="#">
                                                                         <i class="fa fa-share-square"></i>
                                                                         <form id="formLogout" method="POST" action="{{route('logout')}}">
                                                                             @csrf
                                                                         </form>
-                                                                        Logout
+                                                                        {{__('lang.user.logout')}}
                                                                     </a>
                                                                 </li>
                                                             </ul>

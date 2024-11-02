@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Middleware\CheckBannedUser;
+use App\Http\Middleware\Localization;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'http://127.0.0.1:8000/chatbot/search-job',
             'http://127.0.0.1:8000/api/v1/jobs/apply-job',
         ]);
+        $middleware->appendToGroup('web',Localization::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

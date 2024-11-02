@@ -9,6 +9,7 @@ use App\Models\Skill;
 use App\Services\Career\CareerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -17,7 +18,13 @@ class HomeController extends Controller
         CareerService $careerService,
     )
     {
+
         $this->service = $careerService;
+    }
+
+    public function setLanguage ($locale) {
+        Session::put('locale', $locale);
+        return redirect()->back();
     }
 
     public function index(Request $request)

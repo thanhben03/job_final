@@ -26,38 +26,42 @@
                 <li
                     class="@if(str_contains(request()->url(), 'dashboard')) active @endif">
                     <a href="{{route('candidate.dashboard')}}"><i class="fa fa-tachometer-alt"></i>
-                        Dashboard</a>
+                        {{ trans('lang.user.dashboard') }}</a>
                 </li>
                 <li class="@if(str_contains(request()->url(), 'profile')) active @endif">
                     <a href="{{route('candidate.profile')}}">
                         <i class="fa fa-user"></i>
-                        My Profile
+                        {{ trans('lang.My Profile') }}
                     </a>
                 </li>
                 <li class="@if(str_contains(request()->url(), 'job-applied')) active @endif">
                     <a href="{{route('candidate.job-applied')}}">
                         <i class="fa fa-suitcase"></i>
-                        Applied Jobs
+                        {{ trans('lang.Applied Job') }}
                     </a>
                 </li>
                 <li class="@if(str_contains(request()->url(), 'my-resume')) active @endif">
                     <a href="{{route('candidate.my-resume')}}">
                         <i class="fa fa-receipt"></i>
-                        My Resume
+                        {{ trans('lang.My Resume') }}
                     </a>
                 </li>
                 <li class="@if(str_contains(request()->url(), 'saved-job')) active @endif">
                     <a href="{{route('candidate.saved-job')}}">
                         <i class="fa fa-file-download"></i>
-                        Saved Jobs
+                        {{ trans('lang.Saved Job') }}
                     </a>
                 </li>
-{{--                <li><a href="candidate-job-alert.html"><i class="fa fa-bell"></i> Job Alerts</a></li>--}}
-{{--                <li><a href="candidate-change-password.html"><i class="fa fa-fingerprint"></i> Change Passeord</a></li>--}}
+                <li class="@if(str_contains(request()->url(), 'appointment')) active @endif">
+                    <a href="{{route('candidate.show.appointment')}}">
+                        <i class="fas fa-calendar"></i>
+                        {{ trans('lang.Appointment Manager') }}
+                    </a>
+                </li>
                 <li class="@if(str_contains(request()->url(), 'chat')) active @endif">
                     <a href="{{route('candidate.show.chat')}}">
                         <i class="fa fa-comments"></i>
-                        Chat
+                        {{ trans('lang.user.message') }}
                     </a>
                 </li>
             </ul>

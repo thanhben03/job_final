@@ -38,7 +38,7 @@
 
                     <div>
                         <ul class="wt-breadcrumb breadcrumb-style-2">
-                            <li><a href="index.html">{{__('messages.home')}}</a></li>
+                            <li><a href="index.html">{{__('lang.header.home')}}</a></li>
                             <li>{{$career['category']->name}}</li>
                             <li>{{$career['title']}}</li>
                         </ul>
@@ -102,7 +102,7 @@
                                                 @if(!$isApplied)
                                                     <div class="twm-job-self-bottom">
                                                         <a class="site-button" data-bs-toggle="modal" href="#apply_job_popup" role="button">
-                                                            Apply Now
+                                                            {{ trans('lang.apply') }}
                                                         </a>
                                                     </div>
                                                 @else
@@ -119,25 +119,25 @@
                                     </div>
                                 </div>
 
-                                <h4 class="twm-s-title">Job Description:</h4>
+                                <h4 class="twm-s-title">{{ trans('lang.Job Description') }}:</h4>
                                 @if(!empty($career['detail']->description))
                                     {!! $career['detail']->description !!}
                                 @else
-                                    <x-empty text="No description for this job" />
+                                    <x-empty text="{{ trans('lang.No Data') }}" />
                                 @endif
 
-                                <h4 class="twm-s-title">Requirements:</h4>
+                                <h4 class="twm-s-title">{{ trans('lang.requirements') }}:</h4>
                                 @if(!empty($career['detail']->requirement))
                                     {!! $career['detail']->requirement !!}
                                 @else
-                                    <x-empty text="No requirements for this job" />
+                                    <x-empty text="{{ trans('lang.No Data') }}" />
                                 @endif
 
-                                <h4 class="twm-s-title">Responsabilities:</h4>
+                                <h4 class="twm-s-title">{{ trans('lang.responsabilities') }}:</h4>
                                 @if(!empty($career['detail']->key_responsibilities))
                                     {!! $career['detail']->key_responsibilities !!}
                                 @else
-                                    <x-empty text="No responsibilities for this job" />
+                                    <x-empty text="{{ trans('lang.No Data') }}" />
                                 @endif
 
 
@@ -149,7 +149,7 @@
                             <div class="side-bar mb-4">
                                 <div class="twm-s-info2-wrap mb-5">
                                     <div class="twm-s-info2">
-                                        <h4 class="section-head-small mb-4">Job Information</h4>
+                                        <h4 class="section-head-small mb-4">{{ trans('lang.Job Information') }}</h4>
 {{--                                        <ul class="twm-job-hilites">--}}
 {{--                                            <li>--}}
 {{--                                                <i class="fas fa-calendar-alt"></i>--}}
@@ -169,42 +169,42 @@
                                             <li>
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-calendar-alt"></i>
-                                                    <span class="twm-title">Date Posted</span>
+                                                    <span class="twm-title">{{ trans('lang.Posted On') }}</span>
                                                     <div class="twm-s-info-discription">{{$career['created_at']}}</div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-map-marker-alt"></i>
-                                                    <span class="twm-title">Location</span>
+                                                    <span class="twm-title">{{ trans('lang.location') }}</span>
                                                     <div class="twm-s-info-discription">{{$career['province']->name}}</div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-user-tie"></i>
-                                                    <span class="twm-title">Level</span>
+                                                    <span class="twm-title">{{ trans('lang.level') }}</span>
                                                     <div class="twm-s-info-discription">{{$career['level']}}</div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-clock"></i>
-                                                    <span class="twm-title">Experience</span>
+                                                    <span class="twm-title">{{ trans('lang.experience') }}</span>
                                                     <div class="twm-s-info-discription">{{$career['experience']}}</div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-suitcase"></i>
-                                                    <span class="twm-title">Qualification</span>
+                                                    <span class="twm-title">{{ trans('lang.qualifications') }}</span>
                                                     <div class="twm-s-info-discription">{{$career['qualification']}}</div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="twm-s-info-inner">
                                                     <i class="fas fa-venus-mars"></i>
-                                                    <span class="twm-title">Gender</span>
+                                                    <span class="twm-title">{{ trans('lang.gender') }}</span>
                                                     <div class="twm-s-info-discription">{{$career['gender']}}</div>
                                                 </div>
                                             </li>
@@ -212,7 +212,7 @@
                                                 <div class="twm-s-info-inner">
 
                                                     <i class="fas fa-money-bill-wave"></i>
-                                                    <span class="twm-title">Offered Salary</span>
+                                                    <span class="twm-title">{{ trans('lang.salary') }}</span>
                                                     <div class="twm-s-info-discription">{{$career['min_salary']['convert']}}-{{$career['max_salary']['convert']}} / Month</div>
                                                 </div>
                                             </li>
@@ -223,7 +223,7 @@
                                 </div>
 
                                 <div class="widget tw-sidebar-tags-wrap">
-                                    <h4 class="section-head-small mb-4">Job Skills</h4>
+                                    <h4 class="section-head-small mb-4">{{ trans('lang.Job Skills') }}</h4>
 
                                     <div class="tagcloud">
 
@@ -254,7 +254,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h4 class="modal-title" id="sign_up_popupLabel">Apply For This Job</h4>
+                    <h4 class="modal-title" id="sign_up_popupLabel">{{ trans('lang.apply') }}</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -270,7 +270,7 @@
                                     <div class="row">
                                         <div class="col-xl-12 col-lg-12 col-md-12">
                                             <div class="form-group">
-                                                <label>Your Name</label>
+                                                <label>{{ trans('lang.Your Name') }}</label>
                                                 <div class="ls-inputicon-box">
                                                     <input class="form-control" readonly name="company_name" type="text" value="{{auth()->user()->fullname}}">
                                                     <i class="fs-input-icon fa fa-user "></i>
@@ -279,7 +279,7 @@
                                         </div>
                                         <div class="col-xl-12 col-lg-12 col-md-12">
                                             <div class="form-group">
-                                                <label>Email Address</label>
+                                                <label>{{ trans('lang.Email Address') }}</label>
                                                 <div class="ls-inputicon-box">
                                                     <input class="form-control" name="company_Email" readonly type="email" value="{{auth()->user()->email}}">
                                                     <i class="fs-input-icon fas fa-at"></i>
@@ -296,7 +296,7 @@
 {{--                                            </div>--}}
 
                                             <select id="cv_id" class="form-select mb-3" aria-label="Default select example">
-                                                <option selected>Select your CV</option>
+                                                <option selected>{{ trans('lang.Select your CV') }}</option>
                                                 @foreach($resumes as $resume)
                                                     <option value="{{$resume->id}}">{{$resume->path}}</option>
                                                 @endforeach
@@ -308,7 +308,7 @@
 
                                         <div class="col-xl-12 col-lg-12 col-md-12">
                                             <div class="text-left">
-                                                <button type="button" id="btn-send-application" class="site-button">Send Application</button>
+                                                <button type="button" id="btn-send-application" class="site-button">{{ trans('lang.Send Application') }}</button>
                                             </div>
                                         </div>
 

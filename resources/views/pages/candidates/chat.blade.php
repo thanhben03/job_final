@@ -17,13 +17,13 @@
                             <!--Left Msg section-->
                             <div class="wt-dashboard-msg-user-list">
                                 <div class="user-msg-list-btn-outer">
-                                    <button class="user-msg-list-btn-close">Close</button>
-                                    <button class="user-msg-list-btn-open">User Message</button>
+                                    <button class="user-msg-list-btn-close">{{ trans('lang.close') }}</button>
+                                    <button class="user-msg-list-btn-open">{{ trans('lang.user.message') }}</button>
                                 </div>
                                 <!-- Search Section Start-->
                                 <div class="wt-dashboard-msg-search">
                                     <div class="input-group">
-                                        <input id="search-message" class="form-control" placeholder="Search Messages" type="text">
+                                        <input id="search-message" class="form-control" placeholder="{{trans('lang.Search Messages')}}" type="text">
                                         <button onclick="searchMessage()" class="btn" type="button"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>

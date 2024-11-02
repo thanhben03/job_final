@@ -90,15 +90,14 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="ftr-nw-title">
-                            Join our email subscription now to get updates
-                            on new jobs and notifications.
+                            {{__('lang.home.Join our email subscription now to get updates on new jobs and notifications.')}}
                         </div>
                     </div>
                     <div class="col-md-7">
                         <form>
                             <div class="ftr-nw-form">
                                 <input name="news-letter" class="form-control" placeholder="Enter Your Email" type="text">
-                                <button class="ftr-nw-subcribe-btn">Subscribe Now</button>
+                                <button class="ftr-nw-subcribe-btn">{{__('lang.home.subscribe')}}</button>
                             </div>
                         </form>
                     </div>
@@ -265,8 +264,8 @@
                         @if(Session::has('msg'))
                             <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
                         @endif
-                        <h2 class="modal-title" id="sign_up_popupLabel">Sign Up</h2>
-                        <p>Sign Up and get access to all the features of Jobzilla</p>
+                        <h2 class="modal-title" id="sign_up_popupLabel">{{ trans('lang.Sign Up') }}</h2>
+                        <p>{{ trans('lang.Sign Up and get access to all the features of Jobzilla') }}</p>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         <div class="wrap-errors">
                         </div>
@@ -324,14 +323,14 @@
                                             <div class="form-group mb-3">
                                                 <div class=" form-check">
                                                     <input type="checkbox" class="form-check-input" id="agree2">
-                                                    <p>Already registered?
-                                                        <button class="twm-backto-login" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">Log in here</button>
+                                                    <p>{{ trans('lang.Already registered?') }}
+                                                        <button class="twm-backto-login" data-bs-target="#sign_up_popup2" data-bs-toggle="modal" data-bs-dismiss="modal">{{ trans('lang.login') }}</button>
                                                     </p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <button type="button" onclick="signup()" class="site-button">Sign Up</button>
+                                            <button type="button" onclick="signup()" class="site-button">{{ trans('lang.Sign Up') }}</button>
                                         </div>
 
                                     </div>
@@ -342,7 +341,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <span class="modal-f-title">Login or Sign up with</span>
+                        <span class="modal-f-title">{{ trans('lang.Login or Sign up with') }}</span>
                         <ul class="twm-modal-social">
                             <li><a href="{{route('auth.login', 'github')}}" class="facebook-clr"><i class="fab fa-github"></i></a></li>
                             <li><a href="{{route('auth.login', 'google')}}" class="google-clr"><i class="fab fa-google"></i></a></li>
@@ -361,8 +360,8 @@
 
                 <div id="formLogin">
                     <div class="modal-header">
-                        <h2 class="modal-title" id="sign_up_popupLabel2">Login</h2>
-                        <p>Login and get access to all the features of Jobzilla</p>
+                        <h2 class="modal-title" id="sign_up_popupLabel2">{{ trans('lang.login') }}</h2>
+                        <p>{{ trans('lang.Login and get access to all the features of Jobzilla') }}</p>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         <div class="wrap-errors-login">
 
@@ -394,63 +393,27 @@
                                                 <div class=" form-check">
                                                     <input type="checkbox" class="form-check-input" id="Password3">
                                                     <label class="form-check-label rem-forgot" for="Password3">
-                                                        Remember me
-                                                        <a href="/forgot-password">Forgot Password</a>
+                                                        {{ trans('lang.Remember me') }}
+                                                        <a href="/forgot-password">{{ trans('lang.Forgot Password') }}</a>
                                                     </label>
 
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <button type="button" onclick="signin()" class="site-button">Log in</button>
-                                            <div class="mt-3 mb-3">Don't have an account ?
-                                                <button class="twm-backto-login" data-bs-target="#sign_up_popup" data-bs-toggle="modal" data-bs-dismiss="modal">Sign Up</button>
+                                            <button type="button" onclick="signin()" class="site-button">{{ trans('lang.login') }}</button>
+                                            <div class="mt-3 mb-3">{{ trans('lang.Dont have an account ?') }}
+                                                <button class="twm-backto-login" data-bs-target="#sign_up_popup" data-bs-toggle="modal" data-bs-dismiss="modal">{{ trans('lang.Sign Up') }}</button>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
-                                <!--Login Employer Content-->
-{{--                                <div class="tab-pane fade" id="login-Employer">--}}
-{{--                                    <div class="row">--}}
-
-{{--                                        <div class="col-lg-12">--}}
-{{--                                            <div class="form-group mb-3">--}}
-{{--                                                <input name="username" type="text" required="" class="form-control" placeholder="Usearname*">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-lg-12">--}}
-{{--                                            <div class="form-group mb-3">--}}
-{{--                                                <input name="email" type="text" class="form-control" required="" placeholder="Password*">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-
-{{--                                        <div class="col-lg-12">--}}
-{{--                                            <div class="form-group mb-3">--}}
-{{--                                                <div class=" form-check">--}}
-{{--                                                    <input type="checkbox" class="form-check-input" id="Password4">--}}
-{{--                                                    <label class="form-check-label rem-forgot" for="Password4">Remember me <a href="javascript:;">Forgot Password</a></label>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                        <div class="col-md-12">--}}
-{{--                                            <button type="submit" class="site-button">Log in</button>--}}
-{{--                                            <div class="mt-3 mb-3">Don't have an account ?--}}
-{{--                                                <button class="twm-backto-login" data-bs-target="#sign_up_popup" data-bs-toggle="modal" data-bs-dismiss="modal">Sign Up</button>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <span class="modal-f-title">Login or Sign up with</span>
+                        <span class="modal-f-title">{{ trans('lang.Login or Sign up with') }}</span>
                         <ul class="twm-modal-social">
                             <li><a href="{{route('auth.login', 'github')}}" class="facebook-clr"><i class="fab fa-github"></i></a></li>
                             <li><a href="{{route('auth.login', 'google')}}" class="google-clr"><i class="fab fa-google"></i></a></li>

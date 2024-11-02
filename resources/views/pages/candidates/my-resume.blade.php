@@ -31,7 +31,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Công việc phù hợp</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ trans('lang.Suitable Job') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div
@@ -40,18 +40,18 @@
                         height: 465px;
                         overflow: auto;"
                 >
-                    <p>Chúng tôi gợi ý cho bạn một số công việc phù hợp với hồ sơ của bạn</p>
-                    <div class="alert alert-primary">The Best For You !</div>
+                    <p>{{ trans('lang.We suggest you some jobs that match your profile') }}</p>
+                    <div class="alert alert-primary">{{ trans('lang.The Best For You') }} !</div>
                     <ul class="list-group" id="suggest-job">
 
                     </ul>
-                    <div class="alert alert-success mt-3">There are similarities</div>
+                    <div class="alert alert-success mt-3">{{ trans('lang.There are similarities') }}</div>
                     <ul class="list-group see-more-match-job" id="suggest-job">
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('lang.close') }}</button>
+                    <button type="button" class="btn btn-primary">{{ trans('lang.save') }}</button>
                 </div>
             </div>
         </div>
@@ -62,14 +62,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="companyInfoModalLabel">Company Information</h5>
+                    <h5 class="modal-title" id="companyInfoModalLabel">{{ trans('lang.Company Information') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="company-content">
                 </div>
                 <div class="modal-footer">
-                    <a type="button" onclick="directViewCompany()" class="btn btn-primary">View Detail</a>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a type="button" onclick="directViewCompany()" class="btn btn-primary">{{ trans('lang.View Detail') }}</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('lang.close') }}</button>
                 </div>
             </div>
         </div>
@@ -88,15 +88,15 @@
                 <div class="wt-bnr-inr-entry">
                     <div class="banner-title-outer">
                         <div class="banner-title-name">
-                            <h2 class="wt-title">Candidate CV Manager</h2>
+                            <h2 class="wt-title">{{ trans('lang.Candidate CV Manager') }}</h2>
                         </div>
                     </div>
                     <!-- BREADCRUMB ROW -->
 
                     <div>
                         <ul class="wt-breadcrumb breadcrumb-style-2">
-                            <li><a href="index.html">Home</a></li>
-                            <li>Candidate CV Manager</li>
+                            <li><a href="index.html">{{ trans('lang.home') }}</a></li>
+                            <li>{{ trans('lang.Candidate CV Manager') }}</li>
                         </ul>
                     </div>
 
@@ -121,7 +121,7 @@
                         <div class="twm-right-section-panel candidate-save-job site-bg-gray">
                             <!--Filter Short By-->
                             <div class="product-filter-wrap d-flex justify-content-between align-items-center">
-                                <span class="woocommerce-result-count-left">CV Manager</span>
+                                <span class="woocommerce-result-count-left">{{ trans('lang.CV Manager') }}</span>
 
                             </div>
 
@@ -131,7 +131,7 @@
                                     <div class="col-md-9 d-flex align-items-center">
                                         <div>
                                             <img src="https://static.topcv.vn/v4/image/cv-manager/no-cv.png" alt="Icon">
-                                            <p>Bạn chưa tạo CV nào</p>
+                                            <p>{{ trans('lang.You havent created any CV yet') }}</p>
                                         </div>
                                     </div>
                                     <div class="col-md-3 text-end">
@@ -141,7 +141,7 @@
 
                                 <!-- Section: Uploaded CVs -->
                                 <div class="uploaded-section">
-                                    <h4 class="my-2">CV đã tải lên TopCV</h4>
+                                    <h4 class="my-2">{{ trans('lang.CV Uploaded') }}</h4>
                                     <div class="row" style="flex-wrap: nowrap; overflow-x: auto">
                                         <!-- CV Card 1 -->
                                         @foreach($resumes as $resume)
@@ -150,7 +150,7 @@
 
                                                 <div class="card-body">
                                                     <h5 class="card-title">{{$resume->path}}</h5>
-                                                    <p class="card-text">Cập nhật lần cuối {{$resume->updated_at}}</p>
+                                                    <p class="card-text">{{ trans('lang.Last Updated') }} {{$resume->updated_at}}</p>
                                                     <div class="d-flex justify-content-between">
                                                         <button class="btn btn-outline-secondary">
                                                             <a
@@ -172,7 +172,7 @@
                                     </div>
                                 </div>
                                 <div class="uploaded-section">
-                                    <h4 class="my-2">CV đã tạo trên hệ thống</h4>
+                                    <h4 class="my-2">{{ trans('lang.CV created on the system') }}</h4>
                                     <div class="row" style="flex-wrap: nowrap; overflow-x: auto">
                                         <!-- CV Card 1 -->
                                         @foreach($resumeOnSys as $resume)
@@ -181,7 +181,7 @@
                                         
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $resume->cv->path }}</h5>
-                                                <p class="card-text">Cập nhật lần cuối {{ $resume->cv->updated_at }}</p>
+                                                <p class="card-text">{{ trans('lang.Last Updated') }} {{ $resume->cv->updated_at }}</p>
                                         
                                                 <!-- Three-dot menu for actions -->
                                                 <div class="dropdown float-end">
@@ -191,27 +191,27 @@
                                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                         <li>
                                                             <button class="dropdown-item" onclick="setMainCV({{ $resume->cv->id }})">
-                                                                <i class="fas fa-wrench"></i> Set Main CV
+                                                                <i class="fas fa-wrench"></i> {{ trans('lang.Set Main CV') }}
                                                             </button>
                                                         </li>
                                                         <li>
                                                             <a class="dropdown-item" download href="{{ asset('storage/uploads/' . $resume->cv->path) }}">
-                                                                <i class="fas fa-download"></i> Download
+                                                                <i class="fas fa-download"></i> {{ trans('lang.download') }}
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <a class="dropdown-item" href="{{ route('candidate.create-cv', $resume->id) }}">
-                                                                <i class="fas fa-edit"></i> Edit
+                                                                <i class="fas fa-edit"></i> {{ trans('lang.edit') }}
                                                             </a>
                                                         </li>
                                                         <li>
                                                             <button class="dropdown-item text-danger" onclick="deleteCV({{ $resume->cv->id }})">
-                                                                <i class="fas fa-trash-alt"></i> Delete
+                                                                <i class="fas fa-trash-alt"></i> {{ trans('lang.delete') }}
                                                             </button>
                                                         </li>
                                                         <li>
                                                             <button class="dropdown-item text-warning" onclick="matchWithJob({{ $resume->cv->id }})">
-                                                                <i class="fas fa-magic"></i> Match with Job
+                                                                <i class="fas fa-magic"></i> {{ trans('lang.Match with Job') }}
                                                             </button>
                                                         </li>
                                                     </ul>
@@ -381,18 +381,18 @@
                                             ${ele.company.company_name}
                                         </span>
                                     </p>
-                                    <p class="mb-0"><strong>Location:</strong> ${ele.address}</p>
+                                    <p class="mb-0"><strong>{{trans('lang.location')}}:</strong> ${ele.address}</p>
                                 </div>
                                 <div>
                                     <a href="/jobs/${ele.slug}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                 </div>
                             </div>
                             <div>
-                                <small class="text-muted">Posted on: ${ele.created_at}</small>
+                                <small class="text-muted">{{trans('lang.Posted On')}}: ${ele.created_at}</small>
                                 <br>
-                                <small class="text-muted">Expiration: ${ele.expiration_day}</small>
+                                <small class="text-muted">{{trans('lang.expiration')}}: ${ele.expiration_day}</small>
                                 <div class="d-flex justify-content-between">
-                                    <small class="">Max salary: <strong style="color: green">${ele.max_salary.convert}</strong></small>
+                                    <small class="">{{trans('lang.Max salary')}}: <strong style="color: green">${ele.max_salary.convert}</strong></small>
                                     <small ${ele.cv_applied.length > 0 ? '' : `onclick="applyNow(${ele.id}, ${cvID})"`} class="apply-now-text">${ele.cv_applied.length > 0 ? 'Applied' : 'Apply now'}</small>
                                 </div>
                             </div>
@@ -414,18 +414,18 @@
                                             ${ele.company.company_name}
                                         </span>
                                     </p>
-                                    <p class="mb-0"><strong>Location:</strong> ${ele.address}</p>
+                                    <p class="mb-0"><strong>{{trans('lang.location')}}:</strong> ${ele.address}</p>
                                 </div>
                                 <div>
                                     <a href="/jobs/${ele.slug}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                 </div>
                             </div>
                         <div>
-                            <small class="text-muted">Posted on: ${ele.created_at}</small>
+                            <small class="text-muted">{{trans('lang.Posted On')}}: ${ele.created_at}</small>
                                 <br>
-                                <small class="text-muted">Expiration: ${ele.expiration_day}</small>
+                                <small class="text-muted">{{trans('lang.Expiration')}}: ${ele.expiration_day}</small>
                                 <div class="d-flex justify-content-between">
-                                    <small class="">Max salary: <strong style="color: green">${ele.max_salary.convert}</strong></small>
+                                    <small class="">{{trans('lang.Max salary')}}: <strong style="color: green">${ele.max_salary.convert}</strong></small>
                                     <small ${ele.cv_applied.length > 0 ? '' : `onclick="applyNow(${ele.id}, ${cvID})"`} class="apply-now-text">${ele.cv_applied.length > 0 ? 'Applied' : 'Apply now'}</small>
                                 </div>
                             </div>

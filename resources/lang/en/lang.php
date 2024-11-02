@@ -1,0 +1,36 @@
+
+<?php
+
+return [
+    'category' => 'Category',
+    'location' => 'Location',
+    'upload' => 'Upload',
+    'register' => 'Register',
+    'your_account' => 'Your Account',
+    'apply' => 'Apply',
+    'You need to create an account to find the best and preferred job.' => 'You need to create an account to find the best and preferred job.',
+    'header.home' => 'Home',
+    'header.jobs' => 'Jobs',
+    'header.employers' => 'Employers',
+    'header.cvs' => 'CVs',
+    'user.dashboard' => 'Dashboard',
+    'user.message' => 'Message',
+    'user.profile' => 'Profile',
+    'user.logout' => 'Logout',
+    'home.working_process' => 'Working Process',
+    'home.how_it_work' => 'How it works',
+    'home.for_dream_job' => 'Dream Job',
+    'home.your_resume' => 'Your Resume',
+    'home.Jobs by Categories' => 'Jobs by Categories',
+    'home.Choose Your Desire Category' => 'Choose Your Desire Category',
+    'home.all-category' => 'All Categories',
+    'home.Top Companies' => 'Top Companies',
+    'home.Get hired in top companies' => 'Get hired in top companies',
+    'home.Type your keyword, then click search to find your perfect job.' => 'Type your keyword, then click search to find your perfect job.',
+    'home.Popular Searches' => 'Popular Searches',
+    'home.Find Jobs' => 'Find Jobs',
+    'home.Find the job that fits your life' => 'Find the job that fits your life',
+    'home.Join our email subscription now to get updates on new jobs and notifications.' => 'Join our email subscription now to get updates on new jobs and notifications.',
+    'home.subscribe' => 'Subscribe',
+
+];

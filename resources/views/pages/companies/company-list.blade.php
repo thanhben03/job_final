@@ -8,15 +8,15 @@
             <div class="wt-bnr-inr-entry">
                 <div class="banner-title-outer">
                     <div class="banner-title-name">
-                        <h2 class="wt-title">The Most Exciting Companies</h2>
+                        <h2 class="wt-title">{{__('company.The Most Exciting Company')}}</h2>
                     </div>
                 </div>
                 <!-- BREADCRUMB ROW -->
 
                 <div>
                     <ul class="wt-breadcrumb breadcrumb-style-2">
-                        <li><a href="index.html">Home</a></li>
-                        <li>Companies List</li>
+                        <li><a href="index.html">{{__('lang.header.home')}}</a></li>
+                        <li>{{__('company.Companies List')}}</li>
                     </ul>
                 </div>
 
@@ -42,7 +42,7 @@
                             <form>
 
                                 <div class="form-group mb-4">
-                                    <h4 class="section-head-small mb-4">Location</h4>
+                                    <h4 class="section-head-small mb-4">{{__('lang.location')}}</h4>
                                     <select class="wt-select-bar-large selectpicker" id="select-province" multiple  data-live-search="true" data-bv-field="size">
                                         @foreach(\App\Models\Province::query()->get() as $province)
                                             <option
@@ -58,7 +58,7 @@
                                 </div>
 
                                 <div class="form-group mb-4">
-                                    <h4 class="section-head-small mb-4">Company Size</h4>
+                                    <h4 class="section-head-small mb-4">{{__('company.Company Size')}}</h4>
                                     <select class="wt-select-bar-large selectpicker" id="company-size" data-live-search="true" data-bv-field="size">
                                         <option value="0" selected>All Category</option>
                                         @foreach(\App\Enums\CompanySizeEnum::asSelectArray() as $key => $value)
@@ -74,7 +74,7 @@
                                 </div>
 
                                 <div class="form-group mb-4">
-                                    <h4 class="section-head-small mb-4">Keyword</h4>
+                                    <h4 class="section-head-small mb-4">{{__('lang.keyword')}}</h4>
                                     <div class="input-group">
                                         <input
                                             type="text"
@@ -104,14 +104,14 @@
                     <!--Filter Short By-->
                     <div class="product-filter-wrap d-flex justify-content-between align-items-center m-b30">
                         <span class="woocommerce-result-count-left">
-                            Showing
+                            {{__('lang.showing')}}
                                 @if($companies->total() < $companies->perPage())
                                     {{$companies->total()}}
                                 @else
                                     {{$companies->perPage()}}
                                @endif
                             / {{$companies->total()}}
-                            company
+                            {{__('lang.company')}}
                         </span>
 
                         <form id="formSort" class="woocommerce-ordering twm-filter-select" method="get">

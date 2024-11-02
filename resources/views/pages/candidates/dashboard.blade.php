@@ -10,15 +10,15 @@
                 <div class="wt-bnr-inr-entry">
                     <div class="banner-title-outer">
                         <div class="banner-title-name">
-                            <h2 class="wt-title">Candidate Dashboard</h2>
+                            <h2 class="wt-title">{{ trans('lang.user.dashboard') }}</h2>
                         </div>
                     </div>
                     <!-- BREADCRUMB ROW -->
 
                     <div>
                         <ul class="wt-breadcrumb breadcrumb-style-2">
-                            <li><a href="index.html">Home</a></li>
-                            <li>Candidate Chat</li>
+                            <li><a href="index.html">{{ trans('lang.header.home') }}</a></li>
+                            <li>{{ trans('lang.user.dashboard') }}</li>
                         </ul>
                     </div>
 
@@ -55,7 +55,7 @@
                                                     <div class="wt-card-icon-2"><i class="flaticon-job"></i></div>
                                                     <div class="wt-card-right wt-total-active-listing counter ">{{$savedJobCount}}</div>
                                                     <div class="wt-card-bottom-2 ">
-                                                        <h4 class="m-b0">Saved Jobs</h4>
+                                                        <h4 class="m-b0">{{ trans('lang.Saved Job') }}</h4>
                                                     </div>
                                                 </div>
                                             </div>
@@ -68,7 +68,7 @@
                                                     <div class="wt-card-icon-2"><i class="flaticon-resume"></i></div>
                                                     <div class="wt-card-right  wt-total-listing-view counter ">{{$appliedCount}}</div>
                                                     <div class="wt-card-bottom-2">
-                                                        <h4 class="m-b0">Total Applications</h4>
+                                                        <h4 class="m-b0">{{ trans('lang.Total Applications') }}</h4>
                                                     </div>
                                                 </div>
                                             </div>
@@ -81,7 +81,7 @@
                                                     <div class="wt-card-icon-2"><i class="flaticon-envelope"></i></div>
                                                     <div class="wt-card-right wt-total-listing-review counter ">{{$messageCount}}</div>
                                                     <div class="wt-card-bottom-2">
-                                                        <h4 class="m-b0">Messages</h4>
+                                                        <h4 class="m-b0">{{ trans('lang.user.message') }}</h4>
                                                     </div>
                                                 </div>
                                             </div>
@@ -94,7 +94,7 @@
                                                     <div class="wt-card-icon-2"><i class="flaticon-bell"></i></div>
                                                     <div class="wt-card-right wt-total-listing-bookmarked counter ">{{$notificationCount}}</div>
                                                     <div class="wt-card-bottom-2">
-                                                        <h4 class="m-b0">Notifications</h4>
+                                                        <h4 class="m-b0">{{ trans('lang.notification') }}</h4>
                                                     </div>
                                                 </div>
                                             </div>

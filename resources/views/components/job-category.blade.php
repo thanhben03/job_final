@@ -8,14 +8,14 @@
                     <!-- TITLE START-->
                     <div class="section-head left wt-small-separator-outer">
                         <div class="wt-small-separator site-text-primary">
-                            <div>Jobs by Categories</div>
+                            <div>{{__('lang.home.Jobs by Categories')}}</div>
                         </div>
-                        <h2 class="wt-title">Choose Your Desire Category</h2>
+                        <h2 class="wt-title">{{__('lang.home.Choose Your Desire Category')}}</h2>
                     </div>
                     <!-- TITLE END-->
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 wt-separator-two-part-right text-right">
-                    <a href="job-list.html" class=" site-button">All Categories</a>
+                    <a href="job-list.html" class=" site-button">{{__('lang.home.all-category')}}</a>
                 </div>
             </div>
         </div>

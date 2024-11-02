@@ -1,7 +1,7 @@
 <div class="wt-dashboard-msg-box">
     <div class="single-msg-user-name-box">
         <div class="single-msg-short-discription">
-            <h4 class="single-msg-user-name">{{$receiver->company_name ?? 'No contact !'}}</h4>
+            <h4 class="single-msg-user-name">{{$receiver->company_name ?? trans('lang.No contact !') }}</h4>
 
         </div>
     </div>
