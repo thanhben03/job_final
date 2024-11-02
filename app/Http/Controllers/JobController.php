@@ -96,7 +96,10 @@ class JobController extends Controller
         }
 
 
-        $careers->where('category_id', $category->id);
+        $careers->where([
+            'category_id' => $category->id,
+            'status' => 1
+        ]);
         $careers = $careers->paginate(10);
         $data = CareerResource::make($careers);
         $skills = $this->skillService->getAll();

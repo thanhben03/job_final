@@ -4,7 +4,6 @@
         <!--Left Section-->
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="twm-bnr-left-section">
-                <div class="twm-bnr-title-small">We Have <span class="site-text-primary">208,000+</span> Live Jobs</div>
                 <div class="twm-bnr-title-large">{{__('lang.home.Find the job that fits your life')}}</div>
                 <div class="twm-bnr-discription">{{__('lang.home.Type your keyword, then click search to find your perfect job.')}}</div>
 

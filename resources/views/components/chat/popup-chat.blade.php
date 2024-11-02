@@ -27,7 +27,7 @@
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                                      alt="avatar 1" style="width: 45px; height: 100%;">
                                 <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
-                                    <p class="small mb-0">Hello, how can i help you ?</p>
+                                    <p class="small mb-0">{{ trans('lang.Hello, how can i help you ?') }}</p>
                                 </div>
                             </div>
                         </div>

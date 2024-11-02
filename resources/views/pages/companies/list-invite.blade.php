@@ -8,8 +8,8 @@
         <div class="content-admin-main">
 
             <div class="wt-admin-right-page-header clearfix">
-                <h2>Bookmark</h2>
-                <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Bookmarked Jobs</span></div>
+                <h2>{{ trans('lang.Appointment Manager') }}</h2>
+                <div class="breadcrumbs"><a href="#">{{ trans('lang.header.home') }}</a><a href="#">{{ trans('lang.user.dashboard') }}</a><span>{{ trans('lang.Appointment Manager') }}</span></div>
             </div>
 
             <div class="twm-pro-view-chart-wrap">
@@ -17,7 +17,7 @@
                 <div class="col-lg-12 col-md-12 mb-4">
                     <div class="panel panel-default site-bg-white m-t30">
                         <div class="panel-heading wt-panel-heading p-a20">
-                            <h4 class="panel-tittle m-a0"><i class="far fa-bookmark"></i>Bookmarked Jobs</h4>
+                            <h4 class="panel-tittle m-a0"><i class="far fa-bookmark"></i>{{ trans('lang.Appointment Manager') }}</h4>
                         </div>
                         <div class="panel-body wt-panel-body">
                             <div class="twm-D_table p-a20 table-responsive">

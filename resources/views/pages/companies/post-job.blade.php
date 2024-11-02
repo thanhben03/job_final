@@ -7,51 +7,15 @@
         <div class="content-admin-main">
 
             <div class="wt-admin-right-page-header clearfix">
-                <h2>Post a Job</h2>
-                <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Job Submission Form</span></div>
+                <h2>{{ trans('lang.Post a New Jobs') }}</h2>
+                <div class="breadcrumbs"><a href="#">{{ trans('lang.header.home') }}</a><a href="#">{{ trans('lang.user.dashboard') }}</a><span>{{ trans('lang.Job Submission Form') }}</span></div>
             </div>
 
-            <!--Logo and Cover image-->
-            <!-- <div class="panel panel-default">
-                <div class="panel-heading wt-panel-heading p-a20">
-                    <h4 class="panel-tittle m-a0">Logo and Cover image</h4>
-                </div>
-                <div class="panel-body wt-panel-body p-a20 p-b0 m-b30 ">
-
-                    <div class="row">
-
-                        <div class="col-lg-12 col-md-6">
-                            <div class="form-group">
-
-                                <div class="dashboard-profile-pic">
-                                    <div class="dashboard-profile-photo">
-                                        <img src="images/jobs-company/pic1.jpg" alt="">
-                                        <div class="upload-btn-wrapper">
-                                            <button class="site-button button-sm">Upload Photo</button>
-                                            <input type="file" name="myfile">
-                                        </div>
-                                    </div>
-                                    <p><b>Company Logo :- </b> Max file size is 1MB, Minimum dimension: 136 x 136 And Suitable files are .jpg & .png</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 col-md-6">
-                            <div class="dashboard-cover-pic">
-                                <form action="upload.php" class="dropzone"></form>
-                                <p><b>Background Banner Image :- </b> Max file size is 1MB, Minimum dimension: 770 x 310 And Suitable files are .jpg & .png</p>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>  -->
 
             <!--Basic Information-->
             <div class="panel panel-default">
                 <div class="panel-heading wt-panel-heading p-a20">
-                    <h4 class="panel-tittle m-a0"><i class="fa fa-suitcase"></i>Job Details</h4>
+                    <h4 class="panel-tittle m-a0"><i class="fa fa-suitcase"></i>{{ trans('lang.Job Information') }}</h4>
                     @foreach ($errors->all() as $error)
                         <div class="alert alert-danger">{{ $error }}</div>
                     @endforeach
@@ -375,8 +339,7 @@
 
                             <div class="col-lg-12 col-md-12">
                                 <div class="text-left">
-                                    <button type="submit" class="site-button m-r5">Publish Job</button>
-                                    <button type="submit" class="site-button outline-primary">Save Draft</button>
+                                    <button type="submit" class="site-button m-r5">{{ trans('lang.save') }}</button>
                                 </div>
                             </div>
 

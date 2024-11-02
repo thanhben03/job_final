@@ -7,17 +7,17 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ứng viên phù hợp</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Suitable Candidate</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Chúng tôi gợi ý cho bạn một số ứng viên phù hợp với công việc của bạn</p>
+                    <p>{{ trans('lang.We suggest you some candidates suitable for your job') }}</p>
                     <ul class="list-group" id="suggest-candidate">
 
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('lang.close') }}</button>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="modal-dialog modal-dialog-scrollable modal-lg modal-fullscreen-sm-down">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="appointmentsModalLabel">Danh Sách Cuộc Hẹn</h5>
+                    <h5 class="modal-title" id="appointmentsModalLabel">{{ trans('lang.Appointment List') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -39,7 +39,7 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('lang.close') }}</button>
                 </div>
             </div>
         </div>
@@ -50,20 +50,20 @@
         <div class="modal-dialog modal-dialog-scrollable modal-lg modal-fullscreen-sm-down">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editAppointmentModalLabel">Thay Đổi Ngày và Giờ Cuộc Hẹn</h5>
+                    <h5 class="modal-title" id="editAppointmentModalLabel">{{ trans('lang.Changing Appointment Date and Time') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="edit-appointment-form">
                         <div class="mb-3">
-                            <label for="appointment-date" class="form-label">Chọn Ngày Mới</label>
+                            <label for="appointment-date" class="form-label">{{ trans('lang.Select New Date') }}</label>
                             <input type="date" class="form-control" id="appointment-date" required>
                         </div>
                         <div class="mb-3">
-                            <label for="appointment-time" class="form-label">Chọn Giờ Mới</label>
+                            <label for="appointment-time" class="form-label">{{ trans('lang.Select New Time') }}</label>
                             <input type="time" class="form-control" id="appointment-time" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+                        <button type="submit" class="btn btn-primary">{{ trans('lang.save') }}</button>
                     </form>
                 </div>
             </div>
@@ -77,14 +77,14 @@
         <div class="content-admin-main">
 
             <div class="wt-admin-right-page-header clearfix">
-                <h2>Manage Jobs</h2>
-                <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>My Job Listing</span></div>
+                <h2>{{ trans('lang.Manage Jobs') }}</h2>
+                <div class="breadcrumbs"><a href="#">{{ trans('lang.header.home') }}</a><a href="#">{{ trans('lang.user.dashboard') }}</a><span>{{ trans('lang.Manage Jobs') }}</span></div>
             </div>
 
             <!--Basic Information-->
             <div class="panel panel-default">
                 <div class="panel-heading wt-panel-heading p-a20">
-                    <h4 class="panel-tittle m-a0"><i class="fa fa-suitcase"></i> Job Details</h4>
+                    <h4 class="panel-tittle m-a0"><i class="fa fa-suitcase"></i> {{ trans('lang.Manage Jobs') }}</h4>
                 </div>
                 <div class="panel-body wt-panel-body p-a20 m-b30 ">
                     <div class="twm-D_table p-a20 table-responsive">
@@ -232,8 +232,8 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <h5 class="mb-1"><a href="/candidates/detail/${ele.candidate.id}">${ele.candidate.fullname}</a></h5>
-                                    <p class="mb-0"><strong>Gender:</strong> ${ele.candidate.gender}</p>
-                                    <p class="mb-0"><strong>Price Per Hours:</strong> ${ele.candidate.price_per_hours}</p>
+                                    <p class="mb-0"><strong>{{trans('lang.gender')}}:</strong> ${ele.candidate.gender}</p>
+                                    <p class="mb-0"><strong>{{trans('lang.Price Per Hours')}}:</strong> ${ele.candidate.price_per_hours}</p>
 
                                 </div>
                                 <div>
@@ -241,7 +241,7 @@
                                 </div>
                             </div>
                             <div>
-                                <small class="text-muted">Join Day: ${ele.candidate.created_at}</small>
+                                <small class="text-muted">{{trans('lang.Join Day')}}: ${ele.candidate.created_at}</small>
                                 <small class="">Email: <strong style="color: green">${ele.candidate.email}</strong></small>
                             </div>
                             <div class="wrap-match">

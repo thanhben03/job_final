@@ -11696,7 +11696,7 @@ strong {
 .listing-user ul li a:hover {
   color: #1967d2;
 }
-.listing-user .user-name:before {
+/* .listing-user .user-name:before {
   font-family: "Font Awesome 5 Free";
   content: "\f107";
   font-weight: 900;
@@ -11708,7 +11708,7 @@ strong {
   top: 50%;
   right: 0px;
   transform: translateY(-50%);
-}
+} */
 @media (max-width: 400px) {
   .listing-user .user-name:before {
     font-size: 18px;

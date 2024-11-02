@@ -24,6 +24,8 @@ use App\Models\Province;
 use App\Models\Skill;
 use App\Models\User;
 use App\Models\InviteInterview as Interview;
+use App\Models\Notification;
+use App\Models\UserCareer;
 use App\Services\Career\CareerServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +46,13 @@ class CompanyController extends Controller
 
     public function index()
     {
-        return view('pages.companies.dashboard');
+        $company = Auth::guard('company')->user();
+        $postedJobCount = $company->careers()->count();
+        $appliedCount = UserCareer::query()->whereIn('career_id', $company->careers->pluck('id'))->count();
+        $messageCount = Chat::query()->where('company_id', $company->id)->count();
+        $notificationCount = Notification::query()->where('company_id', $company->id)->count();
+        
+        return view('pages.companies.dashboard',compact('postedJobCount', 'appliedCount', 'messageCount', 'notificationCount'));
     }
 
     public function profile()

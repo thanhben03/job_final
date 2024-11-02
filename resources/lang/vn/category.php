@@ -14,6 +14,6 @@ return [
     'name.sales_business' => 'Kinh Doanh/Bán Hàng',
     'name.marketing' => 'Marketing',
     'name.construction' => 'Xây dựng',
-    'name.software_it' => 'IT PhiationException',
+    'name.software_it' => 'Software IT',
 
 ];

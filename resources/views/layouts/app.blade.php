@@ -391,9 +391,8 @@
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
                                                 <div class=" form-check">
-                                                    <input type="checkbox" class="form-check-input" id="Password3">
                                                     <label class="form-check-label rem-forgot" for="Password3">
-                                                        {{ trans('lang.Remember me') }}
+                                                        {{-- {{ trans('lang.Remember me') }} --}}
                                                         <a href="/forgot-password">{{ trans('lang.Forgot Password') }}</a>
                                                     </label>
 

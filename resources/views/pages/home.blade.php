@@ -160,7 +160,7 @@
                 <div class="wt-small-separator site-text-primary">
                     <div>{{__('lang.home.All Jobs Post')}}</div>
                 </div>
-                <h2 class="wt-title">{{__('lang.home.Find Your Career You Deserve it')}}</h2>
+                <h2 class="wt-title">{{__('lang.Latest Job')}}</h2>
             </div>
             <!-- TITLE END-->
 

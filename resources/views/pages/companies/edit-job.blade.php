@@ -7,14 +7,14 @@
         <div class="content-admin-main">
 
             <div class="wt-admin-right-page-header clearfix">
-                <h2>Post a Job</h2>
-                <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Job Submission Form</span></div>
+                <h2>{{ trans('lang.Edit a Job') }}</h2>
+                <div class="breadcrumbs"><a href="#">{{ trans('lang.header.home') }}</a><a href="#">{{ trans('lang.user.dashboard') }}</a><span>{{ trans('lang.Edit a Job') }}</span></div>
             </div>
 
             <!--Basic Information-->
             <div class="panel panel-default">
                 <div class="panel-heading wt-panel-heading p-a20">
-                    <h4 class="panel-tittle m-a0"><i class="fa fa-suitcase"></i>Job Details</h4>
+                    <h4 class="panel-tittle m-a0"><i class="fa fa-suitcase"></i>{{ trans('lang.Job Information') }}</h4>
                     @foreach ($errors->all() as $error)
                         <div class="alert alert-danger">{{ $error }}</div>
                     @endforeach
@@ -371,9 +371,9 @@
 
 
                             <div class="col-lg-12 col-md-12">
-                                <div class="text-left">
-                                    <button type="submit" class="site-button m-r5">Publish Job</button>
-                                    <a href="{{route('company.manage-job')}}" type="button" class="site-button outline-primary">Back</a>
+                                <div class="text-left d-flex">
+                                    <button type="submit" class="site-button m-r5">{{ trans('lang.save') }}</button>
+                                    <a href="{{route('company.manage-job')}}" type="button" class="site-button outline-primary">{{ trans('lang.back') }}</a>
                                 </div>
                             </div>
 

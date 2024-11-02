@@ -174,7 +174,7 @@
                             @else
                                 <div class="twm-nav-btn-left">
                                     <a class="twm-nav-sign-up" id="btn-signup" href="{{route('login')}}">
-                                        <i class="feather-log-in"></i> Sign In
+                                        <i class="feather-log-in"></i> {{ trans('lang.login') }}
                                     </a>
                                 </div>
                             @endif

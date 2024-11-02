@@ -34,7 +34,7 @@
                                         <div class="flaticon-dashboard"></div>
                                     </div>
                                     <div class="twm-content">
-                                        <div class="twm-jobs-available">{{$category->jobs_count}} Jobs</div>
+                                        <div class="twm-jobs-available">{{$category->jobs_count}} {{ trans('lang.jobs') }}</div>
                                         <a href="{{route('jobs.index', $category->slug)}}">{{__('category.name.'.$category->trans_key)}}</a>
                                     </div>
                                 </div>

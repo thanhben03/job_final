@@ -7,14 +7,14 @@
         <div class="content-admin-main">
 
             <div class="wt-admin-right-page-header clearfix">
-                <h2>Company Profile!</h2>
-                <div class="breadcrumbs"><a href="#">Home</a><a href="#">Dasboard</a><span>Company Profile!</span></div>
+                <h2>{{ trans('lang.Company Profile') }}</h2>
+                <div class="breadcrumbs"><a href="#">Home</a><a href="#">{{ trans('lang.user.dashboard') }}</a><span>{{ trans('lang.Company Profile') }}</span></div>
             </div>
 
             <!--Logo and Cover image-->
             <div class="panel panel-default">
                 <div class="panel-heading wt-panel-heading p-a20">
-                    <h4 class="panel-tittle m-a0">Logo and Cover image</h4>
+                    <h4 class="panel-tittle m-a0">{{ trans('lang.avatar') }}</h4>
                 </div>
                 <div class="panel-body wt-panel-body p-a20 p-b0 m-b30 ">
 
@@ -28,21 +28,21 @@
                                         <img src="{{asset('/images/avatar/'.$company->company_avatar)}}" alt="">
                                         <div class="upload-btn-wrapper">
                                             <div id="upload-image-grid"></div>
-                                            <button class="site-button button-sm">Upload Photo</button>
+                                            <button class="site-button button-sm">{{ trans('lang.Company Logo') }}</button>
                                             <input onchange="uploadAvatar(this)" type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png">
                                         </div>
                                     </div>
-                                    <p><b>Company Logo :- </b> Max file size is 1MB, Minimum dimension: 136 x 136 And Suitable files are .jpg & .png</p>
+                                    <p><b>{{ trans('lang.Company Logo') }} :- </b>{{ trans('lang.Require Image') }}</p>
                                 </div>
 
                             </div>
                         </div>
 
                         <div class="col-lg-12 col-md-12">
-                            <h4>Upload Banner</h4>
+                            <h4>{{ trans('lang.Upload Banner') }}</h4>
                             <form id="formUploadBanner" method="POST" action="/upload-banner" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label for="banner" class="form-label">Choose a banner to upload:</label>
+                                    <label for="banner" class="form-label">{{ trans('lang.Choose a banner to upload') }}:</label>
                                     <input class="form-control" type="file" id="banner" name="banner" accept="image/*" onchange="previewImage(event)">
                                 </div>
                                 <div class="mb-3">
@@ -53,7 +53,7 @@
                                         class="img-fluid"
                                         style="max-height: 300px; @if(!$company->banner) display: none; @endif">
                                 </div>
-                                <button type="submit" class="btn btn-primary">Upload</button>
+                                <button type="submit" class="btn btn-primary">{{ trans('lang.upload') }}</button>
                             </form>
 
                         </div>
@@ -73,7 +73,7 @@
                         <!--Basic Information-->
                         <div class="panel panel-default">
                             <div class="panel-heading wt-panel-heading p-a20">
-                                <h4 class="panel-tittle m-a0">Company Profile</h4>
+                                <h4 class="panel-tittle m-a0">{{ trans('lang.Company Profile') }}</h4>
                                 @foreach ($errors->all() as $error)
                                     <p class="alert alert-danger">{{ $error }}</p>
                                 @endforeach
@@ -87,7 +87,7 @@
 
                                     <div class="col-xl-6 col-lg-6 col-md-12">
                                         <div class="form-group">
-                                            <label>Company Name</label>
+                                            <label>{{ trans('lang.Company Name') }}</label>
                                             <div class="ls-inputicon-box">
                                                 <input class="form-control" name="company_name" type="text"  value="{{old('company_name', $company->company_name)}}" placeholder="Devid Smith">
                                                 <i class="fs-input-icon fa fa-building"></i>
@@ -97,7 +97,7 @@
 
                                     <div class="col-xl-6 col-lg-6 col-md-12">
                                         <div class="form-group">
-                                            <label>Phone</label>
+                                            <label>{{ trans('lang.phone') }}</label>
                                             <div class="ls-inputicon-box">
                                                 <input class="form-control"  value="{{old('company_phone', $company->company_phone)}}" name="company_phone" type="text" placeholder="(251) 1234-456-7890">
                                                 <i class="fs-input-icon fa fa-phone-alt"></i>
@@ -107,7 +107,7 @@
 
                                     <div class="col-xl-6 col-lg-6 col-md-12">
                                         <div class="form-group">
-                                            <label>Email Address</label>
+                                            <label>{{ trans('lang.Email Address') }}</label>
                                             <div class="ls-inputicon-box">
                                                 <input class="form-control"  value="{{old('email', $company->email)}}" name="email" type="email" placeholder="Devid@example.com">
                                                 <i class="fs-input-icon fas fa-at"></i>
@@ -127,7 +127,7 @@
 
                                     <div class="col-xl-12 col-lg-12 col-md-12">
                                         <div class="form-group city-outer-bx has-feedback">
-                                            <label>Full Address</label>
+                                            <label>{{ trans('lang.address') }}</label>
                                             <div class="ls-inputicon-box">
                                                 <input class="form-control"  value="{{old('company_address', $company->company_address)}}" name="company_address" type="text" placeholder="1363-1385 Sunset Blvd Angeles, CA 90026 ,USA">
                                                 <i class="fs-input-icon fas fa-map-marker-alt"></i>
@@ -138,7 +138,7 @@
 
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Description</label>
+                                            <label>{{ trans('lang.description') }}</label>
                                             <textarea class="form-control" rows="3">{{$company->introduce}}</textarea>
                                         </div>
                                     </div>
@@ -150,7 +150,7 @@
                         <!--Social Network-->
                         <div class="panel panel-default">
                             <div class="panel-heading wt-panel-heading p-a20">
-                                <h4 class="panel-tittle m-a0">Social Network</h4>
+                                <h4 class="panel-tittle m-a0">{{ trans('lang.Social Network') }}</h4>
                             </div>
                             <div class="panel-body wt-panel-body p-a20">
 
@@ -208,7 +208,7 @@
 
                         <div class="col-lg-12 col-md-12 mt-3">
                             <div class="text-left">
-                                <button type="submit" class="site-button">Save Changes</button>
+                                <button type="submit" class="site-button">{{ trans('lang.save') }}</button>
                             </div>
                         </div>
                     </form>

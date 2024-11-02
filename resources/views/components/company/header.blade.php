@@ -30,79 +30,7 @@
             <!-- Right Side Content -->
             <div class="header-right">
                 <ul class="header-widget-wrap">
-                    <!--Message-->
-                    <li class="header-widget dashboard-message-dropdown">
-
-                        <div class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle jobzilla-admin-messange" id="ID-MSG_dropdown"
-                               data-bs-toggle="dropdown">
-                                <i class="far fa-envelope"></i>
-                                <span class="notification-animate">4</span>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="ID-MSG_dropdown">
-                                <div class="message-list dashboard-widget-scroll">
-                                    <ul>
-                                        <li class="clearfix">
-                                                    <span class="msg-avtar">
-                                                        <img src="images/user-avtar/pic1.jpg" alt="">
-                                                    </span>
-
-                                            <div class="msg-texting">
-                                                <strong>Alexa Johnson</strong>
-                                                <small class="msg-time">
-                                                    <span class="far fa-clock p-r-5"></span>12 mins ago
-                                                </small>
-                                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                            </div>
-                                        </li>
-                                        <li class="clearfix">
-                                                    <span class="msg-avtar">
-                                                        <img src="images/user-avtar/pic2.jpg" alt="">
-                                                    </span>
-
-                                            <div class="msg-texting">
-                                                <strong>Johan Smith</strong>
-                                                <small class="msg-time">
-                                                    <span class="far fa-clock p-r-5"></span>2 hours ago
-                                                </small>
-                                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                            </div>
-                                        </li>
-                                        <li class="clearfix">
-                                                    <span class="msg-avtar">
-                                                        <img src="images/user-avtar/pic3.jpg" alt="">
-                                                    </span>
-
-                                            <div class="msg-texting">
-                                                <strong>Bobby Brown</strong>
-                                                <small class="msg-time">
-                                                    <span class="far fa-clock p-r-5"></span>3 hours ago
-                                                </small>
-                                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                            </div>
-                                        </li>
-                                        <li class="clearfix">
-                                                    <span class="msg-avtar">
-                                                        <img src="images/user-avtar/pic4.jpg" alt="">
-                                                    </span>
-
-                                            <div class="msg-texting">
-                                                <strong>David Deo</strong>
-                                                <small class="msg-time">
-                                                    <span class="far fa-clock p-r-5"></span>4 hours ago
-                                                </small>
-                                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="message-view-all">
-                                        <a href="javascript:;">View All</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </li>
+                    
 
                     <!--Notification-->
                     <li class="header-widget dashboard-noti-dropdown">
@@ -151,34 +79,13 @@
                         <div class="dashboard-user-section">
                             <div class="listing-user">
                                 <div class="dropdown">
-                                    <a href="javascript:;" class="dropdown-toggle" id="ID-ACCOUNT_dropdown"
-                                       data-bs-toggle="dropdown">
+                                    <a href="javascript:;" class="dropdown-toggle" id="ID-ACCOUNT_dropdown">
                                         <div class="user-name text-black">
                                                     <span>
                                                         <img src="{{asset('/images/avatar/'. $company->company_avatar)}}" alt="">
                                                     </span>{{$company->company_name}}
                                         </div>
                                     </a>
-                                    <div class="dropdown-menu" aria-labelledby="ID-ACCOUNT_dropdown">
-
-                                        <ul>
-                                            <li><a href="dashboard.html"><i class="fa fa-home"></i>Dashboard</a></li>
-                                            <li><a href="dash-messages.html"><i class="fa fa-envelope"></i> Messages</a>
-                                            </li>
-                                            <li><a href="dash-my-profile.html"><i class="fa fa-user"></i> Profile</a>
-                                            </li>
-                                            <li><a onclick="logout()" href="#">
-                                                    <i class="fa fa-share-square"></i>
-                                                    <form id="formLogout" method="POST" action="{{route('company.logout')}}">
-                                                        @csrf
-                                                    </form>
-                                                    Logout
-                                                </a>
-                                            </li>
-                                        </ul>
-
-
-                                    </div>
                                 </div>
 
                             </div>

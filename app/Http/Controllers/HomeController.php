@@ -35,7 +35,7 @@ class HomeController extends Controller
 
         $careers = $this->service
             ->getQueryBuilderWithRelations(['company', 'skills']);
-        $careers = $careers->paginate(10);
+        $careers = $careers->where('status', 1)->paginate(10);
         $data = CareerResource::make($careers)->resolve();
         $categories = Category::withCount('jobs')->get();
         return view('pages.home', [
