@@ -53,9 +53,12 @@
                         </li>
                         <li class=""><a href="javascript:;">{{trans('lang.header.cvs')}}</a>
                             <ul class="sub-menu">
-                                <li><a href="{{route('candidate.show.review-cv')}}">Đánh giá CV</a></li>
+                                <li>
+                                    <a href="{{route('candidate.show.review-cv')}}">Đánh giá CV</a>
+                                </li>
                                 <li><a href="{{route('candidate.create-cv')}}">Tạo CV</a></li>
                             </ul>
+
                         </li>
                         <li class=""><a href="javascript:;">{{trans('lang.language')}}</a>
                             <ul class="sub-menu">

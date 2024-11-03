@@ -8,7 +8,10 @@ use App\Http\Resources\CareerDetailResource;
 use App\Http\Resources\CareerResource;
 use App\Models\Career;
 use App\Models\Province;
+use App\Models\ReportedCareer;
+use App\Models\SaveCareer;
 use App\Models\Skill;
+use App\Models\User;
 use App\Models\UserCareer;
 use App\Services\Career\CareerServiceInterface;
 use Illuminate\Http\Request;
@@ -102,6 +105,67 @@ class JobController extends Controller
             return response()->json([
                 'msg' => $th->getMessage()
             ], 500);
+        }
+    }
+
+    public function saveJob(Request $request)
+    {
+
+        $career_id = $request->career_id;
+        $user_id = $request->user_id;
+
+        // Kiểm tra xem đã lưu công việc chưa
+        $exist = SaveCareer::where([
+            'career_id' => $career_id,
+            'user_id' => $user_id
+        ])->first();
+
+        // Nếu đã tồn tại, xóa bản ghi
+        if ($exist) {
+            $exist->delete();
+
+            return response()->json([
+                'success' => true,
+                'msg' => 'Job removed successfully'
+            ]);
+        }
+
+        // Nếu chưa tồn tại, tạo bản ghi mới
+        $savedJob = SaveCareer::create([
+            'career_id' => $career_id,
+            'user_id' => $user_id
+        ]);
+
+        // Kiểm tra tạo bản ghi thành công
+        return response()->json([
+            'success' => (bool) $savedJob,
+            'msg' => $savedJob ? 'Job Applied Successfully' : 'Failed to apply for job'
+        ], $savedJob ? 200 : 400);
+    }
+
+    public function reportJob(Request $request)
+    {
+        $request->validate([
+            'career_id' => 'required|exists:careers,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+        try {
+            $existJob = Career::query()->findOrFail($request->input('career_id'));
+            $existReport = ReportedCareer::query()->where([
+                'career_id' => $existJob->id,
+                'user_id' => $request->user_id
+            ])->first();
+            if ($existReport) {
+                throw new \Exception('You have already reported this job!');
+            }
+
+            ReportedCareer::query()->create([
+                'career_id' => $existJob->id,
+                'user_id' => $request->user_id
+
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json(['msg' => $th->getMessage()], 500);
         }
     }
 }

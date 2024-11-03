@@ -50,7 +50,8 @@ class OpenAIService
                 ['role' => 'user', 'content' => $prompt]
             ],
             'functions' => $functions, // Danh sách các function đã định nghĩa
-            'function_call' => 'auto' // Để OpenAI tự động gọi function khi cần
+            'function_call' => 'auto', // Để OpenAI tự động gọi function khi cần
+            'max_tokens' => 1000
         ]);
 
         return $content;

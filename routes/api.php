@@ -20,6 +20,8 @@ Route::prefix('api/v1')->group(function () {
         Route::get('/filter', [JobController::class, 'getFilterJob']);
         Route::get('/{id}', [JobController::class, 'show']);
         Route::post('/apply-job', [JobController::class, 'applyJob']);
+        Route::post('/save-job', [JobController::class, 'saveJob']);
+        Route::post('/report-job', [JobController::class, 'reportJob']);
 
     });
 
@@ -30,7 +32,8 @@ Route::prefix('api/v1')->group(function () {
         });
     });
 
-    Route::get('info-system', [UserController::class, 'infoSystem']);
+    Route::get('/info-system', [UserController::class, 'infoSystem']);
+    Route::post('/update-profile', [UserController::class, 'updateProfile']);
 
     Route::prefix('/skills')->group(function () {
         Route::get('/', function () {
@@ -42,6 +45,7 @@ Route::prefix('api/v1')->group(function () {
     Route::prefix('/auth')->group(function () {
         Route::post('/login', [AuthController::class, 'signin']);
     });
+
 
     Route::get('/get-cv/{user_id}', [UserController::class, 'getAllCV']);
 });

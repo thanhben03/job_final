@@ -408,3 +408,15 @@
     font-size: 13px;
     right: 0px;
 }
+
+.header-nav .nav>li.has-child>a:after,
+.header-nav .nav>li.menu-item-has-children>a:after,
+.header-nav .nav>li.sub-menu-down>a:after {
+    content: "\f078";
+    font-size: 9px;
+    margin-left: 5px;
+    margin-top: 0;
+    vertical-align: middle;
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+}
