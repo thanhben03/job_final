@@ -37,6 +37,7 @@ return [
     'Applied Job' => 'Đã ứng tuyển',
     'My Resume' => 'Hồ sơ ứng tuyển',
     'Review CV' => 'Đánh giá hồ sơ',
+    'Create CV' => 'Tạo hồ sơ',
     'Choose CV' => 'Chọn CV',
     'Saved Job' => 'Công việc đã lưu',
     'Total Applications' => 'Tổng đơn',
@@ -161,5 +162,6 @@ return [
     'active' => 'Hoạt động',
     'pending' => 'Chờ duyệt',
     'active.header' => 'Tài khoản của bạn chưa được kích hoạt. chúng tôi sẽ xem xét và kích hoạt tài khoản của bạn trong vòng vài giờ',
-    'active.content' => 'Nếu bạn không nhận được phản hồi, vui lòng liên hệ với quản trị viên qua email để được hỗ trợ.'
+    'active.content' => 'Nếu bạn không nhận được phản hồi, vui lòng liên hệ với quản trị viên qua email để được hỗ trợ.',
+    'account has not been activated' => 'Tài khoản chưa được kích hoạt'
 ];

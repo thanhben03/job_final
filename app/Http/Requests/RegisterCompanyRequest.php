@@ -23,11 +23,9 @@ class RegisterCompanyRequest extends FormRequest
     {
         return [
             'company_name' => 'required|string|max:255',
-            'company_email' => 'required|email|max:255',
-            'company_address' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|min:8', // Minimum password length
             'company_phone' => 'required|regex:/^[0-9]{10}$/', // Assuming phone number is 10 digits
-            'company_password' => 'required|string|min:8', // Minimum password length
-            'website' => 'nullable|url|max:255', // Optional website field
         ];
     }
 }

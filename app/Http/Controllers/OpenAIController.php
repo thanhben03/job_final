@@ -201,7 +201,7 @@ class OpenAIController extends Controller
     {
         $careers = Career::query()
             ->when($salary, function ($query) use ($salary) {
-                $query->where('max_salary', '>=', $salary);
+                $query->where('min_salary', '>=', $salary);
             })
             ->when($categories, function ($query) use ($categories) {
                 $query->whereHas('category', function ($query) use ($categories) {
@@ -225,7 +225,7 @@ class OpenAIController extends Controller
                     [$location]
                 );
             })
-            ->orderBy('careers.created_at', 'desc')
+            ->orderBy('careers.updated_at', 'desc')
             ->take(10)
             ->get();
 

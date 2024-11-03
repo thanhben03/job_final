@@ -33,7 +33,6 @@ class RegisteredCompanyController extends Controller
     {
         try {
             $data = $request->validated();
-
             $user = Company::create($data);
 
             event(new Registered($user));

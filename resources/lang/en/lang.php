@@ -37,6 +37,7 @@ return [
     'Applied Job' => 'Applied Job',
     'My Resume' => 'My Resume',
     'Review CV' => 'Review CV',
+    'Create CV' => 'Create CV',
     'Choose CV' => 'Choose CV',
     'Saved Job' => 'Saved Job',
     'Total Applications' => 'Total Applications',
@@ -161,6 +162,7 @@ return [
     'active' => 'Active',
     'pending' => 'Pending',
     'active.header' => 'Your account has not been activated. We will review and activate your account within a few minutes hour',
-    'active.content' => 'If you do not receive a response, please contact the administrator via email for support.'
+    'active.content' => 'If you do not receive a response, please contact the administrator via email for support.',
+    'account has not been activated' => 'Account has not been activated',
    
 ];

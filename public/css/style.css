@@ -2922,6 +2922,7 @@ ol li {
   margin: 0px 0px;
   font-weight: 400;
   display: block;
+  text-decoration: none;
 }
 @media (max-width: 1199px) {
   .header-style-3 .header-nav .nav > li > a {

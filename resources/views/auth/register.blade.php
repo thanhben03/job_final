@@ -1,19 +1,26 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('company.register.store') }}">
         @csrf
 
         <!-- Name -->
         <div>
-            <x-input-label for="fullname" :value="__('Name')" />
-            <x-text-input id="fullname" class="block mt-1 w-full" type="text" name="fullname" :value="old('fullname')" required autofocus autocomplete="fullname" />
-            <x-input-error :messages="$errors->get('fullname')" class="mt-2" />
+            <x-input-label for="fullname" :value="__('lang.Company Name')" />
+            <x-text-input id="fullname" class="block mt-1 w-full" type="text" name="company_name" :value="old('company_name')" required autofocus autocomplete="fullname" />
+            <x-input-error :messages="$errors->get('company_name')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="__('lang.Email Address')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Phone -->
+        <div class="mt-4">
+            <x-input-label for="phone" :value="__('lang.phone')" />
+            <x-text-input id="phone" class="block mt-1 w-full" type="text" name="company_phone" :value="old('company_phone')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('company_phone')" class="mt-2" />
         </div>
 
         <!-- Password -->
