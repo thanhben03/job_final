@@ -163,5 +163,13 @@ return [
     'pending' => 'Chờ duyệt',
     'active.header' => 'Tài khoản của bạn chưa được kích hoạt. chúng tôi sẽ xem xét và kích hoạt tài khoản của bạn trong vòng vài giờ',
     'active.content' => 'Nếu bạn không nhận được phản hồi, vui lòng liên hệ với quản trị viên qua email để được hỗ trợ.',
-    'account has not been activated' => 'Tài khoản chưa được kích hoạt'
+    'account has not been activated' => 'Tài khoản chưa được kích hoạt',
+    'Personal Info' => 'Thông tin cá nhân',
+    'Career Goal' => 'Mục tiêu nghề nghiệp',
+    'Soft Skill' => 'Kỹ năng mềm',
+    'education' => 'Học vấn',
+    'achievement' => 'Thành tựu',
+    'project' => 'Dự án',
+    'certificate' => 'Chứng chỉ'
+    
 ];

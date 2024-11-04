@@ -90,7 +90,7 @@ class OpenAIController extends Controller
         $functions2 = [
             [
                 'name' => 'search_job',
-                'description' => "Search for job listings based on user input. You can specify one or more of the following parameters: skills, location, salary, or categories. Each field is optional, and the system will return relevant job listings based on the criteria provided.",
+                'description' => "Search job listings based on user input. Users can select one or more of the following parameters: skills, location, salary, or category. Each field is optional and the system will return relevant job listings based on the criteria provided.",
                 'parameters' => [
                     'type' => 'object',
                     'properties' => [

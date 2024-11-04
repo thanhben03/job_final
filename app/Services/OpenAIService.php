@@ -41,7 +41,7 @@ class OpenAIService
 
 
         $content = $this->client->chat()->create([
-            'model' => 'gpt-4o', // Sử dụng GPT-4 hoặc mô hình khác
+            'model' => 'gpt-3.5-turbo', // Sử dụng GPT-4 hoặc mô hình khác
             'messages' => [
                 [
                     'role' => 'assistant',

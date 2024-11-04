@@ -216,8 +216,9 @@
                     reviews.forEach(item => {
                         Object.keys(item).forEach(key => {
                             let value = item[key];
-                            html += `
 
+                            html += `
+                            
                             <tr class="personal_info">
                                 <td><span class="text-highlight bg-primary bg-danger review-cv-score">${value.score}</span></td>
                                 <td><b>${value.field}:</b> <span>${value.reason}</span>

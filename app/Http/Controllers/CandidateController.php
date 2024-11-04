@@ -27,6 +27,7 @@ use Gemini\Enums\MimeType;
 use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -41,17 +42,17 @@ class CandidateController extends Controller
     public function index()
     {
         $messageCount = Chat::query()
-                            ->where('user_id', auth()->user()->id)
-                            ->count();
+            ->where('user_id', auth()->user()->id)
+            ->count();
         $appliedCount = UserCareer::query()
-                            ->whereIn('cv_id', auth()->user()->cv()->pluck('id')->toArray())
-                            ->count();
+            ->whereIn('cv_id', auth()->user()->cv()->pluck('id')->toArray())
+            ->count();
         $notificationCount = Notification::query()
-                            ->where('user_id', auth()->user()->id)
-                            ->count();
+            ->where('user_id', auth()->user()->id)
+            ->count();
         $savedJobCount = SaveCareer::query()
-                            ->where('user_id', auth()->user()->id)
-                            ->count();
+            ->where('user_id', auth()->user()->id)
+            ->count();
 
 
         return view('pages.candidates.dashboard', compact('messageCount', 'appliedCount', 'notificationCount', 'savedJobCount'));
@@ -481,15 +482,36 @@ class CandidateController extends Controller
         $filePath = storage_path('/app/public/uploads/' . $cv->thumbnail); // Đường dẫn tới file PDF
         $pdfContent = base64_encode(file_get_contents($filePath));
 
+        $language = App::getLocale() == 'en' ? 'tiếng anh' : 'tiếng việt';
+        $lang = [trans('lang.achievement'), trans('lang.experience'), trans('lang.language'), 
+        trans('lang.Soft Skill'), trans('lang.skill'), trans('lang.Career Goal')];
+        $lang = implode(' ,', $lang);
+        $prompt = 'Hãy phân tích CV và xuất đầu ra dưới dạng JSON. Các key sẽ là các mục lớn như '.$lang.', v.v. Bất kỳ mục lớn nào bạn nhận thấy trong CV, hãy liệt kê đầy đủ. Mỗi key sẽ có một trường bổ sung để mô tả tên mục đó dưới dạng ngôn ngữ tự nhiên, ví dụ: career_goal sẽ có một trường field chứa "Career Goal". Đầu ra sẽ bao gồm 3 mục chính: score (đánh giá trên thang điểm 10), reason (lý do), suggestion (gợi ý cải thiện).
+        Hãy đảm bảo rằng mọi thông tin phân tích đều chính xác và có thể cải thiện. Trả lời chỉ bằng '.$language.'
+        Ví dụ đầu ra: [
+                {
+                    "personal_info": {
+                    "score": 5,
+                    "reason": "Thiếu thông tin như ngày sinh và địa chỉ.",
+                    "suggestion": "Cung cấp đầy đủ thông tin cá nhân bao gồm ngày sinh và địa chỉ để tạo sự tin cậy.",
+                    "field": "Thông Tin Cá Nhân"
+                    }
+                },
+                {
+                    "career_goal": {
+                    "score": 7,
+                    "reason": "Mục tiêu nghề nghiệp rõ ràng nhưng chưa thể hiện sự đột phá.",
+                    "suggestion": "Thêm các mục tiêu dài hạn và kế hoạch phát triển để thể hiện tầm nhìn nghề nghiệp.",
+                    "field": "Mục Tiêu Nghề Nghiệp"
+                    }
+                }
+        ]';
+        
+
+
         $result = Gemini::generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
             ->generateContent([
-                'Hãy phân tích cv dưới dạng này đầu ra phải ở dạng, các key sẽ là các mục lớn như, achievement, experience, soft skill, language, career_goal v.v bạn nhìn thấy những mục lớn nào thì cứ ghi rõ ra, đồng thời các key đó ví dụ career_goal thì thêm một field nữa chứa là Career Goal và value sẽ gồm 3 mục score (đánh giá trên thang điểm 10), reason, suggestion [{
-              "personal_info": {
-                "score": 5,
-                "reason": "Thiếu thông tin như ngày sinh và địa chỉ.",
-                "suggestion": "Cung cấp đầy đủ thông tin cá nhân bao gồm ngày sinh và địa chỉ để tạo sự tin cậy.",
-                "field": "Personal Info"
-              },]',
+                $prompt,
                 new Blob(
                     mimeType: MimeType::IMAGE_JPEG,
                     data: base64_encode(

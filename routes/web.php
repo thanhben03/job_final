@@ -15,6 +15,7 @@ use App\Http\Middleware\CompanyAuthenticated;
 use App\Http\Middleware\UserAuthenticated;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -107,6 +108,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 Route::get('pdf-to-img', [CandidateController::class, 'pdfToImg'])->name('pdf-to-img');
 
