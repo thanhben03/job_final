@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\AppointmentAcceptEvent;
 use App\Events\AppointmentEvent;
+use App\Http\Resources\AppointmentResource;
 use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -72,6 +73,7 @@ class AppointmentController extends Controller
     public function getAppointments($user_id)
     {
         $appointments = Appointment::where('user_id', $user_id)->with(['company', 'career'])->get();
+        $appointments = AppointmentResource::make($appointments);
         return response()->json($appointments);
     }
 

@@ -27,6 +27,7 @@ class AppointmentResource extends ResourceCollection
                 'note' => $item->note,
                 'created_at' => $item->created_at->toDateString(),
                 'candidate' => User::query()->find($item->user_id),
+                'career' => $item->career
             ];
         });
     }

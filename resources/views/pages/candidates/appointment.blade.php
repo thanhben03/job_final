@@ -121,7 +121,8 @@
             $.get(`/appointments/${candidateId}`, function(data) {
                 let appointmentList = '';
                 data.forEach(appointment => {
-                    let statusClass = appointment.status === 'pending' ? 'text-warning' :
+                    let statusClass = 
+                        appointment.status === 'pending' ? 'text-warning' :
                         appointment.status === 'accepted' ? 'text-success' :
                             'text-danger';
 

@@ -3,6 +3,7 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <form method="POST" action="{{ route('company.login.store') }}">
         @csrf
+        <x-input-error :messages="$errors->get('msg')" class="mt-2" />
 
         <!-- Email Address -->
         <div>

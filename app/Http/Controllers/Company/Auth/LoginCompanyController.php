@@ -28,20 +28,20 @@ class LoginCompanyController extends Controller
      */
     public function store(CompanyLoginRequest $request): RedirectResponse
     {
-//        $data = $request->validated();
-//        $exist = Company::query()->where('company_email', $data['company_email'])->first();
-//        if (Hash::check($data['company_password'], $exist->company_password)) {
-//            Session::put('company', $exist);
-//        } else {
-//            dd('Failed');
-//        }
-//        return redirect()->intended(route('company.dashboard', absolute: false));
+        //        $data = $request->validated();
+        //        $exist = Company::query()->where('company_email', $data['company_email'])->first();
+        //        if (Hash::check($data['company_password'], $exist->company_password)) {
+        //            Session::put('company', $exist);
+        //        } else {
+        //            dd('Failed');
+        //        }
+        //        return redirect()->intended(route('company.dashboard', absolute: false));
         try {
             $request->authenticate();
 
             $request->session()->regenerate();
         } catch (\Throwable $e) {
-            dd($e->getMessage());
+            return redirect()->back()->withErrors(['msg' => $e->getMessage()]);
         }
 
         return redirect()->intended(route('company.dashboard', absolute: false));

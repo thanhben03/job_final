@@ -39,7 +39,7 @@ class RegisteredCompanyController extends Controller
 
             Auth::guard('company')->login($user);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            return redirect()->back()->withErrors(['msg' => $th->getMessage()]);
         }
 
         return redirect(route('company.dashboard', absolute: false));
