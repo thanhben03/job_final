@@ -69,10 +69,10 @@
                                             <h4 class="twm-job-title">{{$company['company_name']}}</h4>
                                             <p class="twm-employer-address"><i class="feather-map-pin"></i>{{$company['company_address']}}</p>
                                             <a href="{{$company['website']}}" class="twm-employer-websites site-text-primary">{{$company['website']}}</a>
-                                            <div class="twm-employer-self-bottom">
-                                                <a href="javascript:;" class="site-button outline-primary">Add Review</a>
-                                                <a href="javascript:;" class="site-button">Follow Us</a>
-                                            </div>
+{{--                                            <div class="twm-employer-self-bottom">--}}
+{{--                                                <a href="javascript:;" class="site-button outline-primary">Add Review</a>--}}
+{{--                                                <a href="javascript:;" class="site-button">Follow Us</a>--}}
+{{--                                            </div>--}}
                                         </div>
                                     </div>
 

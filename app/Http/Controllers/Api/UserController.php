@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\WorkTypeEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\ListCVResource;
 use App\Http\Resources\NotificationResource;
 use App\Models\CurriculumVitae;
 use App\Models\Notification;
@@ -16,7 +17,8 @@ class UserController extends Controller
 {
     public function getAllCV($user_id)
     {
-        $cvs = CurriculumVitae::query()->where('user_id', $user_id)->get()->pluck('path', 'id');
+        $cvs = CurriculumVitae::query()->where('user_id', $user_id)->get();
+        $cvs = ListCVResource::make($cvs);
         return response()->json($cvs);
     }
 
@@ -46,7 +48,7 @@ class UserController extends Controller
         $user = User::query()->find($request->id);
         $user->update($dataUser);
         $user->save();
-        
+
         if ($user) {
             try {
                 DB::beginTransaction();
@@ -96,6 +98,22 @@ class UserController extends Controller
             return response()->json([
                 'msg' => $th->getMessage(),
             ], 500);
+        }
+    }
+
+    public function setDefaultCV(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $user = User::query()->findOrFail($request->user_id);
+            $user->main_cv = $request->cvId;
+            $user->save();
+            DB::commit();
+            return response()->json([
+                'msg' => 'ok'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
         }
     }
 }

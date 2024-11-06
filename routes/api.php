@@ -25,9 +25,9 @@ Route::prefix('api/v1')->group(function () {
         Route::get('/get-applied-job/{id}', [JobController::class, 'getAppliedJob']);
         Route::get('/get-appointment/{id}', [JobController::class, 'getAppointment']);
         Route::post('/report-job', [JobController::class, 'reportJob']);
-        
+
     });
-    
+
     Route::post('/update-appointment', [JobController::class, 'updateAppointment']);
     Route::prefix('/provinces')->group(function () {
         Route::get('/', function () {
@@ -55,4 +55,5 @@ Route::prefix('api/v1')->group(function () {
 
 
     Route::get('/get-cv/{user_id}', [UserController::class, 'getAllCV']);
+    Route::post('/set-default-cv', [UserController::class, 'setDefaultCV']);
 });

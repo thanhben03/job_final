@@ -147,7 +147,7 @@ class JobController extends Controller
         // Kiểm tra tạo bản ghi thành công
         return response()->json([
             'success' => (bool) $savedJob,
-            'msg' => $savedJob ? 'Job Applied Successfully' : 'Failed to apply for job'
+            'msg' => $savedJob ? 'Job Saved Successfully' : 'Failed to apply for job'
         ], $savedJob ? 200 : 400);
     }
 
