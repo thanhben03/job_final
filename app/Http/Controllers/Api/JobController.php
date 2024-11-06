@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\AppointmentAcceptEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApplyJobRequest;
+use App\Http\Resources\Api\AppliedJobResource;
+use App\Http\Resources\Api\AppointmentResource;
 use App\Http\Resources\CareerDetailResource;
 use App\Http\Resources\CareerResource;
+use App\Http\Resources\SavedJobResource;
+use App\Models\Appointment;
 use App\Models\Career;
+use App\Models\Notification;
 use App\Models\Province;
 use App\Models\ReportedCareer;
 use App\Models\SaveCareer;
@@ -37,6 +43,10 @@ class JobController extends Controller
         if ($request->has('search')) {
             $careers->where('title', 'like', '%' . $request->get('search') . '%');
         }
+        if ($request->has('category_id')) {
+            $careers->where('category_id', $request->get('category_id'));
+            Session::flash('category_id', $request['category_id']);
+        }
 
         if ($request->has('locations')) {
             $locationFilter = explode(',', $request['locations']);
@@ -51,8 +61,6 @@ class JobController extends Controller
             $skillIds = Skill::query()->whereIn('name', $skillFilter)->pluck('id')->toArray();
             $careers = $careers->hasSkills($skillIds);
         }
-
-
 
         $careers = $careers->paginate(10);
         $data = CareerResource::make($careers)->resolve();
@@ -167,5 +175,51 @@ class JobController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['msg' => $th->getMessage()], 500);
         }
+    }
+
+    public function getSavedJob($user_id)
+    {
+        $user = User::query()->findOrFail($user_id);
+        $savedJob = $user->saveJob;
+        $data = SavedJobResource::make($savedJob)->resolve();
+
+        return response()->json($data);
+    }
+
+    public function getAppliedJob($user_id)
+    {
+        $user = User::query()->findOrFail($user_id);
+        // lay tat ca cv cua nguoi dung
+        $cvIds = $user->cv()->pluck('id')->toArray();
+
+        // lay id cv cac job ma nguoi dung da apply
+        $user_carreers = UserCareer::query()->whereIn('cv_id', $cvIds)->get();
+
+        $careers = AppliedJobResource::make($user_carreers);
+
+
+        return response()->json($careers);
+    }
+
+    public function getAppointment($user_id)
+    {
+        $appointments = Appointment::query()->where('user_id', $user_id)->get();
+        $appointments = AppointmentResource::make($appointments);
+
+        return response()->json($appointments);
+    }
+
+    public function updateAppointment(Request $request)
+    {
+        $appointment = Appointment::query()->findOrFail($request->id);
+        $appointment->status = $request->status;
+        $appointment->save();
+
+        // $notification = Notification::query()->create([
+        //     'company_id' => $appointment->company_id,
+        //     'message' => "Ứng viên [" . $appointment->user->fullname . "] đã đồng ý lịch hẹn của bạn !",
+        //     'from_id' => $appointment->user_id,
+        // ]);
+        // broadcast(new AppointmentAcceptEvent($appointment->company_id, $notification->message))->toOthers();
     }
 }

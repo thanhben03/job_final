@@ -21,10 +21,14 @@ Route::prefix('api/v1')->group(function () {
         Route::get('/{id}', [JobController::class, 'show']);
         Route::post('/apply-job', [JobController::class, 'applyJob']);
         Route::post('/save-job', [JobController::class, 'saveJob']);
+        Route::get('/get-saved-job/{id}', [JobController::class, 'getSavedJob']);
+        Route::get('/get-applied-job/{id}', [JobController::class, 'getAppliedJob']);
+        Route::get('/get-appointment/{id}', [JobController::class, 'getAppointment']);
         Route::post('/report-job', [JobController::class, 'reportJob']);
-
+        
     });
-
+    
+    Route::post('/update-appointment', [JobController::class, 'updateAppointment']);
     Route::prefix('/provinces')->group(function () {
         Route::get('/', function () {
             $provinces = Province::all();
@@ -45,6 +49,9 @@ Route::prefix('api/v1')->group(function () {
     Route::prefix('/auth')->group(function () {
         Route::post('/login', [AuthController::class, 'signin']);
     });
+
+    Route::get('/notifications/{id}', [UserController::class, 'notifications']);
+    Route::get('/notifications/delete-all/{id}', [UserController::class, 'deleteAllNotifications']);
 
 
     Route::get('/get-cv/{user_id}', [UserController::class, 'getAllCV']);

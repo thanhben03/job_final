@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\WorkTypeEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\NotificationResource;
 use App\Models\CurriculumVitae;
+use App\Models\Notification;
 use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -55,10 +57,10 @@ class UserController extends Controller
                         $user->experiences()->create([
                             'from_date' => $value['from_date'],
                             'to_date' => $value['to_date'],
-                            'title' => $value['company'],
+                            'title' => $value['title'],
                             'position' => $value['position'],
                             'description' => $value['description'],
-                            'user_id' => $dataUser['id']
+                            'user_id' => $request->id
                         ]);
                     }
                 }
@@ -69,6 +71,31 @@ class UserController extends Controller
                 DB::rollBack();
                 return response()->json(['msg' => $th->getMessage()], 500);
             }
+        }
+    }
+
+    public function notifications($user_id) {
+        try {
+            $notifications = Notification::query()->where('user_id', $user_id)->get();
+            $notifications = NotificationResource::make($notifications);
+
+            return response()->json($notifications);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
+    public function deleteAllNotifications ($id) {
+        try {
+            Notification::query()->where('user_id', $id)->delete();
+
+            return response()->json([
+                'msg' => 'Xóa thông báo thành công !',
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'msg' => $th->getMessage(),
+            ], 500);
         }
     }
 }
