@@ -44,6 +44,7 @@
                                     <label>Job Skill</label>
                                     <div class="ls-inputicon-box">
                                         <select
+
                                             name="skill_ids[]"
                                             multiple
                                             class="wt-select-box selectpicker"
@@ -271,9 +272,15 @@
                                 <div class="form-group">
                                     <label>Category</label>
                                     <div class="ls-inputicon-box">
-                                        <select class="wt-select-box selectpicker"  data-live-search="true" title="" name="category_id" data-bv-field="size">
+                                        <select
+                                            onchange="changeCategory(this)"
+                                            class="wt-select-box selectpicker"
+                                            data-live-search="true"
+                                            title=""
+                                            name="category_id"
+                                            data-bv-field="size">
                                             @foreach($categories as $category)
-                                                <option value="{{$category->id}}}}">{{$category->name}}</option>
+                                                <option value="{{$category->id}}">{{$category->name}}</option>
                                             @endforeach
                                         </select>
                                         <i class="fs-input-icon fa fa-home"></i>
@@ -385,6 +392,16 @@
                     $("#district").selectpicker('refresh')
                 }
             });
+        }
+
+        function changeCategory(e) {
+            // if (e.value != 7) {
+            //     console.log(1)
+            //     console.log($("#select-skills"))
+            //     $("#select-skills").classList.add('d-none');
+            // } else {
+            //     $("#select-skills").classList.remove('d-none');
+            // }
         }
     </script>
 @endpush

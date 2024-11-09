@@ -177,7 +177,17 @@ class CareerResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                        1 => 'Active',
+                        0 => 'Inactive'
+                    ]),
+                Tables\Filters\SelectFilter::make('category_id')
+                    ->label('Category')
+                ->options(fn(Get $get): Collection => Category::query()->pluck('name', 'id')),
+                Tables\Filters\SelectFilter::make('province_id')
+                ->label('Province')
+                ->options(fn(Get $get): Collection => Province::query()->pluck('name', 'code')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -18,7 +18,7 @@ Broadcast::channel('message.{receiverId}', function ($user, $receiverId) {
     return (int) $receiverId === (int) $user->id;
 });
 Broadcast::channel('message.company.{receiverId}', function ($user, $receiverId) {
-    return (int) $receiverId === (int) Session::get('company')->id;
+    return (int) $receiverId === $user->id;
 }, ['guards' => ['company']]);
 Broadcast::channel('notification.{receiverId}', function ($user, $receiverId) {
     return $user;

@@ -26,7 +26,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'http://127.0.0.1:8000/api/v1/jobs/report-job',
             'http://127.0.0.1:8000/api/v1/update-appointment',
             'http://127.0.0.1:8000/api/v1/set-default-cv',
-            'https://zibb.teebi.shop/api/v1/*'
+            'http://127.0.0.1:8000/broadcasting/auth',
+            'http://127.0.0.1:8000/api/v1/*',
+            'https://zibb.teebi.shop/api/v1/*',
+
         ]);
         $middleware->appendToGroup('web',Localization::class);
     })

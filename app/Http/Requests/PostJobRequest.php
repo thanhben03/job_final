@@ -51,8 +51,8 @@ class PostJobRequest extends FormRequest
             'benefit' => 'required',
             'key_responsibilities' => 'required',
             'requirement' => 'required',
-            'skill_ids' => 'required',
-            'category_id' => 'required|integer|exists:categories,id',
+            'skill_ids' => 'nullable',
+            'category_id' => 'required',
         ];
     }
 }

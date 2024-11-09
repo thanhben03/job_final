@@ -55,9 +55,11 @@ class CareerService implements CareerServiceInterface
             $careerDetailData['career_id'] = $result->id;
             $this->careerDetailRepository->create($careerDetailData);
 
-            $skillIds = $this->data['skill_ids'];
+            if (isset($data['skill_ids'])) {
+                $skillIds = $this->data['skill_ids'];
 
-            $result->skills()->attach($skillIds);
+                $result->skills()->attach($skillIds);
+            }
             DB::commit();
             return true;
         } catch (\Exception $exception) {

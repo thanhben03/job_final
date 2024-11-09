@@ -220,6 +220,7 @@
 
         // Handle Scroll To Latest Message
         function scrollToBottom() {
+            console.log('scroll')
             let chatContainer = document.getElementById('msg-chat-wrap');
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
