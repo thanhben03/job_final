@@ -203,7 +203,7 @@ class UserController extends Controller
         }
     }
 
-    public function getAllChatByUser($user_id)
+    public function getAllChatByUser(Request $request, $user_id)
     {
         $latestMessages = Chat::query()
             ->select('chats.*')

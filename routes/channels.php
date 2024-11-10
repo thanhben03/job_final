@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Session;
 
@@ -14,9 +15,10 @@ Broadcast::channel('appointment.{userId}', function ($user, $userId) {
 Broadcast::channel('appointment.company.{companyId}', function ($user, $companyId) {
     return (int) $companyId === (int) $user->id;
 }, ['guards' => ['company']]);
-Broadcast::channel('message.{receiverId}', function ($user, $receiverId) {
+Broadcast::channel('message.{receiverId}', function (Request $request, $user, $receiverId) {
     return (int) $receiverId === (int) $user->id;
-});
+}, ['guards' => ['web', 'auth:sanctum']]);
+
 Broadcast::channel('message.company.{receiverId}', function ($user, $receiverId) {
     return (int) $receiverId === $user->id;
 }, ['guards' => ['company']]);

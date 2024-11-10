@@ -19,7 +19,12 @@ class AuthController extends Controller
             ], 404);
         }
         $user = UserResource::make($user);
+        $tokenResult = $user->createToken('authToken')->plainTextToken;
 
-        return response()->json($user);
+        return response()->json([
+            'access_token' => $tokenResult,
+            'token_type' => 'Bearer',
+            'user' => $user
+        ]);
     }
 }
