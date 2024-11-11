@@ -170,6 +170,6 @@ return [
     'education' => 'Học vấn',
     'achievement' => 'Thành tựu',
     'project' => 'Dự án',
-    'certificate' => 'Chứng chỉ'
-    
+    'certificate' => 'Chứng chỉ',
+    'CV Not Found' => 'Không tìm thấy CV'
 ];

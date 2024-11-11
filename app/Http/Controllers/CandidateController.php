@@ -409,6 +409,7 @@ class CandidateController extends Controller
             $certificate = $cv->certificate;
             $bestCareers = Career::query()
                 ->join('career_details', 'careers.id', '=', 'career_details.career_id')
+                ->select('career_details.*', 'career_details.id as id_detail', 'careers.*')
                 ->whereRaw("
                 MATCH(careers.title) AGAINST(? IN NATURAL LANGUAGE MODE)
                 AND MATCH(careers.address) AGAINST(? IN NATURAL LANGUAGE MODE)
@@ -417,6 +418,7 @@ class CandidateController extends Controller
                 ->get();
             $careers = Career::query()
                 ->join('career_details', 'careers.id', '=', 'career_details.career_id')
+                ->select('career_details.*', 'career_details.id as id_detail', 'careers.*')
                 ->whereRaw("
                     MATCH(careers.title) AGAINST(? IN NATURAL LANGUAGE MODE)
                     OR MATCH(careers.address) AGAINST(? IN NATURAL LANGUAGE MODE)
@@ -483,7 +485,7 @@ class CandidateController extends Controller
         $pdfContent = base64_encode(file_get_contents($filePath));
 
         $language = App::getLocale() == 'en' ? 'tiếng anh' : 'tiếng việt';
-        $lang = [trans('lang.achievement'), trans('lang.experience'), trans('lang.language'), 
+        $lang = [trans('lang.achievement'), trans('lang.experience'), trans('lang.language'),
         trans('lang.Soft Skill'), trans('lang.skill'), trans('lang.Career Goal')];
         $lang = implode(' ,', $lang);
         $prompt = 'Hãy phân tích CV và xuất đầu ra dưới dạng JSON. Các key sẽ là các mục lớn như '.$lang.', v.v. Bất kỳ mục lớn nào bạn nhận thấy trong CV, hãy liệt kê đầy đủ. Mỗi key sẽ có một trường bổ sung để mô tả tên mục đó dưới dạng ngôn ngữ tự nhiên, ví dụ: career_goal sẽ có một trường field chứa "Career Goal". Đầu ra sẽ bao gồm 3 mục chính: score (đánh giá trên thang điểm 10), reason (lý do), suggestion (gợi ý cải thiện).
@@ -506,7 +508,7 @@ class CandidateController extends Controller
                     }
                 }
         ]';
-        
+
 
 
         $result = Gemini::generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)

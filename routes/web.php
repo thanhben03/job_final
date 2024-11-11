@@ -24,8 +24,12 @@ Route::get('/fetch-data-select/{type}', [HomeController::class, 'fetchDataSelect
 //Route::resource('/jobs', JobController::class);
 
 
-Route::get('/jobs/{category}', [JobController::class, 'index'])->name('jobs.index');
-Route::get('/jobs/{category}/{job}', [JobController::class, 'show'])->name('jobs.show');
+//Route::get('/jobs/{category}', [JobController::class, 'index'])->name('jobs.index');
+//Route::get('/jobs/{category}/{job}', [JobController::class, 'show'])->name('jobs.show');
+
+Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
+Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
+
 Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
 Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
 

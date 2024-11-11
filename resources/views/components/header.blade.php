@@ -39,15 +39,15 @@
                     <ul class=" nav navbar-nav">
                         <li class="has-mega-menu"><a href="{{route('home')}}">{{trans('lang.header.home')}}</a>
                         </li>
-                        <li class="has-child">
-                            <a href="#">{{trans('lang.header.jobs')}}</a>
-                            <ul class="sub-menu">
-                                @foreach(\App\Models\Category::query()->get() as $category)
-                                    <li><a href="{{route('jobs.index', $category->slug)}}">
-                                            {{__('category.'.$category->trans_key)}}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
+                        <li class="">
+                            <a href="{{route('jobs.index')}}">{{trans('lang.header.jobs')}}</a>
+{{--                            <ul class="sub-menu">--}}
+{{--                                @foreach(\App\Models\Category::query()->get() as $category)--}}
+{{--                                    <li><a href="{{route('jobs.index', $category->slug)}}">--}}
+{{--                                            {{__('category.'.$category->trans_key)}}</a>--}}
+{{--                                    </li>--}}
+{{--                                @endforeach--}}
+{{--                            </ul>--}}
                         </li>
                         <li class=""><a href="{{route('company.list')}}">{{trans('lang.header.employers')}}</a>
                         </li>
@@ -83,7 +83,7 @@
                             @if(auth()->user())
                                 <div class="header-right">
                                     <ul class="header-widget-wrap">
-                                        
+
 
                                         <!--Notification-->
                                         <li class="header-widget dashboard-noti-dropdown">

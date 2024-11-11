@@ -130,7 +130,7 @@
                             <h4 class="twm-job-title">{{$candidate['fullname']}}</h4>
 
                             <p>Senior UI / UX Designer and Developer at Google INC</p>
-                            <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{$candidate['province']->name}}</p>
+                            <p class="twm-candidate-address"><i class="feather-map-pin"></i>{{$candidate['province']->name ?? ''}}</p>
 
                         </div>
                     </div>
@@ -140,7 +140,12 @@
                     <div class="twm-candi-self-bottom">
                         <button onclick="showModalQuickChat()" class="site-button">Contact Us</button>
                         <button onclick="showModalInviteInterview()" class="site-button twm-bg-green">Hire Me</button>
-                        <a download href="{{ asset('storage/uploads/' . $candidate['main_cv']->path) }}" class="site-button secondry">Download CV</a>
+                        @if(isset($candidate['main_cv']->path))
+                            <a download href="{{ asset('storage/uploads/' . $candidate['main_cv']?->path) }}" class="site-button secondry">Download CV</a>
+                        @else
+                            <a href="#" id="btnNoCV" class="site-button secondry">Download CV</a>
+
+                        @endif
                     </div>
                 </div>
             </div>
@@ -365,5 +370,11 @@
         function showModalInviteInterview() {
             $("#modal-invite-interview").modal('toggle')
         }
+
+
+        $("#btnNoCV").click(function () {
+                alert('{{trans('lang.CV Not Found')}}')
+        })
+
     </script>
 @endpush

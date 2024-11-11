@@ -58,7 +58,7 @@ class CareerResource extends ResourceCollection
                 'gender' => GenderEnum::getDescription($career->gender),
                 'qualification' => QualificationEnum::getDescription($career->qualification),
                 'detail' => $career->detail,
-                'cv_applied' => $career->user_careers ?? null,
+                'cv_applied' => $career->user_careers->whereIn('cv_id', auth()->user()->cv()->pluck('id')->toArray()) ?? null,
                 'appointments' => AppointmentResource::make($career->appointments)->resolve(),
                 'from_time' => $career->from_time,
                 'to_time' => $career->to_time,

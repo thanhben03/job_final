@@ -36,7 +36,7 @@
                 <div>
                     <ul class="wt-breadcrumb breadcrumb-style-2">
                         <li><a href="index.html">{{__('lang.header.home')}}</a></li>
-                        <li>{{__('category.name.'.$category->trans_key)}}</li>
+{{--                        <li>{{__('category.name.'.$category->trans_key)}}</li>--}}
                         <li>{{__('job-list.Jobs List')}}</li>
                     </ul>
                 </div>
@@ -64,20 +64,36 @@
                             <form id="formFilter">
 
                                 <div class="form-group mb-4">
-                                    <h4 class="section-head-small mb-4">{{__('lang.skill')}}</h4>
-                                    <select multiple name="skills[]" id="select-skill" class="wt-select-bar-large selectpicker"  data-live-search="true" data-bv-field="size">
-                                        @foreach($skills as $skill)
+                                    <h4 class="section-head-small mb-4">{{__('lang.category')}}</h4>
+                                    <select name="category" id="select-category" class="wt-select-bar-large selectpicker"  data-live-search="true" data-bv-field="size">
+                                        @foreach(\App\Models\Category::query()->where('status', 1)->get() as $category)
                                             <option
-                                                @if(str_contains(session()->get('skills'), $skill->name))
+                                                @if(str_contains(session()->get('category'), $category->name))
                                                     selected
                                                 @endif
-                                                value="{{$skill->name}}"
+                                                value="{{$category->name}}"
                                             >
-                                                {{$skill->name}}
+                                                {{trans('category.name.'.$category->trans_key)}}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
+
+{{--                                <div class="form-group mb-4">--}}
+{{--                                    <h4 class="section-head-small mb-4">{{__('lang.skill')}}</h4>--}}
+{{--                                    <select multiple name="skills[]" id="select-skill" class="wt-select-bar-large selectpicker"  data-live-search="true" data-bv-field="size">--}}
+{{--                                        @foreach($skills as $skill)--}}
+{{--                                            <option--}}
+{{--                                                @if(str_contains(session()->get('skills'), $skill->name))--}}
+{{--                                                    selected--}}
+{{--                                                @endif--}}
+{{--                                                value="{{$skill->name}}"--}}
+{{--                                            >--}}
+{{--                                                {{$skill->name}}--}}
+{{--                                            </option>--}}
+{{--                                        @endforeach--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
 
                                 <div class="form-group mb-4">
                                     <h4 class="section-head-small mb-4">{{__('lang.keyword')}}</h4>
@@ -94,7 +110,6 @@
 
                                 <div class="form-group mb-4">
                                     <h4 class="section-head-small mb-4">{{__('lang.location')}}</h4>
-                                    <div class="input-group">
                                         <select name="provinces[]" multiple class="wt-select-bar-large selectpicker" id="select-province"  data-live-search="true" data-bv-field="size">
                                             @foreach($provinces as $province)
                                                 <option
@@ -107,7 +122,6 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                    </div>
                                 </div>
 
                                 <div class="twm-sidebar-ele-filter">
@@ -200,7 +214,7 @@
                                             : $career['company']->company_avatar}}" alt="#">
                                         </div>
                                         <div class="twm-mid-content">
-                                            <a href="{{route('jobs.show', ['category' => $category->slug, 'job' => $career['slug']])}}" class="twm-job-title">
+                                            <a href="{{route('jobs.show', ['job' => $career['slug']])}}" class="twm-job-title">
                                                 <h4>{{$career['title']}}<span class="twm-job-post-duration">/ {{$career['updated_at']}}</span></h4>
                                             </a>
                                             <p class="twm-job-address">{{$career['address']}}</p>
@@ -263,7 +277,8 @@
             let originUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
             let url;
             let filterJobTypeStr = '';
-            let filterSkillStr = '';
+            let filterCategoryStr = '';
+            // let filterSkillStr = '';
             let filterProvinceStr = '';
 
             savedJob = function (careerId) {
@@ -288,7 +303,8 @@
 
             submitFilter.click(function () {
                 resetFilter()
-                filterSkill()
+                // filterSkill()
+                filterCategory()
                 filterJobType()
                 filterLocation()
                 getKeyword()
@@ -320,18 +336,27 @@
                 url += filterJobTypeStr;
             }
 
-            function filterSkill() {
-                let skills = $("#select-skill").val()
-
-                for (let i = 0; i < skills.length; i++) {
-                    if (i === 0) {
-                        filterSkillStr += url.includes("?") ? `&skills=${skills[i]}` : `?skills=${skills[i]}`
-                    } else {
-                        filterSkillStr += `,${skills[i]}`
-                    }
-                }
-                url += filterSkillStr;
+            function filterCategory() {
+                let selectedValues = $('#select-category').val()
+                if (selectedValues == '')
+                    return;
+                console.log('123')
+                filterCategoryStr += url.includes("?") ? `&category=${selectedValues}` : `?category=${selectedValues}`
+                url += filterCategoryStr;
             }
+
+            // function filterSkill() {
+            //     let skills = $("#select-skill").val()
+            //
+            //     for (let i = 0; i < skills.length; i++) {
+            //         if (i === 0) {
+            //             filterSkillStr += url.includes("?") ? `&skills=${skills[i]}` : `?skills=${skills[i]}`
+            //         } else {
+            //             filterSkillStr += `,${skills[i]}`
+            //         }
+            //     }
+            //     url += filterSkillStr;
+            // }
 
             function filterLocation() {
                 let provinces = $("#select-province").val()

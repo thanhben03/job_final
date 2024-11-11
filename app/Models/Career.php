@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 class Career extends Model
 {
@@ -26,6 +25,11 @@ class Career extends Model
     {
         return $this->belongsToMany(Skill::class, 'career_skills', 'career_id', 'skill_id');
     }
+
+//    public function categories(): BelongsToMany
+//    {
+//        return $this->belongsToMany(Category::class, );
+//    }
 
     public function appointments()
     {
@@ -54,6 +58,13 @@ class Career extends Model
         });
     }
 
+    public function scopeHasCategory($query, $category)
+    {
+        return $query->whereHas('category', function($q) use ($category) {
+            $q->where('name', $category);  // Kiểm tra nếu skill_id nằm trong mảng
+        });
+    }
+
     public function user_careers()
     {
         return $this->hasMany(UserCareer::class, 'career_id', 'id');
@@ -76,3 +87,4 @@ class Career extends Model
 
 
 }
+?>

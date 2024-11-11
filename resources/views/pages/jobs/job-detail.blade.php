@@ -289,11 +289,27 @@
 
 
                                         <div class="col-lg-12 col-md-12">
-{{--                                            <div class="form-group">--}}
-{{--                                                <label>Upload Resume</label>--}}
-{{--                                                <form action="upload.php" class="dropzone dz-clickable"><div class="dz-default dz-message"><span><i class="sl sl-icon-plus"></i> Click here or drop files to upload</span></div></form>--}}
-{{--                                                <small>If you do not have a resume document, you may write your brief professional profile <a class="site-text-primary" href="javascript:void(0);">here</a></small>--}}
-{{--                                            </div>--}}
+                                            <div class="form-group">
+                                                <input name="type_name" type="radio">
+                                                <label>Upload Resume</label>
+                                                <form id="uploadForm" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="mb-3">
+                                                        <input class="form-control" type="file" id="formFile" name="file">
+                                                    </div>
+                                                    <button type="submit" id="btn-upload" class="btn btn-primary">Upload</button>
+                                                </form>
+                                                <small>If you do not have a resume document, you may write your brief professional profile <a class="site-text-primary" href="javascript:void(0);">here</a></small>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="form-group">
+                                                <input name="type_name" type="radio">
+                                                <label>CV Available</label>
+                                            </div>
 
                                             <select id="cv_id" class="form-select mb-3" aria-label="Default select example">
                                                 <option selected>{{ trans('lang.Select your CV') }}</option>
@@ -303,8 +319,6 @@
                                             </select>
 
                                         </div>
-
-
 
                                         <div class="col-xl-12 col-lg-12 col-md-12">
                                             <div class="text-left">
@@ -332,7 +346,40 @@
 
     <script>
         $(document).ready(function() {
-          const btnSend = $("#btn-send-application");
+
+            $('#uploadForm').on('submit', function (e) {
+                e.preventDefault();
+                const btnUpload = $("#btn-upload");
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('api.file.upload') }}",  // Đường dẫn API
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                        btnUpload.text('Process...')
+                        btnUpload.prop('disabled', true)
+                    },
+                    success: function (response) {
+
+                        console.log(response)
+                    },
+                    error: function (response) {
+                        alert(response.responseJSON.message)
+                    },
+                    complete: function () {
+                        btnUpload.text('Upload')
+                        btnUpload.prop('disabled', false)
+                    }
+                });
+            });
+
+
+            const btnSend = $("#btn-send-application");
             // check flag job
 
           btnSend.click(function () {

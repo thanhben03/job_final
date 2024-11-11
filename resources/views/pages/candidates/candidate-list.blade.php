@@ -9,15 +9,15 @@
             <div class="wt-bnr-inr-entry">
                 <div class="banner-title-outer">
                     <div class="banner-title-name">
-                        <h2 class="wt-title">Candidate Grid</h2>
+                        <h2 class="wt-title">{{trans('lang.candidate')}}</h2>
                     </div>
                 </div>
                 <!-- BREADCRUMB ROW -->
 
                 <div>
                     <ul class="wt-breadcrumb breadcrumb-style-2">
-                        <li><a href="index.html">Home</a></li>
-                        <li>Candidate Grid</li>
+                        <li><a href="index.html">{{trans('lang.header.home')}}</a></li>
+                        <li>{{trans('lang.candidate')}}</li>
                     </ul>
                 </div>
 
@@ -153,7 +153,7 @@
                                             <div class="twm-fot-content">
                                                 <div class="twm-left-info">
                                                     <p class="twm-candidate-address"><i
-                                                            class="feather-map-pin"></i>{{$candidate['province']->name}}
+                                                            class="feather-map-pin"></i>{{$candidate['province']->name ?? ''}}
                                                     </p>
                                                     <div class="twm-jobs-vacancies">{{$candidate['gender']}}</div>
                                                 </div>

@@ -45,15 +45,16 @@ class JobController extends Controller
 
     }
 
-    public function index($category, Request $request)
+    public function index(Request $request)
     {
         Session::flash('job-type');
         Session::flash('skills');
         Session::flash('locations');
         Session::flash('sort');
         Session::forget('keyword');
+        Session::forget('category');
 
-        $category = Category::query()->where('slug', $category)->firstOrFail();
+//        $category = Category::query()->where('slug', $category)->firstOrFail();
 
         if ($request->has('sort')) {
             $sort = $request['sort'] == 'latest' ? 'desc' : 'asc';
@@ -69,6 +70,7 @@ class JobController extends Controller
             $careers = $careers->where('title', 'like', '%' . $request['search'] . '%');
             Session::flash('keyword', $request['search']);
         }
+
         if ($request->has('job-type')) {
             // Chuyển chuỗi 'job_type' thành mảng
             $jobTypeFilter = explode(',', $request->input('job-type'));
@@ -87,6 +89,10 @@ class JobController extends Controller
             $skillIds = Skill::query()->whereIn('name', $skillFilter)->pluck('id')->toArray();
             $careers = $careers->hasSkills($skillIds);
         }
+        if ($request->has('category')) {
+            Session::flash('category', $request['category']);
+            $careers = $careers->hasCategory($request['category']);
+        }
 
         if ($request->has('locations')) {
             $locationFilter = explode(',', $request['locations']);
@@ -96,10 +102,10 @@ class JobController extends Controller
         }
 
 
-        $careers->where([
-            'category_id' => $category->id,
-            'status' => 1
-        ]);
+//        $careers->where([
+//            'category_id' => $category->id,
+//            'status' => 1
+//        ]);
         $careers = $careers->paginate(10);
         $data = CareerResource::make($careers);
         $skills = $this->skillService->getAll();
@@ -113,12 +119,12 @@ class JobController extends Controller
             'skills' => $skills,
             'provinces' => $provinces,
             'data' => $data->resolve(),
-            'category' => $category,
+//            'category' => $category,
             'careerIdSaved' => $careerIdSaved,
         ]);
     }
 
-    public function show($category, $slug)
+    public function show($slug)
     {
 
         $career = $this->service->getQueryBuilderWithRelations(['company', 'skills']);
