@@ -287,10 +287,10 @@
                                             </div>
                                         </div>
 
-
+                                        <input type="text" hidden id="current_cv_id">
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
-                                                <input name="type_name" type="radio">
+                                                <input checked value="upload_cv" name="type_cv" type="radio">
                                                 <label>Upload Resume</label>
                                                 <form id="uploadForm" method="POST" enctype="multipart/form-data">
                                                     @csrf
@@ -307,7 +307,7 @@
 
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
-                                                <input name="type_name" type="radio">
+                                                <input value="available_cv" name="type_cv" type="radio">
                                                 <label>CV Available</label>
                                             </div>
 
@@ -346,7 +346,7 @@
 
     <script>
         $(document).ready(function() {
-
+            let typeChooseCV = 'upload_cv'
             $('#uploadForm').on('submit', function (e) {
                 e.preventDefault();
                 const btnUpload = $("#btn-upload");
@@ -365,7 +365,8 @@
                         btnUpload.prop('disabled', true)
                     },
                     success: function (response) {
-
+                        $("#current_cv_id").val(response.cv.id)
+                        alert('Upload success !')
                         console.log(response)
                     },
                     error: function (response) {
@@ -380,12 +381,19 @@
 
 
             const btnSend = $("#btn-send-application");
-            // check flag job
+
+            // chooseTypeCV.change(function (e) {
+            //     if (e.target.value === 'upload_cv') {
+            //         $("#current_cv_id").val()
+            //     }
+            // })
 
           btnSend.click(function () {
               if ({{$career['flag']}}) {
                   return confirm('This job is being flagged. Are you sure you want to continue?')
               }
+              let chooseTypeCV = $('input[name="type_cv"]:checked')
+
               $.ajax({
                   type: 'POST',
                   // make sure you respect the same origin policy with this url:
@@ -393,7 +401,7 @@
                   url: '{{route('api.v1.applyJob')}}',
                   data: {
                       "job_id" : {{$career['id']}},
-                      'cv_id': $("#cv_id").val(),
+                      'cv_id': chooseTypeCV.val() === 'upload_cv' ? $("#current_cv_id").val() : $("#cv_id").val(),
                       "_token": '{{csrf_token()}}'
                   },
                   success: function(msg){
@@ -408,7 +416,6 @@
           })
 
         })
-
 
 
         function reportCareer() {

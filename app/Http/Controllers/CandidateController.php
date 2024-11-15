@@ -179,6 +179,7 @@ class CandidateController extends Controller
         ]);
         $careerSuggest = [];
         $userProfile = '';
+        $cvCreated = null;
         // Lưu file vào storage/app/public/uploads
         try {
             if ($request->file()) {
@@ -246,7 +247,7 @@ class CandidateController extends Controller
                         //                        $careerSuggest = $this->matchWithJob($cv->id);
                     }
                 } else {
-                    CurriculumVitae::query()->create([
+                    $cvCreated = CurriculumVitae::query()->create([
                         'user_id' => auth()->user()->id,
                         'path' => $fileName,
                         'thumbnail' => 'img-cv/' . $fileName . '.png',
@@ -264,12 +265,12 @@ class CandidateController extends Controller
                 return response()->json([
                     'success' => true,
                     'msg' => 'File has been uploaded successfully!',
+                    'cv' => $cvCreated,
                     'redirect_url' => route('candidate.create-cv', $userProfile->id ?? 0)
                 ]);
             }
         } catch (\Throwable $e) {
             DB::rollBack();
-            dd($e);
             return response()->json([
                 'success' => false,
                 'msg' => $e->getMessage(),
