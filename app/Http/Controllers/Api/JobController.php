@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\AppointmentAcceptEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ApplyJobRequest;
 use App\Http\Resources\Api\AppliedJobResource;
 use App\Http\Resources\Api\AppointmentResource;
-use App\Http\Resources\CareerDetailResource;
-use App\Http\Resources\CareerResource;
+use App\Http\Resources\Api\CareerResource;
 use App\Http\Resources\SavedJobResource;
 use App\Models\Appointment;
 use App\Models\Career;
-use App\Models\Notification;
 use App\Models\Province;
 use App\Models\ReportedCareer;
 use App\Models\SaveCareer;
