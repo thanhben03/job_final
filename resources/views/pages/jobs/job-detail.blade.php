@@ -68,7 +68,12 @@
                                         <div class="twm-job-self-top">
                                             <div class="twm-media-bg">
                                                 <img width="100%" src="{{asset('/images/banner-detail.jpg')}}" alt="#">
-                                                <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                                                <div class="twm-jobs-category green">@if($career['expiration_day'] < \Carbon\Carbon::now())
+                                                        <span style="background: #929292">Expired</span>
+                                                    @else
+                                                        <span class="twm-bg-green">New</span>
+
+                                                    @endif</div>
                                             </div>
 
 
@@ -150,20 +155,6 @@
                                 <div class="twm-s-info2-wrap mb-5">
                                     <div class="twm-s-info2">
                                         <h4 class="section-head-small mb-4">{{ trans('lang.Job Information') }}</h4>
-{{--                                        <ul class="twm-job-hilites">--}}
-{{--                                            <li>--}}
-{{--                                                <i class="fas fa-calendar-alt"></i>--}}
-{{--                                                <span class="twm-title">Date Posted</span>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <i class="fas fa-eye"></i>--}}
-{{--                                                <span class="twm-title">8160 Views</span>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <i class="fas fa-file-signature"></i>--}}
-{{--                                                <span class="twm-title">6 Applicants</span>--}}
-{{--                                            </li>--}}
-{{--                                        </ul>--}}
                                         <ul class="twm-job-hilites2">
 
                                             <li>
@@ -171,6 +162,13 @@
                                                     <i class="fas fa-calendar-alt"></i>
                                                     <span class="twm-title">{{ trans('lang.Posted On') }}</span>
                                                     <div class="twm-s-info-discription">{{$career['created_at']}}</div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="twm-s-info-inner">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                    <span class="twm-title">{{ trans('lang.expiration') }}</span>
+                                                    <div class="twm-s-info-discription">{{$career['expiration_day']}}</div>
                                                 </div>
                                             </li>
                                             <li>

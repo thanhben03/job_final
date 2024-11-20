@@ -61,7 +61,7 @@ class Career extends Model
     public function scopeHasCategory($query, $category)
     {
         return $query->whereHas('category', function($q) use ($category) {
-            $q->where('name', $category);  // Kiểm tra nếu skill_id nằm trong mảng
+            $q->where('slug', $category);  // Kiểm tra nếu skill_id nằm trong mảng
         });
     }
 

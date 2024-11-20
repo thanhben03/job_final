@@ -51,7 +51,9 @@
         .profile-container:hover {
             background-color: #f1f1f1;
         }
+
     </style>
+    @stack('css')
     @vite('resources/js/bootstrap.js')
 </head>
 

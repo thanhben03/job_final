@@ -57,6 +57,9 @@ class ProfileController extends Controller
                 }
 
                 UserExperience::query()->insert($insertDataExperience);
+            } else {
+                UserExperience::query()->where('user_id', $request->user()->id)->delete();
+
             }
 
             $skill_ids = Skill::query()->whereIn('name', $skill_ids)->get()->pluck('id')->toArray();

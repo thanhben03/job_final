@@ -10043,6 +10043,8 @@ ol.comment-list li.comment .comment-respond .comment-form p {
 
 /*Work Experience*/
 .twm-timing-list-wrap {
+    display: flex;
+    flex-direction: column;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 50px;

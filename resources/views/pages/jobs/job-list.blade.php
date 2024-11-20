@@ -66,12 +66,13 @@
                                 <div class="form-group mb-4">
                                     <h4 class="section-head-small mb-4">{{__('lang.category')}}</h4>
                                     <select name="category" id="select-category" class="wt-select-bar-large selectpicker"  data-live-search="true" data-bv-field="size">
+                                        <option value="">Select Category</option>
                                         @foreach(\App\Models\Category::query()->where('status', 1)->get() as $category)
                                             <option
-                                                @if(str_contains(session()->get('category'), $category->name))
+                                                @if(str_contains(session()->get('category'), $category->slug))
                                                     selected
                                                 @endif
-                                                value="{{$category->name}}"
+                                                value="{{$category->slug}}"
                                             >
                                                 {{trans('category.name.'.$category->trans_key)}}
                                             </option>
@@ -227,7 +228,12 @@
                                         </div>
                                         <div class="twm-right-content">
                                             <div class="twm-jobs-category green">
-                                                <span class="twm-bg-green">New</span>
+                                                @if($career['expiration_day'] < \Carbon\Carbon::now())
+                                                    <span style="background: #929292">Expired</span>
+                                                @else
+                                                    <span class="twm-bg-green">New</span>
+
+                                                @endif
                                                 @if(in_array($career['id'], $careerIdSaved))
                                                     <i
                                                         id="icon-save-{{$career['id']}}"
