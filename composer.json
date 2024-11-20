@@ -19,6 +19,7 @@
         "tymon/jwt-auth": "2.x-dev"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "3.14.x-dev",
         "fakerphp/faker": "^1.23",
         "laravel/breeze": "^2.2",
         "laravel/pint": "^1.13",

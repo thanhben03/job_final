@@ -25,3 +25,8 @@ Broadcast::channel('message.company.{receiverId}', function ($user, $receiverId)
 Broadcast::channel('notification.{receiverId}', function ($user, $receiverId) {
     return $user;
 }, ['guards' => ['company', 'web']]);
+
+
+Broadcast::channel('chat-general', function () {
+    return true;
+});

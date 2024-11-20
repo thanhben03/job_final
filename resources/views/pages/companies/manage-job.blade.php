@@ -226,9 +226,9 @@
                 type: 'POST',
                 url: '{{ route('match.with.candidate') }}',
                 data: {
-                  career_id: jobId,
-                  type: type,
-                  _token: '{{csrf_token()}}'
+                    '_token': '{{csrf_token()}}',
+                    'career_id': jobId,
+                    'type': type
                 },
                 success: function (res) {
                     let result = Object.values(res.candidates)

@@ -26,7 +26,7 @@ class OpenAIController extends Controller
         $prompt = $request->input('prompt');
 
 
-        // Định nghĩa function 
+        // Định nghĩa function
         $functions = [
             [
                 'name' => 'get_job_details',
@@ -90,35 +90,36 @@ class OpenAIController extends Controller
         $functions2 = [
             [
                 'name' => 'search_job',
-                'description' => "Search job listings based on user input. Users can select one or more of the following parameters: skills, location, salary, or category. Each field is optional and the system will return relevant job listings based on the criteria provided.",
+                'description' => "Tìm việc làm dựa trên kỹ năng, vị trí,mức lương hoặc các tiêu chí khác. Chỉ trả về các kết quả theo tiêu chí của người dùng gửi lên",
                 'parameters' => [
                     'type' => 'object',
                     'properties' => [
                         'skills' => [
                             'type' => 'string',
-                            'description' => 'Specify the skills required for the job (e.g., programming, management).'
+                            'description' => 'The skills required for the job (e.g., programming, management). You can provide multiple skills separated by commas.'
                         ],
                         'location' => [
                             'type' => 'string',
-                            'description' => 'Specify the location where the job is based (e.g., New York, remote).'
+                            'description' => 'vị trí người dùng đưa ra ví dụ Hồ Chí Minh, Hà Nội, Cần Thơ v.v...'
                         ],
                         'salary' => [
                             'type' => 'integer',
-                            'description' => 'Specify the minimum salary required for the job (e.g., 50000 for $50,000/year).'
+                            'description' => 'Mức lương đưa ra, ví dụ trên 10 triệu v.v...'
                         ],
                         'categories' => [
                             'type' => 'array',
-                            'description' => 'Specify one or more categories or fields for the job (e.g., IT, healthcare, finance).',
+                            'description' => 'Các ngành nghề người dùng đưa ra ví dụ: công nghệ thông tin, xây dựng, marketing',
                             'items' => [
                                 'type' => 'string',
                                 'enum' => $categories
                             ]
                         ]
-                    ]
-                    // 'required' => ['skills', 'location', 'salary']
+                    ],
+                    'additionalProperties' => false // Ensure no extra fields are allowed
                 ]
             ]
         ];
+
 
 
         // Gọi OpenAI API
@@ -197,38 +198,46 @@ class OpenAIController extends Controller
     }
 
     // hàm search tổng hợp
-    public function searchJob($skills = null, $location = null, $salary = null, $categories)
+    public function searchJob($skills = null, $location = null, $salary = null, $categories = null)
     {
+
         $careers = Career::query()
             ->when($salary, function ($query) use ($salary) {
                 $query->where('min_salary', '>=', $salary);
+                Log::info('salary: ' . $salary);
             })
             ->when($categories, function ($query) use ($categories) {
                 $query->whereHas('category', function ($query) use ($categories) {
                     $query->whereIn('name', $categories);
                 });
+                Log::info($categories);
             })
             ->when($skills, function ($query) use ($skills) {
                 // $skillsString = implode(',', $skills);
-                $query->join('career_details', 'careers.id', '=', 'career_details.career_id')
+                $query->leftJoin('career_details', 'careers.id', '=', 'career_details.career_id')
                     ->whereRaw(
-                        "MATCH(careers.title) AGAINST(? IN BOOLEAN MODE)
-                    OR MATCH(career_details.description) AGAINST(? IN BOOLEAN MODE)
-                    OR MATCH(career_details.requirement) AGAINST(? IN BOOLEAN MODE)
-                    ",
+                        "
+                        (
+                        MATCH(careers.title) AGAINST(? IN BOOLEAN MODE)
+                        OR MATCH(career_details.description) AGAINST(? IN BOOLEAN MODE)
+                        OR MATCH(career_details.requirement) AGAINST(? IN BOOLEAN MODE)
+                        )
+
+                        ",
                         [$skills, $skills, $skills]
                     );
+                Log::info('skills: ' . $skills);
             })
             ->when($location, function ($query) use ($location) {
                 $query->whereRaw(
-                    "MATCH(careers.address) AGAINST(? IN BOOLEAN MODE)",
+                    "MATCH(careers.address) AGAINST(? IN NATURAL LANGUAGE MODE)",
                     [$location]
                 );
+                Log::info('location: ' . $location);
             })
             ->orderBy('careers.updated_at', 'desc')
             ->take(10)
             ->get();
-
         return $careers;
     }
 
@@ -278,7 +287,7 @@ class OpenAIController extends Controller
     {
         $item = $items->map(function ($item) {
             $category = $item->category;
-            $slug = "/jobs/$category->slug/$item->slug";
+            $slug = "/jobs/$item->slug";
             return "<li><a href='$slug'>$item->title</a></li>";
         })->toArray();
 
