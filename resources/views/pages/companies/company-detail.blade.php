@@ -16,7 +16,7 @@
 
                 <div>
                     <ul class="wt-breadcrumb breadcrumb-style-2">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{route('home')}}">Home</a></li>
                         <li>{{__('company.Company Detail')}}</li>
                     </ul>
                 </div>
@@ -67,8 +67,10 @@
                                             </div>
 
                                             <h4 class="twm-job-title">{{$company['company_name']}}</h4>
-                                            <p class="twm-employer-address"><i class="feather-map-pin"></i>{{$company['company_address']}}</p>
-                                            <a href="{{$company['website']}}" class="twm-employer-websites site-text-primary">{{$company['website']}}</a>
+                                            <p class="twm-employer-address"><i class="feather-map-pin"></i>
+                                                {{$company['company_address'] ? $company['company_address'] : trans('lang.No Data')}}
+                                            </p>
+                                            <a href="{{$company['website']}}" class="twm-employer-websites site-text-primary">{{$company['website'] ?? trans('lang.No Data')}}</a>
 {{--                                            <div class="twm-employer-self-bottom">--}}
 {{--                                                <a href="javascript:;" class="site-button outline-primary">Add Review</a>--}}
 {{--                                                <a href="javascript:;" class="site-button">Follow Us</a>--}}
@@ -81,41 +83,49 @@
 
                             <h4 class="twm-s-title">{{__('company.About Company')}}</h4>
                             <!-- Introduce -->
-                            {!! $company['introduce'] !!}
+                            @if(isset($company['introduce']))
+                                {!! $company['introduce'] !!}
+                            @else
+                                <x-empty text="{{ trans('lang.No Data') }}" />
+                            @endif
 
                             {{--Available Job--}}
                             <h4 class="twm-s-title">{{__('company.Available Jobs')}}</h4>
                             <div class="twm-jobs-list-wrap">
-                                <ul>
-                                    @foreach($company['careers'] as $career)
-                                        <li>
-                                            <div class="twm-jobs-list-style1 mb-5">
-                                                <div class="twm-media">
-                                                    <img
-                                                        src="
+                                @if($company['careers']->count() > 0)
+                                    <ul>
+                                        @foreach($company['careers'] as $career)
+                                            <li>
+                                                <div class="twm-jobs-list-style1 mb-5">
+                                                    <div class="twm-media">
+                                                        <img
+                                                            src="
                                                         {{
                                                         str_contains($company['company_avatar'], 'http')
                                                         ? $company['company_avatar']
                                                         : asset('/images/avatar/'.$company['company_avatar'])
                                                         }}"
-                                                        alt="#">
+                                                            alt="#">
+                                                    </div>
+                                                    <div class="twm-mid-content">
+                                                        <a href="{{route('jobs.show', [$career['category']->slug, $career['slug']])}}" class="twm-job-title">
+                                                            <h4>{{$career->title}}<span class="twm-job-post-duration">/ {{$career->created_at->diffForHumans()}}</span></h4>
+                                                        </a>
+                                                        <p class="twm-job-address">{{$career->address}}</p>
+                                                        <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
+                                                    </div>
+                                                    <div class="twm-right-content">
+                                                        <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                                                        <div class="twm-jobs-amount">$1000 <span>/ Month</span></div>
+                                                        <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
+                                                    </div>
                                                 </div>
-                                                <div class="twm-mid-content">
-                                                    <a href="{{route('jobs.show', [$career['category']->slug, $career['slug']])}}" class="twm-job-title">
-                                                        <h4>{{$career->title}}<span class="twm-job-post-duration">/ {{$career->created_at->diffForHumans()}}</span></h4>
-                                                    </a>
-                                                    <p class="twm-job-address">{{$career->address}}</p>
-                                                    <a href="https://themeforest.net/user/thewebmax/portfolio" class="twm-job-websites site-text-primary">https://thewebmax.com</a>
-                                                </div>
-                                                <div class="twm-right-content">
-                                                    <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
-                                                    <div class="twm-jobs-amount">$1000 <span>/ Month</span></div>
-                                                    <a href="job-detail.html" class="twm-jobs-browse site-text-primary">Browse Job</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    <x-empty text="{{ trans('lang.No Data') }}" />
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -132,21 +142,21 @@
                                             <div class="twm-s-info-inner">
                                                 <i class="fas fa-clock"></i>
                                                 <span class="twm-title">Website</span>
-                                                <div class="twm-s-info-discription">{{$company['website']}}</div>
+                                                <div class="twm-s-info-discription">{{$company['website'] ?? trans('lang.No Data')}}</div>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="twm-s-info-inner">
                                                 <i class="fas fa-venus-mars"></i>
                                                 <span class="twm-title">Employee</span>
-                                                <div class="twm-s-info-discription">{{$company['employee']}}</div>
+                                                <div class="twm-s-info-discription">{{$company['employee'] ?? trans('lang.No Data')}}</div>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="twm-s-info-inner">
                                                 <i class="fas fa-mobile-alt"></i>
                                                 <span class="twm-title">Phone</span>
-                                                <div class="twm-s-info-discription">{{$company['company_phone']}}</div>
+                                                <div class="twm-s-info-discription">{{$company['company_phone'] ?? trans('lang.No Data')}}</div>
                                             </div>
                                         </li>
                                         <li>
@@ -161,7 +171,7 @@
 
                                                 <i class="fas fa-map-marker-alt"></i>
                                                 <span class="twm-title">Address</span>
-                                                <div class="twm-s-info-discription">{{$company['company_address']}}</div>
+                                                <div class="twm-s-info-discription">{{$company['company_address'] ?? trans('lang.No Data')}}</div>
                                             </div>
                                         </li>
 

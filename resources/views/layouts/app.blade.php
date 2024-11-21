@@ -605,8 +605,9 @@
                 }, 1500)
             },
             error: function (xhr) {
+                console.log(xhr)
                 $(".wrap-errors-login").html(
-                    `<div class="alert alert-danger text-left">${xhr.responseJSON.msg}</div>`
+                    `<div class="alert alert-danger text-left">${xhr.responseJSON.message}</div>`
                 )
             }
         })

@@ -75,7 +75,7 @@ Route::middleware(CompanyAuthenticated::class)->group(function () {
     Route::get('/companies/manage-job', [CompanyController::class, 'showManageJob'])->name('company.manage-job');
     Route::get('/companies/detail-job/{slug}', [CompanyController::class, 'showDetailJob'])->name('company.show.detail-job');
     Route::get('/companies/candidate-applied/{job_id}', [CompanyController::class, 'showCandidateAppliedJob'])->name('company.show.detail-job');
-    Route::put('/companies/update', [CompanyController::class, 'update'])->name('company.profile.update');
+    Route::put('/companies/update/{company_id}', [CompanyController::class, 'update'])->name('company.profile.update');
     Route::get('/companies/chat', [CompanyController::class, 'showChat'])->name('company.show.chat');
     Route::get('/companies/list-invite', [CompanyController::class, 'showListInvite'])->name('company.show.invite');
     Route::get('/companies/candidate-list', [CompanyController::class, 'showCandidateList'])->name('company.show.candidate.list');

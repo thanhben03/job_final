@@ -67,7 +67,7 @@
             <div class="panel panel-default">
                 <div class="panel-body wt-panel-body p-a20 m-b30 ">
 
-                    <form method="POST" action="{{route('company.profile.update')}}">
+                    <form method="POST" action="{{route('company.profile.update', $company->id)}}">
                         @csrf
                         @method('PUT')
                         <!--Basic Information-->

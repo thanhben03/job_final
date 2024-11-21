@@ -166,6 +166,8 @@ return [
     'account has not been activated' => 'Account has not been activated',
     'CV Not Found' => 'CV Not Found',
     'Number of your CV on the system' => 'Number of your CV on the system',
-    'There are no appointments displayed' => 'There are no appointments displayed'
+    'There are no appointments displayed' => 'There are no appointments displayed',
+    'Profile Info' => 'Profile Info',
+    'Leave your message' => 'Leave your message'
 
 ];
