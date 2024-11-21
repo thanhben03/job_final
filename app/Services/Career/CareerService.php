@@ -109,40 +109,22 @@ class CareerService implements CareerServiceInterface
             $selectValues[] = $select->getValue(DB::connection()->getQueryGrammar());
         }
 
-        if ($careerId > 0) {
-            $candidates = UserCareer::query()
-                ->join('curriculum_vitaes', 'curriculum_vitaes.id', '=', 'user_careers.cv_id')
-                ->join('users', 'users.id', '=', 'curriculum_vitaes.user_id')
-                ->leftJoin('user_profiles', 'user_profiles.cv_id', '=', 'curriculum_vitaes.id')
-                ->select('users.*', 'user_profiles.skill')
-                ->selectRaw(implode(', ', $selectValues)) // Chuyển đổi mảng thành chuỗi cho selectRaw
-                ->selectRaw('(' . implode(' + ', $matchCountExpression) . ') as match_count') // Đếm số lượng khớp
-                ->setBindings(array_merge(
-                // Lấy giá trị từ mảng conditions
-                    array_column($conditions, 'value'),
-                    array_column($conditions, 'value')
-                ))
-                ->where('user_careers.career_id', $careerId)
-                ->having('match_count', '>', 0) // Chỉ lấy những ứng viên có match_count > 0
-                ->orderBy('match_count', 'desc')
-                ->get();
-        } else {
-            // Bắt đầu truy vấn
-            $candidates = User::query()
-                ->leftJoin('curriculum_vitaes', 'curriculum_vitaes.user_id', '=', 'users.id')
-                ->leftJoin('user_profiles', 'user_profiles.cv_id', '=', 'curriculum_vitaes.id')
-                ->select('users.*', 'user_profiles.skill')
-                ->selectRaw(implode(', ', $selectValues)) // Chuyển đổi mảng thành chuỗi cho selectRaw
-                ->selectRaw('(' . implode(' + ', $matchCountExpression) . ') as match_count') // Đếm số lượng khớp
-                ->setBindings(array_merge(
-                // Lấy giá trị từ mảng conditions
-                    array_column($conditions, 'value'),
-                    array_column($conditions, 'value')
-                ))
-                ->having('match_count', '>', 0) // Chỉ lấy những ứng viên có match_count > 0
-                ->orderBy('match_count', 'desc')
-                ->get();
-        }
+
+        $candidates = User::query()
+            ->leftJoin('curriculum_vitaes', 'curriculum_vitaes.user_id', '=', 'users.id')
+            ->leftJoin('user_profiles', 'user_profiles.cv_id', '=', 'curriculum_vitaes.id')
+            ->select('users.*', 'user_profiles.skill')
+            ->selectRaw(implode(', ', $selectValues)) // Chuyển đổi mảng thành chuỗi cho selectRaw
+            ->selectRaw('(' . implode(' + ', $matchCountExpression) . ') as match_count') // Đếm số lượng khớp
+            ->setBindings(array_merge(
+            // Lấy giá trị từ mảng conditions
+                array_column($conditions, 'value'),
+                array_column($conditions, 'value')
+            ))
+            ->having('match_count', '>', 0) // Chỉ lấy những ứng viên có match_count > 0
+            ->orderBy('match_count', 'desc')
+            ->get();
+
 
 
 
@@ -163,7 +145,6 @@ class CareerService implements CareerServiceInterface
                 'matches' => $matches,
             ];
         });
-
         return $matchedCandidates;
     }
 
