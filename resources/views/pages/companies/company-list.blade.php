@@ -154,7 +154,7 @@
 {{--                                            <a href="employer-detail.html" class="twm-job-websites site-text-primary">Accountancy</a>--}}
                                         </div>
                                         <div class="twm-right-content">
-                                            <div class="twm-jobs-vacancies"><span>{{count($company['careers'])}}</span>Vacancies</div>
+                                            <div class="twm-jobs-vacancies"><span>{{count($company['careers'])}}</span>{{trans('lang.jobs')}}</div>
                                         </div>
                                     </div>
                                 </li>

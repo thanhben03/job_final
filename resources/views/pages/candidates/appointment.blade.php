@@ -119,23 +119,26 @@
 
             // Lấy danh sách cuộc hẹn của ứng viên
             $.get(`/appointments/${candidateId}`, function(data) {
-                let appointmentList = '';
-                data.forEach(appointment => {
-                    let statusClass = 
-                        appointment.status === 'pending' ? 'text-warning' :
-                        appointment.status === 'accepted' ? 'text-success' :
-                            'text-danger';
+                let appointmentList = '{{trans('lang.There are no appointments displayed')}}';
+                if (data.length > 0) {
+                    appointmentList = ''
+                    data.forEach(appointment => {
+                        let statusClass =
+                            appointment.status === 'pending' ? 'text-warning' :
+                                appointment.status === 'accepted' ? 'text-success' :
+                                    'text-danger';
 
-                    appointmentList += `
-                <li class="list-group-item d-flex justify-content-between align-items-center appointment-item" data-id="${appointment.id}" data-company="${appointment.company.company_name}" data-date="${appointment.date}" data-time="${appointment.time}" data-note="${appointment.note}" data-status="${appointment.status}">
-                    <div>
-                        <span class="fw-bold">${appointment.career.title} | ${appointment.company.company_name} | ${appointment.created_at}</span>
-                        <span class="badge ${statusClass} ms-2">${appointment.status}</span>
-                    </div>
-                    <i class="bi bi-chevron-right"></i>
-                </li>
-            `;
-                });
+                        appointmentList += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center appointment-item" data-id="${appointment.id}" data-company="${appointment.company.company_name}" data-date="${appointment.date}" data-time="${appointment.time}" data-note="${appointment.note}" data-status="${appointment.status}">
+                            <div>
+                                <span class="fw-bold">${appointment.career.title} | ${appointment.company.company_name} | ${appointment.created_at}</span>
+                                <span class="badge ${statusClass} ms-2">${appointment.status}</span>
+                            </div>
+                            <i class="bi bi-chevron-right"></i>
+                        </li>
+                    `;
+                    });
+                }
                 $('#appointment-list').html(appointmentList);
             });
 

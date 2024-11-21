@@ -61,7 +61,7 @@ class CompanyController extends Controller
         $appliedCount = UserCareer::query()->whereIn('career_id', $company->careers->pluck('id'))->count();
         $messageCount = Chat::query()->where('company_id', $company->id)->count();
         $notificationCount = Notification::query()->where('company_id', $company->id)->count();
-        
+
         return view('pages.companies.dashboard',compact('postedJobCount', 'appliedCount', 'messageCount', 'notificationCount'));
     }
 
@@ -72,11 +72,10 @@ class CompanyController extends Controller
         return view('pages.companies.company-profile', compact('company'));
     }
 
-    public function update(CompanyUpdateRequest $request)
+    public function update($company_id, CompanyUpdateRequest $request)
     {
         $company = Auth::guard("company")->user();
         $data = $request->validated();
-        $data['user_id'] = auth()->user()->id;
         $company->fill($data);
 
         try {
@@ -134,7 +133,7 @@ class CompanyController extends Controller
         $districts = District::query()->where('province_code', $career['province']->code)->get();
 
 
-        return view('pages.companies.edit-job', 
+        return view('pages.companies.edit-job',
         compact('districts','career', 'skills', 'workType', 'exps', 'qualifications', 'genders', 'provinces', 'levels', 'categories')
         );
     }

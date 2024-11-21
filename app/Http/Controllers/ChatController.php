@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessagePresent;
 use App\Events\MessageSentEvent;
 use App\Events\NotificationEvent;
 use App\Http\Resources\ChatResource;
@@ -39,6 +40,7 @@ class ChatController extends Controller
 
         broadcast(new NotificationEvent($user->id, $noti->message));
         broadcast(new MessageSentEvent($message))->toOthers();
+        broadcast(new MessagePresent($message))->toOthers();
         $message = ChatSingleResource::make($message)->resolve();
         return response()->json($message);
 

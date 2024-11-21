@@ -14,9 +14,9 @@
                     </div>
                     <!-- TITLE END-->
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 wt-separator-two-part-right text-right">
-                    <a href="job-list.html" class=" site-button">{{__('lang.home.all-category')}}</a>
-                </div>
+{{--                <div class="col-xl-6 col-lg-6 col-md-12 wt-separator-two-part-right text-right">--}}
+{{--                    <a href="job-list.html" class=" site-button">{{__('lang.home.all-category')}}</a>--}}
+{{--                </div>--}}
             </div>
         </div>
 
@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="twm-content">
                                         <div class="twm-jobs-available">{{$category->jobs_count}} {{ trans('lang.jobs') }}</div>
-                                        <a href="{{route('jobs.index', $category->slug)}}">{{__('category.name.'.$category->trans_key)}}</a>
+                                        <a href="{{env('APP_URL').'?category='.$category->slug}}">{{__('category.name.'.$category->trans_key)}}</a>
                                     </div>
                                 </div>
                             </div>

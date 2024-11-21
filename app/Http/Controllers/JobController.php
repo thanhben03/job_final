@@ -41,7 +41,7 @@ class JobController extends Controller
         $this->service = $careerService;
         $this->skillService = $skillService;
 
-        $this->middleware(UserAuthenticated::class)->except(['index', 'store', 'update']);
+        $this->middleware(UserAuthenticated::class)->except(['index', 'store', 'update', 'matchWithCandidate']);
 
     }
 
@@ -106,7 +106,7 @@ class JobController extends Controller
 //            'category_id' => $category->id,
 //            'status' => 1
 //        ]);
-        $careers = $careers->paginate(10);
+        $careers = $careers->where('status', 1)->paginate(10);
         $data = CareerResource::make($careers);
         $skills = $this->skillService->getAll();
         $provinces = Province::query()->get(['code', 'name']);
@@ -178,13 +178,12 @@ class JobController extends Controller
         return redirect()->back()->with('msg', 'Career added successfully');
     }
 
-    public function matchWithCandidate(Request $request)
+    public function matchWithCandidate(Request $request): \Illuminate\Http\JsonResponse
     {
         $careerID = $request->career_id;
         $type = $request->type;
         $career = $this->service->getQueryBuilderWithRelations(['skills'])->find($careerID)->toArray();
         $extractInfo = $this->service->extractInfoRequire($career);
-
         if ($type == "filter_cv") {
             $candidates = $this->service->matchWithCandidate($extractInfo, $careerID);
         } else {

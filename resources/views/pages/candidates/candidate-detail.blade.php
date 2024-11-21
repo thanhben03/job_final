@@ -6,7 +6,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Leave your message</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{trans('lang.Leave your message')}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -14,8 +14,8 @@
                     <input  type="text" name="user_id" id="user_id" hidden value="{{$candidate['id']}}">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" onclick="sendMessage()" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{trans('lang.close')}}</button>
+                    <button type="button" onclick="sendMessage()" class="btn btn-primary">{{trans('lang.save')}}</button>
                 </div>
             </div>
         </div>
@@ -95,7 +95,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-info">Nếu bạn cho rằng đây là ứng viên giả mạo/span vi phạm tiêu chuẩn vui lòng báo cáo về cho chúng tôi !</div>
+                    <div class="alert alert-info">Nếu bạn cho rằng đây là ứng viên giả mạo/spam vi phạm tiêu chuẩn vui lòng báo cáo về cho chúng tôi !</div>
                     <input hidden id="candidate-id" value="" />
                 </div>
                 <div class="modal-footer">

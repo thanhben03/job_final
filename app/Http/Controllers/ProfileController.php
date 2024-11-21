@@ -41,27 +41,29 @@ class ProfileController extends Controller
 
         try {
             DB::beginTransaction();
-            UserExperience::query()->where('user_id', $request->user()->id)->delete();
 
-            $insertDataExperience = [];
-            for ($i = 0; $i < count($data_experience['title']); $i++) {
-                $insertDataExperience[] = [
-                    'from_date' => $data_experience['from_date'][$i],
-                    'to_date' => $data_experience['to_date'][$i],
-                    'title' => $data_experience['title'][$i],
-                    'position' => $data_experience['position'][$i],
-                    'description' => $data_experience['description'][$i],
-                    'user_id' => Auth::id(),
-                ];
+            if (isset($data_experience['title'])) {
+                UserExperience::query()->where('user_id', $request->user()->id)->delete();
+                $insertDataExperience = [];
+                for ($i = 0; $i < count($data_experience['title']); $i++) {
+                    $insertDataExperience[] = [
+                        'from_date' => $data_experience['from_date'][$i],
+                        'to_date' => $data_experience['to_date'][$i],
+                        'title' => $data_experience['title'][$i],
+                        'position' => $data_experience['position'][$i],
+                        'description' => $data_experience['description'][$i],
+                        'user_id' => Auth::id(),
+                    ];
+                }
+
+                UserExperience::query()->insert($insertDataExperience);
+            } else {
+                UserExperience::query()->where('user_id', $request->user()->id)->delete();
+
             }
-
-            // Bước 3: Chèn dữ liệu mới vào bảng experiences
-//            DB::table('user_experiences')->insert($insertDataExperience);
-
 
             $skill_ids = Skill::query()->whereIn('name', $skill_ids)->get()->pluck('id')->toArray();
             $request->user()->skills()->sync($skill_ids);
-            UserExperience::query()->insert($insertDataExperience);
 
             $request->user()->fill($dataUser);
             $request->user()->save();

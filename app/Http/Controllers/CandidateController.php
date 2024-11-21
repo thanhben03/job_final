@@ -24,6 +24,7 @@ use ConvertApi\ConvertApi;
 use Gemini\Data\Blob;
 use Gemini\Data\Candidate;
 use Gemini\Enums\MimeType;
+use Gemini\Enums\ModelType;
 use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -484,13 +485,12 @@ class CandidateController extends Controller
         $cv = CurriculumVitae::query()->find($request->cvId);
         $filePath = storage_path('/app/public/uploads/' . $cv->thumbnail); // Đường dẫn tới file PDF
         $pdfContent = base64_encode(file_get_contents($filePath));
-
         $language = App::getLocale() == 'en' ? 'tiếng anh' : 'tiếng việt';
         $lang = [trans('lang.achievement'), trans('lang.experience'), trans('lang.language'),
         trans('lang.Soft Skill'), trans('lang.skill'), trans('lang.Career Goal')];
         $lang = implode(' ,', $lang);
         $prompt = 'Hãy phân tích CV và xuất đầu ra dưới dạng JSON. Các key sẽ là các mục lớn như '.$lang.', v.v. Bất kỳ mục lớn nào bạn nhận thấy trong CV, hãy liệt kê đầy đủ. Mỗi key sẽ có một trường bổ sung để mô tả tên mục đó dưới dạng ngôn ngữ tự nhiên, ví dụ: career_goal sẽ có một trường field chứa "Career Goal". Đầu ra sẽ bao gồm 3 mục chính: score (đánh giá trên thang điểm 10), reason (lý do), suggestion (gợi ý cải thiện).
-        Hãy đảm bảo rằng mọi thông tin phân tích đều chính xác và có thể cải thiện. Trả lời chỉ bằng '.$language.'
+        Hãy đảm bảo rằng mọi thông tin phân tích đều chính xác và có thể cải thiện. Trả lời chỉ bằng '.$language.' và chuỗi json không trả lời thêm bất cứ thứ gì khác
         Ví dụ đầu ra: [
                 {
                     "personal_info": {
@@ -510,19 +510,50 @@ class CandidateController extends Controller
                 }
         ]';
 
+        // OPEN AI
+        $client = \OpenAI::factory()
+            ->withBaseUri('https://open.keyai.shop/v1')
+            ->withApiKey(env('OPENAI_API_KEY'))
+            ->withHttpClient(new \GuzzleHttp\Client(['timeout' => 60]))
+            ->make();
+        $createParms = [
+            'model'=>'gpt-4-vision-preview',
+            'messages'=>[
+                [
+                    'role'=>'system', 'content'=>'Your system message like you are a helpful AI assistant'
+                ],
+                [
+                    'role' => 'user',
+                    'content' => [
+                        [
+                            'type' => 'text',
+                            'text' => $prompt
+                        ],
+                        [
+                            'type' => 'image_url',
+                            'image_url' => [
+                                'url' => $pdfContent
+                            ]
+                        ]
+                    ]
+                ]
 
-
-        $result = Gemini::generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
-            ->generateContent([
-                $prompt,
-                new Blob(
-                    mimeType: MimeType::IMAGE_JPEG,
-                    data: base64_encode(
-                        file_get_contents($filePath)
-                    )
-                )
-            ]);
-        $res = str_replace(['`', 'json'], '', $result->text());
+            ],
+            'max_tokens' => 1000
+        ];
+        $result = $client->chat()->create($createParms);
+//        $result = Gemini::generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
+//            ->generateContent([
+//                $prompt,
+//                new Blob(
+//                    mimeType: MimeType::IMAGE_JPEG,
+//                    data: base64_encode(
+//                        file_get_contents($filePath)
+//                    )
+//                )
+//            ]);
+//        $res = str_replace(['`', 'json'], '', $result->text());
+        $res = str_replace(['`', 'json'], '', $result['choices'][0]['message']['content']);
         $res = json_decode($res);
 
 

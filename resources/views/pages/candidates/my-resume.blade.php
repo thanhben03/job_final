@@ -1,4 +1,11 @@
 @extends('layouts.app')
+@push('css')
+    <style>
+        .dropdown-menu.show {
+            transform: translate(0px, -270px) !important;
+        }
+    </style>
+@endpush
 @section('content')
     <!-- Modal Upload CV -->
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
@@ -95,7 +102,7 @@
 
                     <div>
                         <ul class="wt-breadcrumb breadcrumb-style-2">
-                            <li><a href="index.html">{{ trans('lang.home') }}</a></li>
+                            <li><a href="index.html">{{ trans('lang.header.home') }}</a></li>
                             <li>{{ trans('lang.Candidate CV Manager') }}</li>
                         </ul>
                     </div>
@@ -131,7 +138,11 @@
                                     <div class="col-md-9 d-flex align-items-center">
                                         <div>
                                             <img src="https://static.topcv.vn/v4/image/cv-manager/no-cv.png" alt="Icon">
-                                            <p>{{ trans('lang.You havent created any CV yet') }}</p>
+                                            @if(auth()->user()->cv != null)
+                                                <p>{{ trans('lang.Number of your CV on the system') }} : {{count(auth()->user()->cv)}}</p>
+                                            @else
+                                                <p>{{ trans('lang.You havent created any CV yet') }}</p>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-md-3 text-end">
@@ -146,9 +157,11 @@
                                         <!-- CV Card 1 -->
                                         @foreach($resumes as $resume)
                                             <div class="card mx-1 my-1 card-cv" >
+
+
                                                 <img src="{{asset('storage/uploads/'. $resume->thumbnail)}}" class="card-img-top card-cv-img" alt="Profile">
 
-                                                <div class="card-body">
+                                                <div class="card-body" style="top: 200px !important;">
                                                     <h5 class="card-title">{{$resume->path}}</h5>
                                                     <p class="card-text">{{ trans('lang.Last Updated') }} {{$resume->updated_at}}</p>
                                                     <div class="d-flex justify-content-between">
@@ -163,9 +176,15 @@
                                                         <button onclick="deleteCV({{$resume->id}})" class="btn btn-outline-danger">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
-
+                                                            <button title="{{ trans('lang.Set Main CV') }}" class="btn btn-outline-info" onclick="setMainCV({{ $resume->id }})">
+                                                                <i class="fas fa-wrench"></i>
+                                                            </button>
                                                     </div>
                                                 </div>
+                                                @if(auth()->user()->main_cv == $resume->id)
+
+                                                    <div class="main-cv">Main CV</div>
+                                                @endif
                                             </div>
                                         @endforeach
 
@@ -178,11 +197,11 @@
                                         @foreach($resumeOnSys as $resume)
                                         <div class="card mx-1 my-1 card-cv">
                                             <img src="{{ asset('storage/uploads/' . $resume->cv->thumbnail) }}" class="card-img-top card-cv-img" alt="Profile">
-                                        
+
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $resume->cv->path }}</h5>
                                                 <p class="card-text">{{ trans('lang.Last Updated') }} {{ $resume->cv->updated_at }}</p>
-                                        
+
                                                 <!-- Three-dot menu for actions -->
                                                 <div class="dropdown float-end">
                                                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -219,12 +238,12 @@
                                             </div>
 
                                             @if(auth()->user()->main_cv == $resume->cv->id)
-                                                
+
                                                 <div class="main-cv">Main CV</div>
                                             @endif
 
                                         </div>
-                                        
+
                                         @endforeach
 
                                     </div>
@@ -294,7 +313,7 @@
         });
 
 
-        function setMainCV(cvID) {  
+        function setMainCV(cvID) {
             $.ajax({
                 type: 'GET',
                 url: "{{ route('set.main.cv', ':cvID') }}".replace(':cvID', cvID),

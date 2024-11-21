@@ -151,7 +151,7 @@
                                                                 <li><a href="{{route('candidate.show.chat')}}"><i
                                                                             class="fa fa-envelope"></i>{{__('lang.user.message')}}</a>
                                                                 </li>
-                                                                <li><a href="dash-my-profile.html"><i
+                                                                <li><a href="{{route('candidate.profile')}}"><i
                                                                             class="fa fa-user"></i>{{__('lang.user.profile')}}</a>
                                                                 </li>
                                                                 <li><a onclick="logout()" href="#">

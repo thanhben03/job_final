@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\OpenAIController;
+use App\Http\Controllers\CandidateController;
 use App\Models\Province;
 use App\Models\Skill;
 use App\Models\User;
@@ -58,6 +59,7 @@ Route::prefix('api/v1')->group(function () {
     Route::get('/get-cv/{user_id}', [UserController::class, 'getAllCV']);
     Route::post('/upload-cv', [UserController::class, 'uploadCV']);
     Route::post('/upload-avatar', [UserController::class, 'uploadAvatar']);
+    Route::get('/delete-cv/{cvId}', [CandidateController::class, 'deleteCV']);
     Route::post('/set-default-cv', [UserController::class, 'setDefaultCV']);
     Route::post('/chatbot', [OpenAIController::class, 'getResponse']);
     Route::get('/get-chat/{user_id}', [UserController::class, 'getAllChatByUser']);

@@ -21,7 +21,7 @@ class OpenAIService
     public function generateQuery($prompt)
     {
         $response = $this->client->chat()->create([
-            'model' => 'gpt-3.5-turbo-16k-0613',
+            'model' => 'gpt-4-turbo',
             'messages' => [
                 [
                     'role' => 'user',
@@ -50,7 +50,9 @@ class OpenAIService
                 ['role' => 'user', 'content' => $prompt]
             ],
             'functions' => $functions, // Danh sách các function đã định nghĩa
-            'function_call' => 'auto', // Để OpenAI tự động gọi function khi cần
+            'function_call' => [
+                'name' => 'search_job' // Chỉ định tên function cụ thể
+            ], // Để OpenAI tự động gọi function khi cần
             'max_tokens' => 1000
         ]);
 

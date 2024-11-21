@@ -22,28 +22,4 @@
 <script src="{{ asset('/js/custom.js') }}"></script><!-- CUSTOM FUCTIONS  -->
 <script src="{{ asset('/js/toastr.min.js') }}"></script><!-- CUSTOM FUCTIONS  -->
 <script src="{{ asset('/js/pusher.min.js') }}"></script>
-<script>
-    const toggleButton = document.querySelector('.toggle-chat');
-    const chatPopUp = document.querySelector('#chat-bot');
 
-    function scrollToBottom() {
-        let chatContainer = document.querySelector('.card-body');
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
-
-    function toggleOpenChat() {
-        toggleButton.classList.toggle('chat-is-open');
-        chatPopUp.classList.toggle('d-none')
-
-        // Handle Scroll To Latest Message
-        scrollToBottom()
-        $("#message-to-bot").focus();
-    }
-
-    toggleButton.addEventListener('click', _ => {
-        toggleOpenChat()
-
-        // chatPopUp.classList.toggle('chat-display-on');
-        // chatPopUp.classList.toggle('chat-visible');
-    })
-</script>

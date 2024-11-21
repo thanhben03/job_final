@@ -179,7 +179,7 @@
                                             : $career['company']->company_avatar}}" alt="#">
                                     </div>
                                     <div class="twm-mid-content">
-                                        <a href="{{route('jobs.show', ['category' => $career['category']->slug, 'job' => $career['slug']])}}" class="twm-job-title">
+                                        <a href="{{route('jobs.show', $career['slug'])}}" class="twm-job-title">
                                             <h4>{{$career['title']}}<span class="twm-job-post-duration">/ {{$career['updated_at']}}</span></h4>
                                         </a>
                                         <p class="twm-job-address">{{$career['address']}}</p>
@@ -207,7 +207,7 @@
 {{--                                            @endif--}}
                                         </div>
                                         <div class="twm-jobs-amount">{{$career['max_salary']['convert']}} <span>/ Month</span></div>
-                                        <a href="{{route('jobs.show', ['category' => $career['category']->slug, 'job' => $career['slug']])}}" class="twm-jobs-browse site-text-primary">{{$career['province']->name}}</a>
+                                        <a href="{{route('jobs.show', $career['slug'])}}" class="twm-jobs-browse site-text-primary">{{$career['province']->name}}</a>
                                     </div>
                                 </div>
                             </li>

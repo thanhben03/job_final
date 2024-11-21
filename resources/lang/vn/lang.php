@@ -171,5 +171,9 @@ return [
     'achievement' => 'Thành tựu',
     'project' => 'Dự án',
     'certificate' => 'Chứng chỉ',
-    'CV Not Found' => 'Không tìm thấy CV'
+    'CV Not Found' => 'Không tìm thấy CV',
+    'Number of your CV on the system' => 'Số lượng cv của bạn trên hệ thống',
+    'There are no appointments displayed' => 'Không có cuộc hẹn nào được hiển thị ',
+    'Profile Info' => 'Thông tin cá nhân',
+    'Leave your message' => 'Để lại lời nhắn'
 ];

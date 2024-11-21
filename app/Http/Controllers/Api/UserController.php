@@ -190,6 +190,7 @@ class UserController extends Controller
                 $image->move(public_path('images/avatar'), $imageName);
                 $user = User::query()->findOrFail($request->user_id);
                 $user->avatar = $imageName;
+                $user->save();
 
                 // Trả về phản hồi JSON
                 return response()->json([

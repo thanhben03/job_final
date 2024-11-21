@@ -18,7 +18,7 @@
             <a href="candidate-detail.html" class="twm-job-title">
                 <h4>{{auth()->user()->fullname}}</h4>
             </a>
-            <p>IT Contractor</p>
+            <p>{{auth()->user()->email}}</p>
         </div>
 
         <div class="twm-nav-list-1">

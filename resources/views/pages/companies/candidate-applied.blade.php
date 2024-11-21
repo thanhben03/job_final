@@ -11,7 +11,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-info">Nếu bạn cho rằng đây là ứng viên giả mạo/span vi phạm tiêu chuẩn vui lòng báo cáo về cho chúng tôi !</div>
+                    <div class="alert alert-info">Nếu bạn cho rằng đây là ứng viên giả mạo/spam vi phạm tiêu chuẩn vui lòng báo cáo về cho chúng tôi !</div>
                     <input hidden id="candidate-id" value="" />
                 </div>
                 <div class="modal-footer">
@@ -165,7 +165,7 @@
                             <div class="twm-D_table p-a20 table-responsive">
                                 <!-- Filter Dropdown Section -->
                                 <div class="filter-section mb-3">
-                                    
+
                                     {{-- <x-modal.modal-progress />
                                     <button onclick="matchWithCandidate({{$career['id']}}, 'filter_cv')" class="btn btn-primary">Fitler CV</button> --}}
                                 </div>

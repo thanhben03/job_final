@@ -15,11 +15,12 @@ class CompanyUpdateRequest extends FormRequest
 
     public function rules(): array
     {
+        $id = $this->route('company_id'); // Thay 'company' bằng tên route parameter của bạn
         return [
             'company_name' => 'required|string|max:255',
             'company_username' => 'nullable|string|alpha_dash|max:255|unique:companies,company_username',
             'password' => 'nullable|string|min:8|confirmed',
-            'email' => 'required|string|email|max:255|unique:companies,email',
+            'email' => ['required', 'email', 'unique:App\Models\Company,email,'.$id],
             'company_address' => 'nullable|string|max:255',
             'company_phone' => 'nullable|string|regex:/^[0-9]{10,15}$/',
             'company_avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

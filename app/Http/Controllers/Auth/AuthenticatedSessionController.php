@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
         if ($user->ban) {
             return response()->json([
                 'success' => false,
-                'msg' => 'You are banned'
+                'message' => 'You are banned'
             ], 403);
         }
 

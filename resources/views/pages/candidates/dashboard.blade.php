@@ -41,10 +41,10 @@
                     <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
                         <!--Filter Short By-->
                         <div class="twm-right-section-panel site-bg-gray">
-                            <div class="wt-admin-right-page-header">
-                                <h2>{{auth()->user()->fullname}}</h2>
-                                <p>IT Contractor</p>
-                            </div>
+{{--                            <div class="wt-admin-right-page-header">--}}
+{{--                                <h2>{{auth()->user()->fullname}}</h2>--}}
+{{--                                <p>{{auth()->user()->email}}</p>--}}
+{{--                            </div>--}}
 
                             <div class="twm-dash-b-blocks mb-5">
                                 <div class="row">

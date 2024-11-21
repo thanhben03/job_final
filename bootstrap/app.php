@@ -14,19 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: [
-            'http://127.0.0.1:8001/candidates/review-cv', // <-- exclude this route,
-            'http://127.0.0.1:8001/chat/send-to-user', // <-- exclude this route,
-            'http://127.0.0.1:8001/chat/send-to-company', // <-- exclude this route,
-            'http://127.0.0.1:8000/api/v1/auth/login',
-            'http://127.0.0.1:8000/chatbot',
-            'http://127.0.0.1:8000/chatbot/search-job',
-            'http://127.0.0.1:8000/api/v1/jobs/apply-job',
-            'http://127.0.0.1:8000/api/v1/update-profile',
-            'http://127.0.0.1:8000/api/v1/jobs/save-job',
-            'http://127.0.0.1:8000/api/v1/jobs/report-job',
-            'http://127.0.0.1:8000/api/v1/update-appointment',
-            'http://127.0.0.1:8000/api/v1/set-default-cv',
-            'http://127.0.0.1:8000/broadcasting/auth',
+            'http://127.0.0.1:8000/*',
             'http://127.0.0.1:8000/api/v1/*',
             'https://zibb.teebi.shop/api/v1/*',
 
