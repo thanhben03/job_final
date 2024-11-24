@@ -118,7 +118,7 @@ Route::get('pdf-to-img', [CandidateController::class, 'pdfToImg'])->name('pdf-to
 
 Route::get('invite-interview', [CandidateController::class, 'acceptInterview']);
 Route::middleware(StartSession::class)->post('/chatbot', [OpenAIController::class, 'getResponse'])->name('chat.bot');
-Route::post('/chatbot/search-job', [OpenAIController::class, 'searchJobs']);
+
 
 Route::get('/set-main-cv/{id}', [CandidateController::class, 'setMainCv'])->name('set.main.cv');
 

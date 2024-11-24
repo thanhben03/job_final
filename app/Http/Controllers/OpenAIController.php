@@ -104,7 +104,7 @@ class OpenAIController extends Controller
                         ],
                         'salary' => [
                             'type' => 'integer',
-                            'description' => 'Mức lương đưa ra, ví dụ trên 10 triệu v.v...'
+                            'description' => 'Mức lương đưa ra, ví dụ "tôi cần tìm công việc php với mức lương trên 10 triệu"  v.v...'
                         ],
                         'categories' => [
                             'type' => 'array',
@@ -290,10 +290,11 @@ class OpenAIController extends Controller
             $slug = "/jobs/$item->slug";
             return "<li><a href='$slug'>$item->title</a></li>";
         })->toArray();
+        $html = '';
+        if (count($item) > 0) {
+            $item = implode($item);
 
-        $item = implode($item);
-
-        $html = '
+            $html = '
                 <div class="d-flex flex-row justify-content-start mb-4 chat-start">
                                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                                      alt="avatar 1" style="width: 45px; height: 100%;">
@@ -307,6 +308,19 @@ class OpenAIController extends Controller
                                 </div>
                             </div>
                 ';
+        } else {
+            $html = '
+                <div class="d-flex flex-row justify-content-start mb-4 chat-start">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                     alt="avatar 1" style="width: 45px; height: 100%;">
+                                <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                    <p class="small mb-0">
+                                        Không có công việc nào, hãy quay lại sau nhé !
+                                    </p>
+                                </div>
+                            </div>
+                ';
+        }
 
         return $html;
     }

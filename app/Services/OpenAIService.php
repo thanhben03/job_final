@@ -53,7 +53,7 @@ class OpenAIService
             'function_call' => [
                 'name' => 'search_job' // Chỉ định tên function cụ thể
             ], // Để OpenAI tự động gọi function khi cần
-            'max_tokens' => 1000
+            'max_tokens' => 500
         ]);
 
         return $content;

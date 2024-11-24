@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="twm-content">
                                         <div class="twm-jobs-available">{{$category->jobs_count}} {{ trans('lang.jobs') }}</div>
-                                        <a href="{{env('APP_URL').'?category='.$category->slug}}">{{__('category.name.'.$category->trans_key)}}</a>
+                                        <a href="{{env('APP_URL').'/jobs?category='.$category->slug}}">{{__('category.name.'.$category->trans_key)}}</a>
                                     </div>
                                 </div>
                             </div>
