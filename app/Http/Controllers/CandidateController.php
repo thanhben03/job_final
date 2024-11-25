@@ -511,49 +511,50 @@ class CandidateController extends Controller
         ]';
 
         // OPEN AI
-        $client = \OpenAI::factory()
-            ->withBaseUri('https://open.keyai.shop/v1')
-            ->withApiKey(env('OPENAI_API_KEY'))
-            ->withHttpClient(new \GuzzleHttp\Client(['timeout' => 60]))
-            ->make();
-        $createParms = [
-            'model'=>'gpt-4-vision-preview',
-            'messages'=>[
-                [
-                    'role'=>'system', 'content'=>'Your system message like you are a helpful AI assistant'
-                ],
-                [
-                    'role' => 'user',
-                    'content' => [
-                        [
-                            'type' => 'text',
-                            'text' => $prompt
-                        ],
-                        [
-                            'type' => 'image_url',
-                            'image_url' => [
-                                'url' => $pdfContent
-                            ]
-                        ]
-                    ]
-                ]
-
-            ],
-            'max_tokens' => 1000
-        ];
-        $result = $client->chat()->create($createParms);
-//        $result = Gemini::generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
-//            ->generateContent([
-//                $prompt,
-//                new Blob(
-//                    mimeType: MimeType::IMAGE_JPEG,
-//                    data: base64_encode(
-//                        file_get_contents($filePath)
-//                    )
-//                )
-//            ]);
-//        $res = str_replace(['`', 'json'], '', $result->text());
-        $res = str_replace(['`', 'json'], '', $result['choices'][0]['message']['content']);
+//        $client = \OpenAI::factory()
+//            ->withBaseUri('https://open.keyai.shop/v1')
+//            ->withApiKey(env('OPENAI_API_KEY'))
+//            ->withHttpClient(new \GuzzleHttp\Client(['timeout' => 60]))
+//            ->make();
+//        $createParms = [
+//            'model'=>'gpt-4-vision-preview',
+//            'messages'=>[
+//                [
+//                    'role'=>'system', 'content'=>'Your system message like you are a helpful AI assistant'
+//                ],
+//                [
+//                    'role' => 'user',
+//                    'content' => [
+//                        [
+//                            'type' => 'text',
+//                            'text' => $prompt
+//                        ],
+//                        [
+//                            'type' => 'image_url',
+//                            'image_url' => [
+//                                'url' => $pdfContent
+//                            ]
+//                        ]
+//                    ]
+//                ]
+//
+//            ],
+//            'max_tokens' => 1000
+//        ];
+//        $result = $client->chat()->create($createParms);
+        // GEMINI
+        $result = Gemini::generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
+            ->generateContent([
+                $prompt,
+                new Blob(
+                    mimeType: MimeType::IMAGE_JPEG,
+                    data: base64_encode(
+                        file_get_contents($filePath)
+                    )
+                )
+            ]);
+        $res = str_replace(['`', 'json'], '', $result->text());
+//        $res = str_replace(['`', 'json'], '', $result['choices'][0]['message']['content']);
         $res = json_decode($res);
 
 

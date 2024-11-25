@@ -30,7 +30,7 @@
             <!-- Right Side Content -->
             <div class="header-right">
                 <ul class="header-widget-wrap">
-                    
+
 
                     <!--Notification-->
                     <li class="header-widget dashboard-noti-dropdown">
@@ -64,7 +64,8 @@
                                     </ul>
 
                                     <div class="noti-view-all">
-                                        <a href="javascript:;">View All</a>
+                                        <a onclick="deleteAllMessage()" href="javascript:;">Delete All</a>
+
                                     </div>
 
                                 </div>
@@ -116,6 +117,20 @@
 
         function logout() {
             $("#formLogout").submit()
+        }
+
+        function deleteAllMessage() {
+            if (confirm('Are you sure ?')) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{route('delete.all', ':type')}}".replace(':type', 'company'),
+                    success: function (res) {
+                        console.log(res)
+
+                        window.location.reload();
+                    }
+                })
+            }
         }
     </script>
 @endpush

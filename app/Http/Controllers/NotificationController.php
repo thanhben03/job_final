@@ -23,9 +23,13 @@ class NotificationController extends Controller
 
     }
 
-    public function deleteAll()
+    public function deleteAll($type)
     {
-        Notification::query()->where('user_id', auth()->user()->id)->delete();
+        if ($type == 'company') {
+            Notification::query()->where('company_id', auth()->guard('company')->user()->id)->delete();
+        } else {
+            Notification::query()->where('user_id', auth()->user()->id)->delete();
+        }
 
         return response()->json([
             'success' => true,

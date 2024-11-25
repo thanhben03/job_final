@@ -238,7 +238,7 @@
             if (confirm('Are you sure ?')) {
                 $.ajax({
                     type: "GET",
-                    url: "{{route('delete.all')}}",
+                    url: "{{route('delete.all', ':type')}}".replace(':type', 'user'),
                     success: function (res) {
                         console.log(res)
 
