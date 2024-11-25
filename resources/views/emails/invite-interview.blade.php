@@ -68,7 +68,7 @@
             Địa điểm: <strong>{{$body['location']}}</strong></p>
         <p>Vui lòng xác nhận sự tham gia của bạn bằng cách nhấn vào nút dưới đây.</p>
         <div class="button">
-            <a href="/invite-interview?code={{$body['code']}}" target="_blank">Xác Nhận Phỏng Vấn</a>
+            <a href="{{$body['link']}}" target="_blank">Xác Nhận Phỏng Vấn</a>
         </div>
         <p>Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi qua email <strong>{{$body['email']}}</strong> hoặc số điện thoại <strong>{{$body['phone']}}</strong>.</p>
         <p>Chúng tôi mong sớm gặp bạn!</p>

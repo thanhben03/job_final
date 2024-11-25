@@ -293,7 +293,7 @@ class CompanyController extends Controller
                 'location' => $data['location'],
                 'company_name' => \auth()->guard('company')->user()->company_name,
                 'user' => $userExist,
-                'code' => $code
+                'link' => env('APP_URL').'/invite-interview?code='.$code
             ];
             Notification::query()->create([
                 'message' => 'Bạn có một lời mời phỏng vấn qua email',
@@ -324,7 +324,7 @@ class CompanyController extends Controller
         $invites = Interview::query()->where([
             'company_id' => \auth()->guard('company')->user()->id
         ])
-            ->orderBy('id', 'desc')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         $invites = ListInviteResource::make($invites)->resolve();
