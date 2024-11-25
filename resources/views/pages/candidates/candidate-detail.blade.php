@@ -73,14 +73,17 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="">Content: </label>
+                        <label for="">Content (optional): </label>
                         <textarea placeholder="Enter a content for gmail !" id="content-gmail" class="form-control"></textarea>
                     </div>
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" onclick="sendInviteInterview()" class="btn btn-primary">Save changes</button>
+                    <button type="button" onclick="sendInviteInterview()" class="btn btn-primary">
+                        Send Mail
+                        <img id="loading" class="d-none" width="20" src="/images/loading.svg">
+                    </button>
                 </div>
             </div>
         </div>
@@ -105,6 +108,7 @@
             </div>
         </div>
     </div>
+
 
 
     <!-- Candidate Detail V2 START -->
@@ -351,14 +355,21 @@
                     content,location,email,phone
                     // "content": content.text()
                 },
+                beforeSend: function () {
+                    $("#loading").toggleClass('d-none');
+                },
                 success: function (res) {
                     toastr.success(res.msg, 'Notification !')
+                    $("#loading").toggleClass('d-none');
+
                     setTimeout(() => {
                         window.location.reload()
                     }, 1200)
                 },
                 error: function (xhr) {
                     toastr.error(xhr.responseJSON.msg, 'Error !')
+                    $("#loading").toggleClass('d-none');
+
                 }
             })
         }

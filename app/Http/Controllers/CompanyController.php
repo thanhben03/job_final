@@ -8,6 +8,7 @@ use App\Enums\LevelEnum;
 use App\Enums\QualificationEnum;
 use App\Enums\StatusCV;
 use App\Enums\WorkTypeEnum;
+use App\Events\NotificationEvent;
 use App\Http\Requests\CompanyUpdateRequest;
 use App\Http\Resources\CandidateAppliedResource;
 use App\Http\Resources\CareerResource;
@@ -122,6 +123,7 @@ class CompanyController extends Controller
     public function showEditJob ($id) {
         $career = Career::query()->where('id', $id)->get();
         $career = CareerResource::make($career)->resolve()[0];
+
         $skills = Skill::all();
         $workType = WorkTypeEnum::asSelectArray();
         $exps = JobExpEnum::asSelectArray();
@@ -269,7 +271,7 @@ class CompanyController extends Controller
         $request->validate([
             'candidate_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',
-            'content' => 'required|string',
+            'content' => 'nullable|string',
             'position' => 'required',
             'email' => 'required|string|email|max:255',
             'phone' => 'required|string|max:255',
@@ -293,8 +295,13 @@ class CompanyController extends Controller
                 'user' => $userExist,
                 'code' => $code
             ];
-
+            Notification::query()->create([
+                'message' => 'Bạn có một lời mời phỏng vấn qua email',
+                'user_id' => $userExist->id,
+                'from_id' => \auth()->guard('company')->user()->id,
+            ]);
             Mail::to($userExist->email)->send(new InviteInterview($body));
+            broadcast(new NotificationEvent($userExist->id, 'Bạn có một lời mời phỏng vấn qua email !'));
             Interview::query()->create([
                 'user_id' => $userExist->id,
                 'company_id' => \auth()->guard('company')->user()->id,

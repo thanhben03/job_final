@@ -49,10 +49,10 @@
                                             class="wt-select-box selectpicker"
                                             data-live-search="true" title="" id="j-category" data-bv-field="size">
                                             @foreach($skills as $skill)
-                                                <option 
+                                                <option
                                                 @if (in_array($skill->id, $career['skills']->pluck('id')->toArray())) selected
-                                                    
-                                                @endif 
+
+                                                @endif
                                                 value="{{$skill->id}}">{{$skill->name}}</option>
                                             @endforeach
                                         </select>
@@ -72,7 +72,7 @@
                                             class="wt-select-box selectpicker"
                                             data-live-search="true" title="" id="s-category" data-bv-field="size">
                                             @foreach($workType as $key => $value)
-                                                <option 
+                                                <option
                                                 @if ($key == old('work_type', $career['work_type'])) selected
                                                     selected
                                                 @endif
@@ -117,7 +117,7 @@
                                     <div class="ls-inputicon-box">
                                         <select name="experience" class="wt-select-box selectpicker"  data-live-search="true" title="" id="salary" data-bv-field="size">
                                             @foreach($exps as $key => $value)
-                                                <option 
+                                                <option
                                                 @if ($key == old('experience', $career['experience'])) selected
                                                     selected
                                                 @endif
@@ -139,8 +139,8 @@
                                     <div class="ls-inputicon-box">
                                         <select name="qualification" class="wt-select-box selectpicker"  data-live-search="true" title="" data-bv-field="size">
                                             @foreach($qualifications as $key => $value)
-                                                <option 
-                                                @if ($key == old('qualification', $career['qualification'])) 
+                                                <option
+                                                @if ($key == old('qualification', $career['qualification']))
                                                     selected
                                                 @endif
                                                     value="{{$key}}">{{$value}}
@@ -159,7 +159,7 @@
                                     <div class="ls-inputicon-box">
                                         <select class="wt-select-box selectpicker"  data-live-search="true" name="gender" id="gender" data-bv-field="size">
                                             @foreach($genders as $keyd => $value)
-                                                <option 
+                                                <option
                                                 @if ($keyd == old('gender', $career['gender']))
                                                     selected
                                                 @endif
@@ -182,7 +182,7 @@
                                                 data-live-search="true" title=""
                                                 name="province_id" data-bv-field="size">
                                             @foreach($provinces as $key => $value)
-                                                <option 
+                                                <option
                                                 @if ($key == old('province_id', $career['province']->code))
                                                     selected
                                                 @endif
@@ -205,7 +205,7 @@
                                             class="form-control"
                                             id="district"
                                             name="district_id" >
-                                            @foreach ($districts as $district)  
+                                            @foreach ($districts as $district)
                                                 <option @if ($district->code == old('district_id', $career['district']->code)) selected @endif value="{{$district->code}}">{{$district->name}}</option>
                                             @endforeach
                                         </select>
@@ -223,8 +223,8 @@
                                     <div class="ls-inputicon-box">
                                         <select class="wt-select-box selectpicker"  data-live-search="true" title="" name="level" data-bv-field="size">
                                             @foreach($levels as $key => $value)
-                                                <option 
-                                                    @if ($key == old('level', $career['level'])) selected @endif 
+                                                <option
+                                                    @if ($key == old('level', $career['level'])) selected @endif
                                                     value="{{$key}}">{{$value}}
                                                 </option>
                                             @endforeach

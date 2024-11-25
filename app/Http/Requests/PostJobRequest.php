@@ -44,9 +44,9 @@ class PostJobRequest extends FormRequest
             'to_time' => 'nullable|date_format:H:i|after:from_time',
             'expiration_day' => 'nullable|date|after_or_equal:today',
             'qualification' => ['required'], // Assuming TINYINT range
-//            'company_id' => 'required|integer|exists:companies,id',
-            'province_id' => 'nullable|string|max:255',
-            'district_id' => 'nullable|string|max:255',
+//            'company_id' => 'required|integer|exists:companies,id'
+            'province_id' => 'required|string|max:255',
+            'district_id' => 'required|string|max:255',
             'description' => 'required',
             'benefit' => 'required',
             'key_responsibilities' => 'required',
