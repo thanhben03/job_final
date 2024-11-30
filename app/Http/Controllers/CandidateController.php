@@ -7,6 +7,7 @@ use App\Http\Resources\CandidateResource;
 use App\Http\Resources\CandidateSingleResource;
 use App\Http\Resources\CareerResource;
 use App\Http\Resources\ChatResource;
+use App\Http\Resources\JobAppliedResource;
 use App\Models\Career;
 use App\Models\Chat;
 use App\Models\Company;
@@ -93,7 +94,7 @@ class CandidateController extends Controller
 
         // lay cac job
         $careers = Career::query()->whereIn('id', $ids)->paginate(10);
-        $data = CareerResource::make($careers)->resolve();
+        $data = JobAppliedResource::make($careers)->resolve();
         return view('pages.candidates.job-applied', compact('data', 'careers'));
     }
 
@@ -460,6 +461,7 @@ class CandidateController extends Controller
             ReportedUser::query()->create([
                 'user_id' => $candidate->id,
                 'company_id' => $company->id,
+                'report_content' => $request->report_content
             ]);
 
             return response()->json([

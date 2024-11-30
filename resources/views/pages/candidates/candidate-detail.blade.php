@@ -94,16 +94,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Báo cáo vi phạm</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{trans('lang.Report Violations')}}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-info">Nếu bạn cho rằng đây là ứng viên giả mạo/spam vi phạm tiêu chuẩn vui lòng báo cáo về cho chúng tôi !</div>
+                    <div class="alert alert-info">{{trans('lang.Content Report')}}</div>
                     <input hidden id="candidate-id" value="" />
+                    <textarea id="report-content" placeholder="{{trans('lang.Content')}}" class="form-control" cols="30" rows="20"></textarea>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" onclick="reportCandidate()" id="btn-send-report" class="btn btn-primary">Report</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{trans('lang.close')}}</button>
+                    <button type="button" onclick="reportCandidate()" id="btn-send-report" class="btn btn-primary">{{trans('lang.report')}}</button>
                 </div>
             </div>
         </div>
@@ -139,15 +141,15 @@
                         </div>
                     </div>
                     <div class="twm-ep-detail-tags">
-                        <button onclick="showModalReportCandidate({{$candidate['id']}})" class="de-info twm-bg-purple"><i class="fa fa-exclamation-triangle"></i> Report</button>
+                        <button onclick="showModalReportCandidate({{$candidate['id']}})" class="de-info twm-bg-purple"><i class="fa fa-exclamation-triangle"></i>{{trans('lang.report')}}</button>
                     </div>
                     <div class="twm-candi-self-bottom">
-                        <button onclick="showModalQuickChat()" class="site-button">Contact Us</button>
-                        <button onclick="showModalInviteInterview()" class="site-button twm-bg-green">Hire Me</button>
+                        <button onclick="showModalQuickChat()" class="site-button">{{trans('lang.Contact Us')}}</button>
+                        <button onclick="showModalInviteInterview()" class="site-button twm-bg-green">{{trans('lang.Hire Me')}}</button>
                         @if(isset($candidate['main_cv']->path))
-                            <a download href="{{ asset('storage/uploads/' . $candidate['main_cv']?->path) }}" class="site-button secondry">Download CV</a>
+                            <a download href="{{ asset('storage/uploads/' . $candidate['main_cv']?->path) }}" class="site-button secondry">{{trans('lang.download')}} CV</a>
                         @else
-                            <a href="#" id="btnNoCV" class="site-button secondry">Download CV</a>
+                            <a href="#" id="btnNoCV" class="site-button secondry">{{trans('lang.download')}} CV</a>
 
                         @endif
                     </div>
@@ -166,7 +168,7 @@
                         <div class="cabdidate-de-info">
 
                             <div class="twm-s-info-wrap mb-5">
-                                <h4 class="section-head-small mb-4">Profile Info</h4>
+                                <h4 class="section-head-small mb-4">{{trans('lang.Profile Info')}}</h4>
                                 <div class="twm-s-info-4">
                                     <div class="row">
 
@@ -226,7 +228,7 @@
                                 </div>
                             </div>
 
-                            <h4 class="twm-s-title m-t0">About Me</h4>
+                            <h4 class="twm-s-title m-t0">{{trans('lang.About Me')}}</h4>
 
                             @if(isset($candidate['introduce']))
                                 {!! $candidate['introduce'] !!}
@@ -234,7 +236,7 @@
                                 <x-empty text="No introduce for this candidate" />
                             @endif
 
-                            <h4 class="twm-s-title">Skills</h4>
+                            <h4 class="twm-s-title">{{trans('lang.skill')}}</h4>
 
                             @if(count($candidate['skills']) > 0)
                                 <div class="tw-sidebar-tags-wrap">
@@ -248,7 +250,7 @@
                                 <x-empty text="No skills for this candidate" />
                             @endif
 
-                            <h4 class="twm-s-title">Work Experience</h4>
+                            <h4 class="twm-s-title">{{trans('lang.Work Experience')}}</h4>
                             @if(count($candidate['experiences']) > 0)
                                 <div class="twm-timing-list-wrap">
 
@@ -320,11 +322,13 @@
                 url: '{{route('candidate.report')}}',
                 data: {
                     '_token': '{{csrf_token()}}',
-                    'candidate_id': $("#candidate-id").val()
+                    'candidate_id': $("#candidate-id").val(),
+                    'report_content': $("#report-content").val(),
                 },
                 success: function (res) {
                     toastr.success('Reported Successfully !', 'Notification !')
                     $("#btn-send-report").prop('disabled', true)
+                    $("#modal-report-candidate").modal('toggle')
 
                 },
                 error: function (xhr) {

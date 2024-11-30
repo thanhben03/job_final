@@ -20,7 +20,7 @@ class SavedJobResource extends ResourceCollection
             $career = Career::query()->where('id', $item->career_id)->first();
 
             return [
-                'id' => $item->id,
+                'id' => $career->id,
                 'career' => [
                     'id' => $career->id,
                     'title' => $career->title,

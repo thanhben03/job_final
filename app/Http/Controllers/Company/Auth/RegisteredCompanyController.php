@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Company\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterCompanyRequest;
 use App\Models\Company;
+use App\Models\Province;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -21,7 +22,8 @@ class RegisteredCompanyController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $provinces = Province::all();
+        return view('auth.register', compact('provinces'));
     }
 
     /**

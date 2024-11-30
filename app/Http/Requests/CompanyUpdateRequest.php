@@ -31,6 +31,7 @@ class CompanyUpdateRequest extends FormRequest
             'facebook_link' => 'nullable|string|max:255',
             'twitter_link' => 'nullable|string|max:255',
             'instagram_link' => 'nullable|string|max:255',
+            'province_id' => 'required'
         ];
     }
 }

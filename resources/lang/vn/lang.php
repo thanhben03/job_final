@@ -33,6 +33,7 @@ return [
     'address' => 'Địa chỉ',
     'phone' => 'Số điện thoại',
     'candidate' => 'Ứng viên',
+    'report' => 'Báo cáo',
     'My Profile' => 'Cá nhân',
     'Applied Job' => 'Đã ứng tuyển',
     'My Resume' => 'Hồ sơ ứng tuyển',
@@ -113,6 +114,7 @@ return [
     'From Date' => 'Từ ngày',
     'To Date' => 'Đến ngày',
     'Appointment Manager' => 'Quản lý lịch hẹn',
+    'Interview Manager' => 'Quản lý lịch phỏng vấn',
     'Appointment Details' => 'Chi tiết lịch hẹn',
     'Apply For This Job' => 'Ứng tuyển ngay',
     'Send Application' => 'Nộp đơn',
@@ -175,5 +177,14 @@ return [
     'Number of your CV on the system' => 'Số lượng cv của bạn trên hệ thống',
     'There are no appointments displayed' => 'Không có cuộc hẹn nào được hiển thị ',
     'Profile Info' => 'Thông tin cá nhân',
-    'Leave your message' => 'Để lại lời nhắn'
+    'Leave your message' => 'Để lại lời nhắn',
+    'Content Report' => 'Nếu bạn cho rằng đây là ứng viên giả mạo/spam vi phạm tiêu chuẩn vui lòng báo cáo về cho chúng tôi !',
+    'Report Violations' => 'Báo cáo vi phạm',
+    'About Me' => 'Về tôi',
+    'Contact Us' => 'Liên hệ tôi',
+    'Hire Me' => 'Tuyển Dụng',
+    'Content' => 'Nội dung',
+    'Chat' => 'Tin nhắn',
+    'Province' => 'Tỉnh'
+
 ];

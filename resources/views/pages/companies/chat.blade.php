@@ -83,11 +83,11 @@
                         <div class="single-user-comment-wrap">
                             <div class="row">
                                 <div class="col-xl-9 col-lg-12">
-                                    <div class="single-user-comment-block clearfix">
-                                        <div class="single-user-com-pic">
+                                    <div class="single-user-comment-block clearfix" style="float: left">
+                                        <div class="single-user-com-pic custom-avatar-chat">
                                             <img src="${e.message.user.avatar.includes('http') ? e.message.user.avatar : `/images/avatar/${e.message.user.avatar}`}" alt="">
                                         </div>
-                                        <div class="single-user-com-text">${e.message.message}</div>
+                                        <div style="width: max-content" class="single-user-com-text">${e.message.message}</div>
                                         <div class="single-user-msg-time">${e.message.created_at}</div>
                                     </div>
                                 </div>

@@ -11,6 +11,7 @@ use App\Http\Resources\Api\ListCVResource;
 use App\Http\Resources\ChatSingleResource;
 use App\Http\Resources\CVResource;
 use App\Http\Resources\NotificationResource;
+use App\Http\Resources\UserResource;
 use App\Models\Chat;
 use App\Models\Company;
 use App\Models\CurriculumVitae;
@@ -78,6 +79,7 @@ class UserController extends Controller
                 }
 
                 DB::commit();
+                $user = UserResource::make($user);
                 return response()->json(['msg' => 'Cập nhật thành công!', 'user' => $user]);
             } catch (\Throwable $th) {
                 DB::rollBack();

@@ -8,12 +8,13 @@ use App\Enums\LevelEnum;
 use App\Enums\QualificationEnum;
 use App\Enums\StatusCV;
 use App\Enums\WorkTypeEnum;
+use App\Models\UserCareer;
 use App\Trait\ConvertPriceString;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class CareerResource extends ResourceCollection
+class ManageJobResource extends ResourceCollection
 {
 
     use ConvertPriceString;
@@ -58,7 +59,7 @@ class CareerResource extends ResourceCollection
                 'gender' => GenderEnum::getDescription($career->gender),
                 'qualification' => QualificationEnum::getDescription($career->qualification),
                 'detail' => $career->detail,
-                'cv_applied' => auth()->check() ? $career->user_careers->whereIn('cv_id', auth()->user()->cv()->pluck('id')->toArray()) : null,
+                'cv_applied' => $career->user_careers,
                 'appointments' => AppointmentResource::make($career->appointments)->resolve(),
                 'from_time' => $career->from_time,
                 'to_time' => $career->to_time,

@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ManageJobResource extends ResourceCollection
+class JobAppliedResource extends ResourceCollection
 {
 
     use ConvertPriceString;
@@ -64,11 +64,7 @@ class ManageJobResource extends ResourceCollection
                 'from_time' => $career->from_time,
                 'to_time' => $career->to_time,
                 'published' => $career->status,
-                'status' => auth()->user() && $career->user_careers->count() > 0 && auth()->user()->cv() !== null
-                    ? ($careerCV = $career->user_careers->whereIn('cv_id', auth()->user()->cv()->pluck('id')->toArray())->first())
-                        ? StatusCV::getDescription($careerCV->status)
-                        : ''
-                    : '',
+                'status' => StatusCV::getDescription($career->status),
                 'category' => $career->category
             ];
         });

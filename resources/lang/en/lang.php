@@ -20,6 +20,7 @@ return [
     'time' => 'Time',
     'yes' => 'Yes',
     'no' => 'No',
+    'report' => 'Report',
     'expiration' => 'Expiration',
     'description' => 'Description',
     'language' => 'Language',
@@ -113,6 +114,7 @@ return [
     'From Date' => 'From Date',
     'To Date' => 'To Date',
     'Appointment Manager' => 'Appointment Manager',
+    'Interview Manager' => 'Interview Manager',
     'Appointment Details' => 'Appointment Details',
     'Apply For This Job' => 'Apply For This Job',
     'Send Application' => 'Send Application',
@@ -168,6 +170,14 @@ return [
     'Number of your CV on the system' => 'Number of your CV on the system',
     'There are no appointments displayed' => 'There are no appointments displayed',
     'Profile Info' => 'Profile Info',
-    'Leave your message' => 'Leave your message'
+    'Leave your message' => 'Leave your message',
+    'Content Report' => 'If you think this is a fake/spam candidate that violates standards, please report it to us!',
+    'Report Violations' => 'Report Violations',
+    'About Me' => 'About Me',
+    'Contact Us' => 'Contact Us',
+    'Hire Me' => 'Hire Me',
+    'Content' => 'Content',
+    'Chat' => 'Chat',
+    'Province' => 'Province'
 
 ];

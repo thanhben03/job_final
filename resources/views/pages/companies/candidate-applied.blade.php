@@ -105,7 +105,10 @@
                                 <textarea class="form-control" id="note" name="note" rows="3"></textarea>
                             </div>
                             <input hidden type="text" id="career-id" name="career_id" value="">
-                            <button type="submit" class="btn btn-primary">Đặt lịch hẹn</button>
+                            <button type="submit" class="btn btn-primary">
+                                Đặt lịch hẹn
+                                <img id="loading" class="d-none" src="/images/loading.svg" width="22" alt="">
+                            </button>
                         </form>
                         <div id="success-message" class="alert alert-success mt-3" style="display: none;">
                             Lịch hẹn đã được tạo thành công!
@@ -230,12 +233,12 @@
                                                                 <span class="fa fa-eye"></span>
                                                             </button>
                                                         </li>
-                                                        <li>
-                                                            <button title="Send message" data-bs-toggle="tooltip"
-                                                                    data-bs-placement="top">
-                                                                <span class="far fa-envelope-open"></span>
-                                                            </button>
-                                                        </li>
+{{--                                                        <li>--}}
+{{--                                                            <button title="Send message" data-bs-toggle="tooltip"--}}
+{{--                                                                    data-bs-placement="top">--}}
+{{--                                                                <span class="far fa-envelope-open"></span>--}}
+{{--                                                            </button>--}}
+{{--                                                        </li>--}}
                                                         <li>
                                                             <button onclick="showModalReportCandidate({{$candidate['info']->id}})" title="Report" data-bs-toggle="tooltip"
                                                                     data-bs-placement="top">
@@ -348,10 +351,15 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  // Thêm CSRF token vào header
                 },
                 data: $(this).serialize(),
+                beforeSend: function () {
+                  $("#loading").toggleClass('d-none')
+                },
                 success: function(response) {
                     $('#success-message').show().text(response.success);
                     $('#error-message').hide(); // Ẩn thông báo lỗi nếu có
                     $('#appointment-form')[0].reset();
+                    $("#loading").toggleClass('d-none')
+
                 },
                 error: function(xhr) {
                     if (xhr.status === 409) {
@@ -360,6 +368,8 @@
                     } else {
                         alert('Đã có lỗi xảy ra. Vui lòng thử lại!');
                     }
+                    $("#loading").toggleClass('d-none')
+
                 }
             });
         });

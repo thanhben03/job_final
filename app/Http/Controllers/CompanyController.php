@@ -15,6 +15,7 @@ use App\Http\Resources\CareerResource;
 use App\Http\Resources\ChatResource;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\ListInviteResource;
+use App\Http\Resources\ManageJobResource;
 use App\Mail\InviteInterview;
 use App\Models\Career;
 use App\Models\Category;
@@ -70,7 +71,8 @@ class CompanyController extends Controller
     {
 
         $company = Auth::guard("company")->user();
-        return view('pages.companies.company-profile', compact('company'));
+        $provinces = Province::all();
+        return view('pages.companies.company-profile', compact('company', 'provinces'));
     }
 
     public function update($company_id, CompanyUpdateRequest $request)
@@ -144,7 +146,7 @@ class CompanyController extends Controller
     {
         $company = Auth::guard("company")->user();
         $careers = $this->service->getAllById($company->id);
-        $careers = CareerResource::make($careers)->resolve();
+        $careers = ManageJobResource::make($careers)->resolve();
         return view('pages.companies.manage-job', compact('careers'));
     }
 

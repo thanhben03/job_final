@@ -34,70 +34,70 @@
                     <div class="item">
                         <div class="ow-client-logo">
                             <div class="client-logo client-logo-media">
-                                <a href="employer-list.html"><img src="images/client-logo/w1.png" alt=""></a></div>
+                                <a href="/companies/list"><img src="images/client-logo/w1.png" alt=""></a></div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="ow-client-logo">
                             <div class="client-logo client-logo-media">
-                                <a href="employer-list.html"><img src="images/client-logo/w2.png" alt=""></a></div>
+                                <a href="/companies/list"><img src="images/client-logo/w2.png" alt=""></a></div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="ow-client-logo">
                             <div class="client-logo client-logo-media">
-                                <a href="employer-list.html"><img src="images/client-logo/w3.png" alt=""></a></div>
+                                <a href="/companies/list"><img src="images/client-logo/w3.png" alt=""></a></div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="ow-client-logo">
                             <div class="client-logo client-logo-media">
-                                <a href="employer-list.html"><img src="images/client-logo/w4.png" alt=""></a></div>
+                                <a href="/companies/list"><img src="images/client-logo/w4.png" alt=""></a></div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="ow-client-logo">
                             <div class="client-logo client-logo-media">
-                                <a href="employer-list.html"><img src="images/client-logo/w5.png" alt=""></a></div>
+                                <a href="/companies/list"><img src="images/client-logo/w5.png" alt=""></a></div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="ow-client-logo">
                             <div class="client-logo client-logo-media">
-                                <a href="employer-list.html"><img src="images/client-logo/w6.png" alt=""></a></div>
+                                <a href="/companies/list"><img src="images/client-logo/w6.png" alt=""></a></div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="ow-client-logo">
                             <div class="client-logo client-logo-media">
-                                <a href="employer-list.html"><img src="images/client-logo/w1.png" alt=""></a></div>
+                                <a href="/companies/list"><img src="images/client-logo/w1.png" alt=""></a></div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="ow-client-logo">
                             <div class="client-logo client-logo-media">
-                                <a href="employer-list.html"><img src="images/client-logo/w2.png" alt=""></a></div>
+                                <a href="/companies/list"><img src="images/client-logo/w2.png" alt=""></a></div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="ow-client-logo">
                             <div class="client-logo client-logo-media">
-                                <a href="employer-list.html"><img src="images/client-logo/w3.png" alt=""></a></div>
+                                <a href="/companies/list"><img src="images/client-logo/w3.png" alt=""></a></div>
                         </div>
                     </div>
 
                     <div class="item">
                         <div class="ow-client-logo">
                             <div class="client-logo client-logo-media">
-                                <a href="employer-list.html"><img src="images/client-logo/w5.png" alt=""></a></div>
+                                <a href="/companies/list"><img src="images/client-logo/w5.png" alt=""></a></div>
                         </div>
                     </div>
 

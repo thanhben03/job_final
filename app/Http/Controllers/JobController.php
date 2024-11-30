@@ -225,6 +225,7 @@ class JobController extends Controller
     {
         $request->validate([
             'career_id' => 'required|exists:careers,id',
+            'content_report' => 'nullable'
         ]);
         try {
             $existJob = Career::query()->findOrFail($request->input('career_id'));
@@ -238,8 +239,8 @@ class JobController extends Controller
 
             ReportedCareer::query()->create([
                 'career_id' => $existJob->id,
-                'user_id' => auth()->user()->id
-
+                'user_id' => auth()->user()->id,
+                'report_content' => $request->report_content,
             ]);
         } catch (\Throwable $th) {
             return response()->json(['msg' => $th->getMessage()], 500);

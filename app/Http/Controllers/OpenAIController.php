@@ -104,7 +104,7 @@ class OpenAIController extends Controller
                         ],
                         'salary' => [
                             'type' => 'integer',
-                            'description' => 'Mức lương đưa ra, ví dụ "tôi cần tìm công việc php với mức lương trên 10 triệu"  v.v...'
+                            'description' => 'Mức lương đưa ra ex: trên 10 triệu, 10 triệu, dưới 10 triệu'
                         ],
                         'categories' => [
                             'type' => 'array',
@@ -130,27 +130,6 @@ class OpenAIController extends Controller
             $functionName = $response['choices'][0]['message']['function_call']['name'];
             $arguments = json_decode($response['choices'][0]['message']['function_call']['arguments'], true);
 
-            // Gọi hàm get_product_details
-            if ($functionName === 'get_job_details') {
-                $productId = $arguments['job_id'];
-                //                $product = $this->getJobDetails($productId);
-                //                dd($product);
-                return response()->json([
-                    'role' => 'assistant',
-                    'content' => $this->getProductDetails($productId)
-                ]);
-            }
-
-            // Gọi hàm search_jobs_by_title
-            if ($functionName === 'search_jobs_by_title') {
-                $skills = $arguments['skills'];
-                $jobs = $this->searchJobsByTitle($skills);
-                $html = $this->getListJobHtml($jobs);
-                return response()->json([
-                    'role' => 'assistant',
-                    'content' => $html
-                ]);
-            }
 
             // Gọi hàm search_jobs_by_title
             if ($functionName === 'search_job') {
@@ -166,18 +145,6 @@ class OpenAIController extends Controller
                 ]);
             }
 
-            if ($functionName === 'search_jobs') {
-                $salary = $arguments['salary'];
-                $skills = $arguments['skills'];
-                $limit = $arguments['limit'] ?? 10;
-
-                $jobs = $this->searchJobs($salary, $skills, $limit);
-                $html = $this->getListJobHtml($jobs);
-                return response()->json([
-                    'role' => 'assistant',
-                    'content' => $html
-                ]);
-            }
         }
         $content = $response['choices'][0]['message'];
         $html = '

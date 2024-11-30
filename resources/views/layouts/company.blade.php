@@ -60,7 +60,7 @@
                     </li>
 
                     <li class="@if (str_contains(request()->url(), 'profile')) active @endif">
-                        <a href="{{ route('company.profile') }}"><i class="fa fa-user-tie"></i><span
+                        <a href="{{ route('company.profile') }}"><i class="far fa-building"></i><span
                                 class="admin-nav-text">{{ trans('lang.user.profile') }}</span></a>
                     </li>
 
@@ -79,7 +79,7 @@
                     </li>
 
                     <li class="@if (str_contains(request()->url(), 'list-invite')) active @endif">
-                        <a href="javascript:;"><i class="fa fa-envelope"></i><span
+                        <a href="javascript:;"><i class="fas fa-user-alt"></i><span
                                 class="admin-nav-text">{{ trans('lang.candidate') }}</span></a>
                         <ul class="sub-menu">
                             <li>
@@ -90,9 +90,17 @@
                                 <a href="{{ route('company.show.invite') }}"><span
                                         class="admin-nav-text">{{ trans('lang.Appointment Manager') }}</span></a>
                             </li>
+                            <li>
+                                <a href="{{ route('company.show.invite') }}"><span
+                                        class="admin-nav-text">{{ trans('lang.Interview Manager') }}</span></a>
+                            </li>
                         </ul>
                     </li>
-                    <li class="@if (str_contains(request()->url(), 'list-invite')) active @endif">
+                    <li class="@if (str_contains(request()->url(), 'chat')) active @endif">
+                        <a href="{{ route('company.show.chat') }}"><i class="fa fa-envelope"></i><span
+                                class="admin-nav-text">{{ trans('lang.Chat') }}</span></a>
+                    </li>
+                    <li class="@if (str_contains(request()->url(), 'language')) active @endif">
                         <a href="javascript:;"><i class="fas fa-globe"></i><span
                                 class="admin-nav-text">{{ trans('lang.language') }}</span></a>
                         <ul class="sub-menu">

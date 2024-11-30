@@ -20,6 +20,7 @@ class CareerResource extends ResourceCollection
     public function toArray(Request $request)
     {
         return $this->collection->map(function ($career) {
+            
             return [
                 'id' => $career->id,
                 'title' => $career->title,
@@ -48,8 +49,8 @@ class CareerResource extends ResourceCollection
                 'total' => $career->total,
                 'province' => $career->province,
                 'district' => $career->district,
-                'updated_at' => $career->updated_at->diffForHumans(),
-                'created_at' => $career->created_at->toDateString(),
+                'updated_at' => $career?->updated_at?->diffForHumans() ?? '',
+                'created_at' => $career?->created_at?->toDateString(),
                 'expiration_day' => $career->expiration_day,
                 'gender' => GenderEnum::getDescription($career->gender),
                 'qualification' => QualificationEnum::getDescription($career->qualification),

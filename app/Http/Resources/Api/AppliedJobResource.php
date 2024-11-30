@@ -18,7 +18,7 @@ class AppliedJobResource extends ResourceCollection
         return $this->collection->map(function ($item) {
             $career = $item->career;
             return [
-                'id' => $item->id,
+                'id' => $career->id,
                 'career' => $career,
                 'company' => $career->company,
                 'status' => $item->status,
