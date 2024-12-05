@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckBannedUser;
 use App\Http\Middleware\Localization;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;

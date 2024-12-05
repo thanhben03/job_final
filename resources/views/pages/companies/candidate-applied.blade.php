@@ -362,12 +362,9 @@
 
                 },
                 error: function(xhr) {
-                    if (xhr.status === 409) {
-                        $('#error-message').show().text(xhr.responseJSON.error);
-                        $('#success-message').hide(); // Ẩn thông báo thành công nếu có
-                    } else {
-                        alert('Đã có lỗi xảy ra. Vui lòng thử lại!');
-                    }
+
+                    alert(xhr.responseJSON.message);
+
                     $("#loading").toggleClass('d-none')
 
                 }

@@ -1,6 +1,54 @@
 @extends('layouts.app')
+@push('css')
+    <link rel="stylesheet" href="/richtexteditor/rte_theme_default.css" />
+    <style>
+        .richtexteditor.rte-skin-default.rte-modern {
+            width: unset !important;
+            min-width: unset !important;
+        }
+        /* Định nghĩa overlay */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Hiển thị trên tất cả các thành phần khác */
+            visibility: hidden; /* Ẩn overlay mặc định */
+        }
 
+        /* Định nghĩa icon loading */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Hiệu ứng xoay */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Hiển thị overlay khi cần */
+        #overlay.active {
+            visibility: visible;
+        }
+
+    </style>
+@endpush
 @section('content')
+    <div id="overlay">
+        <div class="spinner"></div>
+    </div>
     <!-- Modal Report Career-->
     <div class="modal fade" id="modal-report-career" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -14,6 +62,8 @@
                     <input hidden id="career-id" value="" />
                     <textarea id="report-content" placeholder="{{ trans('lang.Content') }}" class="form-control" cols="30"
                         rows="20"></textarea>
+                    <label for="fileInput" class="form-label">Upload Image:</label>
+                    <input class="form-control" type="file" id="fileInput" multiple>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
@@ -102,8 +152,16 @@
                                                             class="btn-report">{{ trans('lang.report') }}</span>
                                                     </div>
                                                 </h4>
-                                                <p class="twm-job-address"><i
-                                                        class="feather-map-pin"></i>{{ $career['address'] }}</p>
+                                                <p class="twm-job-address">
+                                                    <i class="feather-map-pin"></i>
+                                                    {{ $career['address'] }}
+                                                </p>
+                                                <p>
+                                                    <strong>
+                                                        {{trans('lang.company')}}:
+                                                        {{$career['company']->company_name}}
+                                                    </strong>
+                                                </p>
                                                 <div class="twm-job-self-mid">
                                                     <div class="twm-job-self-mid-left">
                                                         <a href="https://themeforest.net/user/thewebmax/portfolio"
@@ -285,32 +343,32 @@
                                 <div class="twm-tabs-style-1">
 
                                     <div class="row">
-                                        <div class="col-xl-12 col-lg-12 col-md-12">
-                                            <div class="form-group">
-                                                <label>{{ trans('lang.Your Name') }}</label>
-                                                <div class="ls-inputicon-box">
-                                                    <input class="form-control" readonly name="company_name"
-                                                        type="text" value="{{ auth()->user()->fullname }}">
-                                                    <i class="fs-input-icon fa fa-user "></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-12 col-lg-12 col-md-12">
-                                            <div class="form-group">
-                                                <label>{{ trans('lang.Email Address') }}</label>
-                                                <div class="ls-inputicon-box">
-                                                    <input class="form-control" name="company_Email" readonly
-                                                        type="email" value="{{ auth()->user()->email }}">
-                                                    <i class="fs-input-icon fas fa-at"></i>
-                                                </div>
-                                            </div>
-                                        </div>
+{{--                                        <div class="col-xl-12 col-lg-12 col-md-12">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <label>{{ trans('lang.Your Name') }}</label>--}}
+{{--                                                <div class="ls-inputicon-box">--}}
+{{--                                                    <input class="form-control" readonly name="company_name"--}}
+{{--                                                        type="text" value="{{ auth()->user()->fullname }}">--}}
+{{--                                                    <i class="fs-input-icon fa fa-user "></i>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-xl-12 col-lg-12 col-md-12">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <label>{{ trans('lang.Email Address') }}</label>--}}
+{{--                                                <div class="ls-inputicon-box">--}}
+{{--                                                    <input class="form-control" name="company_Email" readonly--}}
+{{--                                                        type="email" value="{{ auth()->user()->email }}">--}}
+{{--                                                    <i class="fs-input-icon fas fa-at"></i>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
                                         <input type="text" hidden id="current_cv_id">
                                         <div class="col-lg-12 col-md-12">
                                             <div class="form-group">
                                                 <input checked value="upload_cv" name="type_cv" type="radio">
-                                                <label>Upload Resume</label>
+                                                <label>{{trans('lang.Upload Resume')}}</label>
                                                 <form id="uploadForm" method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="mb-3">
@@ -318,21 +376,16 @@
                                                             name="file">
                                                     </div>
                                                     <button type="submit" id="btn-upload"
-                                                        class="btn btn-primary">Upload</button>
+                                                        class="btn btn-primary">{{trans('lang.upload')}}</button>
                                                 </form>
-                                                <small>If you do not have a resume document, you may write your brief
-                                                    professional profile <a class="site-text-primary"
-                                                        href="javascript:void(0);">here</a></small>
                                             </div>
 
 
                                         </div>
 
                                         <div class="col-lg-12 col-md-12">
-                                            <div class="form-group">
-                                                <input value="available_cv" name="type_cv" type="radio">
-                                                <label>CV Available</label>
-                                            </div>
+                                            <input value="available_cv" name="type_cv" type="radio">
+                                            <label>{{trans('lang.CV Available')}}</label>
 
                                             <select id="cv_id" class="form-select mb-3"
                                                 aria-label="Default select example">
@@ -343,12 +396,51 @@
                                             </select>
 
                                         </div>
+                                        <div class="col-lg-12 col-md-12 mb-2">
+                                            <div class="container1">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        {{trans('lang.Letter Introduction')}}
+                                                        <button id="btnGetLetter" onclick="handleIntroduction()" style="font-size: 13px; color: white" class="btn btn-info">
+                                                            {{trans('lang.Create auto')}}
+                                                            <img class="d-none" id="loading" src="/images/loading.svg" width="18" alt="">
+                                                        </button>
+
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <form>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="introduction" id="no-introduction" value="option1" checked>
+                                                                <label class="form-check-label" for="no-introduction">
+                                                                    {{trans('lang.Not Use')}}
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="introduction" id="custom-introduction" value="option2">
+                                                                <label class="form-check-label" for="custom-introduction">
+                                                                    {{trans('lang.Write Content')}}
+                                                                </label>
+                                                            </div>
+                                                            <div id="custom-introduction-content" style="display: none;">
+                                                                <textarea class="form-control" id="custom-introduction-text" rows="5" placeholder="{{trans('lang.Enter self-introduction content')}}"></textarea>
+                                                            </div>
+                                                            <div id="no-use-introduction">
+                                                                <p>{{trans('lang.The system will send a notification email to the employer')}}</p>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
 
                                         <div class="col-xl-12 col-lg-12 col-md-12">
                                             <div class="text-left">
                                                 <button type="button" id="btn-send-application"
                                                     class="site-button">{{ trans('lang.Send Application') }}</button>
+
                                             </div>
+
                                         </div>
 
 
@@ -368,8 +460,30 @@
 @endsection
 
 @push('js')
+    <script type="text/javascript" src="/richtexteditor/rte.js"></script>
+    <script type="text/javascript" src='/richtexteditor/plugins/all_plugins.js'></script>
     <script>
+        let selectedCvId = null;
+        let editor1 = new RichTextEditor("#custom-introduction-text");
+
         $(document).ready(function() {
+
+            const introductionRadio = document.getElementsByName('introduction');
+            const customIntroductionContent = document.getElementById('custom-introduction-content');
+            const noUseIntroductionContent = document.getElementById('no-use-introduction');
+
+            introductionRadio.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (radio.value === 'option2') {
+                        customIntroductionContent.style.display = 'block';
+                        noUseIntroductionContent.style.display = 'none';
+                    } else {
+                        customIntroductionContent.style.display = 'none';
+                        noUseIntroductionContent.style.display = 'block';
+                    }
+                });
+            });
+
             let typeChooseCV = 'upload_cv'
             $('#uploadForm').on('submit', function(e) {
                 e.preventDefault();
@@ -417,6 +531,7 @@
                     return confirm('This job is being flagged. Are you sure you want to continue?')
                 }
                 let chooseTypeCV = $('input[name="type_cv"]:checked')
+                let letter = $('input[name="introduction"]:checked').val() === 'option1' ? '' : $("#custom-introduction-text").val();
 
                 $.ajax({
                     type: 'POST',
@@ -427,15 +542,24 @@
                         "job_id": {{ $career['id'] }},
                         'cv_id': chooseTypeCV.val() === 'upload_cv' ? $("#current_cv_id").val() : $(
                             "#cv_id").val(),
+                        'letter': letter,
                         "_token": '{{ csrf_token() }}'
+                    },
+                    beforeSend: function () {
+                        document.getElementById('overlay').classList.add('active');
                     },
                     success: function(msg) {
                         $("#apply_job_popup").modal('toggle');
                         toastr.success('Apply Success !', 'Notification')
-
+                        document.getElementById('overlay').classList.remove('active');
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1200)
                     },
                     error: function(xhr) {
                         toastr.error(xhr.responseJSON.msg, 'Error !')
+                        document.getElementById('overlay').classList.remove('active');
+
                     }
                 });
             })
@@ -443,29 +567,95 @@
         })
 
 
+        function handleIntroduction() {
+            let contentIntro = $("#custom-introduction-text").val();
+            console.log(contentIntro.length)
+
+            if (contentIntro.length < 18) {
+                let uploadCVType = $('input[name="type_cv"]:checked').val() === 'upload_cv';
+                console.log($("#current_cv_id").val())
+                console.log(uploadCVType)
+                // type upload cv
+                cv_id = uploadCVType ? $("#current_cv_id").val() : $("#cv_id").val();
+
+                if (cv_id == 'Select your CV' || cv_id == '') {
+                    alert('{{trans('lang.Please select at least 1 CV')}}')
+                    return;
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/test",
+                    data: {
+                        'cv_id': cv_id
+                    },
+                    beforeSend: function () {
+                        $("#btn-send-application").prop('disabled', true);
+                        $("#loading").toggleClass('d-none');
+                    },
+                    success: function (res) {
+                        editor1.insertHTML(res)
+                        editor1.collapse(false)
+                        $("#btn-send-application").prop('disabled', false);
+
+                        $("#loading").toggleClass('d-none');
+                        toastr.success('Success !');
+                    },
+                    error: function (xhr) {
+                        $("#loading").toggleClass('d-none');
+                        toastr.error('Error !');
+                        $("#btn-send-application").prop('disabled', false);
+
+
+                    }
+
+                })
+            } else {
+                alert('{{trans('lang.Delete old content before starting to write new content')}}')
+            }
+
+
+        }
+
         function reportCareer() {
+            var formData = new FormData();
+
+            // Thêm các file vào FormData
+            let filesArr = $('#fileInput')[0].files;
+            for (let i = 0; i < filesArr.length; i++) {
+                formData.append('files[]', filesArr[i]);
+            }
+
+            // Thêm các trường khác vào FormData
+            formData.append('_token', '{{ csrf_token() }}');
+            formData.append('career_id', $("#career-id").val());
+            formData.append('report_content', $("#report-content").val());
+
+            // Gửi request AJAX
             $.ajax({
                 type: 'POST',
                 url: '{{ route('job.report') }}',
-                data: {
-                    '_token': '{{ csrf_token() }}',
-                    'career_id': $("#career-id").val(),
-                    'report_content': $("#report-content").val(),
-                },
-                success: function(res) {
-                    toastr.success('Reported Successfully !', 'Notification !')
-                    $("#btn-send-report").prop('disabled', true)
-                    $("#modal-report-career").modal('toggle')
-
+                data: formData,
+                processData: false, // Không xử lý dữ liệu FormData
+                contentType: false, // Không thiết lập Content-Type mặc định
+                beforeSend: function () {
+                    document.getElementById('overlay').classList.add('active');
 
                 },
-                error: function(xhr) {
-                    toastr.error(xhr.responseJSON.msg, 'Notification !')
-                    $("#btn-send-report").prop('disabled', true)
+                success: function (res) {
+                    toastr.success('Reported Successfully!', 'Notification!');
+                    $("#btn-send-report").prop('disabled', true);
+                    $("#modal-report-career").modal('toggle');
+                    document.getElementById('overlay').classList.remove('active');
+
+                },
+                error: function (xhr) {
+                    toastr.error(xhr.responseJSON.message, 'Notification!');
+                    document.getElementById('overlay').classList.remove('active');
+
                 }
-
-            })
+            });
         }
+
 
         function showModalReportCareer(careerId) {
 
@@ -473,5 +663,6 @@
             $("#btn-send-report").prop("disabled", false)
             $("#career-id").val(careerId)
         }
+
     </script>
 @endpush

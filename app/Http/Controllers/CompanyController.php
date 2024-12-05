@@ -9,6 +9,7 @@ use App\Enums\QualificationEnum;
 use App\Enums\StatusCV;
 use App\Enums\WorkTypeEnum;
 use App\Events\NotificationEvent;
+use App\Http\Middleware\CheckBannerCompany;
 use App\Http\Requests\CompanyUpdateRequest;
 use App\Http\Resources\CandidateAppliedResource;
 use App\Http\Resources\CareerResource;
@@ -44,6 +45,8 @@ class CompanyController extends Controller
     ) {
         parent::__construct();
         $this->service = $careerService;
+        $this->middleware(CheckBannerCompany::class);
+
     }
 
     public function accountNotActive () {
@@ -285,6 +288,9 @@ class CompanyController extends Controller
         $code = rand(100000, 999999);
         try {
             $userExist  = User::query()->find($data['candidate_id']);
+            if ($userExist->ban) {
+                throw new \Exception('This user is already banned');
+            }
             $body = [
                 'title' => $data['title'],
                 'content' => $data['content'],

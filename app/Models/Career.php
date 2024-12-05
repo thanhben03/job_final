@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Career extends Model
 {
@@ -78,6 +79,11 @@ class Career extends Model
     public function reported()
     {
         return $this->hasMany(ReportedCareer::class, 'career_id', 'id');
+    }
+
+    public function spam()
+    {
+        return $this->hasMany(ReportedCareer::class, 'career_id', 'id')->where('status', 1);
     }
 
     public function category()

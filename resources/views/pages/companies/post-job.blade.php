@@ -174,10 +174,10 @@
                                     <label>District</label>
                                     <div class="ls-inputicon-box">
                                         <select
-                                                class="wt-select-box selectpicker"
+                                                class="form-control"
                                                 id="district"
-                                                data-live-search="true" title=""
-                                                name="district_id" data-bv-field="size">
+
+                                                name="district_id">
 
                                         </select>
                                         <i class="fs-input-icon fa fa-map-marker-alt"></i>
@@ -387,9 +387,10 @@
                         html +=
                             `<option value="${e.code}">${e.name}</option>`
                     })
-
+                    while (districtEle.hasChildNodes()) {
+                        districtEle.removeChild(districtEle.firstChild);
+                    }
                     districtEle.innerHTML = html;
-                    $("#district").selectpicker('refresh')
                 }
             });
         }

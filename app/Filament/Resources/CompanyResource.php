@@ -4,21 +4,26 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CompanyResource\Pages;
 use App\Filament\Resources\CompanyResource\RelationManagers;
+use App\Mail\BanUserMail;
+use App\Mail\UnBanUserMail;
 use App\Models\Company;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Mail;
 
 class CompanyResource extends Resource
 {
     protected static ?string $model = Company::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     public static function form(Form $form): Form
     {
@@ -111,7 +116,61 @@ class CompanyResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\Action::make('Ban User')
+                        ->icon('heroicon-o-lock-closed')
+                        ->label('Ban User')
+                        ->visible(fn ($record) => !$record->ban)
+                        ->form([
+                            Forms\Components\Textarea::make('reason')
+                                ->required()
+                                ->maxLength(255),
+                        ])
+                        ->action(function (?Model $record, array $data) {
+                            if ($record->ban) {
+                                Notification::make()
+                                    ->title('You have already ban this user')
+                                    ->warning()
+                                    ->send();
+                            } else {
+                                $dataMail = [
+                                    'candidate_name' => $record->company_name,
+                                    'reason' => $data['reason']
+                                ];
+                                $record->ban = 1;
+                                $record->save();
+
+                                Mail::to($record->email)->send(new BanUserMail($dataMail));
+
+                                Notification::make()
+                                    ->title('Success !')
+                                    ->success()
+                                    ->send();
+
+                            }
+                        }),
+                    Tables\Actions\Action::make('Unlock User')
+                        ->icon('heroicon-o-lock-open')
+                        ->label('Unlock User')
+                        ->visible(fn ($record) => $record->ban)
+                        ->action(function (?Model $record, array $data) {
+                            $record->ban = 0;
+                            $record->save();
+
+                            $dataMail = [
+                                'candidate_name' => $record->company_name
+                            ];
+                            Mail::to($record->email)->send(new UnBanUserMail($dataMail));
+
+                            Notification::make()
+                                ->title('You have been unlocked for this user')
+                                ->success()
+                                ->send();
+                        })
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

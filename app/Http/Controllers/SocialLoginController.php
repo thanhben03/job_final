@@ -44,6 +44,9 @@ class SocialLoginController extends Controller
                 Mail::to($user->email)->send(new TestSendMail($title, $password));
 
             } else {
+                if ($exist->ban) {
+                    return redirect()->route('home');
+                }
                 Auth::login($exist);
 
             }

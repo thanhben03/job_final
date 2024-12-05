@@ -7,6 +7,7 @@ use App\Enums\JobExpEnum;
 use App\Enums\LevelEnum;
 use App\Enums\QualificationEnum;
 use App\Enums\WorkTypeEnum;
+use App\Filament\Clusters\CareerCluster;
 use App\Filament\Resources\CareerResource\Pages;
 use App\Filament\Resources\CareerResource\RelationManagers;
 use App\Models\Career;
@@ -14,24 +15,35 @@ use App\Models\Category;
 use App\Models\Company;
 use App\Models\District;
 use App\Models\Province;
+use Carbon\Carbon;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Notifications\Notification;
+use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use PhpParser\Builder;
 
 class CareerResource extends Resource
 {
     protected static ?string $model = Career::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
+    protected static ?string $cluster = CareerCluster::class;
+    protected static ?string $navigationLabel = 'Career Management';
+
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function form(Form $form): Form
     {
@@ -129,18 +141,31 @@ class CareerResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('category.name')
-                    ->label('Chuyên mục')
+                    ->label('Category')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\SelectColumn::make('status')
                     ->label('Published')
-                    ->options([0 => 'Pending', 1 => 'Active'])
+                    ->options([0 => 'Pending', 1 => 'Active', 2 => 'Decline'])
                     ->sortable(),
+                Tables\Columns\SelectColumn::make('deleted_at')
+                    ->label('Trashed')
+                    ->options([
+                        null => 'Restored',
+                        1 => 'Trashed',
+                    ])
+                    ->extraAttributes(['style' => 'width: max-content'])
+                    ->afterStateUpdated(function ($state, $record) {
+                        if ($state === null) {
+                            // Logic để khôi phục
+                            $record->restore(); // Nếu model có SoftDeletes
+                        } else {
+                            // Logic để xóa mềm và cập nhật ngày giờ
+                            $record->update(['deleted_at' => 1]);
+                        }
+                    })
+                    ,
                 Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('experience')
-                    ->formatStateUsing(fn($state) => JobExpEnum::getLabels()[$state] ?? 'Unknown') // Format based on enum values
-
                     ->searchable(),
                 Tables\Columns\TextColumn::make('level')
                     ->formatStateUsing(fn($state) => LevelEnum::getLabels()[$state] ?? 'Unknown') // Format based on enum values
@@ -148,15 +173,9 @@ class CareerResource extends Resource
                 Tables\Columns\TextColumn::make('employee')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('working_time')
-                    ->label('Working Time')
-                    ->formatStateUsing(fn($state) => WorkTypeEnum::getLabels()[$state] ?? 'Unknown') // Format based on enum values
-                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('expiration_day')
                     ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('qualification')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('company.company_name')
                     ->numeric()
@@ -171,10 +190,10 @@ class CareerResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('reported_count')
-                    ->label('Reported Count')
-                    ->counts('reported') // Use the counts method for relationship counting
-                    ->sortable(),
+//                TextColumn::make('spam_count')
+//                    ->label('Reported Count')
+//                    ->counts('spam') // Use the counts method for relationship counting
+//                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
@@ -190,7 +209,58 @@ class CareerResource extends Resource
                 ->options(fn(Get $get): Collection => Province::query()->pluck('name', 'code')),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+                ->button()
+                ->label('Actions')
+                ->color('info'),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('decline_job')
+                        ->label('Decline')
+                        ->form([
+                            Forms\Components\Textarea::make('reason')
+                                ->required()
+                                ->maxLength(255),
+                        ])
+                        ->action(function (?Model $record, array $data) {
+                            $record->status = 2;
+                            $record->reason = $data['reason'];
+                            $record->save();
+
+                            Notification::make()
+                                ->title('Success !')
+                                ->success()
+                                ->send();
+                        })
+                    ,
+                    Tables\Actions\Action::make('approve_job')
+                        ->label('Approve')
+                        ->action(function (?Model $record, array $data) {
+                            $record->status = 1;
+                            $record->save();
+                            Notification::make()
+                                ->title('Success !')
+                                ->success()
+                                ->send();
+                        })
+                    ,
+                    Tables\Actions\Action::make('pending_job')
+                        ->label('Pending')
+                        ->action(function (?Model $record, array $data) {
+                            $record->status = 0;
+                            $record->save();
+                            Notification::make()
+                                ->title('Success !')
+                                ->success()
+                                ->send();
+                        })
+                    ,
+                ])
+                ->button()
+                ->color('success')
+                ->label('Approve')
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -59,4 +59,18 @@ class OpenAIService
         return $content;
     }
 
+    public function analyze($content)
+    {
+        // Gửi nội dung tới OpenAI
+        $response = $this->client->chat()->create([
+            'model' => 'gpt-4-turbo',
+            'messages' => "Phân tích nội dung CV:\n{$content}",
+            'max_tokens' => 1000,
+        ]);
+
+        return $response;
+
+        // Xóa file sau khi xử lý
+    }
+
 }

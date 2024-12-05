@@ -2,6 +2,24 @@
 @extends('layouts.company')
 
 @section('content')
+    <!-- Modal View Reason -->
+    <div class="modal" id="modal-view-reason" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reason Decline Job</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="reason"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Match JOB -->
     <div class="modal fade" id="modal-math-candidate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -45,7 +63,7 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Edit Appointment-->
     <div class="modal fade" id="modal-edit-appoinment" tabindex="-1" aria-labelledby="editAppointmentModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg modal-fullscreen-sm-down">
             <div class="modal-content">
@@ -63,8 +81,32 @@
                             <label for="appointment-time" class="form-label">{{ trans('lang.Select New Time') }}</label>
                             <input type="time" class="form-control" id="appointment-time" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="appointment-time" class="form-label">{{ trans('lang.Reason') }}</label>
+                            <textarea class="form-control" id="appointment-reason" ></textarea>
+                        </div>
                         <button type="submit" class="btn btn-primary">{{ trans('lang.save') }}</button>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cancle Appointment-->
+    <div class="modal fade" id="modal-cancel-appoinment" tabindex="-1" aria-labelledby="editAppointmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-fullscreen-sm-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editAppointmentModalLabel">{{ trans('lang.Cancle Appointment') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" hidden id="appointment-id-cancel">
+                    <div class="mb-3">
+                        <label for="appointment-time" class="form-label">{{ trans('lang.Reason') }}</label>
+                        <textarea style="height: 125px" class="form-control" id="cancel-reason" ></textarea>
+                    </div>
+                    <button onclick="cancelAppointment()" type="button" class="btn btn-primary">{{ trans('lang.save') }}</button>
                 </div>
             </div>
         </div>
@@ -138,9 +180,25 @@
                                     </td>
                                     <td>
                                         <div class="twm-jobs-category">
-                                            <span class="{{$career['published'] ? 'twm-bg-green' : 'twm-bg-golden'}}">
-                                                {{$career['published'] ? trans('lang.active') : trans('lang.pending') }}
-                                            </span>
+                                            @switch($career['published'])
+                                                @case(0)
+                                                    <span class="twm-bg-golden">
+                                                        {{trans('lang.pending')}}
+                                                    </span>
+                                                @break
+                                                @case(1)
+                                                    <span class="twm-bg-green">
+                                                        {{trans('lang.active')}}
+                                                    </span>
+                                                @break
+                                                @case(2)
+                                                    <span class="twm-bg-red">
+                                                        {{trans('lang.Decline')}}
+                                                    </span>
+                                                    <p onclick="viewReason({{$career['id']}})" style="text-decoration: underline; font-size: 13px">>>Xem lí do<<</p>
+                                                    @break
+                                            @endswitch
+
                                         </div>
                                     </td>
                                     <td>
@@ -161,20 +219,24 @@
                                     <td>
                                         <div class="twm-table-controls">
                                             <ul class="twm-DT-controls-icon list-unstyled">
-                                                <li>
-                                                    <button onclick="matchWithCandidate({{$career['id']}}, 'match_cv')" title="View profile" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top">
-                                                        <span class="fa fa-eye"></span>
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <a href="{{route('company.show.edit-job', $career['id'])}}">
-                                                        <button title="Edit" data-bs-toggle="tooltip"
+                                                @if($career['published'] != 2)
+                                                    <li>
+                                                        <button onclick="matchWithCandidate({{$career['id']}}, 'match_cv')" title="View profile" data-bs-toggle="tooltip"
                                                                 data-bs-placement="top">
-                                                            <span class="far fa-edit"></span>
+                                                            <span class="fa fa-eye"></span>
                                                         </button>
-                                                    </a>
-                                                </li>
+                                                    </li>
+                                                @endif
+                                                @if($career['published'] != 2)
+                                                    <li>
+                                                        <a href="{{route('company.show.edit-job', $career['id'])}}">
+                                                            <button title="Edit" data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top">
+                                                                <span class="far fa-edit"></span>
+                                                            </button>
+                                                        </a>
+                                                    </li>
+                                                @endif
                                                 <li>
                                                     <button onclick="deleteJob({{$career['id']}})" title="Delete" data-bs-toggle="tooltip"
                                                             data-bs-placement="top">
@@ -338,9 +400,10 @@
                             <small class="${statusClass}">Trạng thái: ${appointment.status}</small><br>
                             <small class="">Ghi chú: ${appointment.note}</small>
                         </div>
-                        ${appointment.status !== 'rejected' ? `
+                        ${(appointment.status !== 'rejected' && appointment.status !== 'cancel') ? `
                         <div class="d-flex flex-column flex-md-row gap-2 mt-2 mt-md-0">
                             <button class="btn btn-outline-secondary btn-sm" onclick="openEditModal(${appointment.id}, '${appointment.date}', '${appointment.time}')">Chỉnh Sửa</button>
+                            <button class="btn btn-outline-primary btn-sm" onclick="openCancelAppointment(${appointment.id})">Hủy lịch</button>
                         </div>
                     ` : ''}
                     </li>
@@ -358,12 +421,47 @@
             $('#edit-appointment-form').data('appointment-id', appointmentId);
         }
 
+        function openCancelAppointment(appointmentId) {
+            $('#modal-cancel-appoinment').modal('show');
+
+            // Lưu lại ID của cuộc hẹn hiện tại vào form
+            $('#appointment-id-cancel').val(appointmentId)
+        }
+
+        function cancelAppointment() {
+            let cancelReason = $("#cancel-reason").val();
+            let id = $("#appointment-id-cancel").val();
+
+            if (cancelReason === '') {
+                alert('{{trans('lang.You must enter a reason for canceling this appointment')}}')
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/appointments/cancel",
+                data: {
+                    id: id,
+                    reason: cancelReason
+                },
+                success: function (res) {
+                    alert('Success !')
+                    $("#modal-cancel-appoinment").modal('toggle')
+                },
+                error: function (xhr) {
+                    alert(xhr.responseJSON.error)
+                }
+            })
+
+        }
+
         $('#edit-appointment-form').on('submit', function(event) {
             event.preventDefault();
 
             const appointmentId = $(this).data('appointment-id');
             const newDate = $('#appointment-date').val();
             const newTime = $('#appointment-time').val();
+            const reason = $("#appointment-reason").val();
 
             $.ajax({
                 url: `/appointments/${appointmentId}/update`,
@@ -371,7 +469,8 @@
                 data: {
                     _token: $('meta[name="csrf-token"]').attr('content'),
                     date: newDate,
-                    time: newTime
+                    time: newTime,
+                    reason: reason
                 },
                 success: function(response) {
                     alert('Ngày và giờ cuộc hẹn đã được cập nhật thành công!');
@@ -383,6 +482,17 @@
                 }
             });
         });
+
+        function viewReason(career_id) {
+            $.ajax({
+                type: "get",
+                url: "/job/get-reason-decline/" + career_id,
+                success: function (res) {
+                    $("#reason").text(res)
+                    $("#modal-view-reason").modal('toggle')
+                }
+            })
+        }
 
 
 

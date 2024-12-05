@@ -15,8 +15,8 @@
                                 <label>{{__('lang.category')}}</label>
                                 <select class="wt-search-bar-select selectpicker"  data-live-search="true" title="" id="select-skill" data-bv-field="size">
                                     <option disabled selected value="">Select Category</option>
-                                    @foreach($skills as $skill)
-                                        <option value="{{$skill->name}}">{{$skill->name}}</option>
+                                    @foreach($categoriesCollection as $category)
+                                        <option value="{{$category->slug}}">{{trans('category.name.'.$category->trans_key)}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -154,7 +154,7 @@
 
             // Kiểm tra và thêm tham số 'skills' nếu có giá trị
             if (skills) {
-                queryParams.push(`skills=${encodeURIComponent(skills)}`);
+                queryParams.push(`category=${encodeURIComponent(skills)}`);
             }
 
             // Kiểm tra và thêm tham số 'locations' nếu có giá trị

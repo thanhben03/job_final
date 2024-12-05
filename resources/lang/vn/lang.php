@@ -185,6 +185,20 @@ return [
     'Hire Me' => 'Tuyển Dụng',
     'Content' => 'Nội dung',
     'Chat' => 'Tin nhắn',
-    'Province' => 'Tỉnh'
+    'Province' => 'Tỉnh',
+    'Please select at least 1 CV' => 'Vui lòng chọn ít nhất 1 cv',
+    'Letter Introduction' => 'Thư Giới Thiệu',
+    'Create auto' => 'Tạo tự động',
+    'The system will send a notification email to the employer' => 'Hệ thống sẽ gửi mail thông báo đến nhà tuyển dụng, nội dung mail bao gồm thông tin liên hệ và hồ sơ đính kèm của bạn.',
+    'Not Use' => 'Không Sử Dụng',
+    'Write Content' => 'Viết Nội Dung',
+    'Enter self-introduction content' => 'Nhập nội dung tự giới thiệu',
+    'Upload Resume' => 'Tải Lên Hồ Sơ',
+    'CV Available' => 'Hồ Sơ Có Sẵn',
+    'Delete old content before starting to write new content' => 'Xóa nội dung cũ trước khi bắt đầu viết nội dung mới',
+    'Reason' => 'Lý do',
+    'Decline' => 'Bị từ chối',
+    'Cancle Appointment' => 'Hủy lịch hẹn',
+    'You must enter a reason for canceling this appointment' => 'Bạn phải nhập lý do hủy lịch hẹn này'
 
 ];

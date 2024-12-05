@@ -3,7 +3,7 @@
 
 @section('content')
     <!--Banner Start-->
-    <x-banner :skills="$skills" :provinces="$provinces" />
+    <x-banner :categoriesCollection="$categoriesCollection" :provinces="$provinces" />
     <!--Banner End-->
 
     <!-- SECTION 1 -->

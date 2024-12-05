@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateJobRequest;
 use App\Http\Resources\CandidateResource;
 use App\Http\Resources\CareerDetailResource;
 use App\Http\Resources\CareerResource;
+use App\Mail\ApplicantNotification;
 use App\Models\Career;
 use App\Models\Category;
 use App\Models\CurriculumVitae;
@@ -21,11 +22,13 @@ use App\Models\Skill;
 use App\Models\UserCareer;
 use App\Services\Career\CareerServiceInterface;
 use App\Services\Skill\SkillServiceInterface;
+use Carbon\Carbon;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Contracts\Queue\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -41,7 +44,7 @@ class JobController extends Controller
         $this->service = $careerService;
         $this->skillService = $skillService;
 
-        $this->middleware(UserAuthenticated::class)->except(['index', 'store', 'update', 'matchWithCandidate']);
+        $this->middleware(UserAuthenticated::class)->except(['index', 'store', 'update', 'matchWithCandidate', 'getReasonDecline']);
 
     }
 
@@ -106,7 +109,10 @@ class JobController extends Controller
 //            'category_id' => $category->id,
 //            'status' => 1
 //        ]);
-        $careers = $careers->where('status', 1)->paginate(10);
+        $careers = $careers->where([
+            'status' => 1,
+            'deleted_at' => null
+        ])->paginate(10);
         $data = CareerResource::make($careers);
         $skills = $this->skillService->getAll();
         $provinces = Province::query()->get(['code', 'name']);
@@ -128,7 +134,15 @@ class JobController extends Controller
     {
 
         $career = $this->service->getQueryBuilderWithRelations(['company', 'skills']);
-        $career = $career->where('slug', $slug)->get();
+        $career = $career
+            ->where([
+                'slug' => $slug,
+                'deleted_at' => null
+            ])->get();
+
+        if ($career->count() <= 0) {
+            return redirect()->back();
+        }
         $career = CareerResource::make($career)->resolve();
         $isApplied  = UserCareer::query()->where([
             'career_id' => $career[0]['id'],
@@ -146,8 +160,14 @@ class JobController extends Controller
     {
         $data = $request->validated();
         $today = now();
-
         $job = Career::query()->findOrFail($data['job_id']);
+
+        if ($job->deleted_at != null || $job->status != 1) {
+            return response()->json([
+                'msg' => 'Something went wrong with this job!'
+            ], 500);
+        }
+
 
         // Neu thoi gian ung tuyen da het
         if ($today->greaterThan($job->expiration_day)) {
@@ -169,6 +189,19 @@ class JobController extends Controller
             'career_id' => $data['job_id'],
             'cv_id' => $data['cv_id'],
         ]);
+
+        $cv = CurriculumVitae::query()->findOrFail($data['cv_id']);
+        $applicantInfo = [
+            'name' => auth()->user()->fullname,
+            'phone' => auth()->user()->phone,
+            'email' => auth()->user()->email,
+            'letter' => $data['letter']
+        ];
+
+        // Gửi email
+        Mail::to($job->company->email)->send(
+            new ApplicantNotification($applicantInfo, storage_path("app/public/uploads/".$cv->path))
+        );
     }
 
     public function store(PostJobRequest $request)
@@ -224,10 +257,17 @@ class JobController extends Controller
     public function reportJob(Request $request)
     {
         $request->validate([
-            'career_id' => 'required|exists:careers,id',
-            'content_report' => 'nullable'
+            'career_id' => 'required',
+            'report_content' => 'nullable',
+            'files' => 'required|array', // Xác định "images" là một mảng
+            'files.*' => 'mimes:jpg,jpeg,png,gif,webp|max:2048', // Mỗi phần tử trong mảng phải là hình ảnh
+        ], [
+            'files.*.mimes' => 'Only accept files with the following formats: jpg, jpeg, png, gif, or webp.', // Custom message cho từng file
         ]);
         try {
+            if (strlen($request->report_content) > 100) {
+                throw new \Exception('Content must not exceed 100 characters');
+            }
             $existJob = Career::query()->findOrFail($request->input('career_id'));
             $existReport = ReportedCareer::query()->where([
                 'career_id' => $existJob->id,
@@ -236,22 +276,42 @@ class JobController extends Controller
             if ($existReport) {
                 throw new \Exception('You have already reported this job!');
             }
+            $uploadedFiles = [];
+            // Lưu các file lên Cloudinary hoặc lưu vào storage
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    $uploadedFileUrl = cloudinary()->upload($file->getRealPath())->getSecurePath();
+                    // Lưu thông tin URL vào mảng để trả về
+                    $uploadedFiles[] = $uploadedFileUrl;
+
+                }
+            }
 
             ReportedCareer::query()->create([
                 'career_id' => $existJob->id,
                 'user_id' => auth()->user()->id,
                 'report_content' => $request->report_content,
+                'images' => json_encode($uploadedFiles),
             ]);
         } catch (\Throwable $th) {
-            return response()->json(['msg' => $th->getMessage()], 500);
+            return response()->json(['message' => $th->getMessage()], 500);
         }
     }
 
     public function destroy($jobID)
     {
         $job = Career::query()->findOrFail($jobID);
-        $job->delete();
+        $job->deleted_at = 1;
+        $job->save();
+//        $job->delete();
 
         return response()->json(['msg' => 'Career deleted successfully']);
+    }
+
+    public function getReasonDecline($id)
+    {
+        $career = Career::query()->findOrFail($id);
+
+        return response()->json($career->reason);
     }
 }

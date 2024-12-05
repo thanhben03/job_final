@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.2",
         "bensampo/laravel-enum": "^6.11",
+        "cloudinary-labs/cloudinary-laravel": "dev-master",
         "convertapi/convertapi-php": "^3.0",
         "filament/filament": "3.x-dev",
         "google-gemini-php/laravel": "^1.0",

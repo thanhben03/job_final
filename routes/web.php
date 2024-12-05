@@ -11,6 +11,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckBannedUser;
+use App\Http\Middleware\CheckBannerCompany;
 use App\Http\Middleware\CompanyAuthenticated;
 use App\Http\Middleware\UserAuthenticated;
 use Illuminate\Contracts\Session\Session;
@@ -39,6 +40,7 @@ Route::get('/api/v1/get-district/{province_id}', [LocationController::class, 'ge
 Route::post('/job', [JobController::class, 'store'])->name('job.store');
 Route::post('/job/update-user-career', [JobController::class, 'updateUserCareer'])->name('job.update.user.career');
 Route::post('/job/report/', [JobController::class, 'reportJob'])->name('job.report');
+Route::get('/job/get-reason-decline/{id}', [JobController::class, 'getReasonDecline']);
 
 Route::post('/match-with-candidate', [JobController::class, 'matchWithCandidate'])->name('match.with.candidate');
 Route::get('/match-with-job/{id}', [CandidateController::class, 'matchWithJob'])->name('match.with.job');
@@ -54,7 +56,6 @@ Route::middleware([UserAuthenticated::class, CheckBannedUser::class])->group(fun
     Route::get('/candidates/create-cv/{id?}', [CandidateController::class, 'createCv'])->name('candidate.create-cv');
     Route::get('/candidates/store-cv', [CandidateController::class, 'storeCV'])->name('candidate.store-cv');
     Route::get('/candidates/delete-cv/{cvId}', [CandidateController::class, 'deleteCV'])->name('candidate.delete-cv');
-    Route::post('/candidates/report', [CandidateController::class, 'reportCandidate'])->name('candidate.report');
     Route::get('/candidates/review-cv', [CandidateController::class, 'showReviewCV'])->name('candidate.show.review-cv');
     Route::post('/candidates/review-cv', [CandidateController::class, 'reviewCV'])->name('candidate.review-cv');
     Route::get('/candidates/appointment', [CandidateController::class, 'showAppointment'])->name('candidate.show.appointment');
@@ -67,7 +68,7 @@ Route::post('/upload-cv', [CandidateController::class, 'uploadCv'])->name('api.f
 Route::post('/upload-avatar', [CandidateController::class, 'uploadAvatar'])->name('api.file.upload.avatar');
 Route::post('/upload-avatar-company', [CandidateController::class, 'uploadAvatarCompany'])->name('api.file.upload.avatar.company');
 
-Route::middleware(CompanyAuthenticated::class)->group(function () {
+Route::middleware([CompanyAuthenticated::class, CheckBannerCompany::class])->group(function () {
     Route::get('/companies/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
     Route::get('/companies/profile', [CompanyController::class, 'profile'])->name('company.profile');
     Route::get('/companies/post-job', [CompanyController::class, 'showPostJob'])->name('company.show.post-job');
@@ -81,6 +82,7 @@ Route::middleware(CompanyAuthenticated::class)->group(function () {
     Route::get('/companies/candidate-list', [CompanyController::class, 'showCandidateList'])->name('company.show.candidate.list');
     Route::post('/companies/send-invite-interview', [CompanyController::class, 'sendInviteInterview'])->name('company.send.invite.interview');
 
+    Route::post('/candidates/report', [CandidateController::class, 'reportCandidate'])->name('candidate.report');
     Route::get('/candidates/list', [CandidateController::class, 'showListCandidate'])->name('candidate.list');
     Route::get('/candidates/detail/{id}', [CandidateController::class, 'showDetailCandidate'])->name('candidate.detail');
 });
@@ -95,6 +97,7 @@ Route::post('/appointments', [AppointmentController::class, 'store'])->name('sto
 Route::get('/appointments/{user_id}', [AppointmentController::class, 'getAppointments']);
 Route::post('/appointments/{id}/accept', [AppointmentController::class, 'acceptAppointment']);
 Route::post('/appointments/{id}/reject', [AppointmentController::class, 'rejectAppointment']);
+Route::post('/appointments/cancel', [AppointmentController::class, 'cancel']);
 Route::post('/appointments/{appointmentId}/update', [AppointmentController::class, 'updateAppointment'])->name('appointment.update.time');
 
 Route::get('/notification/read-message', [NotificationController::class, 'readMessage'])->name('read.all.message');
@@ -123,6 +126,8 @@ Route::middleware(StartSession::class)->post('/chatbot', [OpenAIController::clas
 Route::get('/set-main-cv/{id}', [CandidateController::class, 'setMainCv'])->name('set.main.cv');
 
 Route::get('/language/{locale?}', [HomeController::class, 'setLanguage'])->name('set.language');
+
+Route::post('/test', [OpenAIController::class, 'test2']);
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/company-auth.php';

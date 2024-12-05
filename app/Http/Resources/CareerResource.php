@@ -31,6 +31,7 @@ class CareerResource extends ResourceCollection
                 'title' => $career->title,
                 'slug' => $career->slug,
                 'employee' => $career->employee,
+                'reason' => $career->reason ?? '',
                 'min_salary' => [
                     'origin' => $career->min_salary,
                     'convert' => $this->convertPriceString(intval($career->min_salary))
@@ -39,7 +40,7 @@ class CareerResource extends ResourceCollection
                     'origin' => $career->max_salary,
                     'convert' => $this->convertPriceString(intval($career->max_salary))
                 ],
-                'flag' => $career->reported->count() > 1 ? '1' : '0',
+                'flag' => $career->spam->count() > 1 ? '1' : '0',
                 'address' => $career->address,
                 'phone' => $career->phone,
                 'experience' => JobExpEnum::getDescription(intval($career->experience)),

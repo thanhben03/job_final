@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use App\Events\AppointmentAcceptEvent;
 use App\Events\AppointmentEvent;
 use App\Http\Resources\AppointmentResource;
+use App\Mail\CancelAppointmentMail;
+use App\Mail\InterviewScheduleUpdatedMail;
+use App\Mail\NewAppointmentMail;
+use App\Models\Career;
 use App\Models\Notification;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class AppointmentController extends Controller
@@ -27,9 +33,18 @@ class AppointmentController extends Controller
 
         $existingAppointment = Appointment::where('user_id', $validated['user_id'])
             ->first();
+        $user = User::query()->find($validated['user_id']);
+        if (!$user || $user->ban) {
+            return response()->json(['message' => 'Đã xảy ra lỗi với ứng viên này !'], 400);
 
+        }
+        $job = Career::query()->findOrFail($validated['career_id']);
+        if (!$job) {
+            return response()->json(['message' => 'Đã xảy ra lỗi đối với công việc này !'], 409);
+
+        }
         if ($existingAppointment) {
-            return response()->json(['error' => 'Lịch hẹn đã tồn tại cho ứng viên này!'], 409);
+            return response()->json(['message' => 'Lịch hẹn đã tồn tại cho ứng viên này!'], 409);
         }
         $appointment = Appointment::query()->create($validated);
         $message = Notification::query()->create([
@@ -37,6 +52,14 @@ class AppointmentController extends Controller
             'message' => 'Bạn có môt lịch hẹn chờ phản hồi từ ' . auth()->guard('company')->user()->company_name,
             'from_id' => auth()->guard('company')->user()->id,
         ]);
+        $data = [
+            'date_time' => $validated['date'].' '.$validated['time'],
+            'email' => auth()->guard('company')->user()->email,
+            'note' => $validated['note'],
+            'candidate_name' => $user->fullname,
+            'title' => $job->title,
+        ];
+        Mail::to($user->mail)->send(new NewAppointmentMail($data));
         broadcast(new AppointmentEvent($validated['user_id'], $message->message))->toOthers();
 
         return response()->json(['success' => 'Lịch hẹn đã được tạo thành công!']);
@@ -69,6 +92,24 @@ class AppointmentController extends Controller
         return response()->json(['success' => 'Bạn đã từ chối cuộc hẹn.']);
     }
 
+    public function cancel(Request $request)
+    {
+        $appointment = Appointment::query()->find($request->id);
+        $appointment->status = 'cancel';
+        $appointment->save();
+        $data = [
+            'date_time' => $appointment->date. ' '. $appointment->time,
+            'reason' => $request->reason,
+            'candidate_name' => $appointment->user->fullname,
+            'email' => $appointment->company->email,
+            'company_name' => $appointment->company->company_name,
+        ];
+        Mail::to($appointment->user->email)->send(
+            new CancelAppointmentMail($data)
+        );
+        return response()->json(['success' => 'Bạn đã từ chối cuộc hẹn.']);
+    }
+
     // Lấy danh sách các cuộc hẹn của ứng viên
     public function getAppointments($user_id)
     {
@@ -81,7 +122,8 @@ class AppointmentController extends Controller
     {
         $request->validate([
             'date' => 'required|date',
-            'time' => 'required'
+            'time' => 'required',
+            'reason' => 'nullable'
         ]);
 
         // Kết hợp ngày và giờ mới để kiểm tra
@@ -96,11 +138,24 @@ class AppointmentController extends Controller
         }
 
         $appointment = Appointment::find($appointmentId);
+        if ($appointment->status == 'rejected') {
+            return response()->json(['error' => 'Ứng viên đã từ chối lịch hẹn này !'], 422);
+        }
         if ($appointment) {
             $appointment->date = $request->date;
             $appointment->time = $request->time;
             $appointment->status = 'pending'; // Đặt trạng thái thành pending
             $appointment->save();
+            $data = [
+                'new_date_time' => $newDateTime,
+                'reason' => $request->reason,
+                'candidate_name' => $appointment->user->fullname,
+                'email' => $appointment->company->email,
+                'company_name' => $appointment->company->company_name,
+            ];
+            Mail::to($appointment->user->email)->send(
+                new InterviewScheduleUpdatedMail($data)
+            );
 
             return response()->json(['success' => 'Ngày và giờ cuộc hẹn đã được cập nhật.']);
         } else {

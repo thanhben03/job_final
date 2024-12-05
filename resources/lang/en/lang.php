@@ -178,6 +178,21 @@ return [
     'Hire Me' => 'Hire Me',
     'Content' => 'Content',
     'Chat' => 'Chat',
-    'Province' => 'Province'
+    'Province' => 'Province',
+    'Please select at least 1 CV' => 'Please select at least 1 CV',
+    'Letter Introduction' => 'Letter Introduction',
+    'Create auto' => 'Create auto',
+    'The system will send a notification email to the employer' => 'The system will send a notification email to the employer, the email content includes your contact information and attached resume.',
+    'Not Use' => 'Not Use',
+    'Write Content' => 'Write Content',
+    'Enter self-introduction content' => 'Enter self-introduction content',
+    'Upload Resume' => 'Upload Resume',
+    'CV Available' => 'CV Available',
+    'Delete old content before starting to write new content' => 'Delete old content before starting to write new content',
+    'Reason' => 'Reason',
+    'Decline' => 'Decline',
+    'Cancle Appointment' => 'Cancle Appointment',
+    'You must enter a reason for canceling this appointment' => 'You must enter a reason for canceling this appointment'
+
 
 ];

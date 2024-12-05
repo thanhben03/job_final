@@ -11,4 +11,13 @@ class ReportedCareer extends Model
 
     protected $guarded = [];
 
+    public function career()
+    {
+        return $this->belongsTo(Career::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
 }

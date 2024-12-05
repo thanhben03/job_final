@@ -302,6 +302,12 @@
                     },
                     success: function(res){
                         toastr.success(res.msg, 'Notification !')
+                    },
+                    error: function (xhr) {
+                        toastr.error(xhr.responseJSON.msg)
+                        iconSave.classList.toggle('far')
+                        iconSave.classList.toggle('fas')
+                        iconSave.classList.toggle('saved-job')
                     }
                 });
             }

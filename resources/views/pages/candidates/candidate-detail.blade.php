@@ -30,10 +30,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>
-                        <i style="color: red" class="fas fa-exclamation-triangle"></i>
-                        This user is being flagged!
-                    </p>
+                    @if($candidate['flag'])
+                        <p>
+                            <i style="color: red" class="fas fa-exclamation-triangle"></i>
+                            This user is being flagged!
+                        </p>
+                    @endif
                     <div class="form-group">
                         <label for="">Title: </label>
                         <input value="Thư Mời Tham Gia Phỏng Vấn !" placeholder="Enter a title for gmail !" id="title" class="form-control" type="text" name="message">
@@ -101,6 +103,8 @@
                     <div class="alert alert-info">{{trans('lang.Content Report')}}</div>
                     <input hidden id="candidate-id" value="" />
                     <textarea id="report-content" placeholder="{{trans('lang.Content')}}" class="form-control" cols="30" rows="20"></textarea>
+                    <label for="fileInput" class="form-label">Upload Image:</label>
+                    <input class="form-control" type="file" id="fileInput" multiple>
 
                 </div>
                 <div class="modal-footer">
@@ -317,27 +321,43 @@
 
 
         function reportCandidate() {
+            // Khởi tạo đối tượng FormData
+            var formData = new FormData();
+
+            // Thêm các file vào FormData
+            let filesArr = $('#fileInput')[0].files;
+            for (let i = 0; i < filesArr.length; i++) {
+                formData.append('files[]', filesArr[i]);
+            }
+
+            // Thêm các dữ liệu khác vào FormData
+            formData.append('_token', '{{ csrf_token() }}');
+            formData.append('candidate_id', $("#candidate-id").val());
+            formData.append('report_content', $("#report-content").val());
+
+            // Gửi yêu cầu AJAX
             $.ajax({
                 type: 'POST',
-                url: '{{route('candidate.report')}}',
-                data: {
-                    '_token': '{{csrf_token()}}',
-                    'candidate_id': $("#candidate-id").val(),
-                    'report_content': $("#report-content").val(),
-                },
+                url: '{{ route('candidate.report') }}',
+                data: formData,
+                processData: false,  // Không xử lý dữ liệu (để cho phép gửi file)
+                contentType: false,  // Không thay đổi content type (FormData sẽ tự động làm điều này)
                 success: function (res) {
-                    toastr.success('Reported Successfully !', 'Notification !')
-                    $("#btn-send-report").prop('disabled', true)
-                    $("#modal-report-candidate").modal('toggle')
+                    toastr.success('Reported Successfully !', 'Notification !');
+                    $("#btn-send-report").prop('disabled', true);
+                    $("#modal-report-candidate").modal('toggle');
 
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 1200)
                 },
                 error: function (xhr) {
-                    toastr.error(xhr.responseJSON.msg, 'Notification !')
-                    $("#btn-send-report").prop('disabled', true)
+                    toastr.error(xhr.responseJSON.msg, 'Notification !');
+                    $("#btn-send-report").prop('disabled', true);
                 }
-
-            })
+            });
         }
+
 
         function sendInviteInterview() {
             let title = $("#title").val();

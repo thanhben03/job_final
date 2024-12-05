@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Career;
 use App\Models\Category;
+use App\Models\CurriculumVitae;
 use App\Models\Product;
 use App\Services\OpenAIService;
+use Gemini\Data\Blob;
+use Gemini\Enums\MimeType;
+use Gemini\Laravel\Facades\Gemini;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -208,48 +212,6 @@ class OpenAIController extends Controller
         return $careers;
     }
 
-    // Hàm lấy thông tin sản phẩm
-    public function getJobDetails($productId)
-    {
-        $product = Career::find($productId); // Giả sử Product là model sản phẩm của bạn
-
-        return $product ?? response()->json(['error' => 'Product not found'], 404);
-    }
-
-    // Hàm tìm công việc dựa theo tiêu đề và kỹ năng bằng Full-Text Search
-    public function searchJobsByTitle($skills)
-    {
-        // Sử dụng Full-Text Search trên cột 'title' của bảng Career
-        $skillsString = implode(' ', $skills);
-
-        $jobs = Career::query()
-            ->join('career_details', 'careers.id', '=', 'career_details.career_id')
-            ->whereRaw(
-                "MATCH(careers.title) AGAINST(? IN BOOLEAN MODE)
-                OR MATCH(career_details.description) AGAINST(? IN BOOLEAN MODE)
-                OR MATCH(career_details.requirement) AGAINST(? IN BOOLEAN MODE)
-                ",
-                [$skillsString, $skillsString, $skillsString]
-            )
-            ->get();
-
-        return $jobs;
-    }
-
-    public function searchJobs($salary, $skills, $limit)
-    {
-        // Kết hợp các kỹ năng thành một chuỗi
-        $skillsString = implode(' ', $skills);
-
-        // Truy vấn tìm kiếm
-        $jobs = Career::where('max_salary', '>', $salary) // Điều kiện cho mức lương
-            ->whereRaw("MATCH(title) AGAINST(? IN BOOLEAN MODE)", [$skillsString])
-            ->limit($limit) // Giới hạn số lượng kết quả trả về
-            ->get();
-
-        return $jobs;
-    }
-
     public function getListJobHtml($items)
     {
         $item = $items->map(function ($item) {
@@ -295,6 +257,75 @@ class OpenAIController extends Controller
     public function getCategory()
     {
         return Category::all()->pluck('name')->toArray();
+    }
+
+    public function test(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:pdf,doc,docx|max:2048',
+        ]);
+
+        $cv_id = 63;
+        $cv = CurriculumVitae::query()->findOrFail($cv_id);
+        $filePath = $request->file('file')->storeAs('uploads', $cv->path, 'public');
+        // Đọc nội dung file
+        $fullPath = storage_path('app/public/' . $filePath);
+        $content = file_get_contents($fullPath);
+        $content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
+        // Gửi nội dung tới OpenAI
+        $response = $this->openAIService->analyze($content);
+
+        // Hiển thị kết quả
+        return response()->json($response['choices'][0]['text']);
+    }
+
+    public function test2(Request $request)
+    {
+        $cv_id = $request->cv_id;
+        $cv = CurriculumVitae::query()->find($cv_id);
+        $filePath = storage_path('/app/public/uploads/' . $cv->path); // Đường dẫn tới file PDF
+
+        $prompt = 'Bạn là một trợ lý viết thư chuyên nghiệp. Nhiệm vụ của bạn là viết một bức thư giới thiệu để ứng tuyển vào một công việc, dựa trên thông tin từ CV của ứng viên được cung cấp.
+
+Hãy tạo một bức thư giới thiệu dạng HTML với các yêu cầu sau:
+1. Dùng các thẻ HTML cơ bản như `<h1>`, `<p>`, `<ul>` và `<strong>` để định dạng thư.
+2. Bắt đầu thư với tiêu đề lớn (dùng thẻ `<h1>`) là: "ỨNG TUYỂN VỊ TRÍ: [Tên vị trí ứng tuyển]".
+3. Giới thiệu bản thân:
+   - Tên: [Tên của ứng viên] (in đậm, dùng thẻ `<strong>`).
+   - Số điện thoại: [SĐT của ứng viên] (nếu không có thì để là "[SĐT của bạn]").
+   - Địa chỉ: [Địa chỉ từ CV] (nếu không có thì để là "[Địa chỉ của bạn]").
+4. Dùng đoạn văn bản (thẻ `<p>`) để nêu cách ứng viên biết về vị trí tuyển dụng (ví dụ: qua website hoặc nguồn thông tin khác).
+5. Dùng một danh sách (thẻ `<ul>` và `<li>`) để trình bày lý do ứng viên tin rằng mình phù hợp với vị trí tuyển dụng.
+6. Thêm đoạn văn bản (dùng thẻ `<p>`) để bày tỏ mong muốn được phỏng vấn trong thời gian sớm nhất.
+7. Kết thúc thư bằng một lời chúc tốt đẹp (dùng thẻ `<p>`).
+8. Thêm chữ ký (dùng thẻ `<p>` hoặc `<strong>`), với định dạng:
+   - Trân trọng,
+   - [Tên của ứng viên].
+9. Toàn bộ nội dung được bao trong thẻ `<html>` và `<body>` để dễ gửi qua email.
+10. Nội dung phải rõ ràng, chuyên nghiệp và dễ đọc.
+
+Hãy trả về bức thư dưới dạng HTML hoàn chỉnh.
+';
+        $result = Gemini::generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
+            ->generateContent([
+                $prompt,
+                new Blob(
+                    mimeType: MimeType::APPLICATION_PDF,
+                    data: base64_encode(
+                        file_get_contents($filePath)
+                    )
+                )
+            ]);
+        $res = str_replace(['`', 'html', '< lang="vi">'], '', $result->text());
+
+        return response()->json($res);
+
+        // Loại bỏ các ký tự xuống dòng dư thừa
+        $jsonString = trim($res);
+
+        // Chuyển đổi chuỗi JSON thành mảng PHP
+        $decodedJson = json_decode($jsonString);
+        return response()->json($decodedJson);
     }
 
 }

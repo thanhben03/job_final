@@ -183,6 +183,7 @@ class CareerService implements CareerServiceInterface
             $this->data = $request->validated();
             $career = Arr::except($this->data, ['skill_ids', 'description', 'requirement', 'benefit', 'key_responsibilities']);
             $career['slug'] = Str::slug($career['title']);
+            $career['status'] = 0;
 
             $career = $this->repository->update($id, $career);
 
@@ -230,7 +231,7 @@ class CareerService implements CareerServiceInterface
         $instance = $this->repository->getQueryBuilder();
         return $instance->where([
             'company_id' => $company_id,
-            'status' => 1
+            'deleted_at' => null
         ])->get();
     }
 

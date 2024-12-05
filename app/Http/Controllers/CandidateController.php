@@ -119,7 +119,10 @@ class CandidateController extends Controller
     public function savedJob()
     {
         $ids = auth()->user()->saveJob()->pluck('career_id')->toArray();
-        $careers = Career::query()->whereIn('id', $ids)->get();
+        $careers = Career::query()
+            ->whereIn('id', $ids)
+            ->where('deleted_at', null)
+            ->get();
         $data = CareerResource::make($careers)->resolve();
         return view('pages.candidates.saved-job', compact('careers', 'data'));
     }
@@ -128,6 +131,15 @@ class CandidateController extends Controller
     {
         $career_id = $request->career_id;
         $user_id = auth()->id();
+
+        $career = Career::query()->findOrFail($career_id);
+
+        if ($career->deleted_at != null || $career->status != 1) {
+            return response()->json([
+                'success' => false,
+                'msg' => 'Job Not Found'
+            ], 400);
+        }
 
         // Kiểm tra xem đã lưu công việc chưa
         $exist = SaveCareer::where([
@@ -443,6 +455,12 @@ class CandidateController extends Controller
 
     public function reportCandidate(Request $request)
     {
+        if (strlen($request->report_content) > 100) {
+            return response()->json([
+                'success' => false,
+                'msg' => 'Content must not exceed 100 characters'
+            ], 500);
+        }
         $candidate = User::query()->find($request->candidate_id);
         $company = auth()->guard('company')->user();
         $existReport = ReportedUser::query()->where([
@@ -456,12 +474,23 @@ class CandidateController extends Controller
                 'msg' => 'You have reported this candidate!'
             ], 500);
         }
-
+        $reportedUser = null;
         if ($candidate) {
-            ReportedUser::query()->create([
+            $uploadedFiles = [];
+            // Lưu các file lên Cloudinary hoặc lưu vào storage
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    $uploadedFileUrl = cloudinary()->upload($file->getRealPath())->getSecurePath();
+                    // Lưu thông tin URL vào mảng để trả về
+                    $uploadedFiles[] = $uploadedFileUrl;
+
+                }
+            }
+             ReportedUser::query()->create([
                 'user_id' => $candidate->id,
                 'company_id' => $company->id,
-                'report_content' => $request->report_content
+                'report_content' => $request->report_content,
+                 'images' => json_encode($uploadedFiles),
             ]);
 
             return response()->json([
@@ -469,6 +498,8 @@ class CandidateController extends Controller
                 'msg' => 'Report successfully submitted!'
             ]);
         }
+
+
 
         return response()->json([
             'success' => false,
@@ -484,8 +515,8 @@ class CandidateController extends Controller
 
     public function reviewCV(Request $request)
     {
-        $cv = CurriculumVitae::query()->find($request->cvId);
-        $filePath = storage_path('/app/public/uploads/' . $cv->thumbnail); // Đường dẫn tới file PDF
+        $cv = CurriculumVitae::query()->findOrFail($request->cvId);
+        $filePath = storage_path('/app/public/uploads/' . $cv->path); // Đường dẫn tới file PDF
         $pdfContent = base64_encode(file_get_contents($filePath));
         $language = App::getLocale() == 'en' ? 'tiếng anh' : 'tiếng việt';
         $lang = [trans('lang.achievement'), trans('lang.experience'), trans('lang.language'),
@@ -549,7 +580,7 @@ class CandidateController extends Controller
             ->generateContent([
                 $prompt,
                 new Blob(
-                    mimeType: MimeType::IMAGE_JPEG,
+                    mimeType: MimeType::APPLICATION_PDF,
                     data: base64_encode(
                         file_get_contents($filePath)
                     )

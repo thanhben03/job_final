@@ -36,7 +36,8 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         session()->forget('conversation_history');
-        $skills = Skill::all();
+//        $skills = Skill::all();
+        $categoriesCollection = Category::all();
         $provinces = Province::all();
 
         $careers = $this->service
@@ -45,7 +46,8 @@ class HomeController extends Controller
         $data = CareerResource::make($careers)->resolve();
         $categories = Category::withCount('jobs')->get();
         return view('pages.home', [
-            'skills' => $skills,
+//            'skills' => $skills,
+            'categoriesCollection' => $categoriesCollection,
             'provinces' => $provinces,
             'data' => $data,
             'careers' => $careers,

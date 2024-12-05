@@ -1,5 +1,53 @@
 @extends('layouts.app')
+@push('css')
+    <style>
+        .richtexteditor.rte-skin-default.rte-modern {
+            width: unset !important;
+            min-width: unset !important;
+        }
+        /* Định nghĩa overlay */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Hiển thị trên tất cả các thành phần khác */
+            visibility: hidden; /* Ẩn overlay mặc định */
+        }
+
+        /* Định nghĩa icon loading */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Hiệu ứng xoay */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Hiển thị overlay khi cần */
+        #overlay.active {
+            visibility: visible;
+        }
+
+    </style>
+@endpush
 @section('content')
+    <div id="overlay">
+        <div class="spinner"></div>
+    </div>
     <!-- CONTENT START -->
     <div class="page-content">
 
@@ -196,18 +244,21 @@
             $('#progress-bar').css('width', '0%');
 
             // Tăng dần tiến trình khi đợi phản hồi từ server
-            let progressInterval = setInterval(function() {
-                let currentWidth = parseInt($('#progress-bar').css('width'));
-                if (currentWidth < 90) { // Dừng lại ở 90% để chờ phản hồi hoàn thành
-                    $('#progress-bar').css('width', currentWidth + 10 + '%');
-                }
-            }, 500); // Cập nhật mỗi 500ms
+            // let progressInterval = setInterval(function() {
+            //     let currentWidth = parseInt($('#progress-bar').css('width'));
+            //     if (currentWidth < 90) { // Dừng lại ở 90% để chờ phản hồi hoàn thành
+            //         $('#progress-bar').css('width', currentWidth + 10 + '%');
+            //     }
+            // }, 500); // Cập nhật mỗi 500ms
             $.ajax({
                 type: "POST",
                 url: "{{route('candidate.review-cv')}}",
                 data: {
                     "_token": "{{csrf_token()}}",
                     "cvId": $("#select-cv").val()
+                },
+                beforeSend: function () {
+                    document.getElementById('overlay').classList.add('active');
                 },
                 success: function (res) {
                     let reviews = Object.values(res);
@@ -218,7 +269,7 @@
                             let value = item[key];
 
                             html += `
-                            
+
                             <tr class="personal_info">
                                 <td><span class="text-highlight bg-primary bg-danger review-cv-score">${value.score}</span></td>
                                 <td><b>${value.field}:</b> <span>${value.reason}</span>
@@ -234,18 +285,19 @@
                     });
 
                     $("#wrap-reviews-body").html(html)
-                    clearInterval(progressInterval);
-                    $('#progress-bar').css('width', '100%').text('Hoàn thành!');
+
                 },
                 error: function (xhr) {
-                    console.log(xhr.responseJSON)
+                    alert(xhr.responseJSON.message)
                 },
                 complete: function() {
                     // Ẩn progress bar sau khi hoàn thành
                     setTimeout(function() {
                         $('#progress-bar-container').fadeOut();
                         $(".wrap-btn-review").toggleClass("d-none");
-                        $('#progress-bar-container').text('Đang phân tích CV của bạn !')
+                        document.getElementById('overlay').classList.remove('active');
+
+
                     }, 2000); // Ẩn sau 2 giây
                 }
             })

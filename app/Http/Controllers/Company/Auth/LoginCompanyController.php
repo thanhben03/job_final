@@ -37,6 +37,7 @@ class LoginCompanyController extends Controller
         //        }
         //        return redirect()->intended(route('company.dashboard', absolute: false));
         try {
+
             $request->authenticate();
 
             $request->session()->regenerate();

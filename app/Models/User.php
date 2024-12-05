@@ -84,6 +84,10 @@ class User extends Authenticatable
         return $this->hasMany(ReportedUser::class, 'user_id', 'id');
     }
 
+    public function spam () {
+        return $this->hasMany(ReportedUser::class, 'user_id', 'id')->where('status', 1);
+    }
+
     public function mainCV () {
         return $this->belongsTo(CurriculumVitae::class, 'main_cv', 'id');
     }
