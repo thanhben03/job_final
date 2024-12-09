@@ -44,6 +44,7 @@ Route::get('/job/get-reason-decline/{id}', [JobController::class, 'getReasonDecl
 
 Route::post('/match-with-candidate', [JobController::class, 'matchWithCandidate'])->name('match.with.candidate');
 Route::get('/match-with-job/{id}', [CandidateController::class, 'matchWithJob'])->name('match.with.job');
+Route::get('/match-with-job-cv-upload/{cv_id}', [OpenAIController::class, 'getInfoFromCV'])->name('match.with.job.cv');
 
 
 Route::middleware([UserAuthenticated::class, CheckBannedUser::class])->group(function () {
@@ -128,6 +129,7 @@ Route::get('/set-main-cv/{id}', [CandidateController::class, 'setMainCv'])->name
 Route::get('/language/{locale?}', [HomeController::class, 'setLanguage'])->name('set.language');
 
 Route::post('/test', [OpenAIController::class, 'test2']);
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/company-auth.php';

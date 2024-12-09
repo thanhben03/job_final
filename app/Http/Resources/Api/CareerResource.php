@@ -20,7 +20,7 @@ class CareerResource extends ResourceCollection
     public function toArray(Request $request)
     {
         return $this->collection->map(function ($career) {
-            
+
             return [
                 'id' => $career->id,
                 'title' => $career->title,
@@ -40,7 +40,8 @@ class CareerResource extends ResourceCollection
                 'experience' => JobExpEnum::getDescription(intval($career->experience)),
                 'level' => LevelEnum::getDescription(intval($career->level)),
                 'company' => [
-                    'avatar' => env('APP_URL').'/images/avatar/'.$career->company->company_avatar
+                    'avatar' => env('APP_URL').'/images/avatar/'.$career->company->company_avatar,
+                    'company_name' => $career->company->company_name,
                 ],
                 'work_type' => WorkTypeEnum::getDescription(intval($career->work_type)),
                 'skills' => $career->skills,

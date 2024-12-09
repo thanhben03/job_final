@@ -162,17 +162,26 @@ class JobController extends Controller
         $today = now();
         $job = Career::query()->findOrFail($data['job_id']);
 
-        if ($job->deleted_at != null || $job->status != 1) {
+        if ($job->spam->count() >= 2) {
             return response()->json([
-                'msg' => 'Something went wrong with this job!'
+                'message' => 'This job is being flagged!'
             ], 500);
         }
+
+
+        if ($job->deleted_at != null || $job->status != 1) {
+            return response()->json([
+                'message' => 'Something went wrong with this job!'
+            ], 500);
+        }
+
+
 
 
         // Neu thoi gian ung tuyen da het
         if ($today->greaterThan($job->expiration_day)) {
             return response()->json([
-                'msg' => 'Application period has expired!'
+                'message' => 'Application period has expired!'
             ], 500);
         }
         $userCareer = UserCareer::query()->where([
@@ -182,7 +191,7 @@ class JobController extends Controller
 
         if ($userCareer) {
             return response()->json([
-                'msg' => 'You have already applied for this job'
+                'message' => 'You have already applied for this job'
             ], 500);
         }
         UserCareer::query()->create([
@@ -208,7 +217,11 @@ class JobController extends Controller
     {
         $matchedCandidates = $this->service->store($request);
         Session::put('matchedCandidates', $matchedCandidates);
-        return redirect()->back()->with('msg', 'Career added successfully');
+
+        return response()->json([
+            'message' => 'ok'
+        ]);
+        // return redirect()->back()->with('message', 'Career added successfully');
     }
 
     public function matchWithCandidate(Request $request): \Illuminate\Http\JsonResponse

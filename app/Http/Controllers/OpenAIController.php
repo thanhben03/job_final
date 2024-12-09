@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CareerResource;
 use App\Models\Career;
 use App\Models\Category;
 use App\Models\CurriculumVitae;
@@ -31,65 +32,7 @@ class OpenAIController extends Controller
 
 
         // Định nghĩa function
-        $functions = [
-            [
-                'name' => 'get_job_details',
-                'description' => 'Fetches jobs details from the database',
-                'parameters' => [
-                    'type' => 'object',
-                    'properties' => [
-                        'job_id' => [
-                            'type' => 'integer',
-                            'description' => 'The ID of the jobs'
-                        ]
-                    ],
-                    'required' => ['job_id']
-                ]
-            ],
-            [
-                'name' => 'search_jobs_by_title',
-                'description' => 'Search for jobs with titles that match skills if the user only provides skills and does not specify a salary.',
-                'parameters' => [
-                    'type' => 'object',
-                    'properties' => [
-                        'skills' => [
-                            'type' => 'array',
-                            'items' => [
-                                'type' => 'string',
-                            ],
-                            'description' => 'List of skills the user possesses',
-                        ],
-                    ],
-                    'required' => ['skills']
-                ]
-            ],
-            [
-                'name' => 'search_jobs',
-                'description' => 'Search for jobs based on specific criteria including salary and skills. This function is called only if the user provides both criteria: salary and skills.',
-                'parameters' => [
-                    'type' => 'object',
-                    'properties' => [
-                        'salary' => [
-                            'type' => 'number',
-                            'description' => 'Minimum salary for job listings',
-                        ],
-                        'skills' => [
-                            'type' => 'array',
-                            'items' => [
-                                'type' => 'string',
-                            ],
-                            'description' => 'List of skills to match with job titles',
-                        ],
-                        'limit' => [
-                            'type' => 'integer',
-                            'description' => 'Maximum number of job listings to return',
-                        ],
-                    ],
-                    'required' => ['salary', 'skills']
-                ]
-            ]
 
-        ];
         $categories = $this->getCategory();
         $functions2 = [
             [
@@ -108,7 +51,7 @@ class OpenAIController extends Controller
                         ],
                         'salary' => [
                             'type' => 'integer',
-                            'description' => 'Mức lương đưa ra ex: trên 10 triệu, 10 triệu, dưới 10 triệu'
+                            'description' => 'Mức lương đưa ra ex: trên 10 triệu, 10 triệu, dưới 10 triệu, từ 10 triệu'
                         ],
                         'categories' => [
                             'type' => 'array',
@@ -148,7 +91,6 @@ class OpenAIController extends Controller
                     'content' => $html
                 ]);
             }
-
         }
         $content = $response['choices'][0]['message'];
         $html = '
@@ -206,6 +148,7 @@ class OpenAIController extends Controller
                 );
                 Log::info('location: ' . $location);
             })
+            ->where('status', 1)
             ->orderBy('careers.updated_at', 'desc')
             ->take(10)
             ->get();
@@ -287,25 +230,25 @@ class OpenAIController extends Controller
 
         $prompt = 'Bạn là một trợ lý viết thư chuyên nghiệp. Nhiệm vụ của bạn là viết một bức thư giới thiệu để ứng tuyển vào một công việc, dựa trên thông tin từ CV của ứng viên được cung cấp.
 
-Hãy tạo một bức thư giới thiệu dạng HTML với các yêu cầu sau:
-1. Dùng các thẻ HTML cơ bản như `<h1>`, `<p>`, `<ul>` và `<strong>` để định dạng thư.
-2. Bắt đầu thư với tiêu đề lớn (dùng thẻ `<h1>`) là: "ỨNG TUYỂN VỊ TRÍ: [Tên vị trí ứng tuyển]".
-3. Giới thiệu bản thân:
-   - Tên: [Tên của ứng viên] (in đậm, dùng thẻ `<strong>`).
-   - Số điện thoại: [SĐT của ứng viên] (nếu không có thì để là "[SĐT của bạn]").
-   - Địa chỉ: [Địa chỉ từ CV] (nếu không có thì để là "[Địa chỉ của bạn]").
-4. Dùng đoạn văn bản (thẻ `<p>`) để nêu cách ứng viên biết về vị trí tuyển dụng (ví dụ: qua website hoặc nguồn thông tin khác).
-5. Dùng một danh sách (thẻ `<ul>` và `<li>`) để trình bày lý do ứng viên tin rằng mình phù hợp với vị trí tuyển dụng.
-6. Thêm đoạn văn bản (dùng thẻ `<p>`) để bày tỏ mong muốn được phỏng vấn trong thời gian sớm nhất.
-7. Kết thúc thư bằng một lời chúc tốt đẹp (dùng thẻ `<p>`).
-8. Thêm chữ ký (dùng thẻ `<p>` hoặc `<strong>`), với định dạng:
-   - Trân trọng,
-   - [Tên của ứng viên].
-9. Toàn bộ nội dung được bao trong thẻ `<html>` và `<body>` để dễ gửi qua email.
-10. Nội dung phải rõ ràng, chuyên nghiệp và dễ đọc.
+            Hãy tạo một bức thư giới thiệu dạng HTML với các yêu cầu sau:
+            1. Dùng các thẻ HTML cơ bản như `<h1>`, `<p>`, `<ul>` và `<strong>` để định dạng thư.
+            2. Bắt đầu thư với tiêu đề lớn (dùng thẻ `<h1>`) là: "ỨNG TUYỂN VỊ TRÍ: [Tên vị trí ứng tuyển]".
+            3. Giới thiệu bản thân:
+            - Tên: [Tên của ứng viên] (in đậm, dùng thẻ `<strong>`).
+            - Số điện thoại: [SĐT của ứng viên] (nếu không có thì để là "[SĐT của bạn]").
+            - Địa chỉ: [Địa chỉ từ CV] (nếu không có thì để là "[Địa chỉ của bạn]").
+            4. Dùng đoạn văn bản (thẻ `<p>`) để nêu cách ứng viên biết về vị trí tuyển dụng (ví dụ: qua website hoặc nguồn thông tin khác).
+            5. Dùng một danh sách (thẻ `<ul>` và `<li>`) để trình bày lý do ứng viên tin rằng mình phù hợp với vị trí tuyển dụng.
+            6. Thêm đoạn văn bản (dùng thẻ `<p>`) để bày tỏ mong muốn được phỏng vấn trong thời gian sớm nhất.
+            7. Kết thúc thư bằng một lời chúc tốt đẹp (dùng thẻ `<p>`).
+            8. Thêm chữ ký (dùng thẻ `<p>` hoặc `<strong>`), với định dạng:
+            - Trân trọng,
+            - [Tên của ứng viên].
+            9. Toàn bộ nội dung được bao trong thẻ `<html>` và `<body>` để dễ gửi qua email.
+            10. Nội dung phải rõ ràng, chuyên nghiệp và dễ đọc.
 
-Hãy trả về bức thư dưới dạng HTML hoàn chỉnh.
-';
+            Hãy trả về bức thư dưới dạng HTML hoàn chỉnh.
+        ';
         $result = Gemini::generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
             ->generateContent([
                 $prompt,
@@ -328,4 +271,76 @@ Hãy trả về bức thư dưới dạng HTML hoàn chỉnh.
         return response()->json($decodedJson);
     }
 
+    public function extractInfoFromCV($cv_id)
+    {
+        $cv = CurriculumVitae::query()->find($cv_id);
+        $filePath = storage_path('/app/public/uploads/' . $cv->path); // Đường dẫn tới file PDF
+
+        $prompt = '"Bạn sẽ nhận một tệp PDF chứa CV của ứng viên. Nhiệm vụ của bạn là đọc và trích xuất các thông tin sau từ CV:
+
+        Giới tính: Dựa vào cách xưng hô hoặc các thông tin khác trong CV, ví dụ Nam hoặc Nữ.
+        Kỹ năng lập trình: Liệt kê các ngôn ngữ lập trình hoặc công nghệ mà ứng viên đề cập (ví dụ: PHP, NodeJS, Java, Python).
+        Nơi sống: dựa vào địa chỉ được cấp trong cv vd: An Giang, TP. Hồ Chí Minh,
+        Bằng cấp khác ví dụ: Toeic, MOS Office, v.v
+
+        Trả kết quả dưới dạng cấu trúc như sau:
+            Nam | PHP, NodeJS | An Giang | Toeic
+        ';
+        $result = Gemini::generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
+            ->generateContent([
+                $prompt,
+                new Blob(
+                    mimeType: MimeType::APPLICATION_PDF,
+                    data: base64_encode(
+                        file_get_contents($filePath)
+                    )
+                )
+            ]);
+
+        $result = str_replace(['\n', '\"', 'json', '`'], '', $result->text());
+
+        return $result;
+    }
+
+
+    public function getInfoFromCV($cv_id)
+    {
+        try {
+
+            $data = explode("|", $this->extractInfoFromCV($cv_id));
+
+
+            $skillOfCv = trim($data[1]); // NodeJS,PHP
+            $location = trim($data[2]);
+            $certificate = trim($data[3]);
+            $bestCareers = Career::query()
+                ->join('career_details', 'careers.id', '=', 'career_details.career_id')
+                ->select('career_details.*', 'career_details.id as id_detail', 'careers.*')
+                ->whereRaw("
+                MATCH(careers.title) AGAINST(? IN NATURAL LANGUAGE MODE)
+                AND MATCH(careers.address) AGAINST(? IN NATURAL LANGUAGE MODE)
+                AND MATCH(career_details.description, career_details.requirement) AGAINST(? IN NATURAL LANGUAGE MODE)
+                ", [$skillOfCv, $location, $certificate . ' ' . $skillOfCv . ' ' . $location])
+                ->get();
+            $careers = Career::query()
+                ->join('career_details', 'careers.id', '=', 'career_details.career_id')
+                ->select('career_details.*', 'career_details.id as id_detail', 'careers.*')
+                ->whereRaw("
+                    MATCH(careers.title) AGAINST(? IN NATURAL LANGUAGE MODE)
+                    OR MATCH(careers.address) AGAINST(? IN NATURAL LANGUAGE MODE)
+                    OR MATCH(career_details.description, career_details.requirement) AGAINST(? IN NATURAL LANGUAGE MODE)
+                    ", [$skillOfCv, $location, $certificate])
+                ->get();
+            $careers = $careers->whereNotIn('id', $bestCareers->pluck('id')->toArray());
+            $careers = CareerResource::make($careers);
+            $bestCareers = CareerResource::make($bestCareers);
+            return response()->json([
+                'success' => true,
+                'careers' => $careers,
+                'bestCareers' => $bestCareers,
+            ]);
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+        }
+    }
 }

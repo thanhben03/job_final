@@ -90,11 +90,13 @@ class CandidateController extends Controller
         $cvIds = auth()->user()->cv()->pluck('id')->toArray();
 
         // lay id cv cac job ma nguoi dung da apply
-        $ids = UserCareer::query()->whereIn('cv_id', $cvIds)->pluck('career_id')->toArray();
+        $user_careers = UserCareer::query()->whereIn('cv_id', $cvIds)->get();
+
+        $ids = $user_careers->pluck('career_id')->toArray();
 
         // lay cac job
         $careers = Career::query()->whereIn('id', $ids)->paginate(10);
-        $data = JobAppliedResource::make($careers)->resolve();
+        $data = JobAppliedResource::make($user_careers)->resolve();
         return view('pages.candidates.job-applied', compact('data', 'careers'));
     }
 

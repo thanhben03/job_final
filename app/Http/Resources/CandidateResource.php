@@ -23,7 +23,7 @@ class CandidateResource extends ResourceCollection
             return [
                 'id' => $item->id,
                 'fullname' => $item->fullname,
-                'flag' => $item->reported->count() > 1 ? '1' : '0',
+                'flag' => $item->spam->count() >= 2 ? '1' : '0',
                 'email' => $item->email,
                 'introduce' => $item->introduce,
                 'experiences' => $item->experiences,

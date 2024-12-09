@@ -8,8 +8,10 @@ use App\Http\Resources\Api\AppliedJobResource;
 use App\Http\Resources\Api\AppointmentResource;
 use App\Http\Resources\Api\CareerResource;
 use App\Http\Resources\SavedJobResource;
+use App\Mail\ApplicantNotification;
 use App\Models\Appointment;
 use App\Models\Career;
+use App\Models\CurriculumVitae;
 use App\Models\Province;
 use App\Models\ReportedCareer;
 use App\Models\SaveCareer;
@@ -18,6 +20,7 @@ use App\Models\User;
 use App\Models\UserCareer;
 use App\Services\Career\CareerServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class JobController extends Controller
@@ -36,6 +39,7 @@ class JobController extends Controller
 
     public function getAll(Request $request)
     {
+
         $careers = Career::query();
         if ($request->has('search')) {
             $careers->where('title', 'like', '%' . $request->get('search') . '%');
@@ -80,9 +84,16 @@ class JobController extends Controller
     {
         $data = $request->validated();
         $today = now();
+        $job = Career::query()->findOrFail($data['job_id']);
+
+        if ($job->deleted_at != null || $job->status != 1) {
+            return response()->json([
+                'msg' => 'Something went wrong with this job!'
+            ], 500);
+        }
+
 
         try {
-            $job = Career::query()->findOrFail($data['job_id']);
 
             // Neu thoi gian ung tuyen da het
             if ($today->greaterThan($job->expiration_day)) {
@@ -104,6 +115,18 @@ class JobController extends Controller
                 'career_id' => $data['job_id'],
                 'cv_id' => $data['cv_id'],
             ]);
+            $cv = CurriculumVitae::query()->findOrFail($data['cv_id']);
+
+            $applicantInfo = [
+                'name' => $request->user()->fullname,
+                'phone' => $request->user()->phone,
+                'email' => $request->user()->email
+            ];
+
+            // Gửi email
+            Mail::to($job->company->email)->send(
+                new ApplicantNotification($applicantInfo, storage_path("app/public/uploads/".$cv->path))
+            );
         } catch (\Throwable $th) {
             //throw $th;
 
@@ -152,21 +175,38 @@ class JobController extends Controller
     {
         $request->validate([
             'career_id' => 'required|exists:careers,id',
-            'user_id' => 'required|exists:users,id',
+            'report_content' => 'nullable',
+            'files' => 'required|array', // Xác định "images" là một mảng
+            'files.*' => 'mimes:jpg,jpeg,png,gif,webp|max:2048', // Mỗi phần tử trong mảng phải là hình ảnh
+        ], [
+            'files.*.mimes' => 'Only accept files with the following formats: jpg, jpeg, png, gif, or webp.', // Custom message cho từng file
         ]);
         try {
             $existJob = Career::query()->findOrFail($request->input('career_id'));
             $existReport = ReportedCareer::query()->where([
                 'career_id' => $existJob->id,
-                'user_id' => $request->user_id
+                'user_id' => $request->user()->id
             ])->first();
             if ($existReport) {
                 throw new \Exception('You have already reported this job!');
             }
 
+            $uploadedFiles = [];
+            // Lưu các file lên Cloudinary hoặc lưu vào storage
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $file) {
+                    $uploadedFileUrl = cloudinary()->upload($file->getRealPath())->getSecurePath();
+                    // Lưu thông tin URL vào mảng để trả về
+                    $uploadedFiles[] = $uploadedFileUrl;
+
+                }
+            }
+
             ReportedCareer::query()->create([
                 'career_id' => $existJob->id,
-                'user_id' => $request->user_id
+                'user_id' => $request->user()->id,
+                'report_content' => $request->report_content,
+                'images' => json_encode($uploadedFiles),
 
             ]);
         } catch (\Throwable $th) {
@@ -218,5 +258,10 @@ class JobController extends Controller
         //     'from_id' => $appointment->user_id,
         // ]);
         // broadcast(new AppointmentAcceptEvent($appointment->company_id, $notification->message))->toOthers();
+    }
+
+    public function uploadImageReport(Request $request)
+    {
+        return response()->json($request->file('files')[0]->getRealPath());
     }
 }

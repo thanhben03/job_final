@@ -41,12 +41,10 @@
                     <h5 class="modal-title" id="exampleModalLabel">{{ trans('lang.Suitable Job') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div
-                    class="modal-body"
+                <div class="modal-body"
                     style="
                         height: 465px;
-                        overflow: auto;"
-                >
+                        overflow: auto;">
                     <p>{{ trans('lang.We suggest you some jobs that match your profile') }}</p>
                     <div class="alert alert-primary">{{ trans('lang.The Best For You') }} !</div>
                     <ul class="list-group" id="suggest-job">
@@ -57,7 +55,8 @@
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('lang.close') }}</button>
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{{ trans('lang.close') }}</button>
                     <button type="button" class="btn btn-primary">{{ trans('lang.save') }}</button>
                 </div>
             </div>
@@ -65,7 +64,8 @@
     </div>
 
     <!-- Modal QuickView Company-->
-    <div class="modal fade" id="modal-view-company" tabindex="-1" aria-labelledby="companyInfoModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-view-company" tabindex="-1" aria-labelledby="companyInfoModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -75,8 +75,10 @@
                 <div class="modal-body" id="company-content">
                 </div>
                 <div class="modal-footer">
-                    <a type="button" onclick="directViewCompany()" class="btn btn-primary">{{ trans('lang.View Detail') }}</a>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ trans('lang.close') }}</button>
+                    <a type="button" onclick="directViewCompany()"
+                        class="btn btn-primary">{{ trans('lang.View Detail') }}</a>
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">{{ trans('lang.close') }}</button>
                 </div>
             </div>
         </div>
@@ -137,16 +139,19 @@
                                 <div class="row upload-section p-4 bg-light border rounded">
                                     <div class="col-md-9 d-flex align-items-center">
                                         <div>
-                                            <img src="https://static.topcv.vn/v4/image/cv-manager/no-cv.png" alt="Icon">
-                                            @if(auth()->user()->cv != null)
-                                                <p>{{ trans('lang.Number of your CV on the system') }} : {{count(auth()->user()->cv)}}</p>
+                                            <img src="https://static.topcv.vn/v4/image/cv-manager/no-cv.png"
+                                                alt="Icon">
+                                            @if (auth()->user()->cv != null)
+                                                <p>{{ trans('lang.Number of your CV on the system') }} :
+                                                    {{ count(auth()->user()->cv) }}</p>
                                             @else
                                                 <p>{{ trans('lang.You havent created any CV yet') }}</p>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="col-md-3 text-end">
-                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#uploadModal">+ Tạo mới</button>
+                                        <button class="btn btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#uploadModal">+ Tạo mới</button>
                                     </div>
                                 </div>
 
@@ -155,34 +160,42 @@
                                     <h4 class="my-2">{{ trans('lang.CV Uploaded') }}</h4>
                                     <div class="row" style="flex-wrap: nowrap; overflow-x: auto">
                                         <!-- CV Card 1 -->
-                                        @foreach($resumes as $resume)
-                                            <div class="card mx-1 my-1 card-cv" >
+                                        @foreach ($resumes as $resume)
+                                            <div class="card mx-1 my-1 card-cv">
 
 
-                                                <img src="{{asset('storage/uploads/'. $resume->thumbnail)}}" class="card-img-top card-cv-img" alt="Profile">
+                                                <img src="{{ asset('storage/uploads/' . $resume->thumbnail) }}"
+                                                    class="card-img-top card-cv-img" alt="Profile">
 
                                                 <div class="card-body" style="top: 200px !important;">
-                                                    <h5 class="card-title">{{$resume->path}}</h5>
-                                                    <p class="card-text">{{ trans('lang.Last Updated') }} {{$resume->updated_at}}</p>
+                                                    <h5 class="card-title">{{ $resume->path }}</h5>
+                                                    <p class="card-text">{{ trans('lang.Last Updated') }}
+                                                        {{ $resume->updated_at }}</p>
                                                     <div class="d-flex justify-content-between">
                                                         <button class="btn btn-outline-secondary">
-                                                            <a
-                                                                download
-                                                                href="{{asset('storage/uploads/'. $resume->path)}}">
+                                                            <a download
+                                                                href="{{ asset('storage/uploads/' . $resume->path) }}">
                                                                 <i class="fas fa-download"></i>
                                                             </a>
                                                         </button>
 
-                                                        <button onclick="deleteCV({{$resume->id}})" class="btn btn-outline-danger">
+                                                        <button onclick="deleteCV({{ $resume->id }})"
+                                                            class="btn btn-outline-danger">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
-                                                            <button title="{{ trans('lang.Set Main CV') }}" class="btn btn-outline-info" onclick="setMainCV({{ $resume->id }})">
-                                                                <i class="fas fa-wrench"></i>
-                                                            </button>
+                                                        <button title="{{ trans('lang.Set Main CV') }}"
+                                                            class="btn btn-outline-info"
+                                                            onclick="setMainCV({{ $resume->id }})">
+                                                            <i class="fas fa-wrench"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-danger"
+                                                            onclick="matchWithJobCVUpload({{ $resume->id }})">
+                                                            <i class="fas fa-magic"></i>
+                                                        </button>
+
                                                     </div>
                                                 </div>
-                                                @if(auth()->user()->main_cv == $resume->id)
-
+                                                @if (auth()->user()->main_cv == $resume->id)
                                                     <div class="main-cv">Main CV</div>
                                                 @endif
                                             </div>
@@ -194,56 +207,67 @@
                                     <h4 class="my-2">{{ trans('lang.CV created on the system') }}</h4>
                                     <div class="row" style="flex-wrap: nowrap; overflow-x: auto">
                                         <!-- CV Card 1 -->
-                                        @foreach($resumeOnSys as $resume)
-                                        <div class="card mx-1 my-1 card-cv">
-                                            <img src="{{ asset('storage/uploads/' . $resume->cv->thumbnail) }}" class="card-img-top card-cv-img" alt="Profile">
+                                        @foreach ($resumeOnSys as $resume)
+                                            <div class="card mx-1 my-1 card-cv">
+                                                <img src="{{ asset('storage/uploads/' . $resume->cv->thumbnail) }}"
+                                                    class="card-img-top card-cv-img" alt="Profile">
 
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{ $resume->cv->path }}</h5>
-                                                <p class="card-text">{{ trans('lang.Last Updated') }} {{ $resume->cv->updated_at }}</p>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ $resume->cv->path }}</h5>
+                                                    <p class="card-text">{{ trans('lang.Last Updated') }}
+                                                        {{ $resume->cv->updated_at }}</p>
 
-                                                <!-- Three-dot menu for actions -->
-                                                <div class="dropdown float-end">
-                                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Menu
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <li>
-                                                            <button class="dropdown-item" onclick="setMainCV({{ $resume->cv->id }})">
-                                                                <i class="fas fa-wrench"></i> {{ trans('lang.Set Main CV') }}
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" download href="{{ asset('storage/uploads/' . $resume->cv->path) }}">
-                                                                <i class="fas fa-download"></i> {{ trans('lang.download') }}
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="{{ route('candidate.create-cv', $resume->id) }}">
-                                                                <i class="fas fa-edit"></i> {{ trans('lang.edit') }}
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <button class="dropdown-item text-danger" onclick="deleteCV({{ $resume->cv->id }})">
-                                                                <i class="fas fa-trash-alt"></i> {{ trans('lang.delete') }}
-                                                            </button>
-                                                        </li>
-                                                        <li>
-                                                            <button class="dropdown-item text-warning" onclick="matchWithJob({{ $resume->cv->id }})">
-                                                                <i class="fas fa-magic"></i> {{ trans('lang.Match with Job') }}
-                                                            </button>
-                                                        </li>
-                                                    </ul>
+                                                    <!-- Three-dot menu for actions -->
+                                                    <div class="dropdown float-end">
+                                                        <button class="btn btn-outline-secondary dropdown-toggle"
+                                                            type="button" id="dropdownMenuButton"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                            Menu
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <li>
+                                                                <button class="dropdown-item"
+                                                                    onclick="setMainCV({{ $resume->cv->id }})">
+                                                                    <i class="fas fa-wrench"></i>
+                                                                    {{ trans('lang.Set Main CV') }}
+                                                                </button>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" download
+                                                                    href="{{ asset('storage/uploads/' . $resume->cv->path) }}">
+                                                                    <i class="fas fa-download"></i>
+                                                                    {{ trans('lang.download') }}
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('candidate.create-cv', $resume->id) }}">
+                                                                    <i class="fas fa-edit"></i> {{ trans('lang.edit') }}
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <button class="dropdown-item text-danger"
+                                                                    onclick="deleteCV({{ $resume->cv->id }})">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                    {{ trans('lang.delete') }}
+                                                                </button>
+                                                            </li>
+                                                            <li>
+                                                                <button class="dropdown-item text-warning"
+                                                                    onclick="matchWithJob({{ $resume->cv->id }})">
+                                                                    <i class="fas fa-magic"></i>
+                                                                    {{ trans('lang.Match with Job') }}
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
+
+                                                @if (auth()->user()->main_cv == $resume->cv->id)
+                                                    <div class="main-cv">Main CV</div>
+                                                @endif
+
                                             </div>
-
-                                            @if(auth()->user()->main_cv == $resume->cv->id)
-
-                                                <div class="main-cv">Main CV</div>
-                                            @endif
-
-                                        </div>
-
                                         @endforeach
 
                                     </div>
@@ -266,8 +290,8 @@
 @endsection
 @push('js')
     <script type="text/javascript">
-        $(document).ready(function (e) {
-            $('#uploadForm').on('submit', function (e) {
+        $(document).ready(function(e) {
+            $('#uploadForm').on('submit', function(e) {
                 e.preventDefault();
                 const btnUpload = $("#btn-upload");
 
@@ -275,32 +299,36 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: "{{ route('api.file.upload') }}",  // Đường dẫn API
+                    url: "{{ route('api.file.upload') }}", // Đường dẫn API
                     data: formData,
                     cache: false,
                     contentType: false,
                     processData: false,
-                    beforeSend: function () {
+                    beforeSend: function() {
                         btnUpload.text('Process...')
                         btnUpload.prop('disabled', true)
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (response.success) {
-                            $('#uploadResult').html('<div class="alert alert-success">' + response.msg + '</div>');
+                            $('#uploadResult').html('<div class="alert alert-success">' +
+                                response.msg + '</div>');
                             $('#formFile').val('');
                         } else {
-                            $('#uploadResult').html('<div class="alert alert-danger">' + response.msg + '</div>');
+                            $('#uploadResult').html('<div class="alert alert-danger">' +
+                                response.msg + '</div>');
                         }
 
-                        setTimeout(function () {
+                        setTimeout(function() {
                             $("#uploadModal").modal('toggle')
                             window.location.reload()
                         }, 1500)
                     },
-                    error: function (response) {
-                        $('#uploadResult').html(`<div class="alert alert-danger">${response.responseJSON.message}</div>`);
+                    error: function(response) {
+                        $('#uploadResult').html(
+                            `<div class="alert alert-danger">${response.responseJSON.message}</div>`
+                        );
                     },
-                    complete: function () {
+                    complete: function() {
                         btnUpload.text('Upload')
                         btnUpload.prop('disabled', false)
                     }
@@ -317,13 +345,13 @@
             $.ajax({
                 type: 'GET',
                 url: "{{ route('set.main.cv', ':cvID') }}".replace(':cvID', cvID),
-                success: function (res) {
+                success: function(res) {
                     toastr.success(res.msg, 'Notification !')
-                    setTimeout(function () {
+                    setTimeout(function() {
                         window.location.reload()
                     }, 1500)
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     toastr.error(xhr.responseJSON.msg, 'Notification !')
                 }
             })
@@ -336,13 +364,13 @@
             $.ajax({
                 type: 'GET',
                 url: '{{ route('candidate.delete-cv', ':cvID') }}'.replace(':cvID', cvID),
-                success: function (res) {
+                success: function(res) {
                     toastr.success(res.msg, 'Notification !')
-                    setTimeout(function () {
+                    setTimeout(function() {
                         window.location.reload()
                     }, 1500)
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     toastr.error(xhr.responseJSON.msg, 'Notification !')
 
                 }
@@ -354,19 +382,19 @@
                 type: 'POST',
                 // make sure you respect the same origin policy with this url:
                 // http://en.wikipedia.org/wiki/Same_origin_policy
-                url: '{{route('api.v1.applyJob')}}',
+                url: '{{ route('api.v1.applyJob') }}',
                 data: {
-                    "job_id" : jobId,
+                    "job_id": jobId,
                     "cv_id": cvId,
-                    "_token": '{{csrf_token()}}'
+                    "_token": '{{ csrf_token() }}'
                 },
-                success: function(msg){
+                success: function(msg) {
                     $("#apply_job_popup").modal('toggle');
                     toastr.success('Apply Success !', 'Notification')
                     $(".apply-now-text").css('cursor', 'not-allowed')
 
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     toastr.error(xhr.responseJSON.msg, 'Notification !')
                 }
             });
@@ -379,14 +407,14 @@
             var progress = setInterval(function() {
 
                 // perform processing logic (ajax) here
-                $bar.width($bar.width()+100);
+                $bar.width($bar.width() + 100);
 
-                $bar.text($bar.width()/5 + "%");
+                $bar.text($bar.width() / 5 + "%");
             }, 700);
             $.ajax({
                 type: 'GET',
                 url: '{{ route('match.with.job', ':cvID') }}'.replace(':cvID', cvID),
-                success: function (res) {
+                success: function(res) {
                     let html = ''
                     res.careers.forEach(ele => {
                         html += `
@@ -400,18 +428,18 @@
                                             ${ele.company.company_name}
                                         </span>
                                     </p>
-                                    <p class="mb-0"><strong>{{trans('lang.location')}}:</strong> ${ele.address}</p>
+                                    <p class="mb-0"><strong>{{ trans('lang.location') }}:</strong> ${ele.address}</p>
                                 </div>
                                 <div>
                                     <a href="/jobs/${ele.slug}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                 </div>
                             </div>
                             <div>
-                                <small class="text-muted">{{trans('lang.Posted On')}}: ${ele.created_at}</small>
+                                <small class="text-muted">{{ trans('lang.Posted On') }}: ${ele.created_at}</small>
                                 <br>
-                                <small class="text-muted">{{trans('lang.expiration')}}: ${ele.expiration_day}</small>
+                                <small class="text-muted">{{ trans('lang.expiration') }}: ${ele.expiration_day}</small>
                                 <div class="d-flex justify-content-between">
-                                    <small class="">{{trans('lang.Max salary')}}: <strong style="color: green">${ele.max_salary.convert}</strong></small>
+                                    <small class="">{{ trans('lang.Max salary') }}: <strong style="color: green">${ele.max_salary.convert}</strong></small>
                                     <small ${ele.cv_applied.length > 0 ? '' : `onclick="applyNow(${ele.id}, ${cvID})"`} class="apply-now-text">${ele.cv_applied.length > 0 ? 'Applied' : 'Apply now'}</small>
                                 </div>
                             </div>
@@ -433,18 +461,18 @@
                                             ${ele.company.company_name}
                                         </span>
                                     </p>
-                                    <p class="mb-0"><strong>{{trans('lang.location')}}:</strong> ${ele.address}</p>
+                                    <p class="mb-0"><strong>{{ trans('lang.location') }}:</strong> ${ele.address}</p>
                                 </div>
                                 <div>
                                     <a href="/jobs/${ele.slug}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                                 </div>
                             </div>
                         <div>
-                            <small class="text-muted">{{trans('lang.Posted On')}}: ${ele.created_at}</small>
+                            <small class="text-muted">{{ trans('lang.Posted On') }}: ${ele.created_at}</small>
                                 <br>
-                                <small class="text-muted">{{trans('lang.Expiration')}}: ${ele.expiration_day}</small>
+                                <small class="text-muted">{{ trans('lang.Expiration') }}: ${ele.expiration_day}</small>
                                 <div class="d-flex justify-content-between">
-                                    <small class="">{{trans('lang.Max salary')}}: <strong style="color: green">${ele.max_salary.convert}</strong></small>
+                                    <small class="">{{ trans('lang.Max salary') }}: <strong style="color: green">${ele.max_salary.convert}</strong></small>
                                     <small ${ele.cv_applied.length > 0 ? '' : `onclick="applyNow(${ele.id}, ${cvID})"`} class="apply-now-text">${ele.cv_applied.length > 0 ? 'Applied' : 'Apply now'}</small>
                                 </div>
                             </div>
@@ -459,7 +487,7 @@
                     $bar.text('100%');
                     $(".progress-bar").css('background-color', '#00b314')
 
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $("#modal-progress").modal('toggle')
                         $("#suggest-job").html(html2)
                         $(".see-more-match-job").html(html)
@@ -468,29 +496,132 @@
 
 
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     toastr.error(xhr.responseJSON.msg, 'Notification !')
                 }
             })
         }
+
+        function matchWithJobCVUpload(cvID) {
+            $("#modal-progress").modal('toggle')
+            let $bar = $(".bar");
+            var progress = setInterval(function() {
+
+                // perform processing logic (ajax) here
+                $bar.width($bar.width() + 100);
+
+                $bar.text($bar.width() / 5 + "%");
+            }, 700);
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('match.with.job.cv', ':cvID') }}'.replace(':cvID', cvID),
+                success: function(res) {
+                    let html = ''
+                    res.careers.forEach(ele => {
+                        html += `
+                        <li class="list-group-item item-quickview-company">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-1">${ele.title}</h5>
+                                    <p class="mb-0 d-flex">
+                                        <strong>Company:</strong>
+                                        <span style="color: blue" onclick="viewCompany(${ele.company.id})" class="link-quickview-company">
+                                            ${ele.company.company_name}
+                                        </span>
+                                    </p>
+                                    <p class="mb-0"><strong>{{ trans('lang.location') }}:</strong> ${ele.address}</p>
+                                </div>
+                                <div>
+                                    <a href="/jobs/${ele.slug}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                </div>
+                            </div>
+                            <div>
+                                <small class="text-muted">{{ trans('lang.Posted On') }}: ${ele.created_at}</small>
+                                <br>
+                                <small class="text-muted">{{ trans('lang.expiration') }}: ${ele.expiration_day}</small>
+                                <div class="d-flex justify-content-between">
+                                    <small class="">{{ trans('lang.Max salary') }}: <strong style="color: green">${ele.max_salary.convert}</strong></small>
+                                    <small ${ele.cv_applied.length > 0 ? '' : `onclick="applyNow(${ele.id}, ${cvID})"`} class="apply-now-text">${ele.cv_applied.length > 0 ? 'Applied' : 'Apply now'}</small>
+                                </div>
+                            </div>
+                        </li>
+                        `
+                    })
+
+                    let html2 = '';
+
+                    res.bestCareers.forEach(ele => {
+                        html2 += `
+                        <li class="list-group-item item-quickview-company">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-1">${ele.title}</h5>
+                                    <p class="mb-0 d-flex">
+                                        <strong>Company:</strong>
+                                        <span style="color: blue" onclick="viewCompany(${ele.company.id})" class="link-quickview-company">
+                                            ${ele.company.company_name}
+                                        </span>
+                                    </p>
+                                    <p class="mb-0"><strong>{{ trans('lang.location') }}:</strong> ${ele.address}</p>
+                                </div>
+                                <div>
+                                    <a href="/jobs/${ele.slug}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
+                                </div>
+                            </div>
+                        <div>
+                            <small class="text-muted">{{ trans('lang.Posted On') }}: ${ele.created_at}</small>
+                                <br>
+                                <small class="text-muted">{{ trans('lang.Expiration') }}: ${ele.expiration_day}</small>
+                                <div class="d-flex justify-content-between">
+                                    <small class="">{{ trans('lang.Max salary') }}: <strong style="color: green">${ele.max_salary.convert}</strong></small>
+                                    <small ${ele.cv_applied.length > 0 ? '' : `onclick="applyNow(${ele.id}, ${cvID})"`} class="apply-now-text">${ele.cv_applied.length > 0 ? 'Applied' : 'Apply now'}</small>
+                                </div>
+                            </div>
+                        </li>
+                        `
+                    })
+
+
+                    clearInterval(progress);
+                    $('.progress').removeClass('active');
+                    $bar.width(500);
+                    $bar.text('100%');
+                    $(".progress-bar").css('background-color', '#00b314')
+
+                    setTimeout(function() {
+                        $("#modal-progress").modal('toggle')
+                        $("#suggest-job").html(html2)
+                        $(".see-more-match-job").html(html)
+                        $("#modal-math-job").modal('toggle')
+                    }, 1000)
+
+
+                },
+                error: function(xhr) {
+                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                }
+            })
+        }
+
+
         let mathJobModal = new bootstrap.Modal(document.getElementById('modal-math-job'));
         let companyInfoModal = new bootstrap.Modal(document.getElementById('modal-view-company'));
 
-        document.getElementById('modal-view-company').addEventListener('show.bs.modal', function () {
+        document.getElementById('modal-view-company').addEventListener('show.bs.modal', function() {
             mathJobModal.hide();
         });
 
         // Khi đóng modal thông tin công ty, mở lại modal hiện tại
-        document.getElementById('modal-view-company').addEventListener('hidden.bs.modal', function () {
+        document.getElementById('modal-view-company').addEventListener('hidden.bs.modal', function() {
             mathJobModal.show();
         });
 
         function viewCompany(companyId) {
             $.ajax({
                 type: "GET",
-                url: '{{route('company.detail', ':companyId')}}'.replace(':companyId', companyId),
+                url: '{{ route('company.detail', ':companyId') }}'.replace(':companyId', companyId),
                 dataType: "json",
-                success: function (res) {
+                success: function(res) {
 
 
                     let html = `
@@ -503,14 +634,15 @@
                     $("#company-content").html(html)
                     $("#modal-view-company").modal('toggle')
                 },
-                error: function (xhr) {
+                error: function(xhr) {
 
                 }
             })
         }
 
         function directViewCompany() {
-            window.location.href = '{{route('company.detail', ':companyId')}}'.replace(':companyId', $("#current-choose-company").val())
+            window.location.href = '{{ route('company.detail', ':companyId') }}'.replace(':companyId', $(
+                "#current-choose-company").val())
         }
     </script>
 @endpush

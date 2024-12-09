@@ -291,6 +291,9 @@ class CompanyController extends Controller
             if ($userExist->ban) {
                 throw new \Exception('This user is already banned');
             }
+            if ($userExist->spam->count() >= 2) {
+                throw new \Exception('This user is already flagged as spam');
+            }
             $body = [
                 'title' => $data['title'],
                 'content' => $data['content'],

@@ -84,7 +84,7 @@
             <li><strong>Email:</strong> {{ $applicantInfo['email'] }}</li>
             <li><strong>Số điện thoại:</strong> {{ $applicantInfo['phone'] }}</li>
         </ul>
-        @if($applicantInfo['letter'] != '')
+        @if(isset($applicantInfo['letter']) && $applicantInfo['letter'] != '')
             {!! $applicantInfo['letter'] !!}
         @endif
         <p><strong>Hồ sơ ứng viên</strong> đã được đính kèm trong email này. Hãy kiểm tra và liên hệ ngay để không bỏ lỡ ứng viên tiềm năng!</p>

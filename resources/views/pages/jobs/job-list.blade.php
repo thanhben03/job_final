@@ -222,9 +222,9 @@
                                             <a href="{{$career['company']->website}}" class="twm-job-websites site-text-primary">
                                                 {{$career['company']->website}}
                                             </a>
-                                            <div class="">
-                                                <span onclick="showModalReportCareer({{$career['id']}})" class="btn-report">Report</span>
-                                            </div>
+{{--                                            <div class="">--}}
+{{--                                                <span onclick="showModalReportCareer({{$career['id']}})" class="btn-report">Report</span>--}}
+{{--                                            </div>--}}
                                         </div>
                                         <div class="twm-right-content">
                                             <div class="twm-jobs-category green">

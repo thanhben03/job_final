@@ -12,7 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('api/v1')->group(function () {
+Route::prefix('api/v1')->middleware('auth:sanctum')->group(function () {
 
     Route::prefix('/jobs')->group(function () {
 
@@ -48,9 +48,7 @@ Route::prefix('api/v1')->group(function () {
         });
     });
 
-    Route::prefix('/auth')->group(function () {
-        Route::post('/login', [AuthController::class, 'signin']);
-    });
+
 
     Route::get('/notifications/{id}', [UserController::class, 'notifications']);
     Route::get('/notifications/delete-all/{id}', [UserController::class, 'deleteAllNotifications']);
@@ -67,4 +65,9 @@ Route::prefix('api/v1')->group(function () {
 
     Route::post('/send-message-to-company', [UserController::class, 'sendMessageToCompany']);
 
+
+});
+
+Route::prefix('/api/v1/auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'signin']);
 });

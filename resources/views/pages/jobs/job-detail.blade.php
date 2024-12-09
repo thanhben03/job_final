@@ -557,7 +557,7 @@
                         }, 1200)
                     },
                     error: function(xhr) {
-                        toastr.error(xhr.responseJSON.msg, 'Error !')
+                        toastr.error(xhr.responseJSON.message, 'Error !')
                         document.getElementById('overlay').classList.remove('active');
 
                     }
