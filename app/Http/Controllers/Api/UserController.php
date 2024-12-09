@@ -88,7 +88,8 @@ class UserController extends Controller
         }
     }
 
-    public function notifications($user_id) {
+    public function notifications($user_id)
+    {
         try {
             $notifications = Notification::query()->where('user_id', $user_id)->get();
             $notifications = NotificationResource::make($notifications);
@@ -99,7 +100,8 @@ class UserController extends Controller
         }
     }
 
-    public function deleteAllNotifications ($id) {
+    public function deleteAllNotifications($id)
+    {
         try {
             Notification::query()->where('user_id', $id)->delete();
 
@@ -118,11 +120,17 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
             $user = User::query()->findOrFail($request->user_id);
+            $cv = CurriculumVitae::query()->where('id', $request->cvId)->first();
+            if (!$cv) {
+                return response()->json([
+                    'message' => 'This cv is not available'
+                ], 500);
+            }
             $user->main_cv = $request->cvId;
             $user->save();
             DB::commit();
             return response()->json([
-                'msg' => 'ok'
+                'message' => 'Set default successfully !'
             ]);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 500);
@@ -195,10 +203,11 @@ class UserController extends Controller
                 $user->save();
 
                 // Trả về phản hồi JSON
-                return response()->json([
-                    'msg' => 'Image uploaded successfully.',
-                    'image' => env('APP_URL').'/images/avatar/'.$imageName
-                ]
+                return response()->json(
+                    [
+                        'msg' => 'Image uploaded successfully.',
+                        'image' => env('APP_URL') . '/images/avatar/' . $imageName
+                    ]
                 );
             }
         } catch (\Exception $exception) {
@@ -254,7 +263,7 @@ class UserController extends Controller
         ]);
 
         $noti = Notification::query()->create([
-            'message' => 'Bạn có một tin nhắn mới từ ['.$user->fullname.']',
+            'message' => 'Bạn có một tin nhắn mới từ [' . $user->fullname . ']',
             'company_id' => $company->id,
             'from_id' => $user->id,
         ]);
@@ -265,6 +274,4 @@ class UserController extends Controller
         $message = ChatSingleResource::make($message)->resolve();
         return response()->json($message);
     }
-
-
 }

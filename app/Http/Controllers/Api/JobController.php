@@ -101,6 +101,12 @@ class JobController extends Controller
         if ($user->ban) {
             return response()->json([
                 'msg' => 'This user has been banned !'
+            ], 401);
+        }
+
+        if ($user->ban) {
+            return response()->json([
+                'msg' => 'This user has been banned !'
             ], 500);
         }
         if ($job->deleted_at != null || $job->status != 1) {
