@@ -32,7 +32,11 @@ class JobController extends Controller
 
     public function index()
     {
-        $careers = $this->service->getAll()->take(5);
+        $careers = Career::query()
+        ->where('status', 1)
+        ->whereNull('deleted_at')
+        ->get()
+        ->take(5);
         $careers = CareerResource::make($careers)->resolve();
         return response()->json($careers);
     }
@@ -51,19 +55,26 @@ class JobController extends Controller
 
         if ($request->has('locations')) {
             $locationFilter = explode(',', $request['locations']);
+
             Session::flash('locations', $request['locations']);
             $locationIds = Province::query()->whereIn('name', $locationFilter)->pluck('code')->toArray();
+
             $careers = $careers->whereIn('province_id', $locationIds);
         }
+
         if ($request->has('skills')) {
             $skillFilter = explode(',', $request['skills']);
+
             Session::flash('skills', $request['skills']);
 
             $skillIds = Skill::query()->whereIn('name', $skillFilter)->pluck('id')->toArray();
             $careers = $careers->hasSkills($skillIds);
         }
 
-        $careers = $careers->paginate(10);
+        $careers = $careers
+                    ->where('status', 1)
+                    ->whereNull('deleted_at')
+                    ->paginate(10);
         $data = CareerResource::make($careers)->resolve();
         return response()->json([
             'jobs' => $data,
@@ -85,10 +96,16 @@ class JobController extends Controller
         $data = $request->validated();
         $today = now();
         $job = Career::query()->findOrFail($data['job_id']);
+        $user = User::query()->findOrFail($request->user_id);
 
+        if ($user->ban) {
+            return response()->json([
+                'msg' => 'This user has been banned !'
+            ], 500);
+        }
         if ($job->deleted_at != null || $job->status != 1) {
             return response()->json([
-                'msg' => 'Something went wrong with this job!'
+                'msg' => 'This job was not found !'
             ], 500);
         }
 
@@ -118,14 +135,14 @@ class JobController extends Controller
             $cv = CurriculumVitae::query()->findOrFail($data['cv_id']);
 
             $applicantInfo = [
-                'name' => $request->user()->fullname,
-                'phone' => $request->user()->phone,
-                'email' => $request->user()->email
+                'name' => $user->fullname,
+                'phone' => $user->phone,
+                'email' => $user->email
             ];
 
             // Gửi email
             Mail::to($job->company->email)->send(
-                new ApplicantNotification($applicantInfo, storage_path("app/public/uploads/".$cv->path))
+                new ApplicantNotification($applicantInfo, storage_path("app/public/uploads/" . $cv->path))
             );
         } catch (\Throwable $th) {
             //throw $th;
@@ -175,6 +192,7 @@ class JobController extends Controller
     {
         $request->validate([
             'career_id' => 'required|exists:careers,id',
+            'user_id' => 'required',
             'report_content' => 'nullable',
             'files' => 'required|array', // Xác định "images" là một mảng
             'files.*' => 'mimes:jpg,jpeg,png,gif,webp|max:2048', // Mỗi phần tử trong mảng phải là hình ảnh
@@ -185,7 +203,7 @@ class JobController extends Controller
             $existJob = Career::query()->findOrFail($request->input('career_id'));
             $existReport = ReportedCareer::query()->where([
                 'career_id' => $existJob->id,
-                'user_id' => $request->user()->id
+                'user_id' => $request->user_id
             ])->first();
             if ($existReport) {
                 throw new \Exception('You have already reported this job!');
@@ -198,13 +216,12 @@ class JobController extends Controller
                     $uploadedFileUrl = cloudinary()->upload($file->getRealPath())->getSecurePath();
                     // Lưu thông tin URL vào mảng để trả về
                     $uploadedFiles[] = $uploadedFileUrl;
-
                 }
             }
 
             ReportedCareer::query()->create([
                 'career_id' => $existJob->id,
-                'user_id' => $request->user()->id,
+                'user_id' => $request->user_id,
                 'report_content' => $request->report_content,
                 'images' => json_encode($uploadedFiles),
 

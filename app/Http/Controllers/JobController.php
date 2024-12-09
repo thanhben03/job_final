@@ -171,7 +171,7 @@ class JobController extends Controller
 
         if ($job->deleted_at != null || $job->status != 1) {
             return response()->json([
-                'message' => 'Something went wrong with this job!'
+                'message' => 'This job was not found!'
             ], 500);
         }
 

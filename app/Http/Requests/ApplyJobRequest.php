@@ -24,6 +24,7 @@ class ApplyJobRequest extends FormRequest
         return [
             'cv_id' => 'required|exists:curriculum_vitaes,id',
             'job_id' => 'required|exists:careers,id',
+            'user_id' => 'required',
             'letter' => 'nullable'
         ];
     }
