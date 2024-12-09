@@ -6,13 +6,14 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\OpenAIController;
 use App\Http\Controllers\CandidateController;
+use App\Http\Middleware\CheckBanUserApi;
 use App\Models\Province;
 use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('api/v1')->group(function () {
+Route::prefix('api/v1')->middleware(CheckBanUserApi::class)->group(function () {
 
     Route::prefix('/jobs')->group(function () {
 

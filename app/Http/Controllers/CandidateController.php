@@ -22,6 +22,7 @@ use App\Models\UserCareer;
 use App\Models\UserProfile;
 use App\Services\User\UserService;
 use ConvertApi\ConvertApi;
+use Exception;
 use Gemini\Data\Blob;
 use Gemini\Data\Candidate;
 use Gemini\Enums\MimeType;
@@ -400,11 +401,13 @@ class CandidateController extends Controller
     {
         try {
             DB::beginTransaction();
-            $cv = CurriculumVitae::query()->findOrFail($cvID);
+            $cv = CurriculumVitae::query()->where('id', $cvID)->first();
             if ($cv) {
                 $cv->delete();
                 unlink(storage_path('app/public/uploads/' . $cv->path));
                 unlink(storage_path('app/public/uploads/' . $cv->thumbnail));
+            } else {
+                throw new \Exception('This cv does not exist');
             }
             DB::commit();
             return response()->json([
@@ -413,7 +416,7 @@ class CandidateController extends Controller
             ]);
         } catch (\Exception $exception) {
             DB::rollBack();
-            return response()->json(['msg' => $exception->getMessage()], 400);
+            return response()->json(['msg' => $exception->getMessage()], 500);
         }
     }
 
