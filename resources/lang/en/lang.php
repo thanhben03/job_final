@@ -192,7 +192,9 @@ return [
     'Reason' => 'Reason',
     'Decline' => 'Decline',
     'Cancle Appointment' => 'Cancle Appointment',
-    'You must enter a reason for canceling this appointment' => 'You must enter a reason for canceling this appointment'
-
+    'You must enter a reason for canceling this appointment' => 'You must enter a reason for canceling this appointment',
+    'I need to find a job majoring in finance/marketing' => 'I need to find a job majoring in finance/marketing',
+    'I need to find a php job' => 'I need to find a php job',
+    'Some suggestions' => 'Some suggestions',
 
 ];

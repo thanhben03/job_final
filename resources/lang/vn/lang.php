@@ -199,6 +199,8 @@ return [
     'Reason' => 'Lý do',
     'Decline' => 'Bị từ chối',
     'Cancle Appointment' => 'Hủy lịch hẹn',
-    'You must enter a reason for canceling this appointment' => 'Bạn phải nhập lý do hủy lịch hẹn này'
-
+    'You must enter a reason for canceling this appointment' => 'Bạn phải nhập lý do hủy lịch hẹn này',
+    'I need to find a job majoring in finance/marketing' => 'Tôi cần tìm công việc chuyên ngành tài chính/marketing',
+    'I need to find a php job' => 'Tôi cần tìm công việc php',
+    'Some suggestions' => 'Một số gợi ý'
 ];
