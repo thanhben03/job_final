@@ -104,7 +104,7 @@ class ChatController extends Controller
             ->where([
                 'user_id' => $userId,
                 'company_id' => Auth::guard('company')->user()->id,
-                'sender' => 'user'
+                // 'sender' => 'user'
             ])
             ->latest('id') // Sort by 'id' in descending order and take the latest record
             ->first() // Get the most recent message

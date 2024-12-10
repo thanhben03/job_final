@@ -337,6 +337,10 @@
 
 
         function reportCandidate() {
+            if ($("#report-content").val() == '') {
+                alert('You must enter the report content!')
+                return;
+            }
             // Khởi tạo đối tượng FormData
             var formData = new FormData();
 

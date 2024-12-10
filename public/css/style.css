@@ -12689,6 +12689,7 @@ strong {
 }
 .wt-admin-dashboard-msg-2 .single-user-comment-wrap.sigle-user-reply .single-user-com-text {
   background-color: #f5f5f5;
+  margin-left: auto !important;
 }
 @media (max-width: 991px) {
   .wt-admin-dashboard-msg-2 .single-user-comment-wrap.sigle-user-reply {
