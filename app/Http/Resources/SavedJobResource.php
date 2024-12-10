@@ -25,7 +25,7 @@ class SavedJobResource extends ResourceCollection
                     'id' => $career->id,
                     'title' => $career->title,
                     'company_name' => $career->company->company_name,
-                    'avatar' => env('APP_URL') . '/'.$career->company->company_avatar,
+                    'avatar' => env('APP_URL') . '/images/avatar/'.$career->company->company_avatar,
                     'location' => $career->province->name,
                 ],
             ];
