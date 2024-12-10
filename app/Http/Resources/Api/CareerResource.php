@@ -10,6 +10,7 @@ use App\Enums\StatusCV;
 use App\Enums\WorkTypeEnum;
 use App\Http\Resources\AppointmentResource;
 use App\Trait\ConvertPriceString;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -53,6 +54,7 @@ class CareerResource extends ResourceCollection
                 'updated_at' => $career?->updated_at?->diffForHumans() ?? '',
                 'created_at' => $career?->created_at?->toDateString(),
                 'expiration_day' => $career->expiration_day,
+                'expired' => $career->expiration_day < Carbon::toDay(),
                 'gender' => GenderEnum::getDescription($career->gender),
                 'qualification' => QualificationEnum::getDescription($career->qualification),
                 'detail' => $career->detail,
