@@ -646,6 +646,9 @@
                     $("#btn-send-report").prop('disabled', true);
                     $("#modal-report-career").modal('toggle');
                     document.getElementById('overlay').classList.remove('active');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1200);
 
                 },
                 error: function (xhr) {

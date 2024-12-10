@@ -33,6 +33,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class CandidateController extends Controller
 {
@@ -488,14 +489,13 @@ class CandidateController extends Controller
                     $uploadedFileUrl = cloudinary()->upload($file->getRealPath())->getSecurePath();
                     // Lưu thông tin URL vào mảng để trả về
                     $uploadedFiles[] = $uploadedFileUrl;
-
                 }
             }
-             ReportedUser::query()->create([
+            ReportedUser::query()->create([
                 'user_id' => $candidate->id,
                 'company_id' => $company->id,
                 'report_content' => $request->report_content,
-                 'images' => json_encode($uploadedFiles),
+                'images' => json_encode($uploadedFiles),
             ]);
 
             return response()->json([
@@ -521,14 +521,25 @@ class CandidateController extends Controller
     public function reviewCV(Request $request)
     {
         $cv = CurriculumVitae::query()->findOrFail($request->cvId);
+        if (!$cv || $cv->path == null) {
+            return response()->json([
+                'message' => 'CV not found !'
+            ], 500);
+        }
         $filePath = storage_path('/app/public/uploads/' . $cv->path); // Đường dẫn tới file PDF
         $pdfContent = base64_encode(file_get_contents($filePath));
         $language = App::getLocale() == 'en' ? 'tiếng anh' : 'tiếng việt';
-        $lang = [trans('lang.achievement'), trans('lang.experience'), trans('lang.language'),
-        trans('lang.Soft Skill'), trans('lang.skill'), trans('lang.Career Goal')];
+        $lang = [
+            trans('lang.achievement'),
+            trans('lang.experience'),
+            trans('lang.language'),
+            trans('lang.Soft Skill'),
+            trans('lang.skill'),
+            trans('lang.Career Goal')
+        ];
         $lang = implode(' ,', $lang);
-        $prompt = 'Hãy phân tích CV và xuất đầu ra dưới dạng JSON. Các key sẽ là các mục lớn như '.$lang.', v.v. Bất kỳ mục lớn nào bạn nhận thấy trong CV, hãy liệt kê đầy đủ. Mỗi key sẽ có một trường bổ sung để mô tả tên mục đó dưới dạng ngôn ngữ tự nhiên, ví dụ: career_goal sẽ có một trường field chứa "Career Goal". Đầu ra sẽ bao gồm 3 mục chính: score (đánh giá trên thang điểm 10), reason (lý do), suggestion (gợi ý cải thiện).
-        Hãy đảm bảo rằng mọi thông tin phân tích đều chính xác và có thể cải thiện. Trả lời chỉ bằng '.$language.' và chuỗi json không trả lời thêm bất cứ thứ gì khác
+        $prompt = 'Hãy phân tích CV và xuất đầu ra dưới dạng JSON. Các key sẽ là các mục lớn như ' . $lang . ', v.v. Bất kỳ mục lớn nào bạn nhận thấy trong CV, hãy liệt kê đầy đủ. Mỗi key sẽ có một trường bổ sung để mô tả tên mục đó dưới dạng ngôn ngữ tự nhiên, ví dụ: career_goal sẽ có một trường field chứa "Career Goal". Đầu ra sẽ bao gồm 3 mục chính: score (đánh giá trên thang điểm 10), reason (lý do), suggestion (gợi ý cải thiện).
+        Hãy đảm bảo rằng mọi thông tin phân tích đều chính xác và có thể cải thiện. Trả lời chỉ bằng ' . $language . ' và chuỗi json không trả lời thêm bất cứ thứ gì khác
         Ví dụ đầu ra: [
                 {
                     "personal_info": {
@@ -549,37 +560,37 @@ class CandidateController extends Controller
         ]';
 
         // OPEN AI
-//        $client = \OpenAI::factory()
-//            ->withBaseUri('https://open.keyai.shop/v1')
-//            ->withApiKey(env('OPENAI_API_KEY'))
-//            ->withHttpClient(new \GuzzleHttp\Client(['timeout' => 60]))
-//            ->make();
-//        $createParms = [
-//            'model'=>'gpt-4-vision-preview',
-//            'messages'=>[
-//                [
-//                    'role'=>'system', 'content'=>'Your system message like you are a helpful AI assistant'
-//                ],
-//                [
-//                    'role' => 'user',
-//                    'content' => [
-//                        [
-//                            'type' => 'text',
-//                            'text' => $prompt
-//                        ],
-//                        [
-//                            'type' => 'image_url',
-//                            'image_url' => [
-//                                'url' => $pdfContent
-//                            ]
-//                        ]
-//                    ]
-//                ]
-//
-//            ],
-//            'max_tokens' => 1000
-//        ];
-//        $result = $client->chat()->create($createParms);
+        //        $client = \OpenAI::factory()
+        //            ->withBaseUri('https://open.keyai.shop/v1')
+        //            ->withApiKey(env('OPENAI_API_KEY'))
+        //            ->withHttpClient(new \GuzzleHttp\Client(['timeout' => 60]))
+        //            ->make();
+        //        $createParms = [
+        //            'model'=>'gpt-4-vision-preview',
+        //            'messages'=>[
+        //                [
+        //                    'role'=>'system', 'content'=>'Your system message like you are a helpful AI assistant'
+        //                ],
+        //                [
+        //                    'role' => 'user',
+        //                    'content' => [
+        //                        [
+        //                            'type' => 'text',
+        //                            'text' => $prompt
+        //                        ],
+        //                        [
+        //                            'type' => 'image_url',
+        //                            'image_url' => [
+        //                                'url' => $pdfContent
+        //                            ]
+        //                        ]
+        //                    ]
+        //                ]
+        //
+        //            ],
+        //            'max_tokens' => 1000
+        //        ];
+        //        $result = $client->chat()->create($createParms);
         // GEMINI
         $result = Gemini::generativeModel(\Gemini\Enums\ModelType::GEMINI_FLASH)
             ->generateContent([
@@ -592,7 +603,7 @@ class CandidateController extends Controller
                 )
             ]);
         $res = str_replace(['`', 'json'], '', $result->text());
-//        $res = str_replace(['`', 'json'], '', $result['choices'][0]['message']['content']);
+        //        $res = str_replace(['`', 'json'], '', $result['choices'][0]['message']['content']);
         $res = json_decode($res);
 
 
@@ -678,5 +689,39 @@ class CandidateController extends Controller
         }
 
         return redirect()->route('home');
+    }
+
+    public function downloadCV($user_id)
+    {
+        $user = User::query()->where('id', $user_id)->first();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 500);
+        }
+
+        if ($user->ban) {
+            return response()->json([
+                'message' => 'This user has been banned !'
+            ], 500);
+        }
+
+        if ($user->main_cv == null) {
+            return response()->json([
+                'message' => 'CV not found !'
+            ], 500);
+        }
+        $cv = CurriculumVitae::query()->where('id', $user->main_cv)->first();
+        if (!$cv || $cv->path == null) {
+            return response()->json([
+                'message' => 'CV not found !'
+            ], 500);
+        }
+        // Tạo đường dẫn công khai tới file
+        $fileUrl = asset('storage/uploads/' . $cv->path);
+        return response()->json([
+            'message' => 'File link generated successfully.',
+            'file_url' => $fileUrl
+        ], 200);
     }
 }

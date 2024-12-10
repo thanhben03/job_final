@@ -31,17 +31,18 @@ class AppointmentController extends Controller
         ]);
         $validated['company_id'] = auth()->guard('company')->user()->id;
 
-        $existingAppointment = Appointment::where('user_id', $validated['user_id'])
+        $existingAppointment = Appointment::query()
+            ->where('user_id', $validated['user_id'])
+            ->where('career_id', $validated['career_id'])
+            ->where('status', 'pending')
             ->first();
         $user = User::query()->find($validated['user_id']);
         if (!$user || $user->ban) {
             return response()->json(['message' => 'Đã xảy ra lỗi với ứng viên này !'], 400);
-
         }
         $job = Career::query()->findOrFail($validated['career_id']);
         if (!$job) {
             return response()->json(['message' => 'Đã xảy ra lỗi đối với công việc này !'], 409);
-
         }
         if ($existingAppointment) {
             return response()->json(['message' => 'Lịch hẹn đã tồn tại cho ứng viên này!'], 409);
@@ -53,13 +54,13 @@ class AppointmentController extends Controller
             'from_id' => auth()->guard('company')->user()->id,
         ]);
         $data = [
-            'date_time' => $validated['date'].' '.$validated['time'],
+            'date_time' => $validated['date'] . ' ' . $validated['time'],
             'email' => auth()->guard('company')->user()->email,
             'note' => $validated['note'],
             'candidate_name' => $user->fullname,
             'title' => $job->title,
         ];
-        Mail::to($user->mail)->send(new NewAppointmentMail($data));
+        Mail::to($user->email)->send(new NewAppointmentMail($data));
         broadcast(new AppointmentEvent($validated['user_id'], $message->message))->toOthers();
 
         return response()->json(['success' => 'Lịch hẹn đã được tạo thành công!']);
@@ -69,7 +70,24 @@ class AppointmentController extends Controller
     // Phương thức để ứng viên đồng ý cuộc hẹn
     public function acceptAppointment($id)
     {
-        $appointment = Appointment::find($id);
+        $appointment = Appointment::query()->where('id', $id)->first();
+        if (!$appointment) {
+            return response()->json([
+                'message' => 'Appointment not found !'
+            ], 500);
+        }
+
+        if ($appointment->status != 'pending') {
+            return response()->json([
+                'message' => 'Appointment not found !'
+            ], 500);
+        }
+
+        if ($appointment->company->ban) {
+            return response()->json([
+                'message' => 'This company cannot be found at the moment!'
+            ], 500);
+        }
         $appointment->status = 'accepted';
         $appointment->save();
 
@@ -85,7 +103,24 @@ class AppointmentController extends Controller
     // Phương thức để ứng viên từ chối cuộc hẹn
     public function rejectAppointment($id)
     {
-        $appointment = Appointment::find($id);
+        $appointment = Appointment::query()->where('id', $id)->first();
+        if (!$appointment) {
+            return response()->json([
+                'message' => 'Appointment not found !'
+            ], 500);
+        }
+
+        if ($appointment->status != 'pending') {
+            return response()->json([
+                'message' => 'Appointment not found !'
+            ], 500);
+        }
+
+        if ($appointment->company->ban) {
+            return response()->json([
+                'message' => 'This company cannot be found at the moment!'
+            ], 500);
+        }
         $appointment->status = 'rejected';
         $appointment->save();
 
@@ -98,7 +133,7 @@ class AppointmentController extends Controller
         $appointment->status = 'cancel';
         $appointment->save();
         $data = [
-            'date_time' => $appointment->date. ' '. $appointment->time,
+            'date_time' => $appointment->date . ' ' . $appointment->time,
             'reason' => $request->reason,
             'candidate_name' => $appointment->user->fullname,
             'email' => $appointment->company->email,

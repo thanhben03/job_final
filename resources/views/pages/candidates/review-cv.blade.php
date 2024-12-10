@@ -239,17 +239,6 @@
             $(".wrap-btn-review").toggleClass("d-none");
 
 
-            // Hiển thị progress bar
-            $('#progress-bar-container').show();
-            $('#progress-bar').css('width', '0%');
-
-            // Tăng dần tiến trình khi đợi phản hồi từ server
-            // let progressInterval = setInterval(function() {
-            //     let currentWidth = parseInt($('#progress-bar').css('width'));
-            //     if (currentWidth < 90) { // Dừng lại ở 90% để chờ phản hồi hoàn thành
-            //         $('#progress-bar').css('width', currentWidth + 10 + '%');
-            //     }
-            // }, 500); // Cập nhật mỗi 500ms
             $.ajax({
                 type: "POST",
                 url: "{{route('candidate.review-cv')}}",

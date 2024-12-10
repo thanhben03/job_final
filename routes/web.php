@@ -82,6 +82,7 @@ Route::middleware([CompanyAuthenticated::class, CheckBannerCompany::class])->gro
     Route::get('/companies/list-invite', [CompanyController::class, 'showListInvite'])->name('company.show.invite');
     Route::get('/companies/candidate-list', [CompanyController::class, 'showCandidateList'])->name('company.show.candidate.list');
     Route::post('/companies/send-invite-interview', [CompanyController::class, 'sendInviteInterview'])->name('company.send.invite.interview');
+    Route::get('/candidates/download-cv/{user_id}', [CandidateController::class, 'downloadCV']);
 
     Route::post('/candidates/report', [CandidateController::class, 'reportCandidate'])->name('candidate.report');
     Route::get('/candidates/list', [CandidateController::class, 'showListCandidate'])->name('candidate.list');

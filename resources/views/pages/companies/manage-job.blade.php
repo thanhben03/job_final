@@ -447,6 +447,9 @@
                 success: function (res) {
                     alert('Success !')
                     $("#modal-cancel-appoinment").modal('toggle')
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1300);
                 },
                 error: function (xhr) {
                     alert(xhr.responseJSON.error)

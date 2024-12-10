@@ -274,4 +274,19 @@ class UserController extends Controller
         $message = ChatSingleResource::make($message)->resolve();
         return response()->json($message);
     }
+
+    public function getProfile ($user_id) {
+        $user = User::query()->where('id', $user_id)->first();
+        $user = UserResource::make($user)->resolve();
+
+        if ($user) {
+            return response()->json([
+                'user' => $user
+            ]);
+        }
+
+        return response()->json([
+            'user' => null
+        ], 500);
+    }
 }

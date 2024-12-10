@@ -72,21 +72,27 @@
                             </div>
 
                             <!-- Modal để hiển thị thông tin chi tiết của cuộc hẹn -->
-                            <div class="modal fade" id="appointmentModal" tabindex="-1" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="appointmentModal" tabindex="-1"
+                                aria-labelledby="appointmentModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="appointmentModalLabel">{{ trans('lang.Appointment Details') }}</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <h5 class="modal-title" id="appointmentModalLabel">
+                                                {{ trans('lang.Appointment Details') }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p><strong>{{ trans('lang.company') }}:</strong> <span id="modal-company-name"></span></p>
+                                            <p><strong>{{ trans('lang.company') }}:</strong> <span
+                                                    id="modal-company-name"></span></p>
                                             <p><strong>{{ trans('lang.date') }}:</strong> <span id="modal-date"></span></p>
                                             <p><strong>{{ trans('lang.time') }}:</strong> <span id="modal-time"></span></p>
                                             <p><strong>{{ trans('lang.note') }}:</strong> <span id="modal-note"></span></p>
-                                            <p><strong>{{ trans('lang.status') }}:</strong> <span id="modal-status"></span></p>
+                                            <p><strong>{{ trans('lang.status') }}:</strong> <span id="modal-status"></span>
+                                            </p>
                                             <div id="modal-actions" class="text-end mt-3">
-                                                <button class="btn btn-success me-2" id="accept-appointment-btn">Đồng ý</button>
+                                                <button class="btn btn-success me-2" id="accept-appointment-btn">Đồng
+                                                    ý</button>
                                                 <button class="btn btn-danger" id="reject-appointment-btn">Từ chối</button>
                                             </div>
                                         </div>
@@ -119,14 +125,14 @@
 
             // Lấy danh sách cuộc hẹn của ứng viên
             $.get(`/appointments/${candidateId}`, function(data) {
-                let appointmentList = '{{trans('lang.There are no appointments displayed')}}';
+                let appointmentList = '{{ trans('lang.There are no appointments displayed') }}';
                 if (data.length > 0) {
                     appointmentList = ''
                     data.forEach(appointment => {
                         let statusClass =
                             appointment.status === 'pending' ? 'text-warning' :
-                                appointment.status === 'accepted' ? 'text-success' :
-                                    'text-danger';
+                            appointment.status === 'accepted' ? 'text-success' :
+                            'text-danger';
 
                         appointmentList += `
                         <li class="list-group-item d-flex justify-content-between align-items-center appointment-item" data-id="${appointment.id}" data-company="${appointment.company.company_name}" data-date="${appointment.date}" data-time="${appointment.time}" data-note="${appointment.note}" data-status="${appointment.status}">
@@ -171,27 +177,40 @@
             // Xử lý sự kiện đồng ý cuộc hẹn
             $('#accept-appointment-btn').on('click', function() {
                 const appointmentId = $(this).data('id');
-                $.post(`/appointments/${appointmentId}/accept`, function(response) {
-                    toastr.success(response.success, 'Notification !')
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1200)
-                });
+                $.ajax({
+                    type: 'POST',
+                    url: `/appointments/${appointmentId}/accept`,
+                    success: function(data) {
+                        toastr.success('Success !')
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1200)
+                    },
+                    error: function(xhr) {
+                        toastr.error(xhr.responseJSON.message, 'Error')
+                    }
+                })
             });
 
             // Xử lý sự kiện từ chối cuộc hẹn
             $('#reject-appointment-btn').on('click', function() {
                 const appointmentId = $(this).data('id');
-                $.post(`/appointments/${appointmentId}/reject`, function(response) {
-                    toastr.success(response.success, 'Notification !')
-                    setTimeout(function () {
-                        location.reload();
-                    }, 1200)
-                });
+                $.ajax({
+                    type: 'POST',
+                    url: `/appointments/${appointmentId}/reject`,
+                    success: function(data) {
+                        toastr.success('Success !')
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1200)
+                    },
+                    error: function(xhr) {
+                        toastr.error(xhr.responseJSON.message, 'Error')
+                    }
+                })
             });
+
+
         });
-
-
     </script>
-
 @endpush

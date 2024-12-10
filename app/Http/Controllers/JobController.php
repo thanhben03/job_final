@@ -272,7 +272,7 @@ class JobController extends Controller
         $request->validate([
             'career_id' => 'required',
             'report_content' => 'nullable',
-            'files' => 'required|array', // Xác định "images" là một mảng
+            'files' => 'nullable', // Xác định "images" là một mảng
             'files.*' => 'mimes:jpg,jpeg,png,gif,webp|max:2048', // Mỗi phần tử trong mảng phải là hình ảnh
         ], [
             'files.*.mimes' => 'Only accept files with the following formats: jpg, jpeg, png, gif, or webp.', // Custom message cho từng file

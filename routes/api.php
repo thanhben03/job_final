@@ -63,6 +63,7 @@ Route::prefix('api/v1')->middleware(CheckBanUserApi::class)->group(function () {
     Route::post('/chatbot', [OpenAIController::class, 'getResponse']);
     Route::get('/get-chat/{user_id}', [UserController::class, 'getAllChatByUser']);
     Route::get('/get-chat/{user_id}/{company_id}', [UserController::class, 'getDetailChat']);
+    Route::get('/get-profile/{user_id}', [UserController::class, 'getProfile']);
 
     Route::post('/send-message-to-company', [UserController::class, 'sendMessageToCompany']);
 
