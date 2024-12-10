@@ -1,8 +1,10 @@
+@php use Illuminate\Support\Facades\DB; @endphp
 @extends('layouts.company')
 
 @section('content')
     <!-- Modal -->
-    <div class="modal fade" id="jobPreviewModal" tabindex="-1" aria-labelledby="jobPreviewModalLabel" aria-hidden="true">
+    <div class="modal fade" id="jobPreviewModal" tabindex="-1" aria-labelledby="jobPreviewModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -61,19 +63,19 @@
                                     <label>Job Title</label>
                                     <div class="ls-inputicon-box">
                                         <input class="form-control" value="{{ old('title', 'Ahihihihi 123') }}"
-                                            name="title" type="text" placeholder="Devid Smith">
+                                               name="title" type="text" placeholder="Devid Smith">
                                         <i class="fs-input-icon fa fa-address-card"></i>
                                     </div>
                                 </div>
                             </div>
 
                             <!--Job Skill-->
-                            <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div id="select-skills" class="col-xl-4 col-lg-6 col-md-12 d-none">
                                 <div class="form-group city-outer-bx has-feedback">
                                     <label>Job Skill</label>
                                     <div class="ls-inputicon-box">
                                         <select name="skill_ids[]" multiple class="wt-select-box selectpicker"
-                                            data-live-search="true" title="" id="j-category" data-bv-field="size">
+                                                data-live-search="true" title="" id="j-category" data-bv-field="size">
                                             @foreach ($skills as $skill)
                                                 <option value="{{ $skill->id }}">{{ $skill->name }}</option>
                                             @endforeach
@@ -90,7 +92,7 @@
                                     <label>Job Type</label>
                                     <div class="ls-inputicon-box">
                                         <select name="working_time" class="wt-select-box selectpicker"
-                                            data-live-search="true" title="" id="s-category" data-bv-field="size">
+                                                data-live-search="true" title="" id="s-category" data-bv-field="size">
                                             @foreach ($workType as $key => $value)
                                                 <option value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
@@ -109,7 +111,7 @@
                                             <label>Min Salary</label>
                                             <div class="ls-inputicon-box">
                                                 <input type="number" name="min_salary"
-                                                    value="{{ old('min_salary', '1000000') }}" class="form-control">
+                                                       value="{{ old('min_salary', '1000000') }}" class="form-control">
                                                 <i class="fs-input-icon fa fa-dollar-sign"></i>
                                             </div>
                                         </div>
@@ -119,7 +121,7 @@
                                             <label>Max Salary</label>
                                             <div class="ls-inputicon-box">
                                                 <input type="number" name="max_salary"
-                                                    value="{{ old('max_salary', '2000000') }}" class="form-control">
+                                                       value="{{ old('max_salary', '2000000') }}" class="form-control">
                                                 <i class="fs-input-icon fa fa-dollar-sign"></i>
                                             </div>
                                         </div>
@@ -132,8 +134,9 @@
                                 <div class="form-group">
                                     <label>Experience</label>
                                     <div class="ls-inputicon-box">
-                                        <select name="experience" class="wt-select-box selectpicker" data-live-search="true"
-                                            title="" id="salary" data-bv-field="size">
+                                        <select name="experience" class="wt-select-box selectpicker"
+                                                data-live-search="true"
+                                                title="" id="salary" data-bv-field="size">
                                             @foreach ($exps as $key => $value)
                                                 <option value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
@@ -151,7 +154,7 @@
                                     <label>Qualification</label>
                                     <div class="ls-inputicon-box">
                                         <select name="qualification" class="wt-select-box selectpicker"
-                                            data-live-search="true" title="" data-bv-field="size">
+                                                data-live-search="true" title="" data-bv-field="size">
                                             @foreach ($qualifications as $key => $value)
                                                 <option value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
@@ -167,7 +170,7 @@
                                     <label>Gender</label>
                                     <div class="ls-inputicon-box">
                                         <select class="wt-select-box selectpicker" data-live-search="true" name="gender"
-                                            id="gender" data-bv-field="size">
+                                                id="gender" data-bv-field="size">
                                             @foreach ($genders as $keyd => $value)
                                                 <option value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
@@ -183,8 +186,8 @@
                                     <label>Province</label>
                                     <div class="ls-inputicon-box">
                                         <select onchange="selectProvince(this)" class="wt-select-box selectpicker"
-                                            data-live-search="true" title="" name="province_id"
-                                            data-bv-field="size">
+                                                data-live-search="true" title="" name="province_id"
+                                                data-bv-field="size">
                                             @foreach ($provinces as $key => $value)
                                                 <option value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
@@ -201,13 +204,14 @@
                                     <label>District</label>
                                     <div class="ls-inputicon-box">
                                         <select class="form-control" id="district" name="district_id">
-
+                                            @foreach(DB::table('districts')->where('province_code', '01')->get() as $item)
+                                                <option value="{{$item->code}}">{{$item->name}}</option>
+                                            @endforeach
                                         </select>
                                         <i class="fs-input-icon fa fa-map-marker-alt"></i>
                                     </div>
                                 </div>
                             </div>
-
 
 
                             <!--Level-->
@@ -216,7 +220,7 @@
                                     <label>Level</label>
                                     <div class="ls-inputicon-box">
                                         <select class="wt-select-box selectpicker" data-live-search="true" title=""
-                                            name="level" data-bv-field="size">
+                                                name="level" data-bv-field="size">
                                             @foreach ($levels as $key => $value)
                                                 <option value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
@@ -232,7 +236,7 @@
                                     <label>Phone</label>
                                     <div class="ls-inputicon-box">
                                         <input class="form-control" value="{{ old('phone', '0772854932') }}"
-                                            name="phone" type="text" placeholder="0772859431">
+                                               name="phone" type="text" placeholder="0772859431">
                                         <i class="fs-input-icon fa fa-map-pin"></i>
                                     </div>
                                 </div>
@@ -244,7 +248,7 @@
                                     <label>Employee Number</label>
                                     <div class="ls-inputicon-box">
                                         <input class="form-control" value="{{ old('employee', 10) }}" name="employee"
-                                            type="number" placeholder="10">
+                                               type="number" placeholder="10">
                                         <i class="fs-input-icon fas fa-at"></i>
                                     </div>
                                 </div>
@@ -256,7 +260,7 @@
                                     <label>From Time</label>
                                     <div class="ls-inputicon-box">
                                         <input class="form-control" value="{{ old('from_time', '16:34') }}"
-                                            name="from_time" type="time">
+                                               name="from_time" type="time">
                                         <i class="fs-input-icon fa fa-globe-americas"></i>
                                     </div>
                                 </div>
@@ -268,7 +272,7 @@
                                     <label>To Time</label>
                                     <div class="ls-inputicon-box">
                                         <input class="form-control" value="{{ old('to_time', '16:40') }}" name="to_time"
-                                            type="time">
+                                               type="time">
                                         <i class="fs-input-icon fa fa-clock"></i>
                                     </div>
                                 </div>
@@ -281,7 +285,7 @@
                                     <label>Expiration Day</label>
                                     <div class="ls-inputicon-box">
                                         <input type="date" value="{{ old('expiration_day', '2024-10-04') }}"
-                                            name="expiration_day" class="form-control">
+                                               name="expiration_day" class="form-control">
                                         <i class="fs-input-icon fa fa-map-marker-alt"></i>
                                     </div>
                                 </div>
@@ -293,8 +297,9 @@
                                     <label>Complete Address</label>
                                     <div class="ls-inputicon-box">
                                         <input class="form-control"
-                                            value="{{ old('address', 'AN BINH, AN THANH TRUNG') }}" name="address"
-                                            type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA">
+                                               value="{{ old('address', 'AN BINH, AN THANH TRUNG') }}" name="address"
+                                               type="text"
+                                               placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA">
                                         <i class="fs-input-icon fa fa-home"></i>
                                     </div>
                                 </div>
@@ -304,8 +309,8 @@
                                     <label>Category</label>
                                     <div class="ls-inputicon-box">
                                         <select onchange="changeCategory(this)" class="wt-select-box selectpicker"
-                                            data-live-search="true" title="" name="category_id"
-                                            data-bv-field="size">
+                                                data-live-search="true" title="" name="category_id"
+                                                data-bv-field="size">
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
@@ -349,7 +354,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Key Responsibility</label>
-                                    <textarea name="key_responsibilities" id="key_responsibility" class="form-control" rows="3">
+                                    <textarea name="key_responsibilities" id="key_responsibility" class="form-control"
+                                              rows="3">
                                         {{ old('key_responsibilities', 'RESPONSIBILITY DEFAULT') }}
                                     </textarea>
                                 </div>
@@ -363,8 +369,6 @@
                             </div>
 
 
-
-
                         </div>
                     </form>
                 </div>
@@ -376,8 +380,9 @@
 @endsection
 
 @push('js')
-    <script src="https://cdn.tiny.cloud/1/j7s71fyc3kax1nrnlchfbs12d0rgzpsuwjdnkn43xugf4xgv/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/tyjw3lzlfsxtwzslq3pkz1nsfknx9826o96c6q1y1henmxqo/tinymce/7/tinymce.min.js"
+            referrerpolicy="origin"></script>
+
 
     <script>
         tinymce.init({
@@ -391,7 +396,7 @@
             $.ajax({
                 type: 'GET',
                 url: '/api/v1/get-district/' + e.value,
-                success: function(res) {
+                success: function (res) {
                     let html = ''
                     let districtEle = document.querySelector('#district');
                     res.districts.forEach(e => {
@@ -407,13 +412,13 @@
         }
 
         function changeCategory(e) {
-            // if (e.value != 7) {
-            //     console.log(1)
-            //     console.log($("#select-skills"))
-            //     $("#select-skills").classList.add('d-none');
-            // } else {
-            //     $("#select-skills").classList.remove('d-none');
-            // }
+            if (e.value != 7) {
+                console.log(1)
+                console.log($("#select-skills"))
+                $("#select-skills").addClass('d-none');
+            } else {
+                $("#select-skills").removeClass('d-none');
+            }
         }
 
         function previousPost() {
@@ -422,7 +427,6 @@
             // Lấy dữ liệu từ form
             let jobData = JSON.parse(localStorage.getItem('jobs'));
             console.log(jobData);
-
 
 
             // Điền lại dữ liệu vào form
@@ -453,7 +457,7 @@
             $.ajax({
                 type: 'GET',
                 url: '/api/v1/get-district/' + jobData.province_id,
-                success: function(res) {
+                success: function (res) {
                     let html = ''
                     let districtEle = document.querySelector('#district');
                     res.districts.forEach(e => {
@@ -484,12 +488,13 @@
                 type: 'POST',
                 url: '{{ route('job.store') }}',
                 data: data,
-                success: function(res) {
+                success: function (res) {
 
                 }
             })
         }
-        $(document).ready(function() {
+
+        $(document).ready(function () {
             const form = $('#form-post-job');
 
             // Lưu công việc vào LocalStorage
@@ -545,7 +550,6 @@
 
             //     form[0].reset(); // Reset form sau khi submit
             // });
-
 
 
             if (localStorage.getItem('jobs')) {

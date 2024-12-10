@@ -70,8 +70,8 @@
                                                             Accept
                                                         </span>
                                                     @else
-                                                        <span class="text-clr-red">
-                                                            Reject
+                                                        <span class="text-clr-yellow">
+                                                            Pending
                                                         </span>
                                                     @endif
                                                 </td>

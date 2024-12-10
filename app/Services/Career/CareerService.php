@@ -48,7 +48,7 @@ class CareerService implements CareerServiceInterface
             $this->data = $request->validated();
             $career = Arr::except($this->data, ['skill_ids', 'description', 'requirement', 'benefit', 'key_responsibilities']);
             $career['company_id'] = auth()->guard('company')->user()->id;
-            $career['slug'] = Str::slug($career['title']);
+            $career['slug'] = Str::slug($career['title']). '-'.time();
             $result = $this->repository->create($career);
 
             $careerDetailData = Arr::only($this->data, ['description', 'requirement', 'benefit', 'key_responsibilities']);

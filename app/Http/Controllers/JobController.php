@@ -218,10 +218,10 @@ class JobController extends Controller
         $matchedCandidates = $this->service->store($request);
         Session::put('matchedCandidates', $matchedCandidates);
 
-        return response()->json([
-            'message' => 'ok'
-        ]);
-        // return redirect()->back()->with('message', 'Career added successfully');
+        // return response()->json([
+        //     'message' => 'ok'
+        // ]);
+        return redirect()->back()->with('msg', 'Career added successfully');
     }
 
     public function matchWithCandidate(Request $request): \Illuminate\Http\JsonResponse
