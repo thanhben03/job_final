@@ -37,7 +37,7 @@
                     <option value="{{ $value->code }}">{{ $value->name }}</option>
                 @endforeach
             </select>
-            <x-input-error :messages="$errors->get('company_phone')" class="mt-2" />
+            <x-input-error :messages="$errors->get('province_id')" class="mt-2" />
         </div>
 
         <!-- Password -->

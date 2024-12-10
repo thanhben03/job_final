@@ -7,6 +7,7 @@ use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\SelectColumn;
@@ -14,6 +15,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use function Pest\Laravel\options;
+use Illuminate\Support\Str;
+
 
 class CategoryResource extends Resource
 {
@@ -27,11 +30,17 @@ class CategoryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->live(true)
+                    ->afterStateUpdated(function (Set $set, $state) {
+                        $set('slug', Str::slug($state));
+                    }),
                 Forms\Components\TextInput::make('trans_key')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('slug')
-                    ->maxLength(50),
+                    ->maxLength(50)
+                    ->required()
+                    ->readOnly(),
                 Forms\Components\TextInput::make('name_eng')
                     ->numeric(),
                 Forms\Components\Select::make('status')

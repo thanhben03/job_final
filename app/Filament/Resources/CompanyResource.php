@@ -7,9 +7,13 @@ use App\Filament\Resources\CompanyResource\RelationManagers;
 use App\Mail\BanUserMail;
 use App\Mail\UnBanUserMail;
 use App\Models\Company;
+use App\Models\Province;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Illuminate\Support\Collection;
+
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -113,7 +117,17 @@ class CompanyResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                        1 => 'Active',
+                        0 => 'Inactive'
+                    ]),
+                // Tables\Filters\SelectFilter::make('category_id')
+                //     ->label('Category')
+                // ->options(fn(Get $get): Collection => Category::query()->pluck('name', 'id')),
+                Tables\Filters\SelectFilter::make('province_id')
+                ->label('Province')
+                ->options(fn(Get $get): Collection => Province::query()->pluck('name', 'code')),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

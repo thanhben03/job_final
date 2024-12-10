@@ -27,10 +27,10 @@ class Career extends Model
         return $this->belongsToMany(Skill::class, 'career_skills', 'career_id', 'skill_id');
     }
 
-//    public function categories(): BelongsToMany
-//    {
-//        return $this->belongsToMany(Category::class, );
-//    }
+    //    public function categories(): BelongsToMany
+    //    {
+    //        return $this->belongsToMany(Category::class, );
+    //    }
 
     public function appointments()
     {
@@ -54,17 +54,30 @@ class Career extends Model
 
     public function scopeHasSkills($query, array $skillIds)
     {
-        return $query->whereHas('skills', function($q) use ($skillIds) {
+        return $query->whereHas('skills', function ($q) use ($skillIds) {
             $q->whereIn('skill_id', $skillIds);  // Kiểm tra nếu skill_id nằm trong mảng
         });
     }
 
     public function scopeHasCategory($query, $category)
     {
-        return $query->whereHas('category', function($q) use ($category) {
+        return $query->whereHas('category', function ($q) use ($category) {
             $q->where('slug', $category);  // Kiểm tra nếu skill_id nằm trong mảng
         });
     }
+
+    public function scopeSearchFulltext($query, $stringKeyword)
+    {
+        return $query
+            ->join('career_details', 'careers.id', '=', 'career_details.career_id')
+            ->select('careers.*') // Đảm bảo chỉ lấy cột từ bảng careers nếu cần
+            ->whereRaw("
+                (MATCH(careers.title) AGAINST(? IN NATURAL LANGUAGE MODE)
+                OR MATCH(career_details.description, career_details.requirement) AGAINST(? IN NATURAL LANGUAGE MODE))
+            ", [$stringKeyword, $stringKeyword]);
+    }
+
+
 
     public function user_careers()
     {
@@ -90,7 +103,4 @@ class Career extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
-
 }
-?>

@@ -19,7 +19,6 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/fetch-data-select/{type}', [HomeController::class, 'fetchDataSelect'])->name('fetch.data.select');
 
 //Route::resource('/jobs', JobController::class);
@@ -28,23 +27,27 @@ Route::get('/fetch-data-select/{type}', [HomeController::class, 'fetchDataSelect
 //Route::get('/jobs/{category}', [JobController::class, 'index'])->name('jobs.index');
 //Route::get('/jobs/{category}/{job}', [JobController::class, 'show'])->name('jobs.show');
 
-Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
-Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
+Route::middleware(CheckBannedUser::class)->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
-Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
+    Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
+    Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
 
-Route::post('/api/v1/applyJob', [JobController::class, 'applyJob'])->name('api.v1.applyJob');
-Route::get('/api/v1/get-district/{province_id}', [LocationController::class, 'getDistrict'])->name('api.v1.get-district');
+    Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
+    Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
 
-Route::post('/job', [JobController::class, 'store'])->name('job.store');
-Route::post('/job/update-user-career', [JobController::class, 'updateUserCareer'])->name('job.update.user.career');
-Route::post('/job/report/', [JobController::class, 'reportJob'])->name('job.report');
-Route::get('/job/get-reason-decline/{id}', [JobController::class, 'getReasonDecline']);
+    Route::post('/api/v1/applyJob', [JobController::class, 'applyJob'])->name('api.v1.applyJob');
+    Route::get('/api/v1/get-district/{province_id}', [LocationController::class, 'getDistrict'])->name('api.v1.get-district');
 
-Route::post('/match-with-candidate', [JobController::class, 'matchWithCandidate'])->name('match.with.candidate');
-Route::get('/match-with-job/{id}', [CandidateController::class, 'matchWithJob'])->name('match.with.job');
-Route::get('/match-with-job-cv-upload/{cv_id}', [OpenAIController::class, 'getInfoFromCV'])->name('match.with.job.cv');
+    Route::post('/job', [JobController::class, 'store'])->name('job.store');
+    Route::post('/job/update-user-career', [JobController::class, 'updateUserCareer'])->name('job.update.user.career');
+    Route::post('/job/report/', [JobController::class, 'reportJob'])->name('job.report');
+    Route::get('/job/get-reason-decline/{id}', [JobController::class, 'getReasonDecline']);
+
+    Route::post('/match-with-candidate', [JobController::class, 'matchWithCandidate'])->name('match.with.candidate');
+    Route::get('/match-with-job/{id}', [CandidateController::class, 'matchWithJob'])->name('match.with.job');
+    Route::get('/match-with-job-cv-upload/{cv_id}', [OpenAIController::class, 'getInfoFromCV'])->name('match.with.job.cv');
+});
 
 
 Route::middleware([UserAuthenticated::class, CheckBannedUser::class])->group(function () {

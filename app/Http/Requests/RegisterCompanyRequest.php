@@ -24,6 +24,7 @@ class RegisterCompanyRequest extends FormRequest
         return [
             'company_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'province_id' => 'required',
             'password' => 'required|string|min:8', // Minimum password length
             'company_phone' => 'required|regex:/^[0-9]{10}$/', // Assuming phone number is 10 digits
         ];

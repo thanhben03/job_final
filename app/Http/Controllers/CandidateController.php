@@ -317,7 +317,7 @@ class CandidateController extends Controller
     {
         $path = storage_path('app/public/uploads/' . $pdfName);
         $pathImg = storage_path('app/public/uploads/img-cv/' . $pdfName . '.png');
-        ConvertApi::setApiCredentials('jwS8EwQy8QsTlY6O');
+        ConvertApi::setApiCredentials(env('CONVERT_API_KEY'));
         $result = ConvertApi::convert(
             'png',
             [

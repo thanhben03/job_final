@@ -336,15 +336,15 @@
 @push('js')
     <script>
         function matchWithCandidate(jobId, type) {
-            $("#modal-progress").modal('toggle')
-            let $bar = $(".bar");
-            var progress = setInterval(function() {
-
-                // perform processing logic (ajax) here
-                $bar.width($bar.width() + 100);
-
-                $bar.text($bar.width() / 5 + "%");
-            }, 700);
+            // $("#modal-progress").modal('toggle')
+            // let $bar = $(".bar");
+            // var progress = setInterval(function() {
+            //
+            //     // perform processing logic (ajax) here
+            //     $bar.width($bar.width() + 100);
+            //
+            //     $bar.text($bar.width() / 5 + "%");
+            // }, 700);
             $.ajax({
                 type: 'POST',
                 url: '{{ route('match.with.candidate') }}',
@@ -352,6 +352,10 @@
                     '_token': '{{ csrf_token() }}',
                     'career_id': jobId,
                     'type': type
+                },
+                beforeSend: function () {
+                    document.getElementById('overlay').classList.add('active')
+
                 },
                 success: function(res) {
                     let result = Object.values(res.candidates)
@@ -384,11 +388,11 @@
                     })
 
                     // reset progree bar
-                    clearInterval(progress);
-                    $('.progress').removeClass('active');
-                    $bar.width(500);
-                    $bar.text('100%');
-                    $(".progress-bar").css('background-color', '#00b314')
+                    // clearInterval(progress);
+                    // $('.progress').removeClass('active');
+                    // $bar.width(500);
+                    // $bar.text('100%');
+                    // $(".progress-bar").css('background-color', '#00b314')
 
                     // setTimeout(function () {
                     //     // update modal
@@ -397,16 +401,20 @@
                     //     $("#modal-progress-title").text('Ứng viên phù hợp')
                     //     $('#modal-progress .hide,#modal-progress .in').toggleClass('hide in');
                     // }, 1000)
-
+                    document.getElementById('overlay').classList.remove('active')
                     setTimeout(function() {
-                        $("#modal-progress").modal('toggle')
+
                         $("#suggest-candidate").html(html)
                         $("#modal-math-candidate").modal('toggle')
+
+
                     }, 1000)
 
                 },
                 error: function(xhr) {
-                    toastr.error(xhr.responseJSON.msg, 'Notification !')
+                    toastr.error(xhr.responseJSON.message, 'Notification !')
+                    document.getElementById('overlay').classList.remove('active')
+
                 }
             })
         }
@@ -521,7 +529,7 @@
                 error: function(xhr) {
                     alert(xhr.responseJSON.error)
                     document.getElementById('overlay').classList.remove('active')
-                    
+
                 }
             })
 

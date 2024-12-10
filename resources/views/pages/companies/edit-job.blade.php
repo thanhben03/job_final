@@ -39,7 +39,11 @@
                             </div>
 
                             <!--Job Skill-->
-                            <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div id="select-skills" class="col-xl-4 col-lg-6 col-md-12
+                            @if($career['category']->id != '7')
+                                d-none
+                            @endif
+                            ">
                                 <div class="form-group city-outer-bx has-feedback">
                                     <label>Job Skill</label>
                                     <div class="ls-inputicon-box">
@@ -304,7 +308,10 @@
                                 <div class="form-group">
                                     <label>Category</label>
                                     <div class="ls-inputicon-box">
-                                        <select class="wt-select-box selectpicker"  data-live-search="true" title="" name="category_id" data-bv-field="size">
+                                        <select 
+                                        class="wt-select-box selectpicker"  
+                                        onchange="changeCategory(this)"
+                                        data-live-search="true" title="" name="category_id" data-bv-field="size">
                                             @foreach($categories as $category)
                                                 <option @selected(old('category_id', $career['category']->id) == $category->id) value="{{$category->id}}">{{$category->name}}</option>
                                             @endforeach
@@ -392,7 +399,8 @@
 
 @push('js')
     <!-- Place the first <script> tag in your HTML's <head> -->
-    <script src="https://cdn.tiny.cloud/1/j7s71fyc3kax1nrnlchfbs12d0rgzpsuwjdnkn43xugf4xgv/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+        <script src="https://cdn.tiny.cloud/1/tyjw3lzlfsxtwzslq3pkz1nsfknx9826o96c6q1y1henmxqo/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
 
     <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
     <script>
@@ -403,6 +411,15 @@
         });
     </script>
     <script>
+        function changeCategory(e) {
+            if (e.value != 7) {
+                console.log(1)
+                console.log($("#select-skills"))
+                $("#select-skills").addClass('d-none');
+            } else {
+                $("#select-skills").removeClass('d-none');
+            }
+        }
         function selectProvince(e) {
             $.ajax({
                 type: 'GET',

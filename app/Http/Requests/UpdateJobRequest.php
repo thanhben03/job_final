@@ -44,7 +44,7 @@ class UpdateJobRequest extends FormRequest
             'benefit' => 'required',
             'key_responsibilities' => 'required',
             'requirement' => 'required',
-            'skill_ids' => 'required',
+            'skill_ids' => 'nullable',
             'category_id' => 'required|integer|exists:categories,id',
         ];
     }

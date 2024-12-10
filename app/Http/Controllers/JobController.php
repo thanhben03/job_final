@@ -39,13 +39,11 @@ class JobController extends Controller
     public function __construct(
         CareerServiceInterface $careerService,
         SkillServiceInterface $skillService
-    )
-    {
+    ) {
         $this->service = $careerService;
         $this->skillService = $skillService;
 
         $this->middleware(UserAuthenticated::class)->except(['index', 'store', 'update', 'matchWithCandidate', 'getReasonDecline']);
-
     }
 
     public function index(Request $request)
@@ -57,7 +55,7 @@ class JobController extends Controller
         Session::forget('keyword');
         Session::forget('category');
 
-//        $category = Category::query()->where('slug', $category)->firstOrFail();
+        //        $category = Category::query()->where('slug', $category)->firstOrFail();
 
         if ($request->has('sort')) {
             $sort = $request['sort'] == 'latest' ? 'desc' : 'asc';
@@ -70,7 +68,8 @@ class JobController extends Controller
         }
 
         if ($request['search']) {
-            $careers = $careers->where('title', 'like', '%' . $request['search'] . '%');
+            // $careers = $careers->where('title', 'like', '%' . $request['search'] . '%');
+            $careers = $careers->searchFulltext($request['search']);
             Session::flash('keyword', $request['search']);
         }
 
@@ -80,10 +79,9 @@ class JobController extends Controller
             Session::flash('job-type', $request['job-type']);
 
             // Lọc theo các giá trị trong mảng $jobTypeFilter
-            $careers = $careers->whereIn('working_time', array_map(function($jobType) {
+            $careers = $careers->whereIn('working_time', array_map(function ($jobType) {
                 return WorkTypeEnum::getValue($jobType); // Áp dụng enum mapping
             }, $jobTypeFilter));
-
         }
         if ($request->has('skills')) {
             $skillFilter = explode(',', $request['skills']);
@@ -98,17 +96,20 @@ class JobController extends Controller
         }
 
         if ($request->has('locations')) {
+
             $locationFilter = explode(',', $request['locations']);
             Session::flash('locations', $request['locations']);
             $locationIds = Province::query()->whereIn('name', $locationFilter)->pluck('code')->toArray();
-            $careers = $careers->whereIn('province_id', $locationIds);
+            $careers = $careers->whereIn('careers.province_id', $locationIds);
+            // $careers = $careers->where('province_id', $locationIds[0]);
+
         }
 
 
-//        $careers->where([
-//            'category_id' => $category->id,
-//            'status' => 1
-//        ]);
+        //        $careers->where([
+        //            'category_id' => $category->id,
+        //            'status' => 1
+        //        ]);
         $careers = $careers->where([
             'status' => 1,
             'deleted_at' => null
@@ -125,7 +126,7 @@ class JobController extends Controller
             'skills' => $skills,
             'provinces' => $provinces,
             'data' => $data->resolve(),
-//            'category' => $category,
+            //            'category' => $category,
             'careerIdSaved' => $careerIdSaved,
         ]);
     }
@@ -209,7 +210,7 @@ class JobController extends Controller
 
         // Gửi email
         Mail::to($job->company->email)->send(
-            new ApplicantNotification($applicantInfo, storage_path("app/public/uploads/".$cv->path))
+            new ApplicantNotification($applicantInfo, storage_path("app/public/uploads/" . $cv->path))
         );
     }
 
@@ -227,6 +228,18 @@ class JobController extends Controller
     public function matchWithCandidate(Request $request): \Illuminate\Http\JsonResponse
     {
         $careerID = $request->career_id;
+        $career = Career::query()->where('id', $careerID)->first();
+        if (!$career) {
+            return response()->json([
+                'message' => 'Career not found!'
+            ], 500);
+        }
+
+        if ($career->status == 0) {
+            return response()->json([
+                'message' => 'Waiting for approval for this job!'
+            ], 500);
+        }
         $type = $request->type;
         $career = $this->service->getQueryBuilderWithRelations(['skills'])->find($careerID)->toArray();
         $extractInfo = $this->service->extractInfoRequire($career);
@@ -234,17 +247,19 @@ class JobController extends Controller
             $candidates = $this->service->matchWithCandidate($extractInfo, $careerID);
         } else {
             $candidates = $this->service->matchWithCandidate($extractInfo);
-
         }
         return response()->json([
             'candidates' => $candidates,
         ]);
-
     }
 
     public function update($id, UpdateJobRequest $request)
     {
-        $career = $this->service->update($id, $request);
+        try {
+            $career = $this->service->update($id, $request);
+        } catch (\Throwable $th) {
+            dd($th);
+        }
 
         return redirect()->back()->with('msg', 'Career Updated Successfully !');
     }
@@ -296,7 +311,6 @@ class JobController extends Controller
                     $uploadedFileUrl = cloudinary()->upload($file->getRealPath())->getSecurePath();
                     // Lưu thông tin URL vào mảng để trả về
                     $uploadedFiles[] = $uploadedFileUrl;
-
                 }
             }
 
@@ -316,7 +330,7 @@ class JobController extends Controller
         $job = Career::query()->findOrFail($jobID);
         $job->deleted_at = 1;
         $job->save();
-//        $job->delete();
+        //        $job->delete();
 
         return response()->json(['msg' => 'Career deleted successfully']);
     }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ApplyJobRequest;
+use App\Http\Requests\Api\ApplyJobRequest;
 use App\Http\Resources\Api\AppliedJobResource;
 use App\Http\Resources\Api\AppointmentResource;
 use App\Http\Resources\Api\CareerResource;

@@ -35,7 +35,7 @@
                                                 id="file-uploader" accept=".jpg, .jpeg, .png">
                                         </div>
                                     </div>
-                                    <p><b>{{ trans('lang.Company Logo') }} :- </b>{{ trans('lang.Require Image') }}</p>
+                                    <p><b>{{ trans('lang.Company Logo') }} : </b>{{ trans('lang.Require Image') }}</p>
                                 </div>
 
                             </div>
@@ -169,7 +169,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>{{ trans('lang.description') }}</label>
-                                            <textarea class="form-control" rows="3">{{ $company->introduce }}</textarea>
+                                            <textarea name="introduce" class="form-control" rows="3">{{ $company->introduce }}</textarea>
                                         </div>
                                     </div>
                                 </div>

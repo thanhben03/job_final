@@ -7,6 +7,8 @@ use App\Enums\JobExpEnum;
 use App\Enums\LevelEnum;
 use App\Enums\QualificationEnum;
 use App\Http\Resources\CandidateSingleResource;
+use App\Models\CareerDetail;
+use App\Models\Province;
 use App\Models\Skill;
 use App\Models\User;
 use App\Models\UserCareer;
@@ -128,7 +130,7 @@ class CareerService implements CareerServiceInterface
 
 
 
-        $candidates = collect($candidates)->unique('id');
+        // $candidates = collect($candidates)->unique('id');
         $matchedCandidates = $candidates->map(function ($candidate) {
             $matches = [];
 

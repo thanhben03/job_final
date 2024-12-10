@@ -28,4 +28,8 @@ class Company extends Authenticatable
         return $this->hasMany(Career::class);
     }
 
+    public function province () {
+    
+    }
+
 }

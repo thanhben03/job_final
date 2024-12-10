@@ -18,7 +18,7 @@
                 <p class="mb-0">{{ trans('lang.active.content') }}</p>
                 <form action="{{ route('company.logout') }}" method="POST">
                     @csrf
-                    <button type="submit" class="btn btn-primary">Đăng xuất</button>
+                    <button type="submit" class="btn btn-primary">{{ trans('lang.user.logout') }}</button>
                 </form>
             </div>
         </div>
