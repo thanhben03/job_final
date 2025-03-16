@@ -379,13 +379,13 @@
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="email" id="email-login" type="text" required="" class="form-control" placeholder="Email">
+                                                <input name="email" value="nben19732@gmail.com" id="email-login" type="text" required="" class="form-control" placeholder="Email">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-12">
                                             <div class="form-group mb-3">
-                                                <input name="password" id="password" type="password" class="form-control" required="" placeholder="Password">
+                                                <input name="password" value="demo1234" id="password" type="password" class="form-control" required="" placeholder="Password">
                                             </div>
                                         </div>
 
